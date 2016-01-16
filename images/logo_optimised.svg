@@ -1,0 +1,34 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" id="svg4244" version="1.1" preserveAspectRatio="xMidYMid meet">
+    <defs id="defs4246">
+        <filter id="filter4264" x="-0.12" width="1.24" y="-0.04" height="1.09" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="0.24" id="feGaussianBlur4266" />
+        </filter>
+        <filter id="filter4426" x="-0.02" width="1.05" y="-0.03" height="1.05" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="0.23" id="feGaussianBlur4428" />
+        </filter>
+        <filter id="filter4434" x="-0.02" width="1.05" y="-0.02" height="1.05" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="0.44" id="feGaussianBlur4436" />
+        </filter>
+    </defs>
+    <metadata id="metadata4249" />
+    <g id="layer1" transform="translate(0,-1004.3622)" display="inline">
+        <g id="layer4">
+            <!--<rect id="rect4157" width="48" height="48" x="1.06" y="1004.36" style="display:inline;fill:#fff" />-->
+            <circle id="path4254-0" cx="24" cy="1030.36" r="22" style="display:inline;fill-opacity:0.31;fill:#000;filter:url(#filter4434)" />
+        </g>
+        <circle id="path4254" cx="24" cy="1028.36" r="22" fill="#1d6886" />
+        <g id="g4314" transform="matrix(1.5,0,0,1.5,6,1010.3622)" fill="#000">
+            <path id="path4" d="M0 0 24 0 24 24 0 24Z" fill="none" />
+        </g>
+    </g>
+    <g id="layer3" display="inline">
+        <g id="layer2" display="inline">
+            <path d="M19.77 2.89 17.88 4.79C19.99 6.48 21.33 9.08 21.33 12 21.33 17.16 17.16 21.33 12 21.33 6.84 21.33 2.67 17.16 2.67 12c0-2.92 1.35-5.52 3.44-7.23l-1.88-1.88C1.64 5.09 0 8.35 0 12 0 18.63 5.37 24 12 24 18.63 24 24 18.63 24 12 24 8.35 22.36 5.09 19.77 2.89Z" id="path4139" transform="matrix(1.5,0,0,1.5,6,8.0001631)" style="display:inline;fill-opacity:0.31;fill:#000;filter:url(#filter4426)" />
+            <path d="m12.99 0.06-1.46 5.33 2.65 0-1.44 5.39 1.69 0-2.35 2.35-2.12-2.12-0.17-0.17 1.39 0 1.09-4.09-2.69 0 1.8-6.73z" id="path4141" transform="matrix(1.5,0,0,1.5,6,8.0001631)" style="display:inline;fill-opacity:0.32;fill-rule:evenodd;fill:#000;filter:url(#filter4264)" />
+        </g>
+        <g id="g4292" fill="#fff">
+            <path transform="matrix(1.5,0,0,1.5,6,6)" d="M19.77 2.89 17.88 4.79C19.99 6.48 21.33 9.08 21.33 12 21.33 17.16 17.16 21.33 12 21.33 6.84 21.33 2.67 17.16 2.67 12c0-2.92 1.35-5.52 3.44-7.23l-1.88-1.88C1.64 5.09 0 8.35 0 12 0 18.63 5.37 24 12 24 18.63 24 24 18.63 24 12 24 8.35 22.36 5.09 19.77 2.89Z" id="path6" style="display:inline;fill:#ff9800" />
+            <path transform="matrix(1.5,0,0,1.5,6,6)" d="m12.99 0.06-1.46 5.33 2.65 0-1.44 5.39 1.69 0-2.35 2.35-2.12-2.12-0.17-0.17 1.39 0 1.09-4.09-2.69 0 1.8-6.73z" id="path6336" style="display:inline;fill-rule:evenodd;fill:#ff9800" />
+        </g>
+    </g>
+</svg>
