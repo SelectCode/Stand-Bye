@@ -1,17 +1,21 @@
-var $active, $slider, $topics;
+var $active, $slider, $topics, $images, offsets;
+var scrollTop, halfWindowHeight;
 
 
 
 
 $(function () {
 
+    offsets = [];
+
     $active = $("#menu .current_page_item");
     $slider = $("#menu .slider");
     $topics = $("#page div.topic");
+    $images = $(".parallax div.background img");
 
     $slider.css("left", $active.position().left).width($active.outerWidth());
 
-    $slider.width()
+    getImageOffsets();
 
     $("#menu li.nav_item").click(function (e) {
         setActive($(this));
@@ -28,8 +32,15 @@ $(function () {
     });
 
     $(window).resize(function (e) {
+
         $slider.css("left", $active.position().left).width($active.outerWidth());
+        getImageOffsets();
+
+        halfWindowHeight = $(window).height() / 2;
+
     }).scroll(function (e) {
+
+        scrollTop = $(window).scrollTop();
 
         parallax();
         checkActive();
@@ -43,6 +54,7 @@ $(function () {
     });
 
 
+    halfWindowHeight = $(window).height() / 2;
 });
 
 function setActive($n) {
@@ -82,9 +94,7 @@ function scrollToElement($el) {
 function checkActive() {
 
 
-    var scrollTop = $(window).scrollTop() + $(window).height() / 2;
-
-    console.log("scroll top = " + scrollTop + " +++++++++++++ ");
+    var middle = scrollTop + halfWindowHeight;
 
     for (var i = 0; i < $topics.length; i++) {
         $element = $topics.eq(i);
@@ -92,11 +102,8 @@ function checkActive() {
         var top = $element.offset().top;
         var bottom = $element.outerHeight() + top;
 
-        console.log("top = " + top + " bottom = " + bottom);
-
-        if (scrollTop > top && scrollTop < bottom) {
+        if (middle > top && middle < bottom) {
             var $navElement = $("#menu li.nav_item").eq($element.index());
-            console.log($navElement.text() + " -------------- ");
             setActive($navElement);
             return;
         }
@@ -106,5 +113,33 @@ function checkActive() {
 }
 
 function parallax() {
+
+
+    for (var i = 0; i < $images.length; i++) {
+        $this = $images.eq(i);
+
+        var delta = (scrollTop - offsets[i]) * 0.2;
+
+        console.log("delta = " + delta);
+
+        $this.css({
+            top: $this.data("original_top") + delta
+        });
+    }
+
+};
+
+function getImageOffsets() {
+
+    for (var i = 0; i < $(".parallax div.background").length; i++) {
+
+        offsets[i] = $images.eq(i).offset().top;
+
+    }
+
+    $images.each(function () {
+
+        $(this).data("original_top", $(this).position().top + $(this).outerHeight() / 2);
+    });
 
 };
