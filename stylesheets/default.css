@@ -178,10 +178,6 @@ ul.style2 li:first-child {
     background: #FFFFFF;
 }
 
-#footer-wrapper .container {
-    margin: 0px auto;
-}
-
 .clearfix {
     clear: both;
 }
@@ -233,7 +229,12 @@ ul.style2 li:first-child {
     z-index: 10;
     width: 100%;
     background: inherit;
-    box-shadow: 0em .5em 1.2em 0em rgba(33, 33, 33, 0.5);
+}
+
+.shadow {
+    -webkit-box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
+    -moz-box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
+    box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
 }
 
 #menu ul {
@@ -430,16 +431,11 @@ div.parallax > * {
 
 div.parallax .foreground {
     z-index: 2;
-    background: rgba(33, 33, 33, 0.3);
+    background: rgba(33, 33, 33, 0.5);
 }
 
 div.parallax .background {
-    z-index: 1;
-    -webkit-filter: blur(0.15em);
-    -moz-filter: blur(0.15em);
-    -ms-filter: blur(0.15em);
-    -o-filter: blur(0.15em);
-    filter: blur(0.15em);
+    overflow: hidden;
     object-fit: cover;
     object-position: center;
 }
@@ -450,6 +446,8 @@ div.parallax .background {
     margin: 0;
     padding: 0;
     z-index: 0;
+    float: left;
+    clear: both;
 }
 
 #header_wrapper h1 {
@@ -483,4 +481,26 @@ div.parallax .background {
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.foreground h1 {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 2.5em;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+
+.background img {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 1;
+    -webkit-filter: blur(0.15em);
+    -moz-filter: blur(0.15em);
+    -ms-filter: blur(0.15em);
+    -o-filter: blur(0.15em);
+    filter: blur(0.15em);
+    width: 100%;
+    height: auto;
 }

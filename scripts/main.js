@@ -1,10 +1,13 @@
-var $active, $slider;
+var $active, $slider, $topics;
+
+
 
 
 $(function () {
 
     $active = $("#menu .current_page_item");
     $slider = $("#menu .slider");
+    $topics = $("#page div.topic");
 
     $slider.css("left", $active.position().left).width($active.outerWidth());
 
@@ -12,6 +15,10 @@ $(function () {
 
     $("#menu li.nav_item").click(function (e) {
         setActive($(this));
+
+        var index = $(this).index() + 1;
+
+        scrollToElement($(".topic:nth-of-type(" + index + ")"));
     });
 
     $("#menu li.nav_item").hover(function (e) {
@@ -42,7 +49,7 @@ function setActive($n) {
 
     $active = $n;
 
-    setStart($active);
+    //setStart($active);
     slideTo($active);
 
 };
@@ -58,6 +65,39 @@ function slideTo($el) {
     }, 200, "swing");
 
 };
+
+function scrollToElement($el) {
+    $('html, body').animate({
+        scrollTop: $el.offset().top - $("#menu").outerHeight()
+    }, 250);
+};
+
+
+function checkActive() {
+
+
+    var scrollTop = $(window).scrollTop() + $(window).height() / 2;
+
+    console.log("scroll top = " + scrollTop + " +++++++++++++ ");
+
+    for (var i = 0; i < $topics.length; i++) {
+        $element = $topics.eq(i);
+
+        var top = $element.offset().top;
+        var bottom = $element.outerHeight() + top;
+
+        console.log("top = " + top + " bottom = " + bottom);
+
+        if (scrollTop > top && scrollTop < bottom) {
+            var $navElement = $("#menu li.nav_item").eq($element.index());
+            console.log($navElement.text() + " -------------- ");
+            setActive($navElement);
+            return;
+        }
+
+    }
+
+}
 
 function parallax() {
 
