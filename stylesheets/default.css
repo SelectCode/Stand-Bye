@@ -290,6 +290,7 @@ ul.style2 li:first-child {
     height: .25em;
     background: #FF9800;
     display: inline;
+    z-index: 12;
 }
 
 
@@ -322,7 +323,7 @@ ul.style2 li:first-child {
 /* Welcome                                                                       */
 
 
-/*********************************************************************************/
+/*********************************************************************************
 
 #welcome {
     overflow: hidden;
@@ -362,14 +363,20 @@ ul.style2 li:first-child {
 
 .button {
     display: inline-block;
-    margin-top: 1.5em;
-    padding: 1.50em 3em 1.50em 3em;
-    background: #16a085;
-    text-decoration: none;
+    margin-top: .5em;
+    margin: 0;
+    padding: 1em 3em 1em 3em;
+    border-radius: .5em;
+    background: text-decoration: none;
     text-transform: uppercase;
-    font-weight: 400;
-    font-size: 0.90em;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
     color: #FFF;
+    transition: all 200ms linear;
+    background: #1D6886;
+    cursor: pointer;
+    line-height: normal;
 }
 
 .button:before {
@@ -382,6 +389,10 @@ ul.style2 li:first-child {
     color: #FFF;
 }
 
+.button:hover {
+    background: #16a085;
+}
+
 
 /*********************************************************************************/
 
@@ -389,7 +400,7 @@ ul.style2 li:first-child {
 /* Footer                                                                        */
 
 
-/*********************************************************************************/
+/*********************************************************************************
 
 #footer-wrapper {
     overflow: hidden;
@@ -414,7 +425,7 @@ ul.style2 li:first-child {
 #footer .style1 a {
     font-size: 1em;
     color: #B1B1B1;
-}
+}*/
 
 div.parallax {
     position: relative;
@@ -515,6 +526,7 @@ div.parallax .background {
     z-index: 11;
     height: 5em;
     width: 5em;
+    transition: all 250ms linear;
 }
 
 a#icon_github>img {
@@ -526,4 +538,11 @@ a#icon_github>img {
 
 #icon_github:hover {
     background: #1ABC9C;
+}
+
+#button_wrapper {
+    z-index: 10;
+    position: fixed;
+    right: 5em;
+    bottom: 2em;
 }

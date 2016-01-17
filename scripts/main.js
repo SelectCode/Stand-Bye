@@ -36,6 +36,12 @@ $(function () {
 
     });
 
+    $("#icon_github").hover(function (e) {
+        slideTo($(this));
+    }, function (e) {
+        slideTo($active);
+    });
+
 
 });
 
