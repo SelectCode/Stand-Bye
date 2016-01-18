@@ -57,11 +57,14 @@ p {
 strong {}
 
 a {
-    color: #171717;
+    color: #1D6886;
+    font-weight: bold;
+    transition: all 100ms linear;
+    text-decoration: none;
 }
 
 a:hover {
-    text-decoration: none;
+    color: #1ABC9C;
 }
 
 a img {
@@ -155,6 +158,7 @@ ul.style2 li:first-child {
 .title {
     margin-bottom: 2em;
     text-transform: uppercase;
+    width: 100%;
 }
 
 .title h2 {
@@ -313,7 +317,7 @@ ul.style2 li:first-child {
     float: left;
     width: 100%;
     padding: 2.5em;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 
@@ -372,7 +376,7 @@ ul.style2 li:first-child {
     text-decoration: none;
     font-weight: 500;
     font-size: 1em;
-    color: #FFF;
+    color: #FFF !important;
     transition: all 200ms linear;
     background: #1D6886;
     cursor: pointer;
@@ -432,6 +436,7 @@ div.parallax {
     width: 100%;
     height: 400px;
     display: inline-block;
+    box-sizing: border-box;
 }
 
 div.parallax > * {
@@ -447,7 +452,7 @@ div.parallax .foreground {
     background: rgba(33, 33, 33, 0.5);
 }
 
-div.parallax .background {
+div.parallax div.background {
     overflow: hidden;
     object-fit: cover;
     object-position: center;
@@ -526,6 +531,7 @@ div.parallax .background {
     z-index: 11;
     height: 5em;
     width: 5em;
+    vertical-align: center;
     transition: all 250ms linear;
 }
 
@@ -540,9 +546,59 @@ a#icon_github>img {
     background: #1ABC9C;
 }
 
+
+
 #button_wrapper {
     z-index: 10;
     position: fixed;
     right: 5em;
     bottom: 2em;
+}
+.card {
+    border-radius: .7em;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
+    -moz-box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
+    box-shadow: 0px .5em 1.2em 0px rgba(33, 33, 33, 0.5);
+}
+
+.card_wrapper {
+    margin: 1.5em 1.5em 1.5em 1.5em;
+    width: auto;
+    height: auto;
+    float: left; 
+    clear: both;
+}
+
+a#icon_github>p {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+    left: 0;
+    vertical-align: center;
+    line-height: 2.15em;
+    display: none;
+    font-weight: 400;
+    text-size: .9em;
+}
+
+
+
+a#icon_github:hover>img {
+    display: none;
+}
+
+a#icon_github:hover>p{
+    display: block;
+}
+
+div.topic div.content > * {
+    text-align: center;
+    float: left;
+    clear: both;
 }
