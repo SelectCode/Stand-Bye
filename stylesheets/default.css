@@ -19,6 +19,8 @@ html,
 body {
     box-sizing: border-box;
     height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -76,10 +78,15 @@ hr {
     box-shadow: 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
 }
 
+.shadow_inset {
+    -webkit-box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
+    -moz-box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
+    box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
+}
+
 .center {
     display: flex;
     height: 100%;
-
     align-items: center;
     justify-content: center;
 }
@@ -350,7 +357,6 @@ div.parallax .foreground {
 
 div.parallax div.background {
     overflow: hidden;
-
     object-fit: cover;
     object-position: center;
 }
@@ -373,7 +379,6 @@ div.parallax div.background {
     -ms-filter: blur(0.15em);
     filter: blur(0.15em);
     transform: translate(0, -50%);
-
     -moz-filter: blur(0.15em);
     -o-filter: blur(0.15em);
 }
@@ -425,6 +430,7 @@ div.topic div.content > * {
     font-size: 3em;
     line-height: 4em;
 }
+
 .card {
     flex-grow: 1;
     padding: 1em;

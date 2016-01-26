@@ -28,10 +28,23 @@ $(function () {
     });
 
     //Menu hover listener
-    $("#menu li.nav_item").hover(function (e) {
+    $("#menu li.nav_item, #icon_github").hover(function (e) {
         slideTo($(this));
     }, function (e) {
         slideTo($active);
+    });
+
+    //link click listener
+
+    $("a").click(function (e) {
+
+        var data = $(this).data("goto");
+
+        if (data != "none") {
+            e.preventDefault();
+            scrollToElement($topics.eq(parseInt(data)));
+        }
+
     });
 
     //Resize listener
@@ -50,13 +63,6 @@ $(function () {
         checkActive();
 
     });
-
-    $("#icon_github").hover(function (e) {
-        slideTo($(this));
-    }, function (e) {
-        slideTo($active);
-    });
-
 
     halfWindowHeight = $(window).height() / 2;
 });

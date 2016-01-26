@@ -1,0 +1,27 @@
+#content {
+    padding: 2em;
+    font-size: 1em;
+}
+
+#header {
+    width: 100%;
+    background: #1D6886;
+    padding: 1em;
+    height: 3em;
+}
+
+#header img {
+    float: left;
+    height: 100%;
+}
+
+#header a {
+    padding: 1em;
+}
+
+#header h1 {
+    font-size 1.2em;
+    line-height: 0.9;
+    float: left;
+    padding-left: 1.2em;
+}
