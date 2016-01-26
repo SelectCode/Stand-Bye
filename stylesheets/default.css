@@ -129,7 +129,7 @@ ul.style2 li:first-child {
 /* Titles *****************************************************************/
 
 .title {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     width: 100%;
     text-transform: uppercase;
 }
@@ -137,7 +137,8 @@ ul.style2 li:first-child {
 .title h2 {
     color: #16a085;
     font-weight: 500;
-    font-size: 2em;
+    font-size: 1.5em;
+    margin-top: 1.5em;
 }
 
 .byline {
@@ -171,7 +172,8 @@ ul.style2 li:first-child {
     background: inherit;
 }
 
-#menu ul {
+#menu ul,
+#footer ul {
     margin: 0;
     padding: 0 0 0 0;
     list-style: none;
@@ -304,7 +306,7 @@ a#icon_github:hover>p {
 .button {
     display: inline-block;
     margin: 0;
-    margin-top: .5em;
+    margin: 1em;
     padding: 1em 3em 1em 3em;
     border-radius: .5em;
     background: #1D6886;
@@ -436,8 +438,42 @@ div.topic div.content > * {
     padding: 1em;
     display: block;
     flex-shrink: 1;
-    flex-basis: 20em;
-    max-height: 25em;
+    flex-basis: 10%;
     min-height: 15em;
     overflow: hidden;
+    min-width: 25em;
+    margin-bottom: 1.5em;
+}
+
+
+/* footer *******************************************************************/
+
+#footer {
+    height: 3em;
+    font-size: 1em;
+    width: 100%;
+    background: #1D6886;
+    padding: 0;
+    margin: 0;
+}
+
+#footer a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 1em;
+}
+
+#footer li {
+    display: inline-block;
+    width: auto;
+    height: 100%;
+}
+
+#footer ul {
+    height: 100%;
+}
+
+#footer a:hover {
+    text-decoration: underline;
 }

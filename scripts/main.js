@@ -40,7 +40,7 @@ $(function () {
 
         var data = $(this).data("goto");
 
-        if (data != "none") {
+        if (data != null) {
             e.preventDefault();
             scrollToElement($topics.eq(parseInt(data)));
         }
