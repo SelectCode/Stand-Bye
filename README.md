@@ -1,6 +1,6 @@
 # Stand-Bye
-Sag Bye! zu Umweltverschmutzung und Bye! zu Komfortverlust!
-Stand-Bye! - Die nächste umweltfreundliche und komfortfreundliche Generation des Energiesparens!
+Sag "Bye" zu Umweltverschmutzung und "Bye" zu Komfortverlust!
+Unser JugendForscht Projekt 2016: Die nächste umweltfreundliche und komfortfreundliche Generation des Energiesparens!
 
 ##Das Problem
 ###Keine richtige Anwendung des Standby-Modus‘
