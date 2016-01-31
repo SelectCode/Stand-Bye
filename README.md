@@ -1,5 +1,6 @@
 # Stand-Bye
-The next ecofriendly generation of the windows intern standby
+Sag Bye! zu Umweltverschmutzung und Bye! zu Komfortverlust!
+Stand-Bye! - Die nächste umweltfreundliche und komfortfreundliche Generation des Energiesparens!
 
 ##Das Problem
 ###Keine richtige Anwendung des Standby-Modus‘
