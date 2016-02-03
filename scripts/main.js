@@ -1,11 +1,20 @@
-var $active, $slider, $topics, $images, offsets;
-var scrollTop, halfWindowHeight;
+//vars for the slider menu
+var $active, $slider, $topics;
+//Vars for the parallax effect
+var $images, offsets;
+var scrollImg, scrollContainter;
+
+var scrollTop, windowHeight, halfWindowHeight;
+
+
 var disabled;
 
 $(function () {
 
     //initialize stuff
     offsets = [];
+    scrollContainter = [];
+    scrollImg = [];
 
     $active = $("#menu .current_page_item");
     $slider = $("#menu .slider");
@@ -13,6 +22,9 @@ $(function () {
     $images = $(".parallax div.background img");
 
     $slider.css("left", $active.position().left).width($active.outerWidth());
+
+    windowHeight = $(window).innerHeight();
+    halfWindowHeight = windowHeight / 2;
 
     getImageOffsets();
 
@@ -51,9 +63,11 @@ $(function () {
     $(window).resize(function (e) {
 
         $slider.css("left", $active.position().left).width($active.outerWidth());
-        getImageOffsets();
 
-        halfWindowHeight = $(window).height() / 2;
+        windowHeight = $(window).innerHeight();
+        halfWindowHeight = windowHeight / 2;
+
+        getImageOffsets();
 
     }).scroll(function (e) {
 
@@ -64,7 +78,7 @@ $(function () {
 
     });
 
-    halfWindowHeight = $(window).height() / 2;
+
 });
 
 function setActive($n) {
@@ -150,12 +164,15 @@ function parallax() {
     for (var i = 0; i < $images.length; i++) {
         $this = $images.eq(i);
 
-        var delta = (scrollTop - offsets[i]) * 0.2;
+        var delta = -1 * ((scrollTop - offsets[i]) / scrollContainter[i]) - scrollImg[i];
 
-        //console.log("delta = " + delta);
+        //var offsetContainer = (scrollTop - offsets[i]) * -1;
+        //var delta = (offsetContainer * scrollImg) / scrollContainter;
+
+        console.log(delta);
 
         $this.css({
-            top: $this.data("original_top") + delta
+            top: delta
         });
     }
 
@@ -163,15 +180,27 @@ function parallax() {
 
 function getImageOffsets() {
 
-    for (var i = 0; i < $(".parallax div.background").length; i++) {
+    var $cont = $(".parallax .background");
 
-        offsets[i] = $images.eq(i).offset().top;
+    for (var i = 0; i < $cont.length; i++) {
+
+        var $this = $cont.eq(i);
+        var height = $this.outerHeight();
+
+        offsets[i] = $this.offset().top - $this.outerHeight();
+
+        scrollImg[i] = $images.eq(i).outerHeight() - height;
+        scrollContainter[i] = windowHeight + height;
 
     }
 
-    $images.each(function () {
+    console.log("offsets: " + offsets);
+    console.log("scroll container: " + scrollContainter);
+    console.log("scroll Images:" + scrollImg);
 
-        $(this).data("original_top", $(this).position().top + $(this).outerHeight() / 2);
-    });
+    //  $images.each(function () {
+    //
+    //      $(this).data("original_top", $(this).position().top + $(this).outerHeight() / 2);
+    //  });
 
 };
