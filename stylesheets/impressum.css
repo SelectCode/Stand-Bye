@@ -77,3 +77,6 @@
     background: transparent;
     transition: all 0s ease;
 }
+table {
+    border-spacing: 0 .5em .5em .5em;
+}
