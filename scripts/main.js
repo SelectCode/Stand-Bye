@@ -164,13 +164,16 @@ function parallax() {
     for (var i = 0; i < $images.length; i++) {
         $this = $images.eq(i);
 
-        var delta = -1 * ((scrollTop - offsets[i]) / scrollContainter[i]) - scrollImg[i];
+        var delta = ((scrollTop - offsets[i]) / scrollContainter[i]) * scrollImg[i];
 
         //var offsetContainer = (scrollTop - offsets[i]) * -1;
         //var delta = (offsetContainer * scrollImg) / scrollContainter;
 
-        console.log(delta);
 
+        //console.log("scroll top:" + scrollTop + " offset: " + offsets[i] + " scroll container: " + scrollContainter[i] + " scrollImg: " + scrollImg[i]);
+        if (i == 0) {
+            console.log(delta);
+        }
         $this.css({
             top: delta
         });
@@ -187,11 +190,11 @@ function getImageOffsets() {
         var $this = $cont.eq(i);
         var height = $this.outerHeight();
 
-        offsets[i] = $this.offset().top - $this.outerHeight();
+        offsets[i] = $this.offset().top + $this.outerHeight();
 
         scrollImg[i] = $images.eq(i).outerHeight() - height;
-        do
-            scrollContainter[i] = windowHeight + height;
+
+        scrollContainter[i] = windowHeight + height;
 
     }
 
