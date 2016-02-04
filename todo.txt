@@ -1,8 +1,8 @@
 # javascript
-- Get Algorithm to work
++ Get Algorithm to work
 
 # Text
-- Screenshots der Features erstellen
++ Screenshots der Features erstellen
 - Bessere überschriften finden
 + Overlay der Screenshots weichzeichnen
 - make text wrap around images in feature section
@@ -10,8 +10,8 @@
 # markup
 - fiexd aspect ratio for images
 - alt-attribute for all images
-- animate footer?
-- rise z-index of footer
++ rise z-index of footer
+- fill out meta-tags
 
 # accessibility
 - make script free version

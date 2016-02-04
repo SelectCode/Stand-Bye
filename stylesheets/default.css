@@ -26,7 +26,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    background: #FFFFFF, #FFF, white;
+    background: #ffffff;
     color: #212121;
     font-weight: 400;
     font-size: 1em;
@@ -486,12 +486,15 @@ div.topic div.content > * {
 /* footer *******************************************************************/
 
 #footer {
+    z-index: 5;
     height: 3em;
     font-size: 1em;
     width: 100%;
     background: #1D6886;
     padding: 0;
     margin: 0;
+    float: left;
+    clear: both;
 }
 
 #footer a {
