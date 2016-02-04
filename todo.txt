@@ -1,0 +1,12 @@
+# javascript
+- Get Algorithm to work
+
+# Text
+- Screenshots der Features erstellen
+- Bessere überschriften finden
++ Overlay der Screenshots weichzeichnen
+- make text wrap around images in feature section
+
+# markup
+- Bildern ein festes seitenverhältnis geben
+

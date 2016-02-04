@@ -72,7 +72,7 @@ hr {
     color: #212121;
     background-color: #212121;
     border: .5px solid #212121;
-    opacity: 0.3;
+    opacity: 0.1;
     height: 0px;
     box-sizing: border-box;
 }
@@ -534,7 +534,7 @@ div.topic div.content > * {
     width: auto;
     clear: none;
     text-indent: 1em;
-    padding-top: 1.5em;
+    padding-top: .5em;
     padding-bottom: 1.5em;
     margin-bottom: 0;
 }
@@ -543,14 +543,14 @@ div.topic div.content > * {
     display: block;
     box-sizing: border-box;
     float: left;
-    width: 35%;
+    width: 40%;
     clear: both;
 }
 
 .feature .text {
     float: left;
     clear: none;
-    width: 65%;
+    width: 60%;
     height: auto;
     box-sizing: border-box;
 }
