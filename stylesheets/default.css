@@ -162,7 +162,7 @@ ul.style2 li:first-child {
     text-align: left;
 }
 
-h3.title{
+h3.title {
     margin-bottom: .5em;
 }
 
@@ -341,7 +341,7 @@ a#icon_github:hover>p {
     display: -ms-flexbox;
     display: flex;
     float: left;
-margin-left: -1em;
+    margin-left: -1em;
     margin-right: -1em;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -355,22 +355,23 @@ margin-left: -1em;
 
 .button {
     display: inline-block;
-    margin: 0;
-    margin: 1em;
+    margin-bottom: 1.5em;
     padding: 1em 3em 1em 3em;
     -webkit-border-radius: .5em;
     border-radius: .5em;
     background: #1D6886;
     color: #FFF !important;
     text-decoration: none;
-    text-decoration: none;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 1em;
-    line-height: normal;
     cursor: pointer;
     -webkit-transition: all 200ms linear;
     transition: all 200ms linear;
+}
+
+.button:nth-child(odd) {
+    clear: both;
 }
 
 .button:before {
@@ -485,23 +486,35 @@ div.topic div.content > * {
     line-height: 4em;
 }
 
+
+/* cards *********************************************************************/
+
 .card {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    padding: 1em;
-    display: block;
-    -webkit-flex-shrink: 1;
-    -ms-flex-negative: 1;
-    flex-shrink: 1;
-    -webkit-flex-basis: 10%;
-    -ms-flex-preferred-size: 10%;
-    flex-basis: 10%;
-    min-height: 15em;
+    width: 50%;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    clear: none;
     overflow: hidden;
-    min-width: 25em;
-    margin-bottom: 1.5em;
+    padding-right: 2.5em;
+    padding-bottom: 2em;
+    display: block;
+}
+
+.card_wrapper {
+    padding: 1em 0em 1em;
+}
+
+.card:nth-child(odd) {
+    clear: both;
+}
+
+@media only screen and (max-width: 50em) {
+    .card {
+        clear: both;
+        width: 100%;
+    }
 }
 
 
@@ -592,4 +605,14 @@ div.topic div.content > * {
     padding-left: 1em;
     text-align: justify;
     padding-top: 0;
+}
+
+@media only screen and (max-width: 50em) {
+    .feature .text {
+        clear: both;
+        width: 100%;
+    }
+    .feature img {
+        width: 100%;
+    }
 }
