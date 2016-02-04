@@ -8,5 +8,13 @@
 - make text wrap around images in feature section
 
 # markup
-- Bildern ein festes seitenverhältnis geben
+- fiexd aspect ratio for images
+- alt-attribute for all images
+- animate footer?
+- rise z-index of footer
+
+# accessibility
+- make script free version
+- make simplified version for old browsers
+- redirect to right version
 
