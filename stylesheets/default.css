@@ -17,6 +17,7 @@ Blau: #1D6886 29,104,134 #1ABC9C
 
 html,
 body {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
     padding: 0;
@@ -44,6 +45,7 @@ p,
 ol,
 ul {
     margin-top: 0;
+    text-align: justify;
 }
 
 p {
@@ -74,6 +76,7 @@ hr {
     border: .5px solid #212121;
     opacity: 0.1;
     height: 0px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -81,10 +84,12 @@ hr {
 /* General classes for special properties *************************************/
 
 .shadow {
+    -webkit-box-shadow: 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
     box-shadow: 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
 }
 
 .shadow_inset {
+    -webkit-box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
     box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
 }
 
@@ -151,9 +156,14 @@ ul.style2 li:first-child {
 /* Titles *****************************************************************/
 
 .title {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.1em;
     width: 100%;
     text-transform: uppercase;
+    text-align: left;
+}
+
+h3.title{
+    margin-bottom: .5em;
 }
 
 .title h2 {
@@ -268,6 +278,7 @@ ul.style2 li:first-child {
 }
 
 a#icon_github>img {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0.7em;
     width: 100%;
@@ -317,6 +328,7 @@ a#icon_github:hover>p {
 .content {
     padding: 2.5em;
     width: 100%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-align: justify;
     float: left;
@@ -329,6 +341,9 @@ a#icon_github:hover>p {
     display: -ms-flexbox;
     display: flex;
     float: left;
+margin-left: -1em;
+    margin-right: -1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
@@ -343,6 +358,7 @@ a#icon_github:hover>p {
     margin: 0;
     margin: 1em;
     padding: 1em 3em 1em 3em;
+    -webkit-border-radius: .5em;
     border-radius: .5em;
     background: #1D6886;
     color: #FFF !important;
@@ -361,6 +377,7 @@ a#icon_github:hover>p {
     display: inline-block;
     width: 40px;
     height: 40px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
     color: #FFF;
     text-align: center;
@@ -416,6 +433,7 @@ div.parallax div.background {
     width: 100%;
     height: auto;
     -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
 }
 
@@ -435,7 +453,7 @@ div.parallax div.background {
 div.topic div.content > * {
     float: left;
     clear: both;
-    text-align: center;
+    text-align: justify;
 }
 
 
@@ -529,6 +547,7 @@ div.topic div.content > * {
     display: block;
     float: left;
     clear: left;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
     margin: 1.5em 0em 1.5em 0em;
@@ -548,6 +567,7 @@ div.topic div.content > * {
 
 .feature img {
     display: block;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
     width: 40%;
@@ -559,6 +579,7 @@ div.topic div.content > * {
     clear: none;
     width: 60%;
     height: auto;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
