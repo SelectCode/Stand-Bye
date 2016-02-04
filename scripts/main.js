@@ -69,6 +69,10 @@ $(function () {
 
         getImageOffsets();
 
+        scrollTop = $(window).scrollTop();
+        parallax();
+        checkActive();
+
     }).scroll(function (e) {
 
         scrollTop = $(window).scrollTop();
