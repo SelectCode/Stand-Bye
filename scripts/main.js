@@ -190,7 +190,8 @@ function getImageOffsets() {
         offsets[i] = $this.offset().top - $this.outerHeight();
 
         scrollImg[i] = $images.eq(i).outerHeight() - height;
-        scrollContainter[i] = windowHeight + height;
+        do
+            scrollContainter[i] = windowHeight + height;
 
     }
 
