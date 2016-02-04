@@ -104,6 +104,15 @@ hr {
     justify-content: center;
 }
 
+.blur {
+    -webkit-filter: blur(0.15em);
+    -ms-filter: blur(0.15em);
+    -moz-filter: blur(0.15em);
+    -o-filter: blur(0.15em);
+    filter: blur(0.15em);
+    filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius='10');
+}
+
 
 /* Lists ******************************************************************/
 
@@ -406,13 +415,8 @@ div.parallax div.background {
     z-index: 1;
     width: 100%;
     height: auto;
-    -webkit-filter: blur(0.15em);
-    -ms-filter: blur(0.15em);
-    filter: blur(0.15em);
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
-    -moz-filter: blur(0.15em);
-    -o-filter: blur(0.15em);
 }
 
 
