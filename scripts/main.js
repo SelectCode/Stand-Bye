@@ -1,5 +1,5 @@
 //vars for the slider menu
-var $active, $slider, $topics;
+var $active, $slider, $topics, sliding = false;
 //Vars for the parallax effect
 var $images, offsets;
 var scrollImg, scrollContainter;
@@ -10,6 +10,8 @@ var scrollTop, windowHeight, halfWindowHeight;
 var disabled;
 
 $(function () {
+
+    "use strict";
 
     //initialize stuff
     offsets = [];
@@ -89,7 +91,9 @@ function setActive($n) {
 
     //console.log("set active: " + $n.index());
 
-    if ($active == $n) {
+    "use strict";
+
+    if ($active.is($n)) {
         return;
     }
 
@@ -108,12 +112,19 @@ function slideTo($el) {
     var leftPos = $el.position().left;
     var newWidth = $el.outerWidth();
 
+    sliding = true;
+    console.log("started sliding");
+
     $slider.stop().animate({
         left: leftPos,
         width: newWidth
     }, {
         duration: 200,
-        easing: "swing"
+        easing: "swing",
+        complete: function () {
+            sliding = false;
+            console.log("stopped sliding");
+        }
     });
 
 };
@@ -137,7 +148,7 @@ function scrollToElement($el) {
 
 function checkActive() {
 
-    if (disabled) {
+    if (disabled || sliding) {
         return;
     }
 
@@ -164,20 +175,9 @@ function checkActive() {
 
 function parallax() {
 
-
     for (var i = 0; i < $images.length; i++) {
         $this = $images.eq(i);
-
         var delta = ((scrollTop - offsets[i]) / scrollContainter[i]) * scrollImg[i];
-
-        //var offsetContainer = (scrollTop - offsets[i]) * -1;
-        //var delta = (offsetContainer * scrollImg) / scrollContainter;
-
-
-        //console.log("scroll top:" + scrollTop + " offset: " + offsets[i] + " scroll container: " + scrollContainter[i] + " scrollImg: " + scrollImg[i]);
-        if (i == 0) {
-            console.log(delta);
-        }
         $this.css({
             top: delta
         });
@@ -195,20 +195,9 @@ function getImageOffsets() {
         var height = $this.outerHeight();
 
         offsets[i] = $this.offset().top + $this.outerHeight();
-
         scrollImg[i] = $images.eq(i).outerHeight() - height;
-
         scrollContainter[i] = windowHeight + height;
 
     }
-
-    console.log("offsets: " + offsets);
-    console.log("scroll container: " + scrollContainter);
-    console.log("scroll Images:" + scrollImg);
-
-    //  $images.each(function () {
-    //
-    //      $(this).data("original_top", $(this).position().top + $(this).outerHeight() / 2);
-    //  });
 
 };
