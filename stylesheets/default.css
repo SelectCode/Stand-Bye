@@ -354,6 +354,9 @@ a#icon_github:hover>p {
 /* Button *******************************************************************/
 
 .button {
+    position: relative;
+    left: 0;
+    bottom: 0;
     display: inline-block;
     margin-bottom: 1.5em;
     padding: 1em 3em 1em 3em;
@@ -490,8 +493,9 @@ div.topic div.content > * {
 /* cards *********************************************************************/
 
 .card {
+    display: table-cell;
     width: 50%;
-    height: auto;
+    height: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
@@ -499,11 +503,13 @@ div.topic div.content > * {
     overflow: hidden;
     padding-right: 2.5em;
     padding-bottom: 2em;
-    display: block;
 }
+
+
 
 .card_wrapper {
     padding: 1em 0em 1em;
+    display: table;
 }
 
 .card:nth-child(odd) {

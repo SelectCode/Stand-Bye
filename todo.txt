@@ -3,18 +3,23 @@
 
 # Text
 + Screenshots der Features erstellen
-- Bessere überschriften finden
++ Bessere überschriften finden
 + Overlay der Screenshots weichzeichnen
-- make text wrap around images in feature section
++ make text wrap around images in feature section
++ add contact link
+- write statistics section
+- write team section
 
 # markup
 - fiexd aspect ratio for images
-- alt-attribute for all images
++ alt-attribute for all images
 + rise z-index of footer
-- fill out meta-tags
++ fill out meta-tags
+- same height for download buttons
 
 # accessibility
 - make script free version
 - make simplified version for old browsers
 - redirect to right version
+- test on different browsers/screens
 
