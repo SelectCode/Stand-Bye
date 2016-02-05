@@ -1,3 +1,5 @@
+- Savings calculator?
+
 # javascript
 + Get Algorithm to work
 

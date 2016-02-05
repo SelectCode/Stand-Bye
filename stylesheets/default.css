@@ -505,8 +505,6 @@ div.topic div.content > * {
     padding-bottom: 2em;
 }
 
-
-
 .card_wrapper {
     padding: 1em 0em 1em;
     display: table;
@@ -621,4 +619,32 @@ div.topic div.content > * {
     .feature img {
         width: 100%;
     }
+}
+
+
+/* Table **************************************************************/
+
+table {
+    margin-bottom: 1.5em;
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: rgba(33, 33, 33, 0.05);
+    /*
+    border-left: .1em solid #1D6886;
+    border-right: .1em solid #1D6886;
+*/
+}
+
+td {
+    border: none;
+    padding: .3em .7em;
+}
+
+td:nth-child(1) {
+    font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(33, 33, 33, 0.1);
 }
