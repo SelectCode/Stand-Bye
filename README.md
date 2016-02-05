@@ -16,5 +16,4 @@ Auch lassen sich Ausnahmeprozesse einstellen, bei deren Ausführung der PC nicht
 Wenn diese Analyse ergibt, dass der Computer nicht ausgelastet ist, wird der Energiesparmodus des Computers aktiviert, wodurch im Vergleich zum normalen Betrieb Energie eingespart werden kann.
 Auch haben wir als weiteres Feature einen Präsentationsmodus integriert, der dafür sorgt, dass zuverlässig der Standby und die Bildschirmabschaltung deaktiviert werden.
 
-
-
+Weitere Details findest du auf unserer [Webseite](http://stand-bye.de)
