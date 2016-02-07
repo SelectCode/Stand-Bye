@@ -686,9 +686,10 @@ tr:nth-child(even) {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-#chart_request {
-    width: 50%;
-    height:auto;
+
+.chart_request {
+    width: 15em;
+    height: 15em;
     float: left;
     clear: both;
 }
