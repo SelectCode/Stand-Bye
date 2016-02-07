@@ -72,10 +72,10 @@ hr {
     display: block;
     width: 100%;
     color: #212121;
-    background-color: #212121;
-    border: .5px solid #212121;
-    opacity: 0.1;
+    background-color: #B6B6B6;
+    border: .5px solid #B6B6B6;
     height: 0px;
+    opacity: .4;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -647,4 +647,17 @@ td:nth-child(1) {
 
 tr:nth-child(even) {
     background-color: rgba(33, 33, 33, 0.1);
+}
+.math {
+    font-weight: bold;
+    font-size: 1.1em;
+    letter-spacing: .06em;
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.math sub, 
+.math sup
+{
+    font-style: italic;
 }
