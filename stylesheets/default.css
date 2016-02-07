@@ -669,7 +669,7 @@ tr:nth-child(even) {
 /* calculator hidden ***************************************************/
 
 #calculator_wrapper {
-    display: block;
+    display: none;
 }
 
 
@@ -685,4 +685,10 @@ tr:nth-child(even) {
     padding: .7em;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+#chart_request {
+    width: 50%;
+    height:auto;
+    float: left;
+    clear: both;
 }
