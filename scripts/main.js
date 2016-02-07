@@ -59,9 +59,9 @@ $(function () {
 
         var data = $(this).data("goto");
 
-        console.log("data: " + data);
+        //console.log("data: " + data);
 
-        if (data != null) {
+        if (data != null && data != "") {
             e.preventDefault();
             $("a").each(function () {
 
@@ -148,11 +148,11 @@ function scrollToElement($el) {
 
     var elOffset = $el.offset().top;
 
-    console.log("scroll: " + scrollTop + " offset: " + elOffset + " scrollspeed: " + scrollSpeed);
+    // console.log("scroll: " + scrollTop + " offset: " + elOffset + " scrollspeed: " + scrollSpeed);
 
     var time = Math.abs(scrollTop - elOffset) / (scrollSpeed * windowHeight) * 1000;
 
-    console.log(time);
+    //console.log(time);
 
     $('html, body').animate({
         scrollTop: elOffset - $("#menu").outerHeight()
@@ -214,7 +214,6 @@ function getImageOffsets() {
 
         var $this = $cont.eq(i);
         var height = $this.outerHeight();
-
         offsets[i] = $this.offset().top + $this.outerHeight();
         scrollImg[i] = $images.eq(i).outerHeight() - height;
         scrollContainter[i] = windowHeight + height;
