@@ -9,6 +9,9 @@ var scrollTop, windowHeight, halfWindowHeight;
 
 var disabled;
 
+//Speed for scrolling the page, WindowHeight/s
+var scrollSpeed = 2;
+
 $(function () {
 
     "use strict";
@@ -27,6 +30,8 @@ $(function () {
 
     windowHeight = $(window).innerHeight();
     halfWindowHeight = windowHeight / 2;
+
+    scrollTop = $(window).scrollTop();
 
     getImageOffsets();
 
@@ -50,13 +55,22 @@ $(function () {
 
     //link click listener
 
-    $("a").click(function (e) {
+    $("a.in_page").click(function (e) {
 
         var data = $(this).data("goto");
 
+        console.log("data: " + data);
+
         if (data != null) {
             e.preventDefault();
-            scrollToElement($topics.eq(parseInt(data)));
+            $("a").each(function () {
+
+                console.log("name: " + $(this).attr("name"));
+
+                if (data === $(this).attr("name")) {
+                    scrollToElement($(this));
+                }
+            });
         }
 
     });
@@ -113,7 +127,7 @@ function slideTo($el) {
     var newWidth = $el.outerWidth();
 
     sliding = true;
-    console.log("started sliding");
+    //console.log("started sliding");
 
     $slider.stop().animate({
         left: leftPos,
@@ -123,7 +137,7 @@ function slideTo($el) {
         easing: "swing",
         complete: function () {
             sliding = false;
-            console.log("stopped sliding");
+            //console.log("stopped sliding");
         }
     });
 
@@ -132,11 +146,18 @@ function slideTo($el) {
 function scrollToElement($el) {
     disabled = true;
 
+    var elOffset = $el.offset().top;
+
+    console.log("scroll: " + scrollTop + " offset: " + elOffset + " scrollspeed: " + scrollSpeed);
+
+    var time = Math.abs(scrollTop - elOffset) / (scrollSpeed * windowHeight) * 1000;
+
+    console.log(time);
 
     $('html, body').animate({
-        scrollTop: $el.offset().top - $("#menu").outerHeight()
+        scrollTop: elOffset - $("#menu").outerHeight()
     }, {
-        duration: 250,
+        duration: time,
         start: function () {
             disabled = true;
         },
