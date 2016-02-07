@@ -166,7 +166,7 @@ h3.title {
     margin-bottom: .5em;
 }
 
-.title h2 {
+h2.title {
     color: #16a085;
     font-weight: 500;
     font-size: 1.5em;
@@ -648,6 +648,10 @@ td:nth-child(1) {
 tr:nth-child(even) {
     background-color: rgba(33, 33, 33, 0.1);
 }
+
+
+/* math span ***********************************************************/
+
 .math {
     font-weight: bold;
     font-size: 1.1em;
@@ -656,8 +660,29 @@ tr:nth-child(even) {
     font-family: "Times New Roman", Times, serif;
 }
 
-.math sub, 
-.math sup
-{
+.math sub,
+.math sup {
     font-style: italic;
+}
+
+
+/* calculator hidden ***************************************************/
+
+#calculator_wrapper {
+    display: block;
+}
+
+
+/* user expirience *****************************************************/
+
+.ux {
+    display: none;
+}
+
+.ux img {
+    width: 50%;
+    float: left;
+    padding: .7em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
