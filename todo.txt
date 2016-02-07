@@ -9,7 +9,7 @@
 + Overlay der Screenshots weichzeichnen
 + make text wrap around images in feature section
 + add contact link
-- write statistics section
++ write statistics section
 - write team section
 
 # markup
@@ -17,7 +17,7 @@
 + alt-attribute for all images
 + rise z-index of footer
 + fill out meta-tags
-- same height for download buttons
++ same height for download buttons
 
 # accessibility
 - make script free version

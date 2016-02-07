@@ -80,3 +80,9 @@
 table {
     border-spacing: 0 .5em .5em .5em;
 }
+
+ul {
+    list-style-type: square;
+    line-height: 150%;
+    text-indent: -0.3em;
+}
