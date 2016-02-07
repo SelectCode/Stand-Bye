@@ -109,15 +109,6 @@ hr {
     justify-content: center;
 }
 
-.blur {
-    -webkit-filter: blur(0.15em);
-    -ms-filter: blur(0.15em);
-    -moz-filter: blur(0.15em);
-    -o-filter: blur(0.15em);
-    filter: blur(0.15em);
-    filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius='10');
-}
-
 
 /* Lists ******************************************************************/
 
