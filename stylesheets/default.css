@@ -705,7 +705,7 @@ tr:nth-child(even) {
 /* calculator hidden ***************************************************/
 
 #calculator_wrapper {
-    display: block;
+    display: none;
 }
 
 
