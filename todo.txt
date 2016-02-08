@@ -18,6 +18,7 @@
 + rise z-index of footer
 + fill out meta-tags
 - same height for download buttons
+- fixed aspect ratio for chart
 
 # accessibility
 - make script free version

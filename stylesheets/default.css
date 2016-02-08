@@ -687,9 +687,34 @@ tr:nth-child(even) {
     box-sizing: border-box;
 }
 
-.chart_request {
-    width: 15em;
+
+/* chart ***************************************************************/
+
+#chart_wrapper {
+    width: 50%;
     height: 15em;
-    float: left;
-    clear: both;
+}
+
+#chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.stackedbar-legend {
+    padding-left: 0;
+    list-style: none;
+}
+
+.stackedbar-legend li {
+    padding: .3em 0em;
+}
+
+.stackedbar-legend span {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: .5em;
 }
