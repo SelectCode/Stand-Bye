@@ -667,8 +667,8 @@ table {
     border-collapse: collapse;
     background-color: rgba(33, 33, 33, 0.05);
     /*
-    border-left: .1em solid #1D6886;
-    border-right: .1em solid #1D6886;
+border-left: .1em solid #1D6886;
+border-right: .1em solid #1D6886;
 */
 }
 
@@ -705,7 +705,7 @@ tr:nth-child(even) {
 /* calculator hidden ***************************************************/
 
 #calculator_wrapper {
-    display: block;
+    display: none;
 }
 
 #calculator div {
@@ -814,4 +814,36 @@ tr:nth-child(even) {
     clear: none;
     width: 100%;
     height: auto;
+}
+
+
+/* chart ***************************************************************/
+
+#chart_wrapper {
+    width: 50%;
+    height: 15em;
+}
+
+#chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.stackedbar-legend {
+    padding-left: 0;
+    list-style: none;
+}
+
+.stackedbar-legend li {
+    padding: .3em 0em;
+}
+
+.stackedbar-legend span {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: .5em;
 }

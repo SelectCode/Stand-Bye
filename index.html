@@ -13,6 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
 
 
+
     <!--[if IE 6]>
         <meta http-equiv="refresh " content="0; url="https://www.mozilla.org/de/firefox/new/" />
     <![endif]-->
@@ -266,6 +267,17 @@
                     <br />Aus dem <a href="#">Raumbelegungsplan</a> lässt sich erkennen, dass die PCs inklusive der Pausen pro Woche <b>52 Stunden</b> unbenutzt beiben, wohingegen nur <b>33 Stunden</b> lang Unterrricht stattfindet.
                     <br /> Mit Stand-Bye könnten hier also <b>59%</b> der Energie gespart werden, und gleichzeitig auch <b>59% der Kosten.</b>
                 </p>
+                <h2 class="title">Nachfrage</h2>
+                <hr />
+                <p>Wir haben eine Umfrage an unserer Schule durchgeführt, um zu prüfen ob nachfrage nach Stand-Bye besteht. Wenn du uns etwas feedback geben willst, kannst du <a href="umfrage">hier</a> teilnehmen.
+                    <br /> Ergeben hat die Umfrage (bis jetzt) folgendes:
+                </p>
+
+                <div id="chart_wrapper">
+                    <canvas id="chart"></canvas>
+                </div>
+                <div id="legend"></div>
+
                 <div id="calculator_wrapper">
                     <h2 class="title">Ersparnisrechner</h2>
                     <hr />
@@ -413,39 +425,42 @@
 
     </div>
 
-    <!-- scripts - --------------------------------------------------------------------------->
-    <script src="//code.jquery.com/jquery-2.1.4.min.js " type="text/javascript"></script>
-    <script src="./scripts/main.js " type="text/javascript"></script>
-    <script src="./scripts/calculator.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72893868-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+    < script src="./scripts/calculator.js" type="text/javascript">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" type="text/javascript"></script>
+        <script src="//code.jquery.com/jquery-2.1.4.min.js " type="text/javascript"></script>
+        <script src="./scripts/main.js " type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" type="text/javascript"></script>
+        <script src="./scripts/Chart.StackedBar.js" type="text/javascript"></script>
+        <script src="./scripts/chart.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-72893868-1', 'auto');
+            ga('send', 'pageview');
+        </script>
 
 
-    <noscript>
+        <noscript>
 
-        <div id="noscript_wrapper">
+            <div id="noscript_wrapper">
 
-            <h1>Sie haben JavaScript deaktiviert</h1>
-            <p>Diese Seite braucht JavaScript, um richtig angezeigt zu werden. Bitte aktivieren Sie JavaScript in den Einstellungen ihres Browsers.</p>
-            <div id="center">
-                <label class="button" id="button_ok">
-                    <input type="checkbox " />OK</label>
+                <h1>Sie haben JavaScript deaktiviert</h1>
+                <p>Diese Seite braucht JavaScript, um richtig angezeigt zu werden. Bitte aktivieren Sie JavaScript in den Einstellungen ihres Browsers.</p>
+                <div id="center">
+                    <label class="button" id="button_ok">
+                        <input type="checkbox " />OK</label>
+                </div>
             </div>
-        </div>
-    </noscript>
+        </noscript>
 </body>
 
 </html>
