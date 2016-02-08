@@ -705,7 +705,7 @@ tr:nth-child(even) {
 /* calculator hidden ***************************************************/
 
 #calculator_wrapper {
-    display: none;
+    display: block;
 }
 
 #calculator div {
@@ -832,16 +832,19 @@ tr:nth-child(even) {
     top: 0;
 }
 
-.stackedbar-legend {
+
+/* Legend **************************************************************/
+
+.legend {
     padding-left: 0;
     list-style: none;
 }
 
-.stackedbar-legend li {
+.legend li {
     padding: .3em 0em;
 }
 
-.stackedbar-legend span {
+.legend span {
     display: inline-block;
     width: 1em;
     height: 1em;

@@ -31,15 +31,15 @@ var chartData = {
 var options = {
 
     responsive: true,
-    barValueSpacing: 0,
-    barWidth: em(2.5),
+    barValueSpacing: em(1),
+    barWidth: em(4),
     scaleBeginAtZero: true,
     scaleGridLineColor: "#B6B6B6",
     scaleGridLineWidth: 1,
     barShowStroke: true,
     barStrokeWidth: 1,
     relativeBars: false,
-    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){ console.log(datasets[i]);%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    legendTemplate: "<ul class=\"legend\"><% for (var i=0; i<datasets.length; i++){ console.log(datasets[i]);%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 };
 
 $(function () {
@@ -48,7 +48,7 @@ $(function () {
     var canvas = document.getElementById("chart"),
         $canvas = $("#chart"),
         ctx = canvas.getContext("2d"),
-        myBar = new Chart(ctx).StackedBar(chartData, options);
+        myBar = new Chart(ctx).Bar(chartData, options);
 
     $("#legend").html(myBar.generateLegend());
 
