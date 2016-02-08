@@ -705,6 +705,63 @@ tr:nth-child(even) {
 /* calculator hidden ***************************************************/
 
 #calculator_wrapper {
+    display: block;
+}
+
+#calculator div {
+    width: 50%;
+    float: left;
+    clear: none;
+    margin-right: 1em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+#calculator h3 {
+    border-bottom: 2px solid #1D6886;
+    width: 100%;
+    padding-top: .5em;
+}
+
+#calculator .button {
+    border: none !important;
+    font-size: normal;
+    padding: .7em 2em;
+    margin-top: 1em;
+}
+
+#calculator p {
+    margin-bottom: .4em;
+    padding-right: .3em;
+    text-align: left;
+    line-height: 120%;
+}
+
+#calculator p:nth-child(1) {
+    margin-top: .7em;
+}
+
+#result {
+    display: none;
+    font-size: 1.1em;
+    padding: .5em 0;
+}
+
+#amount_year,
+#amount_day {
+    font-weight: bold;
+}
+
+#error {
+    display: none;
+    font-size 1.1em;
+    color: #ff9800;
+    font-weight: bold;
+    padding: .5em 0em;
+}
+
+#calculator hr:last-of-type {
     display: none;
 }
 
@@ -721,4 +778,40 @@ tr:nth-child(even) {
     padding: .7em;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+
+/* Team members ********************************************************/
+
+#img_team {
+    width: 100%;
+}
+
+.teammember,
+.teammember:nth-child(even),
+.teammember:nth-child(odd) {
+    width: 33.3%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    clear: none;
+}
+
+.teammember ul {
+    list-style: none;
+    text-indent: none;
+    padding-left: 0;
+}
+
+.teammember li {
+    display: inline-block;
+}
+
+.teammember img {
+    padding: 1em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    clear: none;
+    width: 100%;
+    height: auto;
 }
