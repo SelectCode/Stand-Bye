@@ -10,10 +10,10 @@
 + make text wrap around images in feature section
 + add contact link
 + write statistics section
-- write team section
+- improve Team sektion
 
 # markup
-- fiexd aspect ratio for images
++ fiexd aspect ratio for images
 + alt-attribute for all images
 + rise z-index of footer
 + fill out meta-tags
