@@ -819,17 +819,11 @@ tr:nth-child(even) {
 
 /* chart ***************************************************************/
 
-#chart_wrapper {
+.chart {
     width: 50%;
-    height: 15em;
-}
-
-#chart {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    left: 0;
-    top: 0;
+    height: 20em;
+    float: left;
+    clear: both;
 }
 
 
