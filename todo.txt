@@ -1,0 +1,10 @@
+# javascript
+- Get Algorithm to work
+
+# Text
+- Screenshots der Features erstellen
+- Bessere überschriften finden
+
+# markup
+- Bildern ein festes seitenverhältnis geben
+

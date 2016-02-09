@@ -1,11 +1,25 @@
-var $active, $slider, $topics, $images, offsets;
-var scrollTop, halfWindowHeight;
+//vars for the slider menu
+var $active, $slider, $topics, sliding = false;
+//Vars for the parallax effect
+var $images, offsets;
+var scrollImg, scrollContainter;
+
+var scrollTop, windowHeight, halfWindowHeight;
+
+
 var disabled;
+
+//Speed for scrolling the page, WindowHeight/s
+var scrollSpeed = 2;
 
 $(function () {
 
+    "use strict";
+
     //initialize stuff
     offsets = [];
+    scrollContainter = [];
+    scrollImg = [];
 
     $active = $("#menu .current_page_item");
     $slider = $("#menu .slider");
@@ -13,6 +27,11 @@ $(function () {
     $images = $(".parallax div.background img");
 
     $slider.css("left", $active.position().left).width($active.outerWidth());
+
+    windowHeight = $(window).innerHeight();
+    halfWindowHeight = windowHeight / 2;
+
+    scrollTop = $(window).scrollTop();
 
     getImageOffsets();
 
@@ -36,13 +55,22 @@ $(function () {
 
     //link click listener
 
-    $("a").click(function (e) {
+    $("a.in_page").click(function (e) {
 
         var data = $(this).data("goto");
 
-        if (data != null) {
+        //console.log("data: " + data);
+
+        if (data != null && data != "") {
             e.preventDefault();
-            scrollToElement($topics.eq(parseInt(data)));
+            $("a").each(function () {
+
+                console.log("name: " + $(this).attr("name"));
+
+                if (data === $(this).attr("name")) {
+                    scrollToElement($(this));
+                }
+            });
         }
 
     });
@@ -51,9 +79,15 @@ $(function () {
     $(window).resize(function (e) {
 
         $slider.css("left", $active.position().left).width($active.outerWidth());
+
+        windowHeight = $(window).innerHeight();
+        halfWindowHeight = windowHeight / 2;
+
         getImageOffsets();
 
-        halfWindowHeight = $(window).height() / 2;
+        scrollTop = $(window).scrollTop();
+        parallax();
+        checkActive();
 
     }).scroll(function (e) {
 
@@ -64,14 +98,16 @@ $(function () {
 
     });
 
-    halfWindowHeight = $(window).height() / 2;
+
 });
 
 function setActive($n) {
 
     //console.log("set active: " + $n.index());
 
-    if ($active == $n) {
+    "use strict";
+
+    if ($active.is($n)) {
         return;
     }
 
@@ -90,12 +126,19 @@ function slideTo($el) {
     var leftPos = $el.position().left;
     var newWidth = $el.outerWidth();
 
+    sliding = true;
+    //console.log("started sliding");
+
     $slider.stop().animate({
         left: leftPos,
         width: newWidth
     }, {
         duration: 200,
-        easing: "swing"
+        easing: "swing",
+        complete: function () {
+            sliding = false;
+            //console.log("stopped sliding");
+        }
     });
 
 };
@@ -103,11 +146,18 @@ function slideTo($el) {
 function scrollToElement($el) {
     disabled = true;
 
+    var elOffset = $el.offset().top;
+
+    // console.log("scroll: " + scrollTop + " offset: " + elOffset + " scrollspeed: " + scrollSpeed);
+
+    var time = Math.abs(scrollTop - elOffset) / (scrollSpeed * windowHeight) * 1000;
+
+    //console.log(time);
 
     $('html, body').animate({
-        scrollTop: $el.offset().top - $("#menu").outerHeight()
+        scrollTop: elOffset - $("#menu").outerHeight()
     }, {
-        duration: 250,
+        duration: time,
         start: function () {
             disabled = true;
         },
@@ -119,7 +169,7 @@ function scrollToElement($el) {
 
 function checkActive() {
 
-    if (disabled) {
+    if (disabled || sliding) {
         return;
     }
 
@@ -146,16 +196,11 @@ function checkActive() {
 
 function parallax() {
 
-
     for (var i = 0; i < $images.length; i++) {
         $this = $images.eq(i);
-
-        var delta = (scrollTop - offsets[i]) * 0.2;
-
-        //console.log("delta = " + delta);
-
+        var delta = ((scrollTop - offsets[i]) / scrollContainter[i]) * scrollImg[i];
         $this.css({
-            top: $this.data("original_top") + delta
+            top: delta
         });
     }
 
@@ -163,15 +208,16 @@ function parallax() {
 
 function getImageOffsets() {
 
-    for (var i = 0; i < $(".parallax div.background").length; i++) {
+    var $cont = $(".parallax .background");
 
-        offsets[i] = $images.eq(i).offset().top;
+    for (var i = 0; i < $cont.length; i++) {
+
+        var $this = $cont.eq(i);
+        var height = $this.outerHeight();
+        offsets[i] = $this.offset().top + $this.outerHeight();
+        scrollImg[i] = $images.eq(i).outerHeight() - height;
+        scrollContainter[i] = windowHeight + height;
 
     }
-
-    $images.each(function () {
-
-        $(this).data("original_top", $(this).position().top + $(this).outerHeight() / 2);
-    });
 
 };
