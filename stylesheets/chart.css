@@ -1,18 +1,43 @@
 .ct-series-a .ct-bar {
-    stroke: #ff0000;
-    fill: #ff0000;
+    stroke: rgba(29, 104, 134, 1);
     stroke-width: 4em;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+}
+
+.ct-series-a .ct-bar:hover {
+    stroke: rgba(29, 104, 134, 0.7);
 }
 
 .ct-series-b .ct-bar {
-    stroke: #00ff00;
-    fill: #00ff00;
+    stroke: rgba(255, 152, 0, 1);
     stroke-width: 4em;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
 }
 
-.ct-bar {}
+.ct-series-b .ct-bar:hover {
+    stroke: rgba(255, 152, 0, 0.7);
+}
 
 .ct-labels .ct-label {
     color: rgba(33, 33, 33, 0.5);
     font-size: .8em;
+}
+
+#tooltip {
+    position: absolute;
+    display: none;
+    z-index: 20;
+    background: #212121;
+    color: #fff;
+    padding: .3em .7em;
 }

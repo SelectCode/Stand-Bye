@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global $, jQuery, Chartist*/
+/*global $, jQuery, Chartist, console*/
 
 function em(input) {
     "use strict";
@@ -8,10 +8,10 @@ function em(input) {
 }
 
 var chartData = {
-    labels: ["Von Windows-Standby genervt", "Nicht genervt", "Deine Mudda"],
+    labels: ["Von Windows-Standby genervt", "Nicht genervt"],
     series: [
-        [1, 2, 3],
-        [4, 5, 6]
+        [1, 2],
+        [4, 5]
     ]
 };
 
@@ -28,6 +28,43 @@ var options = {
 $(function () {
 
     "use strict";
-    var chart = new Chartist.Bar('.chart', chartData, options);
+    var chart = new Chartist.Bar('.chart', chartData, options),
+        $tooltip = $("#tooltip");
+
+    /*$(".ct-bar").hover(function () {
+
+        console.log("hover");
+        $tooltip.show(0);
+
+    }, function () {
+
+        $tooltip.hide(0);
+
+    }).mousemove(function (e) {
+
+        console.log("mousemove");
+
+        $tooltip.css({
+            top: e.pageY + em(0.7),
+            left: e.pageX + em(0.7)
+        });
+
+    });*/
+
+    $("#chart_wrapper").mousemove(function (e) {
+
+        $tooltip.css({
+            top: e.pageY + em(0.7),
+            left: e.pageX + em(0.7)
+        });
+
+    });
+
+    $("#chart_wrapper").on("mouseenter", ".ct-bar", function () {
+        $tooltip.text($(this).attr("ct:value"));
+        $tooltip.show(0);
+    }).on("mouseleave", ".ct-bar", function () {
+        $tooltip.hide(0);
+    });
 
 });
