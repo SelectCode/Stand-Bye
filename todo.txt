@@ -1,10 +1,31 @@
 # javascript
 - Get Algorithm to work
 
-# Text
-- Screenshots der Features erstellen
-- Bessere überschriften finden
-
 # markup
 - Bildern ein festes seitenverhältnis geben
+- Savings calculator?
 
+
+# Text
++ Screenshots der Features erstellen
++ Bessere überschriften finden
++ Overlay der Screenshots weichzeichnen
++ make text wrap around images in feature section
++ add contact link
++ write statistics section
+- improve Team sektion
+
+# markup
++ fiexd aspect ratio for images
++ alt-attribute for all images
++ rise z-index of footer
++ fill out meta-tags
+- same height for download buttons
+- fixed aspect ratio for chart
+
+
+# accessibility
+- make script free version
+- make simplified version for old browsers
+- redirect to right version
+- test on different browsers/screens

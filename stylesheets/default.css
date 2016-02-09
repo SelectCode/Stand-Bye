@@ -17,6 +17,7 @@ Blau: #1D6886 29,104,134 #1ABC9C
 
 html,
 body {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
     padding: 0;
@@ -26,7 +27,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    background: #FFFFFF, #FFF, white;
+    background: #ffffff;
     color: #212121;
     font-weight: 400;
     font-size: 1em;
@@ -44,6 +45,7 @@ p,
 ol,
 ul {
     margin-top: 0;
+    text-align: justify;
 }
 
 p {
@@ -67,17 +69,27 @@ a img {
 }
 
 hr {
-    display: none;
+    display: block;
+    width: 100%;
+    color: #212121;
+    background-color: #B6B6B6;
+    border: .5px solid #B6B6B6;
+    height: 0px;
+    opacity: .4;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
 /* General classes for special properties *************************************/
 
 .shadow {
+    -webkit-box-shadow: 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
     box-shadow: 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
 }
 
 .shadow_inset {
+    -webkit-box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
     box-shadow: inset 0 .5em 1.2em 0 rgba(33, 33, 33, 0.5);
 }
 
@@ -135,12 +147,17 @@ ul.style2 li:first-child {
 /* Titles *****************************************************************/
 
 .title {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.1em;
     width: 100%;
     text-transform: uppercase;
+    text-align: left;
 }
 
-.title h2 {
+h3.title {
+    margin-bottom: .5em;
+}
+
+h2.title {
     color: #16a085;
     font-weight: 500;
     font-size: 1.5em;
@@ -156,9 +173,28 @@ ul.style2 li:first-child {
 }
 
 #header_wrapper {
+    display: inline-block;
+    padding: 2em;
+    width: auto;
+    height: auto;
     position: relative;
     overflow: hidden;
     text-align: center;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#header_wrapper h2 {
+    float: left;
+    clear: left;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: white;
 }
 
 
@@ -252,6 +288,7 @@ ul.style2 li:first-child {
 }
 
 a#icon_github>img {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0.7em;
     width: 100%;
@@ -299,46 +336,62 @@ a#icon_github:hover>p {
 }
 
 .content {
+    padding: 2.5em;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: justify;
+    float: left;
+    clear: both;
+}
+
+.flex {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     float: left;
+    margin-left: -1em;
+    margin-right: -1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 2.5em;
-    width: 100%;
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    /*text-align: center;*/
 }
 
 
 /* Button *******************************************************************/
 
 .button {
+    position: relative;
+    left: 0;
+    bottom: 0;
     display: inline-block;
-    margin: 0;
-    margin: 1em;
+    margin-bottom: 1.5em;
     padding: 1em 3em 1em 3em;
+    -webkit-border-radius: .5em;
     border-radius: .5em;
     background: #1D6886;
     color: #FFF !important;
     text-decoration: none;
-    text-decoration: none;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 1em;
-    line-height: normal;
     cursor: pointer;
     -webkit-transition: all 200ms linear;
     transition: all 200ms linear;
+}
+
+.button:nth-child(odd) {
+    clear: both;
 }
 
 .button:before {
     display: inline-block;
     width: 40px;
     height: 40px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
     color: #FFF;
     text-align: center;
@@ -352,13 +405,28 @@ a#icon_github:hover>p {
 
 /* Parallax *****************************************************************/
 
-div.parallax {
+.aspect {
     position: relative;
-    width: 100%;
-    height: 400px;
 }
 
-div.parallax > * {
+.aspect:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 33.33%;
+}
+
+.aspect > .content {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.parallax div {
     position: absolute;
     top: 0;
     left: 0;
@@ -366,9 +434,16 @@ div.parallax > * {
     height: 100%;
 }
 
+div.parallax {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
 div.parallax .foreground {
     z-index: 2;
     background: rgba(33, 33, 33, 0.5);
+    text-align: center;
 }
 
 div.parallax div.background {
@@ -393,11 +468,9 @@ div.parallax div.background {
     z-index: 1;
     width: 100%;
     height: auto;
-    -webkit-filter: blur(0.15em);
-    -ms-filter: blur(0.15em);
-    filter: blur(0.15em);
-    -moz-filter: blur(0.15em);
-    -o-filter: blur(0.15em);
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
 }
 
 
@@ -416,7 +489,7 @@ div.parallax div.background {
 div.topic div.content > * {
     float: left;
     clear: both;
-    text-align: center;
+    text-align: justify;
 }
 
 
@@ -434,6 +507,7 @@ div.topic div.content > * {
 }
 
 #logo_wrapper {
+    position: relative;
     display: inline-block;
     float: left;
     clear: none;
@@ -442,41 +516,60 @@ div.topic div.content > * {
 }
 
 #page_title {
-    margin-left: 1em;
+    display: block;
+    float: left;
+    clear: none;
     text-transform: uppercase;
     font-size: 3em;
     line-height: 4em;
+    margin-left: 1em;
 }
 
+
+/* cards *********************************************************************/
+
 .card {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    padding: 1em;
-    display: block;
-    -webkit-flex-shrink: 1;
-    -ms-flex-negative: 1;
-    flex-shrink: 1;
-    -webkit-flex-basis: 10%;
-    -ms-flex-preferred-size: 10%;
-    flex-basis: 10%;
-    min-height: 15em;
+    display: table-cell;
+    width: 50%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    clear: none;
     overflow: hidden;
-    min-width: 25em;
-    margin-bottom: 1.5em;
+    padding-right: 2.5em;
+    padding-bottom: 2em;
+}
+
+.card_wrapper {
+    padding: 1em 0em 1em;
+    display: table;
+}
+
+.card:nth-child(odd) {
+    clear: both;
+}
+
+@media only screen and (max-width: 50em) {
+    .card {
+        clear: both;
+        width: 100%;
+    }
 }
 
 
 /* footer *******************************************************************/
 
 #footer {
+    z-index: 5;
     height: 3em;
     font-size: 1em;
     width: 100%;
     background: #1D6886;
     padding: 0;
     margin: 0;
+    float: left;
+    clear: both;
 }
 
 #footer a {
@@ -498,4 +591,262 @@ div.topic div.content > * {
 
 #footer a:hover {
     text-decoration: underline;
+}
+
+
+/* features *****************************************************************/
+
+.feature {
+    display: block;
+    float: left;
+    clear: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 1.5em 0em 1.5em 0em;
+    padding: 0em;
+}
+
+.feature .title {
+    display: inline-block;
+    float: left;
+    width: auto;
+    clear: none;
+    text-indent: 1em;
+    padding-top: .5em;
+    padding-bottom: 1.5em;
+    margin-bottom: 0;
+}
+
+.feature img {
+    display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    width: 40%;
+    clear: both;
+}
+
+.feature .text {
+    float: left;
+    clear: none;
+    width: 60%;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.feature p {
+    display: inline-block;
+    float: left;
+    clear: left;
+    padding-right: 1em;
+    padding-bottom: .5em;
+    padding-left: 1em;
+    text-align: justify;
+    padding-top: 0;
+}
+
+@media only screen and (max-width: 50em) {
+    .feature .text {
+        clear: both;
+        width: 100%;
+    }
+    .feature img {
+        width: 100%;
+    }
+}
+
+
+/* Table **************************************************************/
+
+table {
+    margin-bottom: 1.5em;
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: rgba(33, 33, 33, 0.05);
+    /*
+border-left: .1em solid #1D6886;
+border-right: .1em solid #1D6886;
+*/
+}
+
+td {
+    border: none;
+    padding: .3em .7em;
+}
+
+td:nth-child(1) {
+    font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(33, 33, 33, 0.1);
+}
+
+
+/* math span ***********************************************************/
+
+.math {
+    font-weight: bold;
+    font-size: 1.1em;
+    letter-spacing: .06em;
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.math sub,
+.math sup {
+    font-style: italic;
+}
+
+
+/* calculator hidden ***************************************************/
+
+#calculator_wrapper {
+    display: block;
+}
+
+#calculator div {
+    width: 50%;
+    float: left;
+    clear: none;
+    margin-right: 1em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+#calculator h3 {
+    border-bottom: 2px solid #1D6886;
+    width: 100%;
+    padding-top: .5em;
+}
+
+#calculator .button {
+    border: none !important;
+    font-size: normal;
+    padding: .7em 2em;
+    margin-top: 1em;
+}
+
+#calculator p {
+    margin-bottom: .4em;
+    padding-right: .3em;
+    text-align: left;
+    line-height: 120%;
+}
+
+#calculator p:nth-child(1) {
+    margin-top: .7em;
+}
+
+#result {
+    display: none;
+    font-size: 1.1em;
+    padding: .5em 0;
+}
+
+#amount_year,
+#amount_day {
+    font-weight: bold;
+}
+
+#error {
+    display: none;
+    font-size 1.1em;
+    color: #ff9800;
+    font-weight: bold;
+    padding: .5em 0em;
+}
+
+#calculator hr:last-of-type {
+    display: none;
+}
+
+
+/* user expirience *****************************************************/
+
+.ux {
+    display: none;
+}
+
+.ux img {
+    width: 50%;
+    float: left;
+    padding: .7em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/* Team members ********************************************************/
+
+#img_team {
+    width: 100%;
+}
+
+.teammember,
+.teammember:nth-child(even),
+.teammember:nth-child(odd) {
+    width: 33.3%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    clear: none;
+}
+
+.teammember ul {
+    list-style: none;
+    text-indent: none;
+    padding-left: 0;
+}
+
+.teammember li {
+    display: inline-block;
+}
+
+.teammember img {
+    padding: 1em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    clear: none;
+    width: 100%;
+    height: auto;
+}
+
+
+/* chart ***************************************************************/
+
+#chart_wrapper {
+    width: 50%;
+    height: 15em;
+}
+
+#chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+
+/* Legend **************************************************************/
+
+.legend {
+    padding-left: 0;
+    list-style: none;
+}
+
+.legend li {
+    padding: .3em 0em;
+}
+
+.legend span {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: .5em;
 }
