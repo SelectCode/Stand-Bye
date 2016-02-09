@@ -30,12 +30,4 @@ $(function () {
     "use strict";
     var chart = new Chartist.Bar('.chart', chartData, options);
 
-    chart.on('draw', function (data) {
-        if (data.type === 'bar') {
-            data.element.attr({
-                style: 'stroke-width: 4em'
-            });
-        }
-    });
-
 });

@@ -1,3 +1,18 @@
-.ct-series-a .ct-line {
+.ct-series-a .ct-bar {
     stroke: #ff0000;
+    fill: #ff0000;
+    stroke-width: 4em;
+}
+
+.ct-series-b .ct-bar {
+    stroke: #00ff00;
+    fill: #00ff00;
+    stroke-width: 4em;
+}
+
+.ct-bar {}
+
+.ct-labels .ct-label {
+    color: rgba(33, 33, 33, 0.5);
+    font-size: .8em;
 }
