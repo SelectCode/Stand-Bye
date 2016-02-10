@@ -844,3 +844,8 @@ tr:nth-child(even) {
     height: 1em;
     margin-right: .5em;
 }
+
+#legend {
+    float: left;
+    clear: left;
+}

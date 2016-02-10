@@ -49,11 +49,21 @@
     font-size: .9em;
 }
 
-#tooltip span.color {
+#tooltip span.color,
+#legend span {
     float: left;
     display: block;
     width: 1.1em;
     height: 1.1em;
     background: #B6B6B6;
     margin-right: .3em;
+}
+
+#legend ul {
+    list-style: none;
+    padding-left: none;
+}
+
+#legend span {
+    margin-right: .8em;
 }

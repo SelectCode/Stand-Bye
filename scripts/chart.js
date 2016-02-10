@@ -10,8 +10,9 @@ function em(input) {
 var chartData = {
     labels: ["Von Windows-Standby genervt", "Nicht genervt"],
     series: [
-        [1, 2],
-        [4, 5]
+        //nervt, !nervt
+        [5, 8], // !aktiviert
+        [15, 16] //aktiviert
     ],
     seriesLabels: ["Standby aktiviert", "Standby deaktiviert"]
 };
