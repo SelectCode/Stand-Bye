@@ -12,7 +12,8 @@ var chartData = {
     series: [
         [1, 2],
         [4, 5]
-    ]
+    ],
+    seriesLabels: ["Standby aktiviert", "Standby deaktiviert"]
 };
 
 var options = {
@@ -29,42 +30,50 @@ $(function () {
 
     "use strict";
     var chart = new Chartist.Bar('.chart', chartData, options),
-        $tooltip = $("#tooltip");
+        $tooltip = $("#tooltip"),
+        $tooltip_color = $("#tooltip span.color"),
+        $tooltip_text = $("#tooltip span.text"),
+        $wrapper = $('#chart_wrapper'),
+        $chart = $(".chart");
 
-    /*$(".ct-bar").hover(function () {
+    /*  $("#chart_wrapper").mousemove(function (e) {
 
-        console.log("hover");
-        $tooltip.show(0);
+          $tooltip.css({
+              top: e.pageY + em(0.7),
+              left: e.pageX + em(0.7)
+          });
 
-    }, function () {
+      });*/
 
-        $tooltip.hide(0);
+    $wrapper.on("mouseenter", ".ct-bar", function () {
 
-    }).mousemove(function (e) {
+        if ($(this).parents(".ct-series-a").length === 0) {
+            $tooltip_text.text(chartData.seriesLabels[0]);
+        } else {
+            $tooltip_text.text(chartData.seriesLabels[1]);
+        }
 
-        console.log("mousemove");
+        var x1 = parseFloat($(this).attr("x1")),
+            y1 = parseFloat($(this).attr("y1")),
+            y2 = parseFloat($(this).attr("y2")),
+            stroke = parseFloat($(this).css("stroke-width")),
+            top = $chart.position().top + parseFloat($chart.css("margin-top")) + parseFloat($chart.css("padding-top")),
+            left = $chart.position().left + parseFloat($chart.css("margin-left")) + parseFloat($chart.css("padding-left"));
 
         $tooltip.css({
-            top: e.pageY + em(0.7),
-            left: e.pageX + em(0.7)
+            top: (top + y2 + ((y1 - y2) / 2) - ($tooltip.outerHeight() / 2)),
+            left: left + (x1 + (stroke / 2))
         });
 
-    });*/
-
-    $("#chart_wrapper").mousemove(function (e) {
-
-        $tooltip.css({
-            top: e.pageY + em(0.7),
-            left: e.pageX + em(0.7)
+        $tooltip_text.append(": " + $(this).attr("ct:value"));
+        $tooltip_color.css({
+            background: $(this).css("stroke")
         });
-
-    });
-
-    $("#chart_wrapper").on("mouseenter", ".ct-bar", function () {
-        $tooltip.text($(this).attr("ct:value"));
         $tooltip.show(0);
+
     }).on("mouseleave", ".ct-bar", function () {
         $tooltip.hide(0);
     });
+
 
 });
