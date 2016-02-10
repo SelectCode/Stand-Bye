@@ -38,6 +38,9 @@ $(function () {
 
     //Menu click listener
     $("#menu li.nav_item").click(function (e) {
+
+        e.preventDefault();
+
         setActive($(this));
 
         var index = $(this).index();

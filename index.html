@@ -6,19 +6,22 @@
     <title>Stand-Bye</title>
     <meta name="keywords" content="Standby, Energiesparen, Stand-Bye" />
     <meta name="description" content="Stand-Bye ist ein Programm, das dir hilft mit deinem PC Energie zu sparen. Es ist einfach zu benutzen, individuell anpassbar und kostenlos!" />
+    <meta name="google-site-verification" content="TQDshqHqEiCG2GxTJo7Ngq2LXfN67-s5G9ZPyg8yY74" />
 
     <link href='https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700,800' rel='stylesheet' type='text/css' />
     <link href="./stylesheets/default.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="./stylesheets/noscript.css" rel="stylesheet" type="text/css" media="all" />
-
-
-    <meta name="google-site-verification" content="TQDshqHqEiCG2GxTJo7Ngq2LXfN67-s5G9ZPyg8yY74" />
-
-    <link href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" rel="stylesheet" type="text/css" />
-    <link href="./stylesheets/chart.css" rel="stylesheet" type="text/css" media="all" />
 
     <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
 
+    <script type="text/javascript">
+        document.write("<link href=\"//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css\" rel=\"stylesheet\" type=\"text/css\" />");
+        document.write("<link href=\"./stylesheets/chart.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />");
+        document.write("<link href=\"./stylesheets/script.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />");
+    </script>
+
+    <noscript>
+        <link href="./stylesheets/noscript.css" rel="stylesheet" type="text/css" media="all">
+    </noscript>
     <!--[if IE 6]>
         <meta http-equiv="refresh " content="0; url="https://www.mozilla.org/de/firefox/new/" />
     <![endif]-->
@@ -30,11 +33,11 @@
     <div id="menu-wrapper" class="shadow">
         <div id="menu">
             <ul>
-                <li class="current_page_item nav_item">Home</li>
-                <li class="nav_item">Features</li>
-                <li class="nav_item">Statistik</li>
-                <li class="nav_item">Team</li>
-                <li class="nav_item">Download</li>
+                <li class="current_page_item nav_item"><a href="#home">Home</a></li>
+                <li class="nav_item"><a href="#features">Features</a></li>
+                <li class="nav_item"><a href="#statistik">Statistik</a></li>
+                <li class="nav_item"><a href="#team">Team</a></li>
+                <li class="nav_item"><a href="#download">Download</a></li>
                 <li class="slider"></li>
             </ul>
         </div>
@@ -50,7 +53,7 @@
 
         <!-- Stand-Bye ----------------------------------------------------------------------->
         <div class="topic">
-
+            <a name="home"></a>
             <div class="parallax aspect">
                 <div class="content">
 
@@ -134,7 +137,7 @@
 
         <!-- Features ------------------------------------------------------------------------>
         <div class="topic">
-
+            <a name="features"></a>
             <div class="parallax aspect">
 
                 <div class="content">
@@ -214,7 +217,7 @@
 
         <!-- Statistik   --------------------------------------------------------------------->
         <div class="topic">
-            <a name="third"></a>
+            <a name="statistik"></a>
 
             <div class="parallax aspect">
 
@@ -276,10 +279,52 @@
                 <h2 class="title">Nachfrage</h2>
                 <hr />
                 <div id="chart_wrapper">
+                    <div class="noscript_overlay">Das Diagramm kann nur Angezeigt werden wenn JavaScript aktiviert ist</div>
                     <div id="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
 
 
-                    <div class="chart"></div>
+                    <div class="chart">
+                        <svg style="width: 100%; height: 100%;" class="ct-chart-bar" height="100%" width="100%" xmlns:ct="http://gionkunz.github.com/chartist-js/ct">
+                            <g class="ct-grids">
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="285" y1="285"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="258" y1="258"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="231" y1="231"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="204" y1="204"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="177" y1="177"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="150" y1="150"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="123" y1="123"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="96" y1="96"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="69" y1="69"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="42" y1="42"></line>
+                                <line class="ct-grid ct-vertical" x2="680" x1="50" y2="15" y1="15"></line>
+                            </g>
+                            <g>
+                                <g class="ct-series ct-series-a">
+                                    <line ct:value="5" class="ct-bar" y2="231" y1="285" x2="207.5" x1="207.5"></line>
+                                    <line ct:value="8" class="ct-bar" y2="198.6" y1="285" x2="522.5" x1="522.5"></line>
+                                </g>
+                                <g class="ct-series ct-series-b">
+                                    <line ct:value="15" class="ct-bar" y2="69" y1="231" x2="207.5" x1="207.5"></line>
+                                    <line ct:value="16" class="ct-bar" y2="25.799999999999983" y1="198.6" x2="522.5" x1="522.5"></line>
+                                </g>
+                            </g>
+                            <g class="ct-labels">
+                                <foreignObject height="20" width="315" y="290" x="50" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-horizontal ct-end" style="width: 315px; height: 20px">Von Windows-Standby genervt</span></foreignObject>
+                                <foreignObject height="20" width="315" y="290" x="365" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-horizontal ct-end" style="width: 315px; height: 20px">Nicht genervt</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="258" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">0</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="231" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">2.5</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="204" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">5</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="177" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">7.5</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="150" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">10</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="123" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">12.5</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="96" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">15</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="69" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">17.5</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="42" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">20</span></foreignObject>
+                                <foreignObject width="30" height="27" x="10" y="15" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 27px; width: 30px">22.5</span></foreignObject>
+                                <foreignObject width="30" height="30" x="10" y="-15" style="overflow: visible;"><span xmlns="http://www.w3.org/1999/xhtml" class="ct-label ct-vertical ct-start" style="height: 30px; width: 30px">25</span></foreignObject>
+                            </g>
+                        </svg>
+                    </div>
                     <div id="legend">
                         <ul>
                             <li><span class="ct-series-a" style="background: #ff9800;"></span>Windows Standby aktiviert</li>
@@ -292,11 +337,14 @@
                 </div>
 
                 <div id="calculator_wrapper">
+
                     <h2 class="title">Ersparnisrechner</h2>
                     <hr />
 
                     <form id="calculator">
+
                         <div class="shadow">
+                            <div class="noscript_overlay">Der Rechner funktioniert nur, wenn JavaScript aktiviert ist</div>
                             <h3 class="title">Ersparnisrechner</h3>
                             <p>Mein PC verbraucht durchsnittlich
                                 <input type="text" id="power" maxlength="5" size="5" /> <b>Watt.</b></p>
@@ -328,7 +376,7 @@
 
         <!-- Team ---------------------------------------------------------------------------->
         <div class="topic">
-
+            <a name="team"></a>
             <div class="parallax aspect">
 
                 <div class="content">
@@ -380,7 +428,7 @@
         <!-- Download ------------------------------------------------------------------------>
         <div class="topic">
 
-
+            <a name="download"></a>
             <div class="parallax aspect">
 
                 <div class="content">
@@ -460,7 +508,7 @@
     </script>
 
 
-    <noscript>
+    <!--    <noscript>
 
         <div id="noscript_wrapper">
 
@@ -471,7 +519,7 @@
                     <input type="checkbox " />OK</label>
             </div>
         </div>
-    </noscript>
+    </noscript>-->
 </body>
 
 </html>

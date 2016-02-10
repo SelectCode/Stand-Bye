@@ -52,7 +52,7 @@ p {
     line-height: 190%;
 }
 
-a {
+#page a {
     color: #1D6886;
     text-decoration: none;
     font-weight: bold;
@@ -60,7 +60,7 @@ a {
     transition: all 100ms linear;
 }
 
-a:hover {
+#page a:hover {
     color: #1ABC9C;
 }
 
@@ -195,80 +195,6 @@ h2.title {
     text-transform: uppercase;
     font-weight: 400;
     color: white;
-}
-
-
-/* Menu ******************************************************************/
-
-#menu-wrapper {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-    background: rgb(29, 104, 134);
-}
-
-#menu {
-    overflow: hidden;
-    width: auto;
-    height: 5em;
-    background: inherit;
-}
-
-#menu ul,
-#footer ul {
-    margin: 0;
-    padding: 0 0 0 0;
-    list-style: none;
-    text-align: center;
-    line-height: normal;
-}
-
-#menu li {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
-#menu .nav_item {
-    display: inline-block;
-    padding-right: 1em;
-    padding-left: 1em;
-    min-width: 6.5em;
-    border: none;
-    color: #212121;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: normal;
-    font-weight: 500;
-    font-size: 1em;
-    line-height: 5em;
-    cursor: pointer;
-    -webkit-transition: all 250ms linear;
-    transition: all 250ms linear;
-}
-
-#menu .nav_item:hover,
-#menu .current_page_item.nav_item {
-    color: #FFF;
-    text-decoration: none;
-}
-
-#menu .current_page_item.nav_item {
-    font-weight: bolder;
-    font-size: 1em;
-}
-
-#menu .slider {
-    position: absolute;
-    bottom: 0px;
-    left: 0;
-    z-index: 12;
-    display: inline;
-    width: 100px;
-    height: .25em;
-    background: #FF9800;
 }
 
 

@@ -30,6 +30,9 @@ var options = {
 $(function () {
 
     "use strict";
+
+    $(".chart").html("");
+
     var chart = new Chartist.Bar('.chart', chartData, options),
         $tooltip = $("#tooltip"),
         $tooltip_color = $("#tooltip span.color"),
