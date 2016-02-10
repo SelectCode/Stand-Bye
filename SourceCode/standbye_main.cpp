@@ -1,66 +1,57 @@
 #include "stdafx.h"
 #include "standbye_main.h"
 
-//TODO: single instance application? https://support.microsoft.com/en-us/kb/243953
-//TODO: Implement Updates --> Download .txt from git hub which defines the newest version. (http://stackoverflow.com/questions/4604663/download-single-files-from-github) https://raw.githubusercontent.com/flobaader/Stand-Bye/gh-pages/index.html
-//TODO: delete vector with delete[] XY
-//TODO: Migrate to System::String?
-//TODO: Cancel MessageWindow on mouse movement
-//TODO: Debug Form
-//TODO: Implement Log System
-//TODO: Implement statistics
-//TODO: Discussion: Use perfMon to read RAM Usage?
-//TODO: Discuss the standard values
-//TODO: Watcher --> analyses the average usage
-//TODO: Always standby after f. ex. 10 o clock
-//TODO: Implement message window and make a welcome and good bye message
-//TODO: Message after Canceling the Standby Countdown: would you like to enable the presentation mode?
-//TODO: Names and Copyright in all files
-//TODO: pictures and team description
-//TODO: booth design
-//TODO: umfrage
-
 #define threshold(X) settings_provider->getThreshold(SettingName::X)
 #define active(X) settings_provider->isActive(SettingName::X)
 #define sysMetric(X) system_watcher->GetSystemMetric(SystemAccess::SystemMetric::X)
-using namespace SmartLogout;
+using namespace StandBye;
 
-NotifyIconAppContext::NotifyIconAppContext(HINSTANCE hinst) {
-	GenerateIcon(hinst);
+[STAThread] //Because of FileDialog --> Application is single threaded - Windows needs that
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
+	mainApplication^ standbye = gcnew mainApplication(hInstance);
 }
 
-void SettingsOpend(Object^, System::EventArgs^) {
-	using namespace SmartLogout;
-	MetroSettingsForm^ settings_form = gcnew MetroSettingsForm(system_watcher, settings_provider);
-	if (settings_form->ShowDialog() == ::DialogResult::OK) {
+NotifyIconAppContext::NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst) {
+	app->GenerateIcon(hinst);
+}
+
+void mainApplication::OpenSettings(Object^, System::EventArgs^) {
+	using namespace StandBye;
+	if (settingsForm->Visible) {
+		return;
+	}
+	if (settingsForm->ShowDialog() == ::DialogResult::OK) {
 		input_monitor->Reset();
 	}
-
-	delete settings_form;
+	//Recreates SettingsForm
+	settingsForm = gcnew MetroSettingsForm(system_watcher, settings_provider);
+	settingsForm->Visible = false;
 }
 
-void Quit(Object^, System::EventArgs^) {
+void mainApplication::Quit(Object^, System::EventArgs^) {
 	onExit = true;
 	input_monitor->Stop();
 	delete  system_watcher, input_monitor, settings_provider;
 	System::Windows::Forms::Application::Exit();
 }
 
-void PresentationMode(Object^ s, System::EventArgs ^)
+void mainApplication::SetPresentationMode(Object^ s, System::EventArgs ^)
 {
 	MenuItem^ item = (MenuItem^)s;
 	if (item->Checked == false) {
 		SystemAccess::SetPresentationMode(true);
 		item->Checked = true;
+		trayicon->ShowBalloonTip(3000, "Stand-Bye!", "The Presentation mode has been activated!", System::Windows::Forms::ToolTipIcon::Info);
 	}
 	else {
 		SystemAccess::SetPresentationMode(false);
+		trayicon->ShowBalloonTip(3000, "Stand-Bye!", "The Presentation mode has been deactivated!", System::Windows::Forms::ToolTipIcon::Info);
 		item->Checked = false;
 	}
 	inPresentationMode = item->Checked;
 }
 
-void CheckUsage() {
+void mainApplication::CheckUsage() {
 	if (inPresentationMode) {
 		DEBUG("Application in presentation mode! \n Canceled Sleep mode!");
 		return;
@@ -86,31 +77,45 @@ void CheckUsage() {
 	if (((bool)active(USE_RAM) ? threshold(MAX_RAM) < sysMetric(RAM) : false))return;
 	if (((bool)active(USE_NET) ? threshold(MAX_NET) < sysMetric(NETWORK) : false)) return;
 
-	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15);
+	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15, settings_provider);
 
 	if ((msgWnd->ShowDialog()) == (::DialogResult::OK)) {
 		DEBUG("Going to Sleep mode!");
 		SystemAccess::StartESM();
 	}
+	else {
+		DEBUG("The User has canceled the MessageWindow!");
+
+		//Asks User if he wants to enable presentation mode
+		MessageWindow^ msgPres = gcnew MessageWindow("Do you like to enable the presentation mode?" + "\n" + "There will be no more interruptions!");
+		if (msgPres->ShowDialog() == DialogResult::OK) {
+			//Enable presentation mode
+			SystemAccess::SetPresentationMode(true);
+			PresentationModeItem->Checked = true;
+		}
+		else {
+			//Do nothing
+		}
+	}
 }
 
-ContextMenu^ GetContextMenu() {
+ContextMenu^ mainApplication::GetContextMenu() {
 	using namespace System::Windows::Forms;
 
 	ContextMenu^ contextMenu = gcnew ContextMenu();
 
 	MenuItem^ settingsItem = gcnew MenuItem();
 	settingsItem->Text = "&Settings\0";
-	settingsItem->Click += gcnew System::EventHandler(&SettingsOpend);
+	settingsItem->Click += gcnew System::EventHandler(this, &mainApplication::OpenSettings);
 
-	MenuItem^ PresentationModeItem = gcnew MenuItem();
+	PresentationModeItem = gcnew MenuItem();
 	PresentationModeItem->Text = "&Presentation mode\0";
 	PresentationModeItem->Checked = false;
-	PresentationModeItem->Click += gcnew System::EventHandler(&PresentationMode);
+	PresentationModeItem->Click += gcnew System::EventHandler(this, &mainApplication::SetPresentationMode);
 
 	MenuItem^ exitItem = gcnew MenuItem();
 	exitItem->Text = "&Exit\0";
-	exitItem->Click += gcnew System::EventHandler(&Quit);
+	exitItem->Click += gcnew System::EventHandler(this, &mainApplication::Quit);
 
 	contextMenu->MenuItems->Add(settingsItem);
 	contextMenu->MenuItems->Add(PresentationModeItem);
@@ -119,36 +124,45 @@ ContextMenu^ GetContextMenu() {
 	return contextMenu;
 }
 
-NotifyIcon^ GenerateIcon(HINSTANCE hInstance) {
+NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	using namespace System::Windows::Forms;
-	::NotifyIcon^ icon = gcnew NotifyIcon();
-	icon->Icon = System::Drawing::Icon::FromHandle((IntPtr)LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1)));
-	icon->Text = "Stand-Bye";
-	icon->ContextMenu = GetContextMenu();
-	icon->Visible = true;
-	return icon;
+	trayicon = gcnew NotifyIcon();
+	trayicon->Icon = System::Drawing::Icon::FromHandle((IntPtr)LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1)));
+	trayicon->Text = "Stand-Bye";
+	trayicon->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &mainApplication::OnMouseClick);
+	trayicon->ContextMenu = GetContextMenu();
+	trayicon->Visible = true;
+	trayicon->ShowBalloonTip(4000, "Stand-Bye!", "Standby is active. The environment will thank you!", System::Windows::Forms::ToolTipIcon::Info);
+	return trayicon;
 }
 
-void OnThreadException(System::Object ^ sender, System::Threading::ThreadExceptionEventArgs ^ args) {
-	//TODO: Implement on exception
+void mainApplication::OnThreadException(System::Object ^ sender, System::Threading::ThreadExceptionEventArgs ^ args) {
+	//TODO: Implement on exception --> Log system
 }
 
-[STAThread] //Because of FileDialog --> Application is single threaded - Windows needs that
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
-	Application::ThreadException += gcnew System::Threading::ThreadExceptionEventHandler(&OnThreadException);
+mainApplication::mainApplication(HINSTANCE hInstance) {
+	Application::ThreadException += gcnew System::Threading::ThreadExceptionEventHandler(this, &mainApplication::OnThreadException);
 	//Application::SetUnhandledExceptionMode(ThrowException)
-
 	onExit = false;
 
 	while (onExit == false) {
 		settings_provider = new SettingsProvider();
 		system_watcher = gcnew SystemMetricWatcher(settings_provider, 2, 30);//Sample 2 times/second, space for 30 samples, average over 15 seconds
 		system_watcher->Start();
-		input_monitor = gcnew InputMonitor(settings_provider, &CheckUsage);
+		input_monitor = gcnew InputMonitor(this, settings_provider);
+		settingsForm = gcnew MetroSettingsForm(system_watcher, settings_provider);
+		settingsForm->Visible = false;
 
 		using System::Windows::Forms::Application;
-		ApplicationContext^ context = gcnew NotifyIconAppContext(hInstance);
-		Application::ApplicationExit += gcnew System::EventHandler(&Quit);
+		ApplicationContext^ context = gcnew NotifyIconAppContext(this, hInstance);
+		Application::ApplicationExit += gcnew System::EventHandler(this, &mainApplication::Quit);
 		Application::Run(context); //Synchronous
+	}
+}
+
+void mainApplication::OnMouseClick(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e)
+{
+	if (e->Button == Windows::Forms::MouseButtons::Left) {
+		mainApplication::OpenSettings(nullptr, nullptr);
 	}
 }

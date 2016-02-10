@@ -18,6 +18,7 @@ SettingsProvider::SettingsProvider() {
 };
 
 SettingsProvider::~SettingsProvider() {
+	saveSettingsToFile();
 	for each(Setting* s in SettingsList) {
 		delete s;
 	}
@@ -25,7 +26,14 @@ SettingsProvider::~SettingsProvider() {
 }
 
 string SettingsProvider::getRawSetting(SettingName name) {
-	return SettingsProvider::getSettingbyName(name)->GetValue().at(0);
+	try {
+		return SettingsProvider::getSettingbyName(name)->GetValue().at(0);
+	}
+	catch (Exception^ e) {
+		DEBUG("Could not get Raw Setting!");
+		DEBUG(e->Data + "\n" + e->InnerException + "\n" + e->Message);
+		return "";
+	}
 }
 
 int SettingsProvider::getThreshold(SettingName name) {
@@ -62,33 +70,29 @@ bool SettingsProvider::setActiveState(SettingName name, bool status) {
 	return writeSettingsFile();
 }
 
-bool SettingsProvider::setSetting(SettingName name, const string value) {
+void SettingsProvider::setSetting(SettingName name, const string value) {
 	getSettingbyName(name)->ChangeValue(value);
-	return writeSettingsFile();
 };
 
-bool SettingsProvider::setSetting(SettingName name, const int value) {
-	return SettingsProvider::setSetting(name, std::to_string(value));
+void SettingsProvider::setSetting(SettingName name, const int value) {
+	SettingsProvider::setSetting(name, std::to_string(value));
 };
 
 vector<string> SettingsProvider::getProcessList() {
 	return SettingsProvider::getSettingbyName(SettingName::PROC_EXCP)->GetValue();
 };
 
-bool SettingsProvider::addProcessToProcessList(const string process) {
+void SettingsProvider::addProcessToProcessList(const string process) {
 	if (!getSettingbyName(SettingName::PROC_EXCP)->Contains(process)) {
 		getSettingbyName(SettingName::PROC_EXCP)->AddValue(process);
-		return writeSettingsFile();
 	}
 	else {
 		DEBUG("Process already added");
-		return true;
 	}
 };
 
-bool SettingsProvider::removeProcessFromProcessList(const string process) {
+void SettingsProvider::removeProcessFromProcessList(const string process) {
 	getSettingbyName(SettingName::PROC_EXCP)->RemoveValue(process);
-	return writeSettingsFile();
 };
 
 bool SettingsProvider::reset() {
@@ -104,9 +108,12 @@ bool SettingsProvider::reset() {
 	SettingsList.push_back(new Setting(SettingName::MAX_RAM, MAX_RAM_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::WAIT_TIME, WAIT_TIME_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::PROC_EXCP, PROC_EXCP_DEFAULT));
+	return writeSettingsFile();
+}
 
-	//Returns true if succeeded
-	return SettingsProvider::writeSettingsFile();
+bool SettingsProvider::saveSettingsToFile()
+{
+	return writeSettingsFile();
 };
 
 bool SettingsProvider::repairFile() {
@@ -118,8 +125,8 @@ bool SettingsProvider::repairFile() {
 	}
 	else {
 		//Folder does not exist --> Creating Folder
-		string LogoutFolderPath = SettingsProvider::getAppDataFolderPath();
-		_mkdir(LogoutFolderPath.c_str());
+		string StandByeFolderPath = SettingsProvider::getStandByeFolderPath();
+		_mkdir(StandByeFolderPath.c_str());
 		return SettingsProvider::reset();
 	}
 	return false;
@@ -199,16 +206,16 @@ string SettingsProvider::getSettingsFilePath() {
 	String^ a = Environment::GetFolderPath(Environment::SpecialFolder::ApplicationData);
 
 	//Adds the Path to the Settings file
-	a = Path::Combine(a, "SmartLogout");
+	a = Path::Combine(a, "StandBye");
 	a = Path::Combine(a, "Settings.ini");
 
 	return BasicFunc::StringToString(a);
 };
 
-string SettingsProvider::getAppDataFolderPath() {
+string SettingsProvider::getStandByeFolderPath() {
 	//Gets the AppData Path
 	String^ a = Environment::GetFolderPath(Environment::SpecialFolder::ApplicationData);
-	a = Path::Combine(a, "SmartLogout");
+	a = Path::Combine(a, "StandBye");
 	return BasicFunc::StringToString(a);
 };
 
@@ -223,4 +230,8 @@ Setting* SettingsProvider::getSettingbyName(SettingName name) {
 	if (repairFile()) {
 		return SettingsProvider::getSettingbyName(name);
 	}
+
+	DEBUG("Invalid settingName entered!");
+	DEBUG("Could not get Setting!");
+	return nullptr;
 };

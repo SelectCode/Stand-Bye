@@ -14,10 +14,9 @@ enum class SettingName {
 class Setting {
 private:
 	const vector<string> NAME_STRINGS = { "MAX_CPU", "MAX_HDD", "MAX_NET", "MAX_RAM", "WAIT_TIME", "PROC_EXCP", "NET_ADAPT", "USE_CPU", "USE_HDD", "USE_NET", "USE_RAM" };
-
+	string ConvertSettingNameToString(SettingName n);
 	vector<string> value;
 	SettingName name;
-	string ConvertSettingNameToString(SettingName n);
 	SettingName ConvertStringToSettingName(string name);
 
 public:

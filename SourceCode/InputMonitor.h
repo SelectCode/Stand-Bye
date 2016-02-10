@@ -4,17 +4,19 @@
 #include "SystemMetricWatcher.h"
 #include "SystemAccess.h"
 
+ref class mainApplication;
+
 ref class InputMonitor {
 private:
-	void(*OnFinished)();
 	int wait_time;
 	bool aborted;
+	mainApplication^ parent;
 	ThreadStart^ thread_start;
 	Thread^ watcher;
 	SettingsProvider* settings_provider;
 
 public:
-	InputMonitor(SettingsProvider* s, void(*f)());
+	InputMonitor(mainApplication^ parent, SettingsProvider* s);
 	~InputMonitor();
 
 	void Reset();

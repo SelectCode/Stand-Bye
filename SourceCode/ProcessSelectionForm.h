@@ -3,7 +3,7 @@
 #include "SystemAccess.h"
 #include "ProcessItem.h"
 
-namespace SmartLogout {
+namespace StandBye {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -187,41 +187,10 @@ namespace SmartLogout {
 			this->ResumeLayout(false);
 		}
 #pragma endregion
-	private: System::Void ProcessSelectionForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		tableLayoutPanel1->Visible = false;
-
-		listViewProc->Font = BasicFunc::getMetroFont(9);
-		//Prepare ListView
-		ImageList^ imglistSmall = gcnew ImageList, ^imglistLarge = gcnew ImageList;
-		imglistSmall->ImageSize = Drawing::Size(24, 24);
-		imglistLarge->ImageSize = Drawing::Size(50, 50);
-		listViewProc->SmallImageList = imglistSmall;
-		listViewProc->LargeImageList = imglistLarge;
-	}
-
-	private: System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (listViewProc->SelectedItems->Count > 0) {
-			ProcessItem^ p = (ProcessItem^)listViewProc->SelectedItems[0];
-			selectedProcessPath = p->GetPath();
-			this->DialogResult = Windows::Forms::DialogResult::OK;
-		}
-		else {
-			this->DialogResult = Windows::Forms::DialogResult::Cancel;
-		}
-		this->Close();
-	}
-	private: System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->DialogResult = Windows::Forms::DialogResult::Cancel;
-		this->Close();
-	}
-
-	private: System::Void ProcessSelectioNForm_OnShown(System::Object ^sender, System::EventArgs ^e) {
-		for each(std::string path in SystemAccess::GetRunningProccesses()) {
-			listViewProc->Items->Add(gcnew ProcessItem(path, listViewProc));
-			Application::DoEvents();
-		}
-
-		tableLayoutPanel1->Visible = true;
-	}
+	private:
+		System::Void ProcessSelectionForm_Load(System::Object^  sender, System::EventArgs^  e);
+		System::Void ProcessSelectioNForm_OnShown(System::Object ^sender, System::EventArgs ^e);
+		System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

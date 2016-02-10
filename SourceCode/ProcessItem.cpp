@@ -15,8 +15,8 @@ ProcessItem::ProcessItem(const string settings_value, Windows::Forms::ListView^ 
 	this->SubItems->Add(path);
 }
 
-bool ProcessItem::Write(SettingsProvider* settings_provider) {
-	return settings_provider->addProcessToProcessList(BasicFunc::StringToString(path));
+void ProcessItem::Write(SettingsProvider* settings_provider) {
+	settings_provider->addProcessToProcessList(BasicFunc::StringToString(path));
 }
 
 ProcessItem::~ProcessItem() {

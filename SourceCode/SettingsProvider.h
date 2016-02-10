@@ -33,7 +33,7 @@ public:
 	SettingsProvider();
 	~SettingsProvider();
 
-	///<summary>Returns the value of a specified Setting in percent or kbit/s
+	///<summary>Returns the value of a specified Setting in percent or kBit/s
 	///<para>use namespace <code> SettingName:: </code> to get the Names!</para>
 	///</summary>
 	int getThreshold(SettingName name);
@@ -53,27 +53,30 @@ public:
 	///</summary>
 	bool setActiveState(SettingName name, const bool status);
 
-	///<summary>Sets the value for a specified Setting in percent or kbit/s</summary>
+	///<summary>Sets the value for a specified Setting in percent or kBit/s</summary>
 	///<param name="limit">The maximum value</param>
-	bool setSetting(SettingName name, const int limit);
+	void setSetting(SettingName name, const int limit);
 
 	///<summary>Sets the value for a specified Setting</summary>
 	///<param name="limit">The maximum value</param>
-	bool setSetting(SettingName name, const string value);
+	void setSetting(SettingName name, const string value);
 
 	///<summary>Returns the set List of blocked Processes</summary>
 	vector<string> getProcessList();
 
 	///<summary>Adds one Process to the blocked process list</summary>
 	///<param name="process">path of the process</param>
-	bool addProcessToProcessList(const string process);
+	void addProcessToProcessList(const string process);
 
 	///<summary>Adds one Process to the blocked process list.</summary>
 	///<param name="process">path of the process</param>
-	bool removeProcessFromProcessList(const string process);
+	void removeProcessFromProcessList(const string process);
 
 	///<summary>Resets all settings to factory settings</summary>
 	bool reset();
+
+	///<summary>Saves settings to the save file</summary>
+	bool saveSettingsToFile();
 
 private:
 
@@ -87,5 +90,5 @@ private:
 
 	string getSettingsFilePath();
 
-	string getAppDataFolderPath();
+	string getStandByeFolderPath();
 };

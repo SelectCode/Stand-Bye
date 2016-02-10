@@ -10,7 +10,7 @@ ref class ProcessItem : ListViewItem {
 public:
 	~ProcessItem();
 	ProcessItem(const string settings_value, Windows::Forms::ListView^ list);
-	bool Write(SettingsProvider* settings_provider);
+	void Write(SettingsProvider* settings_provider);
 	String^ GetPath();
 	void addIconToLists(Windows::Forms::ListView^ list);
 };

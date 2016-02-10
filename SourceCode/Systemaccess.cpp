@@ -62,12 +62,12 @@ float SystemAccess::GetMetric(SystemMetric s) {
 		case SystemMetric::HDD:
 			return getHddUsage();
 		}
-		return 0.0f;
 	}
 	catch (Exception^ ex) {
 		DEBUG("Could not get Metric!");
 		DEBUG("Error Details: " + ex->Message + "\n" + ex->Data + "\n" + ex->Source);
 	}
+	return 0.0f;
 }
 
 void SystemAccess::StartESM()

@@ -6,28 +6,40 @@
 #include "TimeoutWindow.h"
 #include "SystemAccess.h"
 #include "SystemMetricWatcher.h"
-#include "InputMonitor.h"
 #include "MetroSettingsForm.h"
+#include "MessageWindow.h"
+#include "InputMonitor.h"
+using namespace StandBye;
+
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow);
+
+ref class mainApplication {
+private:
+	MetroSettingsForm^ settingsForm;
+	NotifyIcon^ trayicon;
+	MenuItem^ PresentationModeItem; //Has to be accessed
+
+	SystemMetricWatcher^ system_watcher;
+	SettingsProvider* settings_provider;
+	InputMonitor^ input_monitor;
+
+	bool inPresentationMode;
+	bool onExit;
+
+public:
+	mainApplication(HINSTANCE hInstance);
+	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
+	void CheckUsage();
+private:
+	void OpenSettings(Object^ s, System::EventArgs^ event_args);
+	void Quit(Object^ s, System::EventArgs^ event_args);
+	void SetPresentationMode(Object^ s, System::EventArgs^ event_args);
+	ContextMenu^ GetContextMenu();
+	void OnThreadException(System::Object^ sender, System::Threading::ThreadExceptionEventArgs^ args);
+	void OnMouseClick(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e);
+};
 
 ref class NotifyIconAppContext : System::Windows::Forms::ApplicationContext {
 public:
-	NotifyIconAppContext(HINSTANCE hinst);
+	NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst);
 };
-
-HWND hwnd;
-gcroot<SystemMetricWatcher^> system_watcher;
-SettingsProvider* settings_provider;
-gcroot<InputMonitor^> input_monitor;
-boolean inPresentationMode;
-bool onExit;
-
-void SettingsOpend(Object^ s, System::EventArgs^ event_args);
-void Quit(Object^ s, System::EventArgs^ event_args);
-void PresentationMode(Object^ s, System::EventArgs^ event_args);
-
-ContextMenu^ GetContextMenu();
-NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
-void CheckUsage();
-void OnThreadException(System::Object^ sender, System::Threading::ThreadExceptionEventArgs^ args);
-
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow);

@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "InputMonitor.h"
 
+#include "standbye_main.h" //Is needed here to prevent cross including
+
 #define TO_MILLISECONDS(X) ((X) * 1000)
 
-InputMonitor::InputMonitor(SettingsProvider* s, void(*f)()) {
+InputMonitor::InputMonitor(mainApplication^ parent, SettingsProvider* s) {
 	aborted = false;
-	OnFinished = f;
+	this->parent = parent;
 	settings_provider = s;
 	Start();
 }
@@ -24,7 +26,7 @@ void InputMonitor::Monitor() {
 
 		if (SystemAccess::GetLastInputTime() > wait_time) {
 			DEBUG("Wait Time is over!");
-			OnFinished();
+			parent->CheckUsage();
 		}
 		//Sleep only 10 milliseconds at once to handle to Close() Event
 		for (int x = 0; x < wait_time; x = x + 10) {

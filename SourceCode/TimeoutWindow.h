@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 #include <time.h>
+#include "SettingsProvider.h"
+#include "SystemAccess.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -13,12 +15,13 @@ using namespace System::Threading;
 /// <summary>
 /// Summary for TimeoutWindow
 /// </summary>
-namespace SmartLogout {
+namespace StandBye {
 	public ref class TimeoutWindow : public MetroFramework::Forms::MetroForm
 	{
 		int delay; // in milliseconds
 		double startTime; //in milliseconds
 		System::Windows::Forms::Timer^ timer;
+		SettingsProvider* settings_provider;
 		int counter;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel1;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTime;
@@ -26,12 +29,13 @@ namespace SmartLogout {
 	private: MetroFramework::Controls::MetroButton^  metroButtonCancel;
 	private: MetroFramework::Controls::MetroButton^  metroButtonOK;
 	public:
-		TimeoutWindow(const int duration) {
+		TimeoutWindow(const int duration, SettingsProvider* prov) {
 			InitializeComponent();
 			this->DoubleBuffered = true;
 			delay = duration * 1000;
 			startTime = Environment::TickCount;
 			RefreshUI(gcnew Object, gcnew EventArgs);
+			settings_provider = prov;
 		}
 
 	protected:
@@ -147,48 +151,10 @@ namespace SmartLogout {
 			this->PerformLayout();
 		}
 #pragma endregion
-	private: System::Void TimeoutWindow_Load(System::Object^, System::EventArgs^) {
-		this->ControlBox = true;
-		this->MaximizeBox = false;
-		this->MinimizeBox = false;
-
-		//Gets the Working Space
-		Drawing::Rectangle WorkArea = Screen::PrimaryScreen->WorkingArea;
-		this->Location = Point(WorkArea.Width - this->Size.Width, WorkArea.Height - this->Size.Height);
-		this->Update();
-
-		//Starts Time
-		timer = gcnew System::Windows::Forms::Timer;
-		timer->Interval = 10;
-		counter = 0;
-		timer->Tick += gcnew System::EventHandler(this, &TimeoutWindow::RefreshUI);
-		timer->Start();
-
-		System::Media::SystemSounds::Asterisk->Play();
-	}
-
-	private: System::Void RefreshUI(System::Object^, System::EventArgs^) {
-		int past_millis = Environment::TickCount - startTime;
-
-		if (past_millis < delay) {
-			metroButtonCancel->Text = "Cancel [" + Math::Truncate((delay - past_millis) / 1000).ToString() + "]";
-			this->metroLabelTime->Text = String::Format("{0:0.00}s", (double)(delay - past_millis) / 1000);
-			metroProgressBar1->Value = 100 - Math::Truncate(((double)past_millis / (double)delay) * 100);
-			counter++;
-			this->BringToFront();
-		}
-		else {
-			this->DialogResult = Windows::Forms::DialogResult::OK;
-			this->Close();
-		}
-	}
-	private: System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->DialogResult = Windows::Forms::DialogResult::OK;
-		this->Close();
-	}
-	private: System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->DialogResult = Windows::Forms::DialogResult::Cancel;
-		this->Close();
-	}
+	private:
+		System::Void TimeoutWindow_Load(System::Object^, System::EventArgs^);
+		System::Void RefreshUI(System::Object^, System::EventArgs^);
+		System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }
