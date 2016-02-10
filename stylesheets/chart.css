@@ -1,12 +1,13 @@
 .ct-series-a .ct-bar {
-    stroke: rgba(29, 104, 134, 1);
-    stroke-width: 4em;
     -webkit-transition: all;
     transition: all;
-    -webkit-transition-duration: 100ms;
-    transition-duration: 100ms;
     -webkit-transition-timing-function: ease-in;
     transition-timing-function: ease-in;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+
+    stroke: rgba(29, 104, 134, 1);
+    stroke-width: 4em;
 }
 
 .ct-series-a .ct-bar:hover {
@@ -14,14 +15,15 @@
 }
 
 .ct-series-b .ct-bar {
-    stroke: rgba(255, 152, 0, 1);
-    stroke-width: 4em;
     -webkit-transition: all;
     transition: all;
-    -webkit-transition-duration: 100ms;
-    transition-duration: 100ms;
     -webkit-transition-timing-function: ease-in;
     transition-timing-function: ease-in;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+
+    stroke: rgba(255, 152, 0, 1);
+    stroke-width: 4em;
 }
 
 .ct-series-b .ct-bar:hover {
@@ -34,15 +36,15 @@
 }
 
 #tooltip {
+    position: absolute;
+    z-index: 20;
+    display: none;
+    margin-left: .5em;
+    padding: .5em .5em;
     -webkit-border-radius: .5em;
     border-radius: .5em;
-    position: absolute;
-    display: none;
-    z-index: 20;
     background: #212121;
     color: #fff;
-    padding: .5em .5em;
-    margin-left: .5em;
 }
 
 #tooltip span.text {
@@ -51,17 +53,17 @@
 
 #tooltip span.color,
 #legend span {
+    display: block;
     float: left;
-    display: block;
+    margin-right: .3em;
     width: 1.1em;
     height: 1.1em;
     background: #B6B6B6;
-    margin-right: .3em;
 }
 
 #legend ul {
+    padding-left: none;
     list-style: none;
-    padding-left: none;
 }
 
 #legend span {
