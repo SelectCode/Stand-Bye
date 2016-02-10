@@ -1,0 +1,69 @@
+.ct-series-a .ct-bar {
+    stroke: rgba(29, 104, 134, 1);
+    stroke-width: 4em;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+}
+
+.ct-series-a .ct-bar:hover {
+    stroke: rgba(29, 104, 134, 0.7);
+}
+
+.ct-series-b .ct-bar {
+    stroke: rgba(255, 152, 0, 1);
+    stroke-width: 4em;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+}
+
+.ct-series-b .ct-bar:hover {
+    stroke: rgba(255, 152, 0, 0.7);
+}
+
+.ct-labels .ct-label {
+    color: rgba(33, 33, 33, 0.5);
+    font-size: .8em;
+}
+
+#tooltip {
+    -webkit-border-radius: .5em;
+    border-radius: .5em;
+    position: absolute;
+    display: none;
+    z-index: 20;
+    background: #212121;
+    color: #fff;
+    padding: .5em .5em;
+    margin-left: .5em;
+}
+
+#tooltip span.text {
+    font-size: .9em;
+}
+
+#tooltip span.color,
+#legend span {
+    float: left;
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+    background: #B6B6B6;
+    margin-right: .3em;
+}
+
+#legend ul {
+    list-style: none;
+    padding-left: none;
+}
+
+#legend span {
+    margin-right: .8em;
+}
