@@ -1,17 +1,17 @@
 #noscript_wrapper {
-    z-index: 15;
     position: fixed;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
+    z-index: 15;
+    width: 100%;
+    height: 100%;
     background: rgba(255, 255, 255, 0.5);
 }
 
 #noscript_wrapper>h1 {
-    font-size: 2em;
     color: #1D6886;
     text-align: center;
+    font-size: 2em;
 }
 
 #noscript_wrapper>p {
@@ -25,9 +25,6 @@
     width: 100%;
     text-align: center;
 }
-
-
-/* Menu ******************************************************************/
 
 #menu-wrapper {
     position: fixed;

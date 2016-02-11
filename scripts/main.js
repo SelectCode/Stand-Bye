@@ -1,3 +1,6 @@
+/*jslint browser: true*/
+/*global $, jQuery, Chartist, console*/
+
 //vars for the slider menu
 var $active, $slider, $topics, sliding = false;
 //Vars for the parallax effect
@@ -11,98 +14,6 @@ var disabled;
 
 //Speed for scrolling the page, WindowHeight/s
 var scrollSpeed = 2;
-
-$(function () {
-
-    "use strict";
-
-    //initialize stuff
-    offsets = [];
-    scrollContainter = [];
-    scrollImg = [];
-
-    $active = $("#menu .current_page_item");
-    $slider = $("#menu .slider");
-    $topics = $("div.topic");
-    $images = $(".parallax div.background img");
-
-    $slider.css("left", $active.position().left).width($active.outerWidth());
-
-    windowHeight = $(window).innerHeight();
-    halfWindowHeight = windowHeight / 2;
-
-    scrollTop = $(window).scrollTop();
-
-    getImageOffsets();
-
-
-    //Menu click listener
-    $("#menu li.nav_item").click(function (e) {
-
-        e.preventDefault();
-
-        setActive($(this));
-
-        var index = $(this).index();
-
-        //console.log("click: " + index);
-        scrollToElement($topics.eq(index));
-    });
-
-    //Menu hover listener
-    $("#menu li.nav_item, #icon_github").hover(function (e) {
-        slideTo($(this));
-    }, function (e) {
-        slideTo($active);
-    });
-
-    //link click listener
-
-    $("a.in_page").click(function (e) {
-
-        var data = $(this).data("goto");
-
-        //console.log("data: " + data);
-
-        if (data != null && data != "") {
-            e.preventDefault();
-            $("a").each(function () {
-
-                console.log("name: " + $(this).attr("name"));
-
-                if (data === $(this).attr("name")) {
-                    scrollToElement($(this));
-                }
-            });
-        }
-
-    });
-
-    //Resize listener
-    $(window).resize(function (e) {
-
-        $slider.css("left", $active.position().left).width($active.outerWidth());
-
-        windowHeight = $(window).innerHeight();
-        halfWindowHeight = windowHeight / 2;
-
-        getImageOffsets();
-
-        scrollTop = $(window).scrollTop();
-        parallax();
-        checkActive();
-
-    }).scroll(function (e) {
-
-        scrollTop = $(window).scrollTop();
-
-        parallax();
-        checkActive();
-
-    });
-
-
-});
 
 function setActive($n) {
 
@@ -126,8 +37,9 @@ function setActive($n) {
 
 function slideTo($el) {
 
-    var leftPos = $el.position().left;
-    var newWidth = $el.outerWidth();
+    "use strict";
+    var leftPos = $el.position().left,
+        newWidth = $el.outerWidth();
 
     sliding = true;
     //console.log("started sliding");
@@ -157,7 +69,7 @@ function scrollToElement($el) {
 
     //console.log(time);
 
-    $('html, body').animate({
+    $('html, body').stop().animate({
         scrollTop: elOffset - $("#menu").outerHeight()
     }, {
         duration: time,
@@ -205,6 +117,10 @@ function parallax() {
         $this.css({
             top: delta
         });
+        if (delta > 0 || delta < $this.parent().outerHeight() - $this.height) {
+            getImageOffsets();
+            console.log("recalc offsets");
+        }
     }
 
 };
@@ -216,11 +132,100 @@ function getImageOffsets() {
     for (var i = 0; i < $cont.length; i++) {
 
         var $this = $cont.eq(i);
+
         var height = $this.outerHeight();
         offsets[i] = $this.offset().top + $this.outerHeight();
         scrollImg[i] = $images.eq(i).outerHeight() - height;
         scrollContainter[i] = windowHeight + height;
-
     }
 
 };
+
+$(function () {
+
+    "use strict";
+
+    //initialize stuff
+    offsets = [];
+    scrollContainter = [];
+    scrollImg = [];
+
+    $active = $("#menu .current_page_item");
+    $slider = $("#menu .slider");
+    $topics = $("div.topic");
+    $images = $(".parallax div.background img");
+
+    $slider.css("left", $active.position().left).width($active.outerWidth());
+
+    windowHeight = $(window).innerHeight();
+    halfWindowHeight = windowHeight / 2;
+
+    scrollTop = $(window).scrollTop();
+
+    getImageOffsets();
+
+    parallax();
+
+    //Menu click listener
+    $("#menu li.nav_item").click(function (e) {
+        setActive($(this));
+
+        var index = $(this).index();
+
+        //console.log("click: " + index);
+        scrollToElement($topics.eq(index));
+    });
+
+    //Menu hover listener
+    $("#menu li.nav_item, #icon_github").hover(function (e) {
+        slideTo($(this));
+    }, function (e) {
+        slideTo($active);
+    });
+
+    //link click listener
+    $("a.in_page").click(function (e) {
+
+        var data = $(this).data("goto");
+
+        //console.log("data: " + data);
+
+        if (data != null && data != "") {
+            e.preventDefault();
+            $("a").each(function () {
+
+                console.log("name: " + $(this).attr("name"));
+
+                if (data === $(this).attr("name")) {
+                    scrollToElement($(this));
+                }
+            });
+        }
+
+    });
+
+    //Resize listener
+    $(window).resize(function (e) {
+
+        $slider.css("left", $active.position().left).width($active.outerWidth());
+
+        windowHeight = $(window).innerHeight();
+        halfWindowHeight = windowHeight / 2;
+
+        getImageOffsets();
+
+        scrollTop = $(window).scrollTop();
+        parallax();
+        checkActive();
+
+    }).scroll(function (e) {
+
+        scrollTop = $(window).scrollTop();
+
+        parallax();
+        checkActive();
+
+    });
+
+
+});
