@@ -190,6 +190,7 @@ h2.title {
 }
 
 #menu ul,
+#dropdown_menu ul,
 #footer ul {
     margin: 0;
     padding: 0 0 0 0;
@@ -327,15 +328,22 @@ a#icon_github:hover>p {
 
 /* Dropdwown menu **********************************************************/
 
-#dropdown_menu_wrapper {
+#dropdown_menu {
     display: none;
     width: 100%;
-    position: fixed;
-    z-index: 10;
     background: #1D6886;
     top: 0;
     left: 0;
     height: 2.5em;
+}
+
+@media only screen and (max-width: 42em) {
+    #menu {
+        display: none;
+    }
+    #dropdown_menu {
+        display: block;
+    }
 }
 
 
@@ -349,6 +357,12 @@ a#icon_github:hover>p {
     padding: 5em 0em 0em 0em;
     max-width: 1600px;
     min-width: 300px;
+}
+
+@media only screen and (max-width: 50em) {
+    #page {
+        padding-top: 2.5em;
+    }
 }
 
 .content {
