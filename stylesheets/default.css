@@ -872,7 +872,7 @@ tr:nth-child(even) {
 
 /* user expirience *****************************************************/
 
-.ux div div {
+.ux div {
     width: 50%;
     height: auto;
     float: left;
@@ -887,12 +887,20 @@ tr:nth-child(even) {
     box-sizing: border-box;
 }
 
-.ux .byline {
-    padding: 0 .7em;
+.ux>p {
+    padding: 0em .5em;
 }
 
-.ux>div>p {
-    padding: 0em .5em;
+@media only screen and (max-width: 27em) {
+    .ux div {
+        width: 100%;
+    }
+    .ux {
+        padding: .3em;
+    }
+    .ux img {
+        padding: 0;
+    }
 }
 
 
