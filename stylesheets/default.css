@@ -860,12 +860,19 @@ tr:nth-child(even) {
     display: none;
 }
 
+.switch:after {
+    content: "links";
+}
+
 @media only screen and (max-width: 42em) {
     #calculator div {
         width: 100%;
         margin-bottom: 1em;
         -webkit-box-shadow: none;
         box-shadow: none;
+    }
+    .switch:after {
+        content: 'oben';
     }
 }
 
