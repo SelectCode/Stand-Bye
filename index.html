@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -102,7 +102,7 @@
                         <p>
                             Oft widersprechen sich Energiesparen und Komfort - es ist bequemer, den PC einfach laufen zu lassen, damit der Download oder Rendervorgang schon fertig ist, wenn man wiederkommt.
                             <br /> Mit Stand-Bye geht beides: Der PC läuft nur solange es unbedingt nötig ist und alles ist erledigt, wenn du mit dem Kaffee zurückkommst.
-                            <br /><a href="#third" data-goto="1">mehr>></a>
+                            <br /><a class="in_page" href="#features" data-goto="features">mehr>></a>
                         </p>
                     </div>
 
@@ -110,7 +110,7 @@
                         <h3 class="title">Volle Kontrolle</h3>
                         <p>
                             Der Windows-Standby gibt dir nur wenig Freiraum, um festzulegen, wann dein PC Energie sparen soll. Mit Stand-Bye hast du die komplette Kontrolle und kannst ganz individuell die Bedingungen festlegen, unter denen dein PC in den Energiesparmodus versetzt wird.
-                            <br /><a href="#" data-goto="1">mehr>></a>
+                            <br /><a href="#features" class="in_page" data-goto="features">mehr>></a>
                         </p>
                     </div>
 
@@ -469,25 +469,25 @@
                         <h3 class="title">Neuste version</h3>
                         <p>Hier kannst du die aktuellste Version von Stand-Bye herunterladen:</p>
                         <p>Wenn der Download abgeschlossen ist, führe die Datei einfach aus und folge den Anweisungen im Installer. Falls du willst, dass Stand-Bye automatisch mit Windows gestartet wird, kannst du das in den Einstellungen aktivieren.</p>
-                        <a href="https://github.com/flobaader/Stand-Bye/releases/download/v0.4.3/Install_Stand-Bye.msi" class="button">Installer Herunterladen</a>
+                        <a href="https://github.com/flobaader/Stand-Bye/releases/download/v0.4.3/Install_Stand-Bye.msi" class="button" onclick="ga('send', 'event', 'Links', 'click', 'installer download');">Installer Herunterladen</a>
                     </div>
                     <div class="card">
                         <h3 class="title">ZIP-Datei</h3>
                         <p>Wenn du die Umwelt auch unterwegs schützen möchtest:</p>
                         <p>Die portable Version von Stand-Bye kann ohne Installation, z.B. von einem USB-Stick aus, ausgeführt werden!</p>
-                        <a href="https://github.com/flobaader/Stand-Bye/releases/download/v0.4.3/Portable.zip" class="button">.zip herunterladen</a>
+                        <a href="https://github.com/flobaader/Stand-Bye/releases/download/v0.4.3/Portable.zip" class="button" onclick="ga('send', 'event', 'Links', 'click', 'zip download');">.zip herunterladen</a>
                     </div>
                     <div class="card">
                         <h3 class="title">Ältere Versionen</h3>
                         <p>Ältere Versionen von Stand-Bye findest du in unserem GitHub-Repository:</p>
                         <p>Diese Versionen können eventuell Fehler enthalten, die im aktuellsten Build schon behoben sind. Falls Fehler oder unerwartetes Verhalten auftritt, probiere am besten, die neuste Version zu installieren.</p>
-                        <a href="https://github.com/flobaader/Stand-Bye/releases" target="_blank" class="button">Zu GitHub</a>
+                        <a href="https://github.com/flobaader/Stand-Bye/releases" target="_blank" class="button" onclick="ga('send', 'event', 'Links', 'click', 'go to github');">Zu GitHub</a>
                     </div>
                     <div class="card">
                         <h3 class="title">Projektarbeit</h3>
                         <p>Wenn du mehr über die technischen Details lesen willst:</p>
                         <p>Die Projektarbeit wurde für den Wettbewerb Jugend Forscht geschrieben und beinhaltet ausführliche Texte zur Implementierung, Idee und Statistik. Auch wenn du selber zum Projekt beitragen willst, solltest du sie am besten vorher lesen.</p>
-                        <a href="https://raw.github.com/flobaader/Stand-Bye/download/StandBye_Projektarbeit.pdf" target="_blank" class="button">Projektarbeit Herunterladen</a>
+                        <a href="https://raw.github.com/flobaader/Stand-Bye/download/StandBye_Projektarbeit.pdf" target="_blank" class="button" onclick="ga('send', 'event', 'Links', 'click', 'projektarbeit');">Projektarbeit Herunterladen</a>
                     </div>
                 </div>
             </div>
@@ -496,8 +496,8 @@
         <!-- footer  ------------------------------------------------------------------------->
         <div id="footer">
             <ul>
-                <li><a href="./html/impressum.html">Impressum</a></li>
-                <li><a href="./html/datenschutz.html">Datenschutzerklärung</a></li>
+                <li><a href="./html/impressum.html" onclick="ga('send', 'event', 'Links', 'click', 'impressum');">Impressum</a></li>
+                <li><a href="./html/datenschutz.html" onclick="ga('send', 'event', 'Links', 'click', 'datenschutzerklärung');">Datenschutzerklärung</a></li>
                 <li><a href="mailto:matthias.weirich@gmail.com">Kontakt</a></li>
             </ul>
         </div>
