@@ -69,7 +69,7 @@ function scrollToElement($el) {
 
     //console.log(time);
 
-    $('html, body').animate({
+    $('html, body').stop().animate({
         scrollTop: elOffset - $("#menu").outerHeight()
     }, {
         duration: time,

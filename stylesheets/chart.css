@@ -5,7 +5,6 @@
     transition-timing-function: ease-in;
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
-
     stroke: rgba(29, 104, 134, 1);
     stroke-width: 4em;
 }
@@ -21,7 +20,6 @@
     transition-timing-function: ease-in;
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
-
     stroke: rgba(255, 152, 0, 1);
     stroke-width: 4em;
 }
@@ -40,7 +38,7 @@
     z-index: 20;
     display: none;
     margin-left: .5em;
-    padding: .5em .5em;
+    padding: .5em .5em;
     -webkit-border-radius: .5em;
     border-radius: .5em;
     background: #212121;
@@ -53,7 +51,7 @@
 
 #tooltip span.color,
 #legend span {
-    display: block;
+    display: block;
     float: left;
     margin-right: .3em;
     width: 1.1em;
@@ -62,7 +60,7 @@
 }
 
 #legend ul {
-    padding-left: none;
+    padding-left: none;
     list-style: none;
 }
 

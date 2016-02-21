@@ -1,7 +1,7 @@
 #noscript_wrapper {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 0;
     z-index: 15;
     width: 100%;
     height: 100%;
@@ -10,26 +10,134 @@
 
 #noscript_wrapper>h1 {
     color: #1D6886;
-    text-align: center;
+    text-align: center;
     font-size: 2em;
 }
 
 #noscript_wrapper>p {
-    padding: 2em 5em 2em 5em;
-    text-align: center;
     font-size: 1.5em;
+    text-align: center;
+    padding: 2em 5em 2em 5em;
 }
 
-input[type="checkbox"] {
+#center {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+#menu-wrapper {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    background: rgb(29, 104, 134);
+}
+
+#menu {
+    overflow: hidden;
+    width: auto;
+    height: 5em;
+    background: inherit;
+}
+
+#menu ul,
+#footer ul {
+    margin: 0;
+    padding: 0 0 0 0;
+    list-style: none;
+    text-align: center;
+    line-height: normal;
+}
+
+#menu li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+#menu .nav_item a {
+    display: inline-block;
+    padding-right: 1em;
+    padding-left: 1em;
+    min-width: 6.5em;
+    border: none;
+    color: #212121;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: normal;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: 5em;
+    cursor: pointer;
+    -webkit-transition: all 250ms linear;
+    transition: all 250ms linear;
+}
+
+#menu .nav_item a:hover,
+#menu .current_page_item.nav_item {
+    color: #FFF;
+    text-decoration: none;
+}
+
+#menu .current_page_item.nav_item {
+    font-weight: bolder;
+    font-size: 1em;
+}
+
+#menu .slider {
     display: none;
 }
 
-#button_ok {
-    left: 50%;
-    margin-right: -50%;
-    text-align: center;
+#menu .nav_item:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0;
+    width: 100%;
+    background: transparent;
+    -webkit-transition: all ease 250ms;
+    transition: all ease 250ms;
 }
-#center {
+
+#menu .nav_item:hover:after,
+#menu .nav_item:active:after {
+    height: 0.25em;
+    background: #ff9800;
+}
+
+#legend {
+    display: none;
+}
+
+#tooltip {
+    display: none;
+}
+
+#calculator h3,
+#calculator p,
+#calculator hr,
+#calculator .button {
+    display: none;
+}
+
+#calculator .shadow {
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#calculator div.noscript_overlay,
+.noscript_overlay {
     display: block;
-    width: 100%;text-align: center;
+    position: relative;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20em;
+    background: rgba(33, 33, 33, 0.5);
+    color: #ff9800;
 }

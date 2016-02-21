@@ -52,7 +52,7 @@ p {
     line-height: 190%;
 }
 
-a {
+#page a {
     color: #1D6886;
     text-decoration: none;
     font-weight: bold;
@@ -60,7 +60,7 @@ a {
     transition: all 100ms linear;
 }
 
-a:hover {
+#page a:hover {
     color: #1ABC9C;
 }
 
@@ -151,6 +151,8 @@ ul.style2 li:first-child {
     width: 100%;
     text-transform: uppercase;
     text-align: left;
+    float: left;
+    clear: both;
 }
 
 h3.title {
@@ -172,33 +174,8 @@ h2.title {
     font-size: 0.90em;
 }
 
-#header_wrapper {
-    display: inline-block;
-    padding: 2em;
-    width: auto;
-    height: auto;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
 
-#header_wrapper h2 {
-    float: left;
-    clear: left;
-    width: 100%;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: white;
-}
-
-
-/* Menu ******************************************************************/
+/* Slider Menu ******************************************************************/
 
 #menu-wrapper {
     position: fixed;
@@ -215,6 +192,7 @@ h2.title {
 }
 
 #menu ul,
+#dropdown_menu ul,
 #footer ul {
     margin: 0;
     padding: 0 0 0 0;
@@ -271,6 +249,21 @@ h2.title {
     background: #FF9800;
 }
 
+@media only screen and (max-width: 50em) {
+    #menu {
+        height: 3.5em;
+    }
+    #menu .nav_item {
+        font-size: .8em;
+        line-height: 4.375em;
+        min-width: 6em;
+        padding: 0em .2em;
+    }
+    #menu .current_page_item.nav_item {
+        font-size: 0.8em;
+    }
+}
+
 
 /* Github icon *************************************************************/
 
@@ -323,6 +316,38 @@ a#icon_github:hover>p {
     display: block;
 }
 
+@media only screen and (max-width: 50em) {
+    #icon_github {
+        width: 3.5em;
+        height: 3.5em;
+    }
+    a#icon_github>p {
+        font-size: .5em;
+        line-height: 3.25;
+    }
+}
+
+
+/* Dropdwown menu **********************************************************/
+
+#dropdown_menu {
+    display: none;
+    width: 100%;
+    background: #1D6886;
+    top: 0;
+    left: 0;
+    height: 2.5em;
+}
+
+@media only screen and (max-width: 42em) {
+    #menu {
+        display: none;
+    }
+    #dropdown_menu {
+        display: block;
+    }
+}
+
 
 /* Page ********************************************************************/
 
@@ -333,6 +358,13 @@ a#icon_github:hover>p {
     margin: auto;
     padding: 5em 0em 0em 0em;
     max-width: 1600px;
+    min-width: 300px;
+}
+
+@media only screen and (max-width: 50em) {
+    #page {
+        padding-top: 2.5em;
+    }
 }
 
 .content {
@@ -343,6 +375,12 @@ a#icon_github:hover>p {
     text-align: justify;
     float: left;
     clear: both;
+}
+
+@media only screen and (max-width: 50em) {
+    .content {
+        padding: 1em;
+    }
 }
 
 .flex {
@@ -462,6 +500,12 @@ div.parallax div.background {
     opacity: 0.9;
 }
 
+@media only screen and (max-width: 30em) {
+    .foreground h1 {
+        font-size: 1.5em;
+    }
+}
+
 .background img {
     position: absolute;
     top: 0;
@@ -483,18 +527,40 @@ div.parallax div.background {
     height: auto;
 }
 
-div.topic div.content > * {
+
+/* Page header **************************************************************/
+
+#header_wrapper {
     float: left;
     clear: both;
     text-align: justify;
+    display: inline-block;
+    padding: 2em;
+    width: auto;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
-
-
-/* Page header **************************************************************/
 
 #header_wrapper h1 {
     float: left;
     clear: none;
+}
+
+#header_wrapper h2 {
+    float: left;
+    clear: left;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: white;
 }
 
 #logo {
@@ -522,11 +588,42 @@ div.topic div.content > * {
     margin-left: 1em;
 }
 
+@media only screen and (max-width: 42em) {
+    #header_wrapper {
+        padding: 1em;
+    }
+    #header_wrapper h2 {
+        font-size: 1.5em;
+    }
+    #logo_wrapper {
+        width: 7.5em;
+        height: 7.5em;
+    }
+    #page_title {
+        font-size: 2em;
+        line-height: 3.75em;
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    #header_wrapper h2 {
+        font-size: 1em;
+    }
+    #logo_wrapper {
+        width: 5em;
+        height: 5em;
+    }
+    #page_title {
+        font-size: 1.5em;
+        line-height: 3.333em;
+    }
+}
+
 
 /* cards *********************************************************************/
 
 .card {
-    display: table-cell;
+    display: block;
     width: 50%;
     height: 100%;
     -webkit-box-sizing: border-box;
@@ -551,6 +648,12 @@ div.topic div.content > * {
     .card {
         clear: both;
         width: 100%;
+    }
+}
+
+@media only screen and (max-width: 25em) {
+    .card {
+        padding: .3em;
     }
 }
 
@@ -600,8 +703,7 @@ div.topic div.content > * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    margin: 1.5em 0em 1.5em 0em;
-    padding: 0em;
+    padding: 1.5em 0em 1.5em 0em;
 }
 
 .feature .title {
@@ -648,9 +750,19 @@ div.topic div.content > * {
     .feature .text {
         clear: both;
         width: 100%;
+        padding-left: 0;
+    }
+    .feature p {
+        padding: 0em 0em .3em 0em;
+    }
+    .feature .title {
+        text-indent: 0;
     }
     .feature img {
         width: 100%;
+    }
+    .feature {
+        padding: 0em .5em;
     }
 }
 
@@ -699,7 +811,7 @@ tr:nth-child(even) {
 }
 
 
-/* calculator hidden ***************************************************/
+/* calculator ***************************************************/
 
 #calculator_wrapper {
     display: block;
@@ -723,7 +835,7 @@ tr:nth-child(even) {
 
 #calculator .button {
     border: none !important;
-    font-size: normal;
+    font-size: 1em;
     padding: .7em 2em;
     margin-top: 1em;
 }
@@ -752,7 +864,7 @@ tr:nth-child(even) {
 
 #error {
     display: none;
-    font-size 1.1em;
+    font-size: 1.1em;
     color: #ff9800;
     font-weight: bold;
     padding: .5em 0em;
@@ -762,27 +874,58 @@ tr:nth-child(even) {
     display: none;
 }
 
+.switch:after {
+    content: "links";
+}
+
+@media only screen and (max-width: 42em) {
+    #calculator div {
+        width: 100%;
+        margin-bottom: 1em;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    .switch:after {
+        content: 'oben';
+    }
+}
+
 
 /* user expirience *****************************************************/
 
-.ux {
-    display: none;
+.ux div {
+    width: 50%;
+    height: auto;
+    float: left;
+    clear: none;
 }
 
 .ux img {
-    width: 50%;
+    width: 100%;
     float: left;
-    padding: .7em;
+    padding-right: .5em;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
+.ux>p {
+    padding: 0em .5em;
+}
+
+@media only screen and (max-width: 27em) {
+    .ux div {
+        width: 100%;
+    }
+    .ux {
+        padding: .3em;
+    }
+    .ux img {
+        padding: 0;
+    }
+}
+
 
 /* Team members ********************************************************/
-
-#img_team {
-    width: 100%;
-}
 
 .teammember,
 .teammember:nth-child(even),
@@ -795,7 +938,7 @@ tr:nth-child(even) {
 
 .teammember ul {
     list-style: none;
-    text-indent: none;
+    text-indent: 0;
     padding-left: 0;
 }
 
@@ -813,6 +956,35 @@ tr:nth-child(even) {
     height: auto;
 }
 
+@media only screen and (max-width: 50em) {
+    .teammember img {
+        width: 33%;
+    }
+    .teammember.card {
+        width: 100%;
+    }
+    .teammember p {
+        padding-top: .5em;
+        width: 67%;
+        float: left;
+        clear: none;
+    }
+    .teammember ul {
+        float: left;
+        clear: none;
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    .teammember img,
+    .teammember p,
+    .teammember ul {
+        width: 100%;
+        float: left;
+        clear: both;
+    }
+}
+
 
 /* chart ***************************************************************/
 
@@ -821,6 +993,17 @@ tr:nth-child(even) {
     height: 20em;
     float: left;
     clear: both;
+}
+
+@media only screen and (max-width: 50em) {
+    .chart {
+        width: 100%;
+    }
+    #chart_wrapper p {
+        width: 100%;
+        float: left;
+        clear: both;
+    }
 }
 
 
