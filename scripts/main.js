@@ -119,7 +119,7 @@ function parallax() {
         });
         if (delta > 0 || delta < $this.parent().outerHeight() - $this.height) {
             getImageOffsets();
-            console.log("recalc offsets");
+            //console.log("recalc offsets");
         }
     }
 
@@ -194,7 +194,7 @@ $(function () {
             e.preventDefault();
             $("a").each(function () {
 
-                console.log("name: " + $(this).attr("name"));
+                //console.log("name: " + $(this).attr("name"));
 
                 if (data === $(this).attr("name")) {
                     scrollToElement($(this));
