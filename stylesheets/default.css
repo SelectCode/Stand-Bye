@@ -151,6 +151,8 @@ ul.style2 li:first-child {
     width: 100%;
     text-transform: uppercase;
     text-align: left;
+    float: left;
+    clear: both;
 }
 
 h3.title {
@@ -375,6 +377,12 @@ a#icon_github:hover>p {
     clear: both;
 }
 
+@media only screen and (max-width: 50em) {
+    .content {
+        padding: 1em;
+    }
+}
+
 .flex {
     display: -webkit-box;
     display: -webkit-flex;
@@ -519,16 +527,13 @@ div.parallax div.background {
     height: auto;
 }
 
-div.topic div.content > * {
-    float: left;
-    clear: both;
-    text-align: justify;
-}
-
 
 /* Page header **************************************************************/
 
 #header_wrapper {
+    float: left;
+    clear: both;
+    text-align: justify;
     display: inline-block;
     padding: 2em;
     width: auto;
@@ -618,7 +623,7 @@ div.topic div.content > * {
 /* cards *********************************************************************/
 
 .card {
-    display: table-cell;
+    display: block;
     width: 50%;
     height: 100%;
     -webkit-box-sizing: border-box;
@@ -698,8 +703,7 @@ div.topic div.content > * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    margin: 1.5em 0em 1.5em 0em;
-    padding: 0em;
+    padding: 1.5em 0em 1.5em 0em;
 }
 
 .feature .title {
@@ -746,9 +750,19 @@ div.topic div.content > * {
     .feature .text {
         clear: both;
         width: 100%;
+        padding-left: 0;
+    }
+    .feature p {
+        padding: 0em 0em .3em 0em;
+    }
+    .feature .title {
+        text-indent: 0;
     }
     .feature img {
         width: 100%;
+    }
+    .feature {
+        padding: 0em .5em;
     }
 }
 
@@ -797,7 +811,7 @@ tr:nth-child(even) {
 }
 
 
-/* calculator hidden ***************************************************/
+/* calculator ***************************************************/
 
 #calculator_wrapper {
     display: block;
@@ -860,19 +874,54 @@ tr:nth-child(even) {
     display: none;
 }
 
+.switch:after {
+    content: "links";
+}
+
+@media only screen and (max-width: 42em) {
+    #calculator div {
+        width: 100%;
+        margin-bottom: 1em;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    .switch:after {
+        content: 'oben';
+    }
+}
+
 
 /* user expirience *****************************************************/
 
-.ux {
-    display: none;
+.ux div {
+    width: 50%;
+    height: auto;
+    float: left;
+    clear: none;
 }
 
 .ux img {
-    width: 50%;
+    width: 100%;
     float: left;
-    padding: .7em;
+    padding-right: .5em;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.ux>p {
+    padding: 0em .5em;
+}
+
+@media only screen and (max-width: 27em) {
+    .ux div {
+        width: 100%;
+    }
+    .ux {
+        padding: .3em;
+    }
+    .ux img {
+        padding: 0;
+    }
 }
 
 
