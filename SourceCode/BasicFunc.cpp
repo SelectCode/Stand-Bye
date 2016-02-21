@@ -25,22 +25,85 @@ int BasicFunc::StringToInt(std::string str) {
 	return result;
 }
 
-void BasicFunc::Print(std::string str) {
-	//OutputDebugString(_T(str.c_str()));
-	//DEBUG(str);
-}
-
-System::Drawing::Font^ BasicFunc::getMetroFont(int size) {
+System::Drawing::Font^ BasicFunc::getMetroFont(float size) {
 	return gcnew System::Drawing::Font(L"Microsoft Sans Serif", size);
 }
 
-boolean BasicFunc::VectorContains(std::vector<string> list, std::string text)
+bool BasicFunc::VectorContains(std::vector<string> list, std::string text)
 {
-	boolean result = false;
+	bool result = false;
 	for each(std::string s in list) {
 		if (s == text) {
 			result = true;
 		}
 	}
 	return result;
+}
+
+System::String ^ BasicFunc::getLogFilePath()
+{
+	using namespace System::IO;
+	using namespace System::Diagnostics;
+
+	//Startup Time
+	DateTime^ starttime = Process::GetCurrentProcess()->StartTime;
+
+	//Path
+	String^ mainFolder = System::IO::Directory::GetCurrentDirectory();
+	String^ log_folder = Path::Combine(mainFolder, "logs");
+	String^ current_date_folder = Path::Combine(log_folder, starttime->ToString("yyyy_MM_dd"));
+	String^ file_path = Path::Combine(current_date_folder, starttime->ToString("HH_mm") + ".txt");
+
+	//Creates Directory if necessary
+	System::IO::Directory::CreateDirectory(current_date_folder);
+
+	return file_path;
+}
+
+void BasicFunc::Log(System::String^ text)
+{
+	//Prints message on Debug-Console
+	System::Diagnostics::Debug::WriteLine(text);
+
+	using namespace System::IO;
+	using namespace System::Diagnostics;
+
+	//Line
+	String^ line = DateTime::Now.ToString("HH:mm:ss:FFF") + "\t" + text;
+
+	//Open Stream
+	StreamWriter^ sw;
+	try {
+		sw = File::AppendText(BasicFunc::getLogFilePath());
+	}
+	catch (System::Exception^) {
+		//Could not find / open the file
+		return;
+	}
+
+	//Appends Text
+	try {
+		sw->WriteLine(line);
+	}
+	finally
+	{
+		if (sw)
+			delete (IDisposable^)sw;
+	}
+}
+
+bool BasicFunc::isNumerique(std::string text)
+{
+	char* p;
+	strtol(text.c_str(), &p, 10);
+	return *p == 0;
+}
+bool BasicFunc::isNumerique(System::String ^ text)
+{
+	return isNumerique(BasicFunc::StringToString(text));
+}
+
+void BasicFunc::Log(std::string text)
+{
+	Log(gcnew String(text.c_str()));
 }

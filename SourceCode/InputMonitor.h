@@ -1,12 +1,11 @@
 #pragma once
 #include "stdafx.h"
-#include "BasicFunc.h"
 #include "SystemMetricWatcher.h"
 #include "SystemAccess.h"
 
 ref class mainApplication;
 
-ref class InputMonitor {
+public ref class InputMonitor {
 private:
 	int wait_time;
 	bool aborted;

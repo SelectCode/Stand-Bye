@@ -16,7 +16,7 @@ public:
 
 private:
 	Thread^ background_thread;
-	AverageBuffer^ cpu_buffer, ^network_buffer, ^hdd_buffer, ^ram_buffer;
+	AverageBuffer^ cpu_buffer, ^network_buffer, ^hdd_buffer, ^ram_buffer, ^sound_buffer;
 	SystemAccess^ system_access;
 	void ReadValues();
 	int frequenzy;

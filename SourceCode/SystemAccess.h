@@ -1,6 +1,5 @@
 #pragma once
 #include "SettingsProvider.h"
-#include "BasicFunc.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -8,29 +7,32 @@
 #include <stdio.h>//To get Processes
 #include <tchar.h>//To get Processes
 
+using namespace System::Diagnostics;
+using namespace System::Collections::Generic;
 using System::Windows::Forms::Timer;
 using System::Windows::Forms::Application;
 using System::Windows::Forms::PowerState;
-using namespace System::Diagnostics;
-using namespace System::Collections::Generic;
+struct IAudioMeterInformation; //To avoid cross linking
 
 public ref class SystemAccess {
 private:
+	//Attributes
 	PerformanceCounter^ perfCPU;
 	PerformanceCounter^ perfHDD;
 	List<PerformanceCounter^>^ perfNETs;
-
 	SettingsProvider* setprov;
-	float getCpuUsage();
-	float getRamUsage();
-	float getNetworkUsage();
-	float getHddUsage();
+
+	//Methods
+	float getCPUUsage();
+	float getRAMUsage();
+	float getNETUsage();
+	float getHDDUsage();
 
 public:
 	SystemAccess(SettingsProvider* p);
 	~SystemAccess();
 
-	enum class  SystemMetric : char { CPU, RAM, NETWORK, HDD };
+	enum class  SystemMetric : char { CPU, RAM, NETWORK, HDD, SOUND };
 
 	float GetMetric(SystemMetric s);
 
@@ -46,5 +48,7 @@ public:
 
 	static void SetAutoStart(boolean value);
 
-	static boolean IsInAutoStart();
+	static bool IsInAutoStart();
+
+	static float getAudioPeak();
 };

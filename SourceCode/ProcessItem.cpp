@@ -3,12 +3,13 @@
 
 ProcessItem::ProcessItem(const string settings_value, Windows::Forms::ListView^ list) {
 	path = gcnew String(settings_value.c_str());
-	SHFILEINFO* stFileInfo = new SHFILEINFO;
+	SHFILEINFO* stFileInfo = new SHFILEINFO();
 	SHGetFileInfo(settings_value.c_str(), FILE_ATTRIBUTE_NORMAL, stFileInfo, sizeof(stFileInfo), SHGFI_ICON | SHGFI_LARGEICON);
 	try {
 		icon = Bitmap::FromHicon((IntPtr)stFileInfo->hIcon);
 	}
-	catch (System::ArgumentException^ e) {
+	catch (System::ArgumentException^) {
+		//Icon loaded failed
 	}
 	addIconToLists(list);
 	this->Text = IO::Path::GetFileNameWithoutExtension(path);

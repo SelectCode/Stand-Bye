@@ -19,7 +19,7 @@ namespace StandBye {
 	public ref class TimeoutWindow : public MetroFramework::Forms::MetroForm
 	{
 		int delay; // in milliseconds
-		double startTime; //in milliseconds
+		int startTime; //in milliseconds
 		System::Windows::Forms::Timer^ timer;
 		SettingsProvider* settings_provider;
 		int counter;

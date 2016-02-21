@@ -18,7 +18,7 @@ SettingName Setting::ConvertStringToSettingName(string name) {
 		counter++;
 	}
 	//The name was not valid
-	BasicFunc::Print("No valid name entered!");
+	LOG("No valid name entered!");
 	throw("Failed to convert string to SettingName. No valid string entered!");
 }
 

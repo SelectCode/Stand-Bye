@@ -1,13 +1,11 @@
 #pragma once
 #include "stdafx.h"
 #include "Setting.h"
-#include "BasicFunc.h"
 #include <string>
 #include <sstream>
 #include <algorithm> //To delete ' in strings
 #include <iostream>
 #include <fstream>
-#include <direct.h> // For creating folders
 
 #define MAX_CPU_DEFAULT "30"                     /*in percent*/
 #define MAX_HDD_DEFAULT "2000"                   /*in kBytes/s*/
@@ -15,7 +13,7 @@
 #define MAX_RAM_DEFAULT "20"                     /*in percent*/
 #define WAIT_TIME_DEFAULT "300"                  /*in seconds*/
 #define PROC_EXCP_DEFAULT ""                     /*paths to exception processes*/
-#define SETTINGS_COUNT 10                        /*to check amount of settings in file*/
+#define SETTINGS_COUNT 11                        /*to check amount of settings in file*/
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -77,6 +75,9 @@ public:
 
 	///<summary>Saves settings to the save file</summary>
 	bool saveSettingsToFile();
+
+	///<summary>Returns all currently loaded settings</summary>
+	vector<Setting*> getAllSettings();
 
 private:
 

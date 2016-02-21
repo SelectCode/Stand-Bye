@@ -5,7 +5,7 @@ using namespace StandBye;
 void MetroSettingsForm::forceRefreshUI() {
 	timerUIRefresh_Tick(gcnew System::Object, gcnew System::EventArgs);
 }
-System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::EventArgs^) {
 	//Focus on first tabPage
 	metroTabControl1->SelectedTab = metroTabPage1;
 
@@ -14,11 +14,13 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^  sender, 
 	metroTrackBarRAM->Value = settings_provider->getThreshold(SettingName::MAX_RAM);
 	setTextBoxValue(metroTextBoxNET, (double)settings_provider->getThreshold(SettingName::MAX_NET) / 1000);
 	setTextBoxValue(metroTextBoxHDD, (double)settings_provider->getThreshold(SettingName::MAX_HDD) / 1000);
-	setTextBoxValue(metroTextBoxWAITTIME, settings_provider->getThreshold(SettingName::WAIT_TIME) / 60);
+	setTextBoxValue(metroTextBoxTimeMIN, Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60));
+	setTextBoxValue(metroTextBoxTimeSEC, settings_provider->getThreshold(SettingName::WAIT_TIME) - Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60) * 60);
 	metroToggleCPU->Checked = settings_provider->isActive(SettingName::USE_CPU);
 	metroToggleHDD->Checked = settings_provider->isActive(SettingName::USE_HDD);
 	metroToggleNET->Checked = settings_provider->isActive(SettingName::USE_NET);
 	metroToggleRAM->Checked = settings_provider->isActive(SettingName::USE_RAM);
+	metroToggleSOUND->Checked = settings_provider->isActive(SettingName::CHECK_SOUND);
 
 	//Load AutoStart Setting
 	metroToggleAutoStart->Checked = SystemAccess::IsInAutoStart();
@@ -41,11 +43,6 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^  sender, 
 	timerRefresh->Start();
 	forceRefreshUI();
 }
-bool MetroSettingsForm::isNumber(std::string line) {
-	char* p;
-	strtol(line.c_str(), &p, 10);
-	return *p == 0;
-}
 
 double MetroSettingsForm::getTextBoxValueAsDouble(MetroFramework::Controls::MetroTextBox^ box) {
 	box->Text = box->Text->Replace(",", ".");
@@ -55,15 +52,15 @@ double MetroSettingsForm::getTextBoxValueAsDouble(MetroFramework::Controls::Metr
 }
 
 void MetroSettingsForm::setTextBoxValue(MetroFramework::Controls::MetroTextBox^ box, double value) {
-	box->Text = String::Format("{0:00.0}", value);
+	if (Math::Floor(value) == value) {
+		//Number has no comma
+		box->Text = String::Format("{0:00}", value);
+	}
+	else {
+		box->Text = String::Format("{0:00.0}", value);
+	}
 }
 
-System::Void MetroSettingsForm::metroTextBoxWAITTIME_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (isNumber(BasicFunc::StringToString(metroTextBoxWAITTIME->Text)) == false) {
-		metroTextBoxWAITTIME->Text = "";
-	}
-	forceRefreshUI();
-}
 void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double SettingsValue, double readValue) {
 	if (SettingsValue > readValue) {
 		label->BackColor = lightGreen;
@@ -73,7 +70,7 @@ void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::Met
 	}
 }
 
-System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::EventArgs^) {
 	float curCPU, curRAM, curHDD, curNET;
 	//gets current system Usage
 	curCPU = system_watcher->GetSystemMetric(SystemAccess::SystemMetric::CPU);
@@ -98,17 +95,21 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^  sender, Sys
 	metroToolTip1->SetToolTip(metroLabelCurRAM, String::Format("Now: {0:00.00} % ", system_access->GetMetric(SystemAccess::SystemMetric::RAM)));
 	metroToolTip1->SetToolTip(metroLabelCurHDD, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::HDD) / 1000));
 	metroToolTip1->SetToolTip(metroLabelCurNET, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::NETWORK) / 1000));
+
+	//Gets Focus
+	this->Focus();
 }
-System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	settings_provider->setSetting(SettingName::MAX_CPU, Decimal::ToInt32(metroTrackBarCPU->Value));
 	settings_provider->setSetting(SettingName::MAX_RAM, Decimal::ToInt32(metroTrackBarRAM->Value));
 	settings_provider->setSetting(SettingName::MAX_HDD, (int)(getTextBoxValueAsDouble(metroTextBoxHDD) * 1000));
 	settings_provider->setSetting(SettingName::MAX_NET, (int)(getTextBoxValueAsDouble(metroTextBoxNET) * 1000));
-	settings_provider->setSetting(SettingName::WAIT_TIME, getTextBoxValueAsDouble(metroTextBoxWAITTIME) * 60);
+	settings_provider->setSetting(SettingName::WAIT_TIME, (int)getTextBoxValueAsDouble(metroTextBoxTimeMIN) * 60 + (int)getTextBoxValueAsDouble(metroTextBoxTimeSEC));
 	settings_provider->setActiveState(SettingName::USE_CPU, metroToggleCPU->Checked);
 	settings_provider->setActiveState(SettingName::USE_HDD, metroToggleHDD->Checked);
 	settings_provider->setActiveState(SettingName::USE_RAM, metroToggleRAM->Checked);
 	settings_provider->setActiveState(SettingName::USE_NET, metroToggleNET->Checked);
+	settings_provider->setActiveState(SettingName::CHECK_SOUND, metroToggleSOUND->Checked);
 
 	for each(ListViewItem^ l in listViewProc->Items) {
 		ProcessItem^ p = (ProcessItem^)l;
@@ -121,11 +122,11 @@ System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^  sender, Sys
 	this->DialogResult = Windows::Forms::DialogResult::OK;
 	this->Hide();
 }
-System::Void MetroSettingsForm::metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::Cancel;
 	this->Hide();
 }
-System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, System::EventArgs^) {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
 	ofd->InitialDirectory = "C:\\";
 	ofd->Filter = "exe files(*.exe)|*.exe";
@@ -138,7 +139,7 @@ System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^  se
 		}
 	}
 }
-System::Void MetroSettingsForm::metroButtonAddFromList_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroButtonAddFromList_Click(System::Object^, System::EventArgs^) {
 	using namespace StandBye;
 	ProcessSelectionForm^ ProcForm = gcnew ProcessSelectionForm;
 	if (ProcForm->ShowDialog() == Windows::Forms::DialogResult::OK) {
@@ -148,16 +149,16 @@ System::Void MetroSettingsForm::metroButtonAddFromList_Click(System::Object^  se
 	}
 	delete ProcForm;
 }
-System::Void MetroSettingsForm::metroButtonRemove_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroButtonRemove_Click(System::Object^, System::EventArgs^) {
 	ProcessItem^ proc = (ProcessItem^)listViewProc->SelectedItems[0];
 	settings_provider->removeProcessFromProcessList(BasicFunc::StringToString(proc->GetPath()));
 	delete proc;
 	refreshIcons();
 }
-System::Void MetroSettingsForm::listViewProc_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::listViewProc_SelectedIndexChanged(System::Object^, System::EventArgs^) {
 	metroButtonRemove->Enabled = (listViewProc->SelectedItems->Count > 0);
 }
-System::Void MetroSettingsForm::metroToggleView_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroToggleView_CheckedChanged(System::Object^, System::EventArgs^) {
 	if (metroToggleView->Checked) {
 		listViewProc->View = Windows::Forms::View::Details;
 	}
@@ -179,33 +180,45 @@ void MetroSettingsForm::refreshIcons() {
 		p->addIconToLists(listViewProc);
 	}
 }
-System::Void MetroSettingsForm::metroTrackBarRAM_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e) {
-	metroLabelRAMPer->Text = String::Format("{0} %", metroTrackBarRAM->Value);
+System::Void MetroSettingsForm::metroTrackBarRAM_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^) {
+	if (metroLabelRAMPer->Text != String::Format("{0} %", metroTrackBarRAM->Value)) {
+		metroLabelRAMPer->Text = String::Format("{0} %", metroTrackBarRAM->Value);
+	}
 }
-System::Void MetroSettingsForm::metroTrackBarCPU_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e) {
-	metroLabelCPUPer->Text = String::Format("{0} %", metroTrackBarCPU->Value);
+System::Void MetroSettingsForm::metroTrackBarCPU_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^) {
+	if (metroLabelCPUPer->Text != String::Format("{0} %", metroTrackBarCPU->Value)) {
+		metroLabelCPUPer->Text = String::Format("{0} %", metroTrackBarCPU->Value);
+	}
 }
-System::Void MetroSettingsForm::metroToggleAutoStart_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroToggleAutoStart_CheckedChanged(System::Object^, System::EventArgs^) {
 	SystemAccess::SetAutoStart(metroToggleAutoStart->Checked);
 }
-System::Void MetroSettingsForm::metroTileHomepage_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroTileHomepage_Click(System::Object^, System::EventArgs^) {
 	ShellExecute(0, 0, "http://www.stand-bye.de", 0, 0, SW_SHOW);
 }
-System::Void MetroSettingsForm::metroTileGithub_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroTileGithub_Click(System::Object^, System::EventArgs^) {
 	ShellExecute(0, 0, "https://github.com/flobaader/Stand-Bye", 0, 0, SW_SHOW);
 }
-System::Void MetroSettingsForm::metroLinkHomepage_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MetroSettingsForm::metroLinkHomepage_Click(System::Object^, System::EventArgs^) {
 	ShellExecute(0, 0, "http://www.stand-bye.de", 0, 0, SW_SHOW);
 }
 System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e) {
 	using MetroFramework::Controls::MetroTextBox;
 	if (e->KeyCode == Windows::Forms::Keys::Return) {
 		MetroTextBox^ txt = (MetroTextBox^)sender;
-		if (getTextBoxValueAsDouble(txt) == -1) {
+		double value = getTextBoxValueAsDouble(txt);
+		if (value == -1) {
+			//Could not convert
 			txt->Text = "";
 		}
 		else {
-			txt->Text = String::Format("{0:00.0}", getTextBoxValueAsDouble(txt));
+			if (Math::Floor(value) == value) {
+				//Number has no comma
+				txt->Text = String::Format("{0:00}", value);
+			}
+			else {
+				txt->Text = String::Format("{0:00.0}", value);
+			}
 		}
 		forceRefreshUI();
 	}

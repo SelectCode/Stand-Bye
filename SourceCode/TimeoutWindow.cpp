@@ -36,7 +36,7 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 	if (past_millis < delay) {
 		metroButtonCancel->Text = "Cancel [" + Math::Truncate((delay - past_millis) / 1000).ToString() + "]";
 		this->metroLabelTime->Text = String::Format("{0:0.00}s", (double)(delay - past_millis) / 1000);
-		metroProgressBar1->Value = 100 - Math::Truncate(((double)past_millis / (double)delay) * 100);
+		metroProgressBar1->Value = 100 - (int)Math::Truncate(((double)past_millis / (double)delay) * 100);
 		counter++;
 		this->BringToFront();
 	}
@@ -45,11 +45,11 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 		this->Close();
 	}
 }
-System::Void TimeoutWindow::metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void TimeoutWindow::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::OK;
 	this->Close();
 }
-System::Void TimeoutWindow::metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void TimeoutWindow::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::Cancel;
 	this->Close();
 }

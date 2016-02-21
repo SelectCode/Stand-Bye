@@ -13,11 +13,11 @@ System::Void MessageWindow::TimeoutWindow_Load(System::Object^, System::EventArg
 	this->Update();
 	System::Media::SystemSounds::Asterisk->Play();
 }
-System::Void MessageWindow::metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MessageWindow::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::OK;
 	this->Close();
 }
-System::Void MessageWindow::metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void MessageWindow::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::Cancel;
 	this->Close();
 }

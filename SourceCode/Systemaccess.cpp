@@ -1,35 +1,12 @@
 #include "stdafx.h"
+
+//Has to be here!
+#include <mmdeviceapi.h> // To get audio volume
+#include <endpointvolume.h> // To get audio volume
 #include "SystemAccess.h"
 
-float SystemAccess::getCpuUsage() {
-	//Note: performance counters need administrator privileges at Windows Vista
-	float cpuUsage_percent = perfCPU->NextValue();
-	return cpuUsage_percent;
-}
-
-float SystemAccess::getRamUsage()
-{
-	MEMORYSTATUSEX memInfo;
-	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
-	GlobalMemoryStatusEx(&memInfo);
-	ULONGLONG totalPhysMem = memInfo.ullTotalPhys;
-	ULONGLONG usedPhysMem = totalPhysMem - memInfo.ullAvailPhys;
-	return (float)(100.0 * usedPhysMem / totalPhysMem);
-}
-
-float SystemAccess::getNetworkUsage() {
-	float kbytes_per_sec = 0;
-	for each(PerformanceCounter^ perf in *perfNETs) {
-		kbytes_per_sec += perf->NextValue() / 1000;
-	}
-	return kbytes_per_sec;
-}
-
-float SystemAccess::getHddUsage()
-{
-	float kbytes_per_sec = perfHDD->NextValue() / 1000;
-	return kbytes_per_sec;
-}
+#define EXIT_ON_ERROR(hr) \
+if (FAILED(hr)){LOG("AUDIO LEVEL DETECTION FAILED"); return 0.0f;}
 
 SystemAccess::SystemAccess(SettingsProvider* p)
 {
@@ -40,6 +17,35 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 	for each(std::string name in SystemAccess::GetNetAdapterNames()) {
 		perfNETs->Add(gcnew PerformanceCounter("Network Interface", "Bytes Total/sec", gcnew String(name.c_str())));
 	}
+}
+float SystemAccess::getCPUUsage() {
+	//Note: performance counters need administrator privileges at Windows Vista
+	float cpuUsage_percent = perfCPU->NextValue();
+	return cpuUsage_percent;
+}
+
+float SystemAccess::getRAMUsage()
+{
+	MEMORYSTATUSEX memInfo;
+	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+	GlobalMemoryStatusEx(&memInfo);
+	ULONGLONG totalPhysMem = memInfo.ullTotalPhys;
+	ULONGLONG usedPhysMem = totalPhysMem - memInfo.ullAvailPhys;
+	return (float)(100.0 * usedPhysMem / totalPhysMem);
+}
+
+float SystemAccess::getNETUsage() {
+	float kbytes_per_sec = 0;
+	for each(PerformanceCounter^ perf in *perfNETs) {
+		kbytes_per_sec += perf->NextValue() / 1000;
+	}
+	return kbytes_per_sec;
+}
+
+float SystemAccess::getHDDUsage()
+{
+	float kbytes_per_sec = perfHDD->NextValue() / 1000;
+	return kbytes_per_sec;
 }
 
 SystemAccess::~SystemAccess() {
@@ -54,25 +60,27 @@ float SystemAccess::GetMetric(SystemMetric s) {
 	try {
 		switch (s) {
 		case SystemMetric::CPU:
-			return getCpuUsage();
+			return getCPUUsage();
 		case SystemMetric::RAM:
-			return getRamUsage();
+			return getRAMUsage();
 		case SystemMetric::NETWORK:
-			return getNetworkUsage();
+			return getNETUsage();
 		case SystemMetric::HDD:
-			return getHddUsage();
+			return getHDDUsage();
+		case SystemMetric::SOUND:
+			return getAudioPeak();
 		}
 	}
 	catch (Exception^ ex) {
-		DEBUG("Could not get Metric!");
-		DEBUG("Error Details: " + ex->Message + "\n" + ex->Data + "\n" + ex->Source);
+		LOG("Could not get Metric!");
+		LOG("Error Details: " + ex->Message + "\n" + ex->Data + "\n" + ex->Source);
 	}
 	return 0.0f;
 }
 
 void SystemAccess::StartESM()
 {
-	DEBUG("ESM will start now");
+	LOG("ESM will start now");
 	/*
 	Different Power-save modes:
 		-Hibernate
@@ -114,10 +122,10 @@ std::vector<std::string> SystemAccess::GetRunningProccesses() {
 
 void SystemAccess::SetPresentationMode(boolean state) {
 	if (state) {
-		SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED);
+		SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED); //Application requires screen and system online
 	}
 	else {
-		SetThreadExecutionState(ES_CONTINUOUS);
+		SetThreadExecutionState(ES_CONTINUOUS); //reset the requirements
 	}
 }
 
@@ -135,7 +143,7 @@ void SystemAccess::SetAutoStart(boolean value) {
 	}
 }
 
-boolean SystemAccess::IsInAutoStart() {
+bool SystemAccess::IsInAutoStart() {
 	String^ path = "\"" + Application::ExecutablePath + "\"";
 	using namespace Microsoft::Win32;
 	RegistryKey^ rk;
@@ -151,6 +159,30 @@ boolean SystemAccess::IsInAutoStart() {
 	{
 		return true;
 	}
+}
+
+float SystemAccess::getAudioPeak()
+{
+	//Requires Win Vista, <mmdeviceapi.h>, <endpointvolume.h> and ole32.lib, needs to be in method to convert MeterInformation to void**
+	float peak = 0;
+	HRESULT hr;
+	IMMDeviceEnumerator *pEnumerator = NULL;
+	IMMDevice *pDevice = NULL; //Get Audio Interface
+	IAudioMeterInformation *pMeterInfo = NULL;
+	hr = CoInitialize(NULL);
+	// Get enumerator for audio endpoint devices.
+	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator),
+		NULL, CLSCTX_INPROC_SERVER,
+		__uuidof(IMMDeviceEnumerator),
+		(void**)&pEnumerator);
+	EXIT_ON_ERROR(hr);
+	hr = pEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pDevice);
+	EXIT_ON_ERROR(hr);
+	hr = pDevice->Activate(__uuidof(IAudioMeterInformation),
+		CLSCTX_ALL, NULL, (void**)&pMeterInfo);
+	EXIT_ON_ERROR(hr);
+	pMeterInfo->GetPeakValue(&peak); //Gets peak value
+	return peak;
 }
 
 std::vector<std::string> SystemAccess::GetNetAdapterNames() {

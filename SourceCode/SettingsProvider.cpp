@@ -9,10 +9,10 @@ SettingsProvider::SettingsProvider() {
 	//Load settings
 	if (loadSettings() == false || ((int)SettingsList.size() != SETTINGS_COUNT)) {
 		//File does not exists or has not excepted number of settings
-		DEBUG("Settings file could not be loaded or configuration is corrupt!");
+		LOG("Settings file could not be loaded or configuration is corrupt!");
 		repairFile();
 		if (loadSettings() == false) {
-			DEBUG("Settings could not be repaired!");
+			LOG("Settings could not be repaired!");
 		}
 	};
 };
@@ -30,8 +30,8 @@ string SettingsProvider::getRawSetting(SettingName name) {
 		return SettingsProvider::getSettingbyName(name)->GetValue().at(0);
 	}
 	catch (Exception^ e) {
-		DEBUG("Could not get Raw Setting!");
-		DEBUG(e->Data + "\n" + e->InnerException + "\n" + e->Message);
+		LOG("Could not get Raw Setting!");
+		LOG(e->Data + "\n" + e->InnerException + "\n" + e->Message);
 		return "";
 	}
 }
@@ -41,9 +41,8 @@ int SettingsProvider::getThreshold(SettingName name) {
 		return BasicFunc::StringToInt(SettingsProvider::getRawSetting(name));
 	}
 	else {
+		LOG("The number of the enumerator should be between 0 and 4");
 		throw("No Threshold with this name could be found!");
-		BasicFunc::Print("The number of the enumerator should be between 0 and 4");
-		return 0;
 	}
 };
 
@@ -52,9 +51,8 @@ bool SettingsProvider::isActive(SettingName name) {
 		return (SettingsProvider::getRawSetting(name) == "TRUE");
 	}
 	else {
+		LOG("The name should be greater than 6!");
 		throw("No valid name entered! Could not convert to boolean!");
-		BasicFunc::Print("The name should be greater than 6!");
-		return NULL;
 	}
 }
 
@@ -87,7 +85,7 @@ void SettingsProvider::addProcessToProcessList(const string process) {
 		getSettingbyName(SettingName::PROC_EXCP)->AddValue(process);
 	}
 	else {
-		DEBUG("Process already added");
+		LOG("Process already added");
 	}
 };
 
@@ -98,15 +96,16 @@ void SettingsProvider::removeProcessFromProcessList(const string process) {
 bool SettingsProvider::reset() {
 	//Resets to DEFAULT values
 	SettingsList.clear();
+	SettingsList.push_back(new Setting(SettingName::WAIT_TIME, WAIT_TIME_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::USE_CPU, "TRUE"));
 	SettingsList.push_back(new Setting(SettingName::MAX_CPU, MAX_CPU_DEFAULT));
+	SettingsList.push_back(new Setting(SettingName::USE_RAM, "TRUE"));
+	SettingsList.push_back(new Setting(SettingName::MAX_RAM, MAX_RAM_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::USE_HDD, "TRUE"));
 	SettingsList.push_back(new Setting(SettingName::MAX_HDD, MAX_HDD_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::USE_NET, "TRUE"));
 	SettingsList.push_back(new Setting(SettingName::MAX_NET, MAX_NET_DEFAULT));
-	SettingsList.push_back(new Setting(SettingName::USE_RAM, "TRUE"));
-	SettingsList.push_back(new Setting(SettingName::MAX_RAM, MAX_RAM_DEFAULT));
-	SettingsList.push_back(new Setting(SettingName::WAIT_TIME, WAIT_TIME_DEFAULT));
+	SettingsList.push_back(new Setting(SettingName::CHECK_SOUND, "TRUE"));
 	SettingsList.push_back(new Setting(SettingName::PROC_EXCP, PROC_EXCP_DEFAULT));
 	return writeSettingsFile();
 }
@@ -114,7 +113,12 @@ bool SettingsProvider::reset() {
 bool SettingsProvider::saveSettingsToFile()
 {
 	return writeSettingsFile();
-};
+}
+vector<Setting*> SettingsProvider::getAllSettings()
+{
+	return SettingsList;
+}
+;
 
 bool SettingsProvider::repairFile() {
 	std::ifstream sFile(SettingsProvider::getSettingsFilePath());
@@ -126,7 +130,7 @@ bool SettingsProvider::repairFile() {
 	else {
 		//Folder does not exist --> Creating Folder
 		string StandByeFolderPath = SettingsProvider::getStandByeFolderPath();
-		_mkdir(StandByeFolderPath.c_str());
+		System::IO::Directory::CreateDirectory(gcnew String(StandByeFolderPath.c_str()));
 		return SettingsProvider::reset();
 	}
 	return false;
@@ -146,7 +150,7 @@ bool SettingsProvider::writeSettingsFile() {
 			if (all_values == "") {
 				all_values = "''";
 			}
-			BasicFunc::Print("Written Setting ['" + set->GetNameAsString() + "'] with value [" + all_values + "]" + "\n");
+			LOG("Written Setting ['" + set->GetNameAsString() + "'] with value [" + all_values + "]");
 			sFile << set->GetNameAsString() << "=" << all_values << std::endl;
 		}
 		sFile.close();
@@ -154,7 +158,7 @@ bool SettingsProvider::writeSettingsFile() {
 	}
 	else {
 		//SettingsFile could not be opened!
-		BasicFunc::Print("SettingsFile could not be opened to write Settings!");
+		LOG("SettingsFile could not be opened to write Settings!");
 		throw("SettingsFile could not be opened to write Settings!");
 		return false;
 	}
@@ -178,7 +182,7 @@ bool SettingsProvider::loadSettings() {
 			}
 			else {
 				repairFile();
-				BasicFunc::Print("Loading settings failed! Resetting File to Standard");
+				LOG("Loading settings failed! Resetting File to Standard");
 				return loadSettings();
 			}
 
@@ -189,14 +193,14 @@ bool SettingsProvider::loadSettings() {
 
 			// Creates new Setting
 			SettingsList.push_back(new Setting(name, value));
-			BasicFunc::Print("Loaded Setting ['" + name + "'] with value ['" + raw_values + "']\n");
+			LOG("Loaded Setting ['" + name + "'] with value ['" + raw_values + "']");
 		}
 		sFile.close();
 		return true;
 	}
 	else {
 		//File could not be opened!
-		BasicFunc::Print("SettingsFile could not be opened!");
+		LOG("SettingsFile could not be opened!");
 		return false;
 	}
 };
@@ -231,7 +235,7 @@ Setting* SettingsProvider::getSettingbyName(SettingName name) {
 		return SettingsProvider::getSettingbyName(name);
 	}
 
-	DEBUG("Invalid settingName entered!");
-	DEBUG("Could not get Setting!");
+	LOG("Invalid settingName entered!");
+	LOG("Could not get Setting!");
 	return nullptr;
 };

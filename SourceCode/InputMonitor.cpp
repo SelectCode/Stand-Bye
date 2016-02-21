@@ -21,11 +21,11 @@ InputMonitor::~InputMonitor()
 void InputMonitor::Monitor() {
 	while (aborted == false) {
 		if (SystemAccess::GetLastInputTime() == 0) {
-			DEBUG("LastInputTime == 0 milliseconds");
+			LOG("LastInputTime == 0 milliseconds");
 		}
 
 		if (SystemAccess::GetLastInputTime() > wait_time) {
-			DEBUG("Wait Time is over!");
+			LOG("Wait Time is over!");
 			parent->CheckUsage();
 		}
 		//Sleep only 10 milliseconds at once to handle to Close() Event

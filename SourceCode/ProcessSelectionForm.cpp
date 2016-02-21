@@ -2,7 +2,7 @@
 #include "ProcessSelectionForm.h"
 using namespace StandBye;
 
-System::Void ProcessSelectionForm::ProcessSelectionForm_Load(System::Object^  sender, System::EventArgs^  e) {
+System::Void ProcessSelectionForm::ProcessSelectionForm_Load(System::Object^, System::EventArgs^) {
 	tableLayoutPanel1->Visible = false;
 
 	listViewProc->Font = BasicFunc::getMetroFont(9);
@@ -14,7 +14,7 @@ System::Void ProcessSelectionForm::ProcessSelectionForm_Load(System::Object^  se
 	listViewProc->LargeImageList = imglistLarge;
 }
 
-System::Void ProcessSelectionForm::metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void ProcessSelectionForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	if (listViewProc->SelectedItems->Count > 0) {
 		ProcessItem^ p = (ProcessItem^)listViewProc->SelectedItems[0];
 		selectedProcessPath = p->GetPath();
@@ -25,11 +25,11 @@ System::Void ProcessSelectionForm::metroButtonOK_Click(System::Object^  sender, 
 	}
 	this->Close();
 }
-System::Void ProcessSelectionForm::metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+System::Void ProcessSelectionForm::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	this->DialogResult = Windows::Forms::DialogResult::Cancel;
 	this->Close();
 }
-System::Void ProcessSelectionForm::ProcessSelectioNForm_OnShown(System::Object ^sender, System::EventArgs ^e) {
+System::Void ProcessSelectionForm::ProcessSelectioNForm_OnShown(System::Object ^, System::EventArgs ^) {
 	for each(std::string path in SystemAccess::GetRunningProccesses()) {
 		listViewProc->Items->Add(gcnew ProcessItem(path, listViewProc));
 		Application::DoEvents();

@@ -13,7 +13,7 @@ SystemMetricWatcher::SystemMetricWatcher(SettingsProvider* prov, int frequenzy, 
 	cpu_buffer = gcnew AverageBuffer(size);
 	hdd_buffer = gcnew AverageBuffer(size);
 	network_buffer = gcnew AverageBuffer(size);
-
+	sound_buffer = gcnew AverageBuffer(size);
 	system_access = gcnew SystemAccess(prov);
 }
 
@@ -31,7 +31,7 @@ void SystemMetricWatcher::Stop() {
 
 void SystemMetricWatcher::Loop() {
 	while (true) {
-		Sleep(float(1000.0f / frequenzy));
+		Sleep((DWORD)float(1000.0f / frequenzy));
 		ReadValues();
 	}
 }
@@ -46,6 +46,8 @@ float SystemMetricWatcher::GetSystemMetric(SystemAccess::SystemMetric s) {
 		return ram_buffer->GetAverage();
 	case SystemAccess::SystemMetric::NETWORK:
 		return network_buffer->GetAverage();
+	case SystemAccess::SystemMetric::SOUND:
+		return sound_buffer->GetAverage();
 	default:
 		return 0.0f;
 	}
@@ -59,4 +61,6 @@ void SystemMetricWatcher::ReadValues() {
 	hdd_buffer->Put(system_access->GetMetric(SystemAccess::SystemMetric::HDD));
 
 	network_buffer->Put(system_access->GetMetric(SystemAccess::SystemMetric::NETWORK));
+
+	sound_buffer->Put(system_access->GetMetric(SystemAccess::SystemMetric::SOUND));
 }

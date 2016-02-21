@@ -1,5 +1,5 @@
 #pragma once
-#include "BasicFunc.h"
+#include "stdafx.h"
 #include "SystemAccess.h"
 #include "ProcessItem.h"
 

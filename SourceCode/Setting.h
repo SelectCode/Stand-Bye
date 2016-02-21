@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include "BasicFunc.h"
 #include <string>
 #include <algorithm>
 
@@ -8,12 +7,12 @@ using std::string;
 using std::vector;
 
 enum class SettingName {
-	MAX_CPU, MAX_HDD, MAX_NET, MAX_RAM, WAIT_TIME, PROC_EXCP, NET_ADAPT, USE_CPU, USE_HDD, USE_NET, USE_RAM
+	MAX_CPU, MAX_HDD, MAX_NET, MAX_RAM, WAIT_TIME, PROC_EXCP, NET_ADAPT, USE_CPU, USE_HDD, USE_NET, USE_RAM, CHECK_SOUND
 };
 
 class Setting {
 private:
-	const vector<string> NAME_STRINGS = { "MAX_CPU", "MAX_HDD", "MAX_NET", "MAX_RAM", "WAIT_TIME", "PROC_EXCP", "NET_ADAPT", "USE_CPU", "USE_HDD", "USE_NET", "USE_RAM" };
+	const vector<string> NAME_STRINGS = { "MAX_CPU", "MAX_HDD", "MAX_NET", "MAX_RAM", "WAIT_TIME", "PROC_EXCP", "NET_ADAPT", "USE_CPU", "USE_HDD", "USE_NET", "USE_RAM", "CHECK_SOUND" };
 	string ConvertSettingNameToString(SettingName n);
 	vector<string> value;
 	SettingName name;
