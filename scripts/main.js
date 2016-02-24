@@ -13,7 +13,7 @@ var scrollTop, windowHeight, halfWindowHeight;
 var disabled;
 
 //Speed for scrolling the page, WindowHeight/s
-var scrollSpeed = 2;
+var scrollSpeed = 5;
 
 function setActive($n) {
 
@@ -52,6 +52,7 @@ function slideTo($el) {
         easing: "swing",
         complete: function () {
             sliding = false;
+
             //console.log("stopped sliding");
         }
     });
@@ -72,12 +73,13 @@ function scrollToElement($el) {
     $('html, body').stop().animate({
         scrollTop: elOffset - $("#menu").outerHeight()
     }, {
-        duration: time,
+        duration: 500, //time,
         start: function () {
             disabled = true;
         },
         complete: function () {
             disabled = false;
+            checkActive();
         }
     });
 };
