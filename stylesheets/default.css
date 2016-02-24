@@ -298,6 +298,37 @@ a#icon_github:hover>p {
     top: 0;
     left: 0;
     height: 2.5em;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#dropdown_menu ul {
+    background: inherit;
+    display: inline-block;
+    width: auto;
+}
+
+#dropdown_menu li.nav_item {
+    display: block;
+    border-bottom: 2px solid rgba(182, 182, 182, 0.4);
+}
+
+#dropdown_menu li.nav_item a {
+    text-decoration: none;
+    display: block;
+    padding: 0.5em 1.5em;
+    color: #212121;
+    -webkit-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+}
+
+#dropdonw_menu li.current_page_item {
+    font-weight: bold;
+}
+
+#dropdown_menu li.nav_item a:hover {
+    text-decoration: none;
+    color: #fff;
 }
 
 @media only screen and (max-width: 42em) {
