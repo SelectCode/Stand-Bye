@@ -302,15 +302,41 @@ a#icon_github:hover>p {
     font-size: 1.2em;
 }
 
+#dropdown_menu #active_item {
+    display: block;
+    height: 2.5em;
+}
+
+#dropdown_menu #active_item span {
+    display: inline-block;
+    line-height: 2.35;
+}
+
+#dropdown_menu #active_item #dropdown_show {
+    border-bottom: 0.25em solid #ff9800;
+    padding: 0em 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#dropdown_menu #icon_arrow_down {
+    background: url('../images/arrow_down.png');
+    height: 2.5em;
+    width: 1.2em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 #dropdown_menu ul {
     background: inherit;
     display: inline-block;
     width: auto;
+    margin-top: .3em;
 }
 
 #dropdown_menu li.nav_item {
     display: block;
-    border-bottom: 2px solid rgba(182, 182, 182, 0.4);
 }
 
 #dropdown_menu li.nav_item a {
@@ -329,6 +355,7 @@ a#icon_github:hover>p {
 #dropdown_menu li.nav_item a:hover {
     text-decoration: none;
     color: #fff;
+    background-color: #1ABC9C;
 }
 
 @media only screen and (max-width: 42em) {
