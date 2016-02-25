@@ -15,6 +15,10 @@ var disabled;
 //Speed for scrolling the page, WindowHeight/s
 var scrollSpeed = 5;
 
+//dropdown
+var $dropdown_text, $menu_active_item, $dropdown, dropdown_visible;
+
+
 function setActive($n) {
 
     //console.log("set active: " + $n.index());
@@ -102,8 +106,13 @@ function checkActive() {
         //console.log("middle = " + middle + "| top = " + top + "| bottom = " + bottom);
 
         if (middle > top && middle < bottom) {
-            var $navElement = $("#menu li.nav_item").eq(i);
+            var $navElement = $("#menu li.nav_item").eq(i),
+                text = $navElement.text();
             setActive($navElement);
+
+            if (text != $dropdown_text) {
+                $dropdown_text.text($navElement.text());
+            }
             return;
         }
 
@@ -143,6 +152,18 @@ function getImageOffsets() {
 
 };
 
+function toggleDropdown() {
+    if (dropdown_visible) {
+        $dropdown.slideUp(250);
+        dropdown_visible = false;
+
+    } else {
+
+        $dropdown.slideDown(250);
+        dropdown_visible = true;
+    }
+}
+
 $(function () {
 
     "use strict";
@@ -156,6 +177,7 @@ $(function () {
     $slider = $("#menu .slider");
     $topics = $("div.topic");
     $images = $(".parallax div.background img");
+    $dropdown_text = $('#dropdown_text');
 
     $slider.css("left", $active.position().left).width($active.outerWidth());
 
@@ -232,5 +254,31 @@ $(function () {
 
     });
 
+
+
+    //dropdown menu
+    $menu_active_item = $('#dropdown_menu #active_item'),
+        $dropdown = $('#dropdown_menu ul'),
+        dropdown_visible = false;
+
+    $dropdown.css('display', 'inline-block');
+    $dropdown.hide(0);
+
+    $menu_active_item.click(function (e) {
+        e.preventDefault();
+        toggleDropdown();
+    });
+
+    $('#page').click(function () {
+        if (dropdown_visible) {
+            toggleDropdown();
+        }
+    });
+
+    $('#dropdown_menu li.nav_item a').click(function (e) {
+        e.preventDefault();
+        scrollToElement($topics.eq($(this).parent().index()));
+        toggleDropdown();
+    });
 
 });
