@@ -22,9 +22,9 @@
     <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
 
     <script type="text/javascript">
-        document.write("<link href=\"//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css\" rel=\"stylesheet\" type=\"text/css\" />");
-        document.write("<link href=\"./stylesheets/chart.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />");
-        document.write("<link href=\"./stylesheets/script.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />");
+        document.write('<link href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" rel="stylesheet" type="text/css" />');
+        document.write('<link href="./stylesheets/chart.css" rel="stylesheet" type="text/css" media="all" />');
+        document.write('<link href="./stylesheets/script.css" rel="stylesheet" type="text/css" media="all" />');
     </script>
 
     <noscript>
@@ -81,65 +81,22 @@
         <div class="topic">
             <a name="home"></a>
             <div id="home">
-
-
-                <div class="foreground">
-                    <div id="header_wrapper">
-                        <div id="logo_wrapper">
-                            <img id="logo" src="images/logo_optimised.svg" alt="Stand-Bye Logo" />
+                <div class="content">
+                    <div id="header_wrapper" class="center_horizontal">
+                        <div class="center_horizontal">
+                            <div id="logo_wrapper">
+                                <img id="logo" src="images/logo_optimised.svg" alt="Stand-Bye Logo" />
+                            </div>
+                            <h1 id="page_title">Stand-Bye!</h1>
                         </div>
-                        <h1 id="page_title">Stand-Bye</h1>
                         <h2>the eco-friendly next generation</h2>
                     </div>
+                    <p id="explanation" class="center_horizontal">Sag "Bye" zu Umweltverschmutzung und "Bye" zu Komfortverlust! Mit Stand-Bye haben wir es geschafft, den Standby-Modus deines PCs besser und intelligenter zu machen. Stand-Bye hilft dir, Energie zu sparen und die Lebenszeit deines PCs zu verlängern - und das freut sowohl die Umwelt als auch deinen Geldbeutel.</p>
+                    <a class="button center_horizontal" href="https://github.com/flobaader/Stand-Bye/releases/download/v0.4.3/Install_Stand-Bye.msi">Installer Herunterladen</a>
+                    <a id="more" href="#download" data-goto="download" class="in_page center_horizontal">Weitere Downloads>></a>
 
                 </div>
-
-
             </div>
-
-            <div class="content">
-
-
-                <p>Sag "Bye" zu Umweltverschmutzung und "Bye" zu Komfortverlust! Mit Stand-Bye haben wir es geschafft, den Standby-Modus deines PCs besser und intelligenter zu machen. Stand-Bye hilft dir, Energie zu sparen und die Lebenszeit deines PCs zu verlängern - und das freut sowohl die Umwelt als auch deinen Geldbeutel.</p>
-
-                <h2 class="title">Stimmen zu Stand-Bye</h2>
-                <hr />
-
-                <div class="card_wrapper">
-
-                    <div class="card ux">
-
-                        <div>
-                            <img src="./images/ju.jpg" alt="Foto von Jakob" />
-                            <p class="byline">Jakob</p>
-                        </div>
-                        <p>Ich habe die Standby-Funktion meines Rechners deaktiviert, da sie mich bei Downloads von Steam-Spielen und bei anderen Updates gestört hat. Immer wenn sich der Standby-Modus aktivierte, wurde der Download abgebrochen - deshalb musste ich ihn erneut starten und dabei am PC sitzen bleiben.</p>
-
-                    </div>
-
-                    <div class="card ux">
-
-                        <div>
-                            <img src="./images/jr.jpg" alt="Foto von Julia" />
-                            <p class="byline">Julia</p>
-                        </div>
-                        <p>Der Standby-Modus nervt mich, weil ich beim Kopieren oder Verschieben von Dateien immer neben dran sitzen und aufpassen muss, dass sich der Laptop nicht von selbst herunterfährt und der Kopiervorgang abgebrochen wird.
-                        </p>
-
-                    </div>
-                    <div class="card ux">
-
-                        <div>
-                            <img src="./images/jh.jpg" alt="Foto von Julian" />
-                            <p class="byline">Julian</p>
-                        </div>
-                        <p> Leider bin ich mit dem Windows Standby nicht zufrieden. Oft geht mein PC während eines Downloads oder während eines YouTube-Videos aus. Weil mir die Umwelt aber wichtig ist, lasse ich ihn trotzdem aktiviert.</p>
-
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
         <!-- Warum Standbye ------------------------------------------------------------------>
@@ -183,6 +140,42 @@
                         </p>
                     </div>
 
+                </div>
+
+                <h2 class="title">Stimmen zu Stand-Bye</h2>
+                <hr />
+
+                <div class="card_wrapper">
+
+                    <div class="card ux">
+
+                        <div>
+                            <img src="./images/ju.jpg" alt="Foto von Jakob" />
+                            <p class="byline">Jakob</p>
+                        </div>
+                        <p>Ich habe die Standby-Funktion meines Rechners deaktiviert, da sie mich bei Downloads von Steam-Spielen und bei anderen Updates gestört hat. Immer wenn sich der Standby-Modus aktivierte, wurde der Download abgebrochen - deshalb musste ich ihn erneut starten und dabei am PC sitzen bleiben.</p>
+
+                    </div>
+
+                    <div class="card ux">
+
+                        <div>
+                            <img src="./images/jr.jpg" alt="Foto von Julia" />
+                            <p class="byline">Julia</p>
+                        </div>
+                        <p>Der Standby-Modus nervt mich, weil ich beim Kopieren oder Verschieben von Dateien immer neben dran sitzen und aufpassen muss, dass sich der Laptop nicht von selbst herunterfährt und der Kopiervorgang abgebrochen wird.
+                        </p>
+
+                    </div>
+                    <div class="card ux">
+
+                        <div>
+                            <img src="./images/jh.jpg" alt="Foto von Julian" />
+                            <p class="byline">Julian</p>
+                        </div>
+                        <p> Leider bin ich mit dem Windows Standby nicht zufrieden. Oft geht mein PC während eines Downloads oder während eines YouTube-Videos aus. Weil mir die Umwelt aber wichtig ist, lasse ich ihn trotzdem aktiviert.</p>
+
+                    </div>
                 </div>
 
             </div>

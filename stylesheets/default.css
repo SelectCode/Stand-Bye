@@ -21,6 +21,7 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
+    width: 100%;
     padding: 0;
     margin: 0;
 }
@@ -145,92 +146,12 @@ h2.title {
 
 /* Slider Menu ******************************************************************/
 
-#menu-wrapper {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-    background: rgb(29, 104, 134);
-}
-
-#menu {
-    overflow: hidden;
-    width: auto;
-    height: 5em;
-    background: inherit;
-}
-
-#menu ul,
-#dropdown_menu ul,
 #footer ul {
     margin: 0;
     padding: 0 0 0 0;
     list-style: none;
     text-align: center;
     line-height: normal;
-}
-
-#menu li {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
-#menu .nav_item {
-    display: inline-block;
-    padding-right: 1em;
-    padding-left: 1em;
-    min-width: 6.5em;
-    border: none;
-    color: #212121;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: normal;
-    font-weight: 500;
-    font-size: 1em;
-    line-height: 5em;
-    cursor: pointer;
-    -webkit-transition: all 250ms linear;
-    -moz-transition: all 250ms linear;
-    transition: all 250ms linear;
-}
-
-#menu .nav_item:hover,
-#menu .current_page_item.nav_item {
-    color: #FFF;
-    text-decoration: none;
-}
-
-#menu .current_page_item.nav_item {
-    font-weight: bolder;
-    font-size: 1em;
-}
-
-#menu .slider {
-    position: absolute;
-    bottom: 0px;
-    left: 0;
-    z-index: 12;
-    display: inline;
-    width: 100px;
-    height: .25em;
-    background: #FF9800;
-}
-
-@media only screen and (max-width: 50em) {
-    #menu {
-        height: 3.5em;
-    }
-    #menu .nav_item {
-        font-size: .8em;
-        line-height: 4.375em;
-        min-width: 6em;
-        padding: 0em .2em;
-    }
-    #menu .current_page_item.nav_item {
-        font-size: 0.8em;
-    }
 }
 
 
@@ -242,8 +163,8 @@ h2.title {
     right: 0px;
     z-index: 11;
     display: block;
-    width: 5em;
-    height: 5em;
+    width: 6vw;
+    height: 6vw;
     vertical-align: center;
     -webkit-transition: all 200ms linear;
     -moz-transition: all 200ms linear;
@@ -275,8 +196,8 @@ a#icon_github>p {
     text-align: center;
     text-transform: uppercase;
     font-weight: 400;
-    font-size: 1em;
-    line-height: 2.375;
+    font-size: 1vw;
+    line-height: 2.875;
 }
 
 a#icon_github:hover>img {
@@ -285,6 +206,16 @@ a#icon_github:hover>img {
 
 a#icon_github:hover>p {
     display: block;
+}
+
+@media only screen and (max-width: 1000px) {
+    #icon_github {
+        height: 8vw;
+        width: 8vw;
+    }
+    a#icon_github>p {
+        font-size: 1.25vw;
+    }
 }
 
 @media only screen and (max-width: 50em) {
@@ -401,9 +332,9 @@ a#icon_github:hover>p {
     display: block;
     overflow: hidden;
     margin: auto;
-    padding: 5em 0em 0em 0em;
+    padding: 6vw 0em 0em 0em;
     max-width: 1600px;
-    min-width: 300px;
+    min-width: 340px;
 }
 
 @media only screen and (max-width: 50em) {
@@ -452,18 +383,6 @@ a#icon_github:hover>p {
     -webkit-transition: all 200ms linear;
     -moz-transition: all 200ms linear;
     transition: all 200ms linear;
-}
-
-.button:before {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    color: #FFF;
-    text-align: center;
-    line-height: 40px;
 }
 
 .button:hover {
@@ -555,6 +474,12 @@ div.parallax div.background {
     padding: 0;
     width: 100%;
     height: auto;
+}
+
+.topic:after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 
@@ -970,33 +895,48 @@ tr:nth-child(even) {
 
 #home {
     display: block;
-    float: left;
-    clear: both;
     position: relative;
     width: 100%;
-    height: auto;
+    min-height: 100vh;
+    margin-bottom: -5em;
     background: url('../images/banner_home.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: top;
     -moz-background-clip: border-box;
-         background-clip: border-box;
+    background-clip: border-box;
     -moz-background-size: cover;
-         background-size: cover;
+    background-size: cover;
 }
 
-#home .foreground {
+#home .content {
     position: relative;
     display: block;
-    float: left;
+    float: none;
     width: 100%;
     height: 100%;
+    min-height: 100%;
     background: rgba(33, 33, 33, 0.5);
     text-align: center;
+    color: #fff;
+    padding: 0% 10%;
 }
 
+#home .content:after,
+#home:after {
+    content: "";
+    display: block;
+    clear: both;
+}
 
-/* Page header **************************************************************/
+#home .center_horizontal {
+    position: relative;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
 
 #header_wrapper {
     float: left;
@@ -1004,22 +944,36 @@ tr:nth-child(even) {
     text-align: justify;
     display: inline-block;
     padding: 2em;
-    width: auto;
+    width: 100%;
     height: auto;
     position: relative;
     overflow: hidden;
     text-align: center;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%);
-    -moz-transform: translate(-50%);
-    -ms-transform: translate(-50%);
-    transform: translate(-50%);
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+#header_wrapper>div {
+    width: 80vw;
+    height: auto;
+    float: left;
+    clear: both;
+    overflow: visible;
+    vertical-align: center;
 }
 
 #header_wrapper h1 {
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
     clear: none;
+    width: 55vw;
+    height: 25vw;
+    text-transform: uppercase;
+    font-size: 5vw;
+    line-height: 500%;
 }
 
 #header_wrapper h2 {
@@ -1029,7 +983,9 @@ tr:nth-child(even) {
     text-align: center;
     text-transform: uppercase;
     font-weight: 400;
-    color: white;
+    margin-top: 1em;
+    color: #fff;
+    font-size: 2.5vw;
 }
 
 #logo {
@@ -1039,51 +995,114 @@ tr:nth-child(even) {
 }
 
 #logo_wrapper {
-    position: relative;
-    display: inline-block;
-    float: left;
-    clear: none;
-    width: 10em;
-    height: 10em;
-}
-
-#page_title {
     display: block;
     float: left;
     clear: none;
-    text-transform: uppercase;
-    font-size: 3em;
-    line-height: 4em;
-    margin-left: 1em;
+    width: 25vw;
+    height: 25vw;
+    height: auto;
 }
 
-@media only screen and (max-width: 42em) {
+#home .button {
+    float: left;
+    clear: both;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    font-size: 1.5vw;
+    margin-bottom: 1.4em;
+}
+
+#home #more {
+    color: #fff;
+    float: left;
+    clear: both;
+    font-size: 1.5vw;
+    width: 100%;
+    text-decoration: underline;
+    -webkit-transition: all 100ms linear;
+    -moz-transition: all 100ms linear;
+    transition: all 100ms linear;
+    margin-bottom: 3em;
+}
+
+#home #more:hover {
+    color: #1ABC9C;
+}
+
+#explanation {
+    width: 100%;
+    font-size: 1.5vw;
+    color: #fff;
+    text-align: justify;
+    -moz-text-align-last: center;
+    text-align-last: center;
+    margin-bottom: 0;
+    float: left;
+    clear: both;
+    margin-bottom: 3em;
+}
+
+@media only screen and (min-width: 1600px) {
+    #logo_wrapper {
+        height: 400px;
+        width: 400px;
+    }
+    #header_wrapper h1 {
+        height: 400px;
+        width: 880px;
+        font-size: 80px;
+    }
+    #header_wrapper h2 {
+        font-size: 40px;
+    }
+    #header_wrapper>div {
+        width: 1280px;
+    }
+    #explanation,
+    #home .button,
+    #home #more {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 740px) {
     #header_wrapper {
-        padding: 1em;
-    }
-    #header_wrapper h2 {
-        font-size: 1.5em;
+        margin: 1em 0;
     }
     #logo_wrapper {
-        width: 7.5em;
-        height: 7.5em;
-    }
-    #page_title {
-        font-size: 2em;
-        line-height: 3.75em;
-    }
-}
-
-@media only screen and (max-width: 30em) {
-    #header_wrapper h2 {
-        font-size: 1em;
-    }
-    #logo_wrapper {
-        width: 5em;
         height: 5em;
+        width: 5em;
     }
-    #page_title {
-        font-size: 1.5em;
-        line-height: 3.333em;
+    #header_wrapper h1 {
+        display: block;
+        height: 5em;
+        width: auto;
+        font-size: 2em;
+        line-height: 2.5;
+        margin-left: 1em;
+        text-overflow: ellipsis;
+    }
+    #header_wrapper h2 {
+        margin: .5em 0em;
+        font-size: 1.2em;
+    }
+    #header_wrapper>div {
+        width: auto;
+        height: auto;
+        position: relative;
+        left: 50%;
+        -webkit-transform: translate(0, -50%);
+        -moz-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        margin-bottom: 1em;
+    }
+    #explanation,
+    #home .button,
+    #home #more {
+        font-size: 1em;
     }
 }
