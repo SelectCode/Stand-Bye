@@ -87,6 +87,21 @@
     }
 }
 
+@media only screen and (min-width: 1400px) {
+    #menu .nav_item a {
+        font-size: 21px;
+    }
+    #menu {
+        height: 84px;
+    }
+    #menu .slider {
+        height: 4.2px;
+    }
+    #menu ul {
+        margin-right: 84px;
+    }
+}
+
 
 /*@media only screen and (max-width: 50em) {
     #menu {

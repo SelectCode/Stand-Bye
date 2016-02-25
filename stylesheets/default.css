@@ -218,6 +218,17 @@ a#icon_github:hover>p {
     }
 }
 
+@media only screen and (min-width: 1400px) {
+    #icon_github {
+        height: 84px;
+        width: 84px;
+    }
+    a#icon_github>p {
+        font-size: 14px;
+        line-height: 3;
+    }
+}
+
 @media only screen and (max-width: 50em) {
     #icon_github {
         width: 3.5em;
@@ -898,7 +909,7 @@ tr:nth-child(even) {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    margin-bottom: -5em;
+    margin-bottom: -6vw;
     background: url('../images/banner_home.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -912,7 +923,8 @@ tr:nth-child(even) {
 #home .content {
     position: relative;
     display: block;
-    float: none;
+    float: left;
+    clear: both;
     width: 100%;
     height: 100%;
     min-height: 100%;
