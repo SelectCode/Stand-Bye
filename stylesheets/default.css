@@ -315,7 +315,6 @@ a#icon_github:hover>p {
 #dropdown_menu #active_item {
     display: inline-block;
     height: 2.5em;
-    border-bottom: 0.25em solid #ff9800;
     font-weight: 500;
     cursor: pointer;
     -webkit-box-sizing: border-box;
@@ -331,9 +330,9 @@ a#icon_github:hover>p {
     clear: both;
     overflow: hidden;
     font-size: 1.3em;
-    height: 2.25em;
-    line-height: 1.73em;
-    margin-right: .3em;
+    height: 2.5em;
+    line-height: 1.9231em;
+    margin-right: .7em;
     padding: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -348,8 +347,8 @@ a#icon_github:hover>p {
     float: left;
     clear: none;
     padding: .3em;
-    height: 2.25em;
-    width: 2.25em;
+    height: 2.5em;
+    width: 2.5em;
     margin: 0em -0.3em;
 }
 
@@ -726,6 +725,17 @@ div.parallax div.background {
 
 #footer a:hover {
     text-decoration: underline;
+}
+
+@media only screen and (max-width: 27em) {
+    #footer li {
+        float: left;
+        clear: both;
+        height: 3em;
+    }
+    #footer {
+        height: auto;
+    }
 }
 
 
