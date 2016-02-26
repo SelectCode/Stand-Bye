@@ -72,6 +72,8 @@ a img {
 }
 
 hr {
+    float: left;
+    clear: both;
     display: block;
     width: 100%;
     color: #212121;
@@ -110,6 +112,14 @@ hr {
     -ms-flex-pack: center;
     -moz-box-pack: center;
     justify-content: center;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    visibility: hidden;
+    float: left;
+    clear: both;
 }
 
 
