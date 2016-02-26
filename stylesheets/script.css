@@ -85,6 +85,12 @@
     #menu ul {
         margin-right: 8vw;
     }
+    #page {
+        padding-top: 8vw;
+    }
+    #home {
+        margin-bottom: -8vw;
+    }
 }
 
 @media only screen and (min-width: 1400px) {
@@ -99,6 +105,190 @@
     }
     #menu ul {
         margin-right: 84px;
+    }
+    #page {
+        padding-top: 84px;
+    }
+}
+
+
+/* Dropdwown menu **********************************************************/
+
+#dropdown_menu {
+    display: none;
+    width: 100%;
+    background: #1D6886;
+    top: 0;
+    left: 0;
+    height: 2.5em;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#dropdown_menu #active_item {
+    display: inline-block;
+    height: 2.5em;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 .7em;
+}
+
+#dropdown_menu #dropdown_text {
+    color: #fff;
+    display: block;
+    float: left;
+    clear: both;
+    overflow: hidden;
+    font-size: 1.3em;
+    height: 2.5em;
+    line-height: 1.9231em;
+    margin-right: .7em;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#dropdown_menu #icon_arrow_down {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    clear: none;
+    padding: .3em;
+    height: 2.5em;
+    width: 2.5em;
+    margin: 0em -0.3em;
+}
+
+#dropdown_menu ul {
+    background: inherit;
+    display: none;
+    width: auto;
+    padding: .3em 0em;
+    margin-top: .7em;
+}
+
+#dropdown_menu li.nav_item {
+    display: block;
+}
+
+#dropdown_menu li.nav_item a {
+    text-decoration: none;
+    display: block;
+    padding: 0.5em 1.5em;
+    color: #212121;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+}
+
+#dropdonw_menu li.current_page_item {
+    font-weight: bold;
+}
+
+#dropdown_menu li.nav_item a:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #1ABC9C;
+}
+
+@media only screen and (max-width: 42em) {
+    #menu {
+        display: none;
+    }
+    #dropdown_menu {
+        display: block;
+    }
+}
+
+
+/* Github icon **********************************************************/
+
+#icon_github {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 11;
+    display: block;
+    width: 6vw;
+    height: 6vw;
+    vertical-align: center;
+    -webkit-transition: all 200ms linear;
+    -moz-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+
+a#icon_github>img {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0.7em;
+    width: 100%;
+    height: 100%;
+}
+
+#icon_github:hover {
+    background: #1ABC9C;
+}
+
+a#icon_github>p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: auto;
+    color: #fff;
+    vertical-align: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1vw;
+    line-height: 2.875;
+}
+
+a#icon_github:hover>img {
+    display: none;
+}
+
+a#icon_github:hover>p {
+    display: block;
+}
+
+@media only screen and (max-width: 1000px) {
+    #icon_github {
+        height: 8vw;
+        width: 8vw;
+    }
+    a#icon_github>p {
+        font-size: 1.25vw;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    #icon_github {
+        height: 84px;
+        width: 84px;
+    }
+    a#icon_github>p {
+        font-size: 14px;
+        line-height: 3;
+    }
+}
+
+@media only screen and (max-width: 50em) {
+    #icon_github {
+        width: 3.5em;
+        height: 3.5em;
+    }
+    a#icon_github>p {
+        font-size: .5em;
+        line-height: 3.25;
     }
 }
 
@@ -118,6 +308,7 @@
     }
 }*/
 
-.noscript_overlay {
+.noscript_overlay,
+#noscript_footer {
     display: none;
 }
