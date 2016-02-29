@@ -3,7 +3,7 @@
  * STAND_BYE! SOURCE CODE
  * ----------------------------------------------------------------------
  * for more information see: http://www.stand-bye.de
- * FILE: InputMonitor.h
+ * FILE: InstanceMonitor.h
  * Author: Florian Baader
  * Contact: flobaader@web.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -11,28 +11,26 @@
 //////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
-#include "SystemMetricWatcher.h"
-#include "SystemAccess.h"
+
+using System::String;
+using namespace System::Threading;
 
 ref class mainApplication;
-
-public  ref class InputMonitor {
+ref class InstanceMonitor
+{
 private:
-	int wait_time;
-	bool aborted;
-	mainApplication^ parent;
-	ThreadStart^ thread_start;
-	Thread^ watcher;
-	SettingsProvider* settings_provider;
+	mainApplication^ mApplication;
+	Thread^ monThread;
+	HANDLE hMutex;
+	bool anotherInstanceRunning;
+	bool exit = false;
+	String^ path;
+	void monitor();
+	void writeFile();
+	void deleteFile();
 
 public:
-	InputMonitor(mainApplication^ parent, SettingsProvider* s);
-	~InputMonitor();
-
-	void Reset();
-	void Stop();
-	void Start();
-
-private:
-	void Monitor();
+	InstanceMonitor(mainApplication^ parent);
+	bool isAnotherInstanceRunning();
+	void Destroy();
 };

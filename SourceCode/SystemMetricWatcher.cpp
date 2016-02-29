@@ -1,7 +1,18 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SystemMetricWatcher.cpp
+ * Author: Matthias Weirich
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "SystemMetricWatcher.h"
 
-SystemMetricWatcher::SystemMetricWatcher(SettingsProvider* prov, int frequenzy, int time) {
+SystemMetricWatcher::SystemMetricWatcher(SystemAccess^ system_access, int frequenzy, int time) {
 	ThreadStart^ start = gcnew ThreadStart(this, &SystemMetricWatcher::Loop);
 	background_thread = gcnew Thread(start);
 	background_thread->IsBackground = true;
@@ -14,7 +25,7 @@ SystemMetricWatcher::SystemMetricWatcher(SettingsProvider* prov, int frequenzy, 
 	hdd_buffer = gcnew AverageBuffer(size);
 	network_buffer = gcnew AverageBuffer(size);
 	sound_buffer = gcnew AverageBuffer(size);
-	system_access = gcnew SystemAccess(prov);
+	this->system_access = system_access;
 }
 
 SystemMetricWatcher::~SystemMetricWatcher() {

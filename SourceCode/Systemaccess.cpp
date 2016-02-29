@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SystemAccess.cpp
+ * Author: Florian Baader, Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 
 //Has to be here!
@@ -10,6 +21,7 @@ if (FAILED(hr)){LOG("AUDIO LEVEL DETECTION FAILED"); return 0.0f;}
 
 SystemAccess::SystemAccess(SettingsProvider* p)
 {
+	LOG("Loading SystemAccess instance...");
 	setprov = p;
 	perfCPU = gcnew PerformanceCounter("Processor", "% Processor Time", "_Total");
 	perfHDD = gcnew PerformanceCounter("PhysicalDisk", "Disk Bytes/sec", "_Total");
@@ -125,7 +137,7 @@ void SystemAccess::SetPresentationMode(boolean state) {
 		SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED); //Application requires screen and system online
 	}
 	else {
-		SetThreadExecutionState(ES_CONTINUOUS); //reset the requirements
+		SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED); //reset the requirements
 	}
 }
 
@@ -136,11 +148,45 @@ void SystemAccess::SetAutoStart(boolean value) {
 	//LocalMaschine require administrator rights
 	rk = Registry::CurrentUser->OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 	if (value) {
-		rk->SetValue(APPLICATION_NAME, path);
+		rk->SetValue(APP_NAME, path);
+		LOG("The autostart has been set");
 	}
 	else {
-		rk->SetValue(APPLICATION_NAME, "");
+		rk->SetValue(APP_NAME, "");
+		LOG("The autostart has been disabled");
 	}
+}
+
+void SystemAccess::EnableWindowsStandBy()
+{
+	SetThreadExecutionState(ES_CONTINUOUS);
+	LOG("Re-Enabled Windows Standby!");
+}
+
+void SystemAccess::DisableWindowsStandBy()
+{
+	SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+	LOG("Disabled Windows Standby!");
+}
+
+bool SystemAccess::isUserActive()
+{
+	//DWORD ActiveSessionID = WTSGetActiveConsoleSessionId();
+	/*
+
+You can call WTSGetActiveConsoleSessionId to get the terminal services (aka "fast user switching" aka "remote desktop") session ID that is currently active on the physical console.
+
+You can call WTSQuerySessionInformation with WTS_CURRENT_SESSION for the session identifier and WTSSessionId for WTSInfoClass to get the terminal services session ID for the current process.
+
+If the active session ID and the current process session ID are the same, the user corresponding to the current process has the active session on the physical console.
+
+If what you want to know is whether the session that the current process is running in is active (but not necessarily on the physical console) you can instead use the WTSConnectState option to WTSQuerySessionInformation.
+
+	*/
+
+	//	DWORD SessionID;
+		//WTSQuerySessionInformation(WTS_CURRENT_SESSION, SessionID, WTSSessionId, )
+	return true;
 }
 
 bool SystemAccess::IsInAutoStart() {
@@ -150,7 +196,7 @@ bool SystemAccess::IsInAutoStart() {
 	//Local machine require administrator rights
 	rk = Registry::CurrentUser->OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 	System::Object^ o = nullptr;
-	o = rk->GetValue(APPLICATION_NAME, "");
+	o = rk->GetValue(APP_NAME, "");
 	if (o == nullptr || o->ToString()->Length == 0 || o->ToString() != path)
 	{
 		return false;
@@ -189,6 +235,7 @@ std::vector<std::string> SystemAccess::GetNetAdapterNames() {
 	System::String ^filter = gcnew System::String("MS TCP Loopback interface");
 	std::vector<std::string> *nics = new std::vector<std::string>();
 	PerformanceCounterCategory^ category = gcnew PerformanceCounterCategory("Network Interface");
+	LOG("Get Network Adapter Names:");
 	if (category->GetInstanceNames() != __nullptr)
 	{
 		for each (System::String ^nic in category->GetInstanceNames())
@@ -196,6 +243,7 @@ std::vector<std::string> SystemAccess::GetNetAdapterNames() {
 			if (!nic->Equals(filter))
 			{
 				nics->push_back(BasicFunc::StringToString(nic));
+				LOG("\t" + nic);
 			}
 		}
 	}

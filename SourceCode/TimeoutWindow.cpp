@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: TimeoutWindow.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "TimeoutWindow.h"
@@ -39,6 +50,7 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 		metroProgressBar1->Value = 100 - (int)Math::Truncate(((double)past_millis / (double)delay) * 100);
 		counter++;
 		this->BringToFront();
+		this->Activate();
 	}
 	else {
 		this->DialogResult = Windows::Forms::DialogResult::OK;

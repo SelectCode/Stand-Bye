@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: BasicFunc.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "BasicFunc.h"
@@ -49,7 +60,8 @@ System::String ^ BasicFunc::getLogFilePath()
 	DateTime^ starttime = Process::GetCurrentProcess()->StartTime;
 
 	//Path
-	String^ mainFolder = System::IO::Directory::GetCurrentDirectory();
+	//String^ mainFolder = System::IO::Directory::GetCurrentDirectory(); //Programm Directory
+	String^ mainFolder = getStandByeAppDataFolderPath();
 	String^ log_folder = Path::Combine(mainFolder, "logs");
 	String^ current_date_folder = Path::Combine(log_folder, starttime->ToString("yyyy_MM_dd"));
 	String^ file_path = Path::Combine(current_date_folder, starttime->ToString("HH_mm") + ".txt");
@@ -76,8 +88,9 @@ void BasicFunc::Log(System::String^ text)
 	try {
 		sw = File::AppendText(BasicFunc::getLogFilePath());
 	}
-	catch (System::Exception^) {
-		//Could not find / open the file
+	catch (System::Exception^ e) {
+		System::Diagnostics::Debug::WriteLine(e->Message);
+		System::Diagnostics::Debug::WriteLine(e->StackTrace);
 		return;
 	}
 
@@ -101,6 +114,13 @@ bool BasicFunc::isNumerique(std::string text)
 bool BasicFunc::isNumerique(System::String ^ text)
 {
 	return isNumerique(BasicFunc::StringToString(text));
+}
+
+System::String ^ BasicFunc::getStandByeAppDataFolderPath()
+{
+	String^ path = Environment::GetFolderPath(Environment::SpecialFolder::ApplicationData);
+	path = System::IO::Path::Combine(path, "StandBye");
+	return path;
 }
 
 void BasicFunc::Log(std::string text)

@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SettingsProvider.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "SettingsProvider.h"
@@ -31,7 +42,7 @@ string SettingsProvider::getRawSetting(SettingName name) {
 	}
 	catch (Exception^ e) {
 		LOG("Could not get Raw Setting!");
-		LOG(e->Data + "\n" + e->InnerException + "\n" + e->Message);
+		LOG(e->Message + "\n" + e->Data + "\n" + e->StackTrace);
 		return "";
 	}
 }
@@ -56,7 +67,7 @@ bool SettingsProvider::isActive(SettingName name) {
 	}
 }
 
-bool SettingsProvider::setActiveState(SettingName name, bool status) {
+void SettingsProvider::setActiveState(SettingName name, const bool status) {
 	string value = "ERROR";
 	if (status == true) {
 		value = "TRUE";
@@ -65,7 +76,6 @@ bool SettingsProvider::setActiveState(SettingName name, bool status) {
 		value = "FALSE";
 	}
 	getSettingbyName(name)->ChangeValue(value);
-	return writeSettingsFile();
 }
 
 void SettingsProvider::setSetting(SettingName name, const string value) {
@@ -80,12 +90,14 @@ vector<string> SettingsProvider::getProcessList() {
 	return SettingsProvider::getSettingbyName(SettingName::PROC_EXCP)->GetValue();
 };
 
-void SettingsProvider::addProcessToProcessList(const string process) {
+bool SettingsProvider::addProcessToProcessList(const string process) {
 	if (!getSettingbyName(SettingName::PROC_EXCP)->Contains(process)) {
 		getSettingbyName(SettingName::PROC_EXCP)->AddValue(process);
+		return true;
 	}
 	else {
 		LOG("Process already added");
+		return false;
 	}
 };
 
@@ -107,6 +119,8 @@ bool SettingsProvider::reset() {
 	SettingsList.push_back(new Setting(SettingName::MAX_NET, MAX_NET_DEFAULT));
 	SettingsList.push_back(new Setting(SettingName::CHECK_SOUND, "TRUE"));
 	SettingsList.push_back(new Setting(SettingName::PROC_EXCP, PROC_EXCP_DEFAULT));
+	SettingsList.push_back(new Setting(SettingName::SEARCH_UPDATES, "TRUE"));
+	SettingsList.push_back(new Setting(SettingName::SHOW_MESSAGES, "TRUE"));
 	return writeSettingsFile();
 }
 

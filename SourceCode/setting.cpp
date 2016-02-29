@@ -1,17 +1,28 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: setting.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "Setting.h"
 
 using std::vector;
 using std::string;
 
-string Setting::ConvertSettingNameToString(SettingName name) {
-	return NAME_STRINGS.at(static_cast<int>(name));
+string Setting::ConvertSettingNameToString(SettingName settingname) {
+	return NAME_STRINGS.at(static_cast<int>(settingname));
 };
 
-SettingName Setting::ConvertStringToSettingName(string name) {
+SettingName Setting::ConvertStringToSettingName(string string_name) {
 	int counter = 0;
 	for each(string s in NAME_STRINGS) {
-		if (s == name) {
+		if (s == string_name) {
 			SettingName n = static_cast<SettingName>(counter);
 			return n;
 		}

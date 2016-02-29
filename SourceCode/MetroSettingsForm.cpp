@@ -1,13 +1,28 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: MetroSettingsForm.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "MetroSettingsForm.h"
+#include "standbye_main.h"
 using namespace StandBye;
 
-void MetroSettingsForm::forceRefreshUI() {
-	timerUIRefresh_Tick(gcnew System::Object, gcnew System::EventArgs);
-}
 System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::EventArgs^) {
+	//KeyPreview
+	this->KeyPreview = true;
+
 	//Focus on first tabPage
 	metroTabControl1->SelectedTab = metroTabPage1;
+
+	//Activate
+	this->Activate();
 
 	//Load Settings
 	metroTrackBarCPU->Value = settings_provider->getThreshold(SettingName::MAX_CPU);
@@ -34,10 +49,20 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 
 	//Load Processes
 	refreshIcons();
+	listViewProc->Items->Clear();
 	for each(std::string str in  settings_provider->getProcessList()) {
 		listViewProc->Items->Add(gcnew ProcessItem(str, listViewProc));
 	}
 	listViewProc->Update();
+
+	//Presentation mode
+	metroTogglePresMode->Checked = parent->isInPresentationMode();
+
+	//Updates
+	metroToggleUPDATES->Checked = settings_provider->isActive(SettingName::SEARCH_UPDATES);
+
+	//Messages
+	metroToggleMessages->Checked = settings_provider->isActive(SettingName::SHOW_MESSAGES);
 
 	//Start Timer
 	timerRefresh->Start();
@@ -45,10 +70,14 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 }
 
 double MetroSettingsForm::getTextBoxValueAsDouble(MetroFramework::Controls::MetroTextBox^ box) {
-	box->Text = box->Text->Replace(",", ".");
-	double value = -1;
-	value = atof(BasicFunc::StringToString(box->Text).c_str());
-	return value;
+	box->Text = box->Text->Trim();
+	box->Text = box->Text->Replace(".", ",");
+	try {
+		return Convert::ToDouble(box->Text);
+	}
+	catch (Exception^) {
+		return -1;
+	}
 }
 
 void MetroSettingsForm::setTextBoxValue(MetroFramework::Controls::MetroTextBox^ box, double value) {
@@ -96,35 +125,20 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	metroToolTip1->SetToolTip(metroLabelCurHDD, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::HDD) / 1000));
 	metroToolTip1->SetToolTip(metroLabelCurNET, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::NETWORK) / 1000));
 
-	//Gets Focus
-	this->Focus();
+	//this->Activate();
 }
 System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
-	settings_provider->setSetting(SettingName::MAX_CPU, Decimal::ToInt32(metroTrackBarCPU->Value));
-	settings_provider->setSetting(SettingName::MAX_RAM, Decimal::ToInt32(metroTrackBarRAM->Value));
-	settings_provider->setSetting(SettingName::MAX_HDD, (int)(getTextBoxValueAsDouble(metroTextBoxHDD) * 1000));
-	settings_provider->setSetting(SettingName::MAX_NET, (int)(getTextBoxValueAsDouble(metroTextBoxNET) * 1000));
-	settings_provider->setSetting(SettingName::WAIT_TIME, (int)getTextBoxValueAsDouble(metroTextBoxTimeMIN) * 60 + (int)getTextBoxValueAsDouble(metroTextBoxTimeSEC));
-	settings_provider->setActiveState(SettingName::USE_CPU, metroToggleCPU->Checked);
-	settings_provider->setActiveState(SettingName::USE_HDD, metroToggleHDD->Checked);
-	settings_provider->setActiveState(SettingName::USE_RAM, metroToggleRAM->Checked);
-	settings_provider->setActiveState(SettingName::USE_NET, metroToggleNET->Checked);
-	settings_provider->setActiveState(SettingName::CHECK_SOUND, metroToggleSOUND->Checked);
-
-	for each(ListViewItem^ l in listViewProc->Items) {
-		ProcessItem^ p = (ProcessItem^)l;
-		p->Write(settings_provider);
-	}
-
-	if (settings_provider->saveSettingsToFile() == false) {
-		MessageBoxA(NULL, "Writing Settings not successful!", "Writing not successful!", MB_OK);
-	}
-	this->DialogResult = Windows::Forms::DialogResult::OK;
-	this->Hide();
+	LOG("SettingsForm: OK Button Clicked");
+	//disables Form;
+	this->Visible = false;
+	writeSettings();
+	input_monitor->Reset();
+	LOG("Settingsform closing");
 }
 System::Void MetroSettingsForm::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
-	this->DialogResult = Windows::Forms::DialogResult::Cancel;
-	this->Hide();
+	LOG("SettingsForm: CANCEL Button Clicked");
+	this->Visible = false;
+	LOG("Settingsform closing");
 }
 System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, System::EventArgs^) {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
@@ -134,8 +148,13 @@ System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, Sy
 	ofd->RestoreDirectory = true;
 	if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 		if (ofd->CheckFileExists != false) {
-			settings_provider->addProcessToProcessList(BasicFunc::StringToString(ofd->FileName));
-			listViewProc->Items->Add(gcnew ProcessItem(BasicFunc::StringToString(ofd->FileName), listViewProc));
+			if (settings_provider->addProcessToProcessList(BasicFunc::StringToString(ofd->FileName))) {
+				//If item is not already existing...
+				listViewProc->Items->Add(gcnew ProcessItem(BasicFunc::StringToString(ofd->FileName), listViewProc));
+			}
+			else {
+				MessageBoxA(NULL, "Process has already been added!", "Error!", MB_OK);
+			}
 		}
 	}
 }
@@ -144,6 +163,13 @@ System::Void MetroSettingsForm::metroButtonAddFromList_Click(System::Object^, Sy
 	ProcessSelectionForm^ ProcForm = gcnew ProcessSelectionForm;
 	if (ProcForm->ShowDialog() == Windows::Forms::DialogResult::OK) {
 		if (ProcForm->selectedProcessPath != "") {
+			for each(ListViewItem^ item in listViewProc->Items) {
+				ProcessItem^ p = (ProcessItem^)item;
+				if (p->GetPath() == ProcForm->selectedProcessPath) {
+					MessageBoxA(NULL, "Process has already been added!", "Error!", MB_OK);
+					return;
+				}
+			}
 			listViewProc->Items->Add(gcnew ProcessItem(BasicFunc::StringToString(ProcForm->selectedProcessPath), listViewProc));
 		}
 	}
@@ -165,6 +191,16 @@ System::Void MetroSettingsForm::metroToggleView_CheckedChanged(System::Object^, 
 	else {
 		listViewProc->View = Windows::Forms::View::Tile;
 	}
+}
+
+System::Void StandBye::MetroSettingsForm::metroToggleOnTop_CheckedChanged(System::Object ^, System::EventArgs ^)
+{
+	this->TopMost = metroToggleOnTop->Checked;
+}
+
+System::Void StandBye::MetroSettingsForm::metroTogglePresMode_CheckedChanged(System::Object ^, System::EventArgs ^)
+{
+	parent->setPresentationMode(metroTogglePresMode->Checked);
 }
 
 void MetroSettingsForm::refreshIcons() {
@@ -193,6 +229,33 @@ System::Void MetroSettingsForm::metroTrackBarCPU_Scroll(System::Object^, System:
 System::Void MetroSettingsForm::metroToggleAutoStart_CheckedChanged(System::Object^, System::EventArgs^) {
 	SystemAccess::SetAutoStart(metroToggleAutoStart->Checked);
 }
+void StandBye::MetroSettingsForm::writeSettings()
+{
+	//Sets Settings
+	settings_provider->setSetting(SettingName::MAX_CPU, Decimal::ToInt32(metroTrackBarCPU->Value));
+	settings_provider->setSetting(SettingName::MAX_RAM, Decimal::ToInt32(metroTrackBarRAM->Value));
+	settings_provider->setSetting(SettingName::MAX_HDD, (int)(getTextBoxValueAsDouble(metroTextBoxHDD) * 1000));
+	settings_provider->setSetting(SettingName::MAX_NET, (int)(getTextBoxValueAsDouble(metroTextBoxNET) * 1000));
+	settings_provider->setSetting(SettingName::WAIT_TIME, (int)getTextBoxValueAsDouble(metroTextBoxTimeMIN) * 60 + (int)getTextBoxValueAsDouble(metroTextBoxTimeSEC));
+	settings_provider->setActiveState(SettingName::USE_CPU, metroToggleCPU->Checked);
+	settings_provider->setActiveState(SettingName::USE_HDD, metroToggleHDD->Checked);
+	settings_provider->setActiveState(SettingName::USE_RAM, metroToggleRAM->Checked);
+	settings_provider->setActiveState(SettingName::USE_NET, metroToggleNET->Checked);
+	settings_provider->setActiveState(SettingName::CHECK_SOUND, metroToggleSOUND->Checked);
+	settings_provider->setActiveState(SettingName::SEARCH_UPDATES, metroToggleUPDATES->Checked);
+	settings_provider->setActiveState(SettingName::SHOW_MESSAGES, metroToggleMessages->Checked);
+
+	//Sets processes
+	for each(ListViewItem^ l in listViewProc->Items) {
+		ProcessItem^ p = (ProcessItem^)l;
+		p->Write(settings_provider);
+	}
+
+	//Writes settings to file
+	if (!settings_provider->saveSettingsToFile()) {
+		MessageBoxA(NULL, "Writing Settings not successful!", "Writing not successful!", MB_OK);
+	}
+}
 System::Void MetroSettingsForm::metroTileHomepage_Click(System::Object^, System::EventArgs^) {
 	ShellExecute(0, 0, "http://www.stand-bye.de", 0, 0, SW_SHOW);
 }
@@ -209,7 +272,8 @@ System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sen
 		double value = getTextBoxValueAsDouble(txt);
 		if (value == -1) {
 			//Could not convert
-			txt->Text = "";
+			txt->Text = "0.0";
+			MessageBoxA(NULL, "Please insert numbers from 0 - 9", "Error!", MB_OK);
 		}
 		else {
 			if (Math::Floor(value) == value) {
@@ -221,5 +285,35 @@ System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sen
 			}
 		}
 		forceRefreshUI();
+		this->Activate();
+	}
+}
+
+void MetroSettingsForm::forceRefreshUI() {
+	timerUIRefresh_Tick(gcnew System::Object, gcnew System::EventArgs);
+}
+
+void StandBye::MetroSettingsForm::OnVisibleChanged(System::Object ^, System::EventArgs ^)
+{
+	if (this->Visible) {
+		MetroSettingsForm_Load(nullptr, nullptr);
+		timerRefresh->Start();
+		forceRefreshUI();
+	}
+	else {
+		timerRefresh->Stop();
+	}
+}
+
+void StandBye::MetroSettingsForm::OnClosing(System::Object ^, System::ComponentModel::CancelEventArgs ^e)
+{
+	e->Cancel = true; //Form should not be closed, but only hidden
+	this->Hide();
+}
+
+void StandBye::MetroSettingsForm::OnKeyDown(System::Object ^, System::Windows::Forms::KeyEventArgs ^e)
+{
+	if (e->Alt && e->Control && e->KeyCode == Windows::Forms::Keys::P) {
+		metroTogglePresMode->Checked = !metroTogglePresMode->Checked;
 	}
 }

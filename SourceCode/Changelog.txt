@@ -1,0 +1,61 @@
+# Changelog:
+
+## v.0.5.2
+* Added installer meta-data
+* Added single instance application support
+* Added cross instance messaging to open the SettingsForm when another instance is launched
+* Updated MetroForm and added features and tooltips
+* Extended Logsystem
+* Application temporary disables the windows standby while StandBye is running
+* Added Copyright notes in all files
+* Added option to disable messages from icon
+* Fixed Bugs:
+	* Fixed too many IO operations of the settingsProvider
+	* Fixed long loading time of SettingsForm
+	* Fixed missing icons
+	* Fixed too many instances of SystemAccess
+	* Fixed RefreshTimer issue on SettingsForm
+	* Fixed LogFiles Directory (IO AccessRights)
+	* Fixed maxLength and Formatting of TextBoxes
+	* Fixed presentation mode issue after messagebox
+	* Fixed option to add processes twice
+	* Fixed disposed error on closing SettingsForm
+	* Fixed Downloading issue, if no internet connection is available
+	* Fixed decimal separator in textboxes
+
+### in Progress:
+- [x] Fixing Bugs
+- [ ] @vavido minimalistic design of the homepage 
+- [ ] Fixing problems with multi-user systems
+- [ ] Designing software as a service
+
+### older versions
+
+#### v0.4.3
+* Added sound detection (audio peak measurement)
+* Added Option to cancel shutdown while sound is playing
+* Added debug window to show detailed information
+* Implemented Log System
+* Fixed some bugs
+* Code improvements and code commenting
+* Improved exception handling
+
+#### v0.3
+* Added tooltips to system tray icon
+* Leftclick on icon opens settingsform
+* Some GUI updates
+* code improvements
+
+#### v0.2
+* System-Usage monitoring
+* Buffering Usage over 30 seconds
+* Settings with current usage
+* Multi-Threaded
+* Wait-Time
+* Exception processes from file / current running processes
+* Autostart
+* Presentationmode
+
+#### v0.1
+* Some tests
+* first code

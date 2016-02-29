@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SystemAccess.h
+ * Author: Florian Baader, Stephan Le
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "SettingsProvider.h"
 #include <string>
@@ -47,6 +58,12 @@ public:
 	static void SetPresentationMode(boolean value);
 
 	static void SetAutoStart(boolean value);
+
+	static void EnableWindowsStandBy();
+
+	static void DisableWindowsStandBy();
+
+	static bool isUserActive();
 
 	static bool IsInAutoStart();
 

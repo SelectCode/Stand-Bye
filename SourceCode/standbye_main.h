@@ -1,15 +1,30 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: standbye_main.h
+ * Author: Florian Baader, Matthias Weirich
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "resource1.h"
 #include "TimeoutWindow.h"
 #include "SystemAccess.h"
 #include "SystemMetricWatcher.h"
-#include "MetroSettingsForm.h"
 #include "MessageWindow.h"
 #include "InputMonitor.h"
+#include "InstanceMonitor.h"
+#include "MetroSettingsForm.h"
+#include "Updater.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow);
+
 using namespace StandBye;
+
 public ref class mainApplication {
 private:
 	NotifyIcon^ trayicon;
@@ -19,23 +34,33 @@ private:
 	SettingsProvider* settings_provider;
 	SystemAccess^ system_access;
 	InputMonitor^ input_monitor;
+	InstanceMonitor^ instance_monitor;
 
-	bool inPresentationMode;
-	bool onExit;
+	bool inPresentationMode = false;
+	bool onExit = false;
+	bool ask_Enable_PresentationMode = true;
 
 public:
 	mainApplication(HINSTANCE hInstance);
 	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
 	void CheckUsage();
+	void OpenSettingsForm();
+	bool isInPresentationMode();
+	void setPresentationMode(bool value);
+	void Quit(Object^, System::EventArgs^);
 
 private:
-	void OpenSettings(Object^ s, System::EventArgs^ event_args);
-	void Quit(Object^ s, System::EventArgs^ event_args);
-	void SetPresentationMode(Object^ s, System::EventArgs^ event_args);
+
+	void OpenSettings(Object^, System::EventArgs^);
+	void SetPresentationMode(Object^, System::EventArgs^);
 	ContextMenu^ GetContextMenu();
 	void OnThreadException(System::Object^ sender, System::Threading::ThreadExceptionEventArgs^ args);
-	void OnMouseClick(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e);
+	void OnIconMouseClick(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e);
 	void OpenDebugForm(System::Object ^sender, System::EventArgs ^e);
+	void CheckForUpdatesOnStartUp();
+	void CheckForUpdatesClicked(System::Object ^sender, System::EventArgs ^e);
+	void OnIconBalloonTipClicked(System::Object ^sender, System::EventArgs ^e);
+	void ShowBallonTipMessage(System::String^ text);
 };
 
 ref class NotifyIconAppContext : System::Windows::Forms::ApplicationContext {

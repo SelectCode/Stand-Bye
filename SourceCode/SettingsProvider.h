@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SettingsProvider.h
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "Setting.h"
@@ -13,7 +24,7 @@
 #define MAX_RAM_DEFAULT "20"                     /*in percent*/
 #define WAIT_TIME_DEFAULT "300"                  /*in seconds*/
 #define PROC_EXCP_DEFAULT ""                     /*paths to exception processes*/
-#define SETTINGS_COUNT 11                        /*to check amount of settings in file*/
+#define SETTINGS_COUNT 13                        /*to check amount of settings in file*/
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -49,7 +60,7 @@ public:
 	///<summary>Sets if selected Metric should be monitored or not
 	///<para>use namespace <code> SettingName:: </code> to get the Names!</para>
 	///</summary>
-	bool setActiveState(SettingName name, const bool status);
+	void setActiveState(SettingName name, const bool status);
 
 	///<summary>Sets the value for a specified Setting in percent or kBit/s</summary>
 	///<param name="limit">The maximum value</param>
@@ -64,7 +75,7 @@ public:
 
 	///<summary>Adds one Process to the blocked process list</summary>
 	///<param name="process">path of the process</param>
-	void addProcessToProcessList(const string process);
+	bool addProcessToProcessList(const string process);
 
 	///<summary>Adds one Process to the blocked process list.</summary>
 	///<param name="process">path of the process</param>

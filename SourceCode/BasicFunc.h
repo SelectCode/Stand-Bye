@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: BasicFunc.h
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include <string>
 #include <msclr\marshal_cppstd.h> //Converting System::String to std::string
@@ -37,4 +48,7 @@ namespace BasicFunc {
 
 	///<summary>Checks if string only contains numerique characters</summary>
 	bool isNumerique(System::String^ text);
+
+	///<summary>Returns the path to the StandBye AppData Folder</summary>
+	System::String^ getStandByeAppDataFolderPath();
 }

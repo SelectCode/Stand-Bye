@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: SystemMetricWatcher.h
+ * Author: Matthias Weirich
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include "SystemAccess.h"
@@ -7,7 +18,7 @@ using namespace System::Threading;
 
 public ref class SystemMetricWatcher {
 public:
-	SystemMetricWatcher(SettingsProvider* settings_provider_, int frequenzy, int time);
+	SystemMetricWatcher(SystemAccess^ system_access, int frequenzy, int time);
 	~SystemMetricWatcher();
 	void Start();
 	void Stop();

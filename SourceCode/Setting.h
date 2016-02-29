@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: Setting.h
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "stdafx.h"
 #include <string>
@@ -7,12 +18,12 @@ using std::string;
 using std::vector;
 
 enum class SettingName {
-	MAX_CPU, MAX_HDD, MAX_NET, MAX_RAM, WAIT_TIME, PROC_EXCP, NET_ADAPT, USE_CPU, USE_HDD, USE_NET, USE_RAM, CHECK_SOUND
+	MAX_CPU, MAX_HDD, MAX_NET, MAX_RAM, WAIT_TIME, PROC_EXCP, NET_ADAPT, USE_CPU, USE_HDD, USE_NET, USE_RAM, CHECK_SOUND, SEARCH_UPDATES, SHOW_MESSAGES
 };
 
 class Setting {
 private:
-	const vector<string> NAME_STRINGS = { "MAX_CPU", "MAX_HDD", "MAX_NET", "MAX_RAM", "WAIT_TIME", "PROC_EXCP", "NET_ADAPT", "USE_CPU", "USE_HDD", "USE_NET", "USE_RAM", "CHECK_SOUND" };
+	const vector<string> NAME_STRINGS = { "MAX_CPU", "MAX_HDD", "MAX_NET", "MAX_RAM", "WAIT_TIME", "PROC_EXCP", "NET_ADAPT", "USE_CPU", "USE_HDD", "USE_NET", "USE_RAM", "CHECK_SOUND", "SEARCH_UPDATES", "SHOW_MESSAGES" };
 	string ConvertSettingNameToString(SettingName n);
 	vector<string> value;
 	SettingName name;

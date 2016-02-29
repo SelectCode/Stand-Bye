@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: InputMonitor.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "InputMonitor.h"
 
@@ -20,10 +31,6 @@ InputMonitor::~InputMonitor()
 
 void InputMonitor::Monitor() {
 	while (aborted == false) {
-		if (SystemAccess::GetLastInputTime() == 0) {
-			LOG("LastInputTime == 0 milliseconds");
-		}
-
 		if (SystemAccess::GetLastInputTime() > wait_time) {
 			LOG("Wait Time is over!");
 			parent->CheckUsage();
@@ -48,9 +55,11 @@ void InputMonitor::Stop()
 	aborted = true;
 	watcher->Join();
 	aborted = false;
+	LOG("Stopped InputMonitor!");
 }
 
 void InputMonitor::Start() {
+	LOG("InputMonitor starting");
 	wait_time = TO_MILLISECONDS(settings_provider->getThreshold(SettingName::WAIT_TIME));
 	thread_start = gcnew ThreadStart(this, &InputMonitor::Monitor);
 	watcher = gcnew Thread(thread_start);

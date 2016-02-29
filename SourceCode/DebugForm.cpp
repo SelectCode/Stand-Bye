@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: DebugForm.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "DebugForm.h"
 using namespace StandBye;
@@ -9,8 +20,7 @@ System::Void StandBye::DebugForm::DebugForm_Load(System::Object ^, System::Event
 
 System::Void StandBye::DebugForm::buttonSettingsForm_Click(System::Object ^, System::EventArgs ^)
 {
-	MetroSettingsForm^ form = gcnew MetroSettingsForm(system_watcher, settings_prov);
-	form->ShowDialog();
+	parent->OpenSettingsForm();
 }
 
 System::Void StandBye::DebugForm::buttonProcessForm_Click(System::Object ^, System::EventArgs ^)
@@ -54,7 +64,6 @@ System::String ^ StandBye::DebugForm::getLogText()
 	}
 
 	return return_string;
-
 }
 
 void DebugForm::OnTick(System::Object ^, System::EventArgs ^)

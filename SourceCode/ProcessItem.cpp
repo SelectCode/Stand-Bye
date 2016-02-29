@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND_BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de
+ * FILE: ProcessItem.cpp
+ * Author: Florian Baader
+ * Contact: flobaader@web.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "ProcessItem.h"
 
@@ -9,7 +20,7 @@ ProcessItem::ProcessItem(const string settings_value, Windows::Forms::ListView^ 
 		icon = Bitmap::FromHicon((IntPtr)stFileInfo->hIcon);
 	}
 	catch (System::ArgumentException^) {
-		//Icon loaded failed
+		LOG("Could not load icon from " + settings_value);
 	}
 	addIconToLists(list);
 	this->Text = IO::Path::GetFileNameWithoutExtension(path);
