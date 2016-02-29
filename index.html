@@ -569,18 +569,18 @@
                     //console.log(e);
                     if (!animating) {
                         idleTime = 0;
-                        $('body').stop();
+                        $('html, body').stop();
                     }
                 });
                 $(this).click(function (e) {
                     idleTime = 0;
-                    $('body').stop();
+                    $('html, body').stop();
                     //console.log("click, reset idle time");
                     //console.log(e);
                 });
                 $(this).keypress(function (e) {
                     idleTime = 0;
-                    $('body').stop();
+                    $('html, body').stop();
                     //console.log("keypress, reset idle time");
                     //console.log(e);
                 });
@@ -626,7 +626,7 @@
 
                 animating = true;
 
-                $("body").stop().animate({
+                $('html, body').stop().animate({
                     scrollTop: target
                 }, {
                     duration: time,
