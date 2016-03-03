@@ -2,6 +2,8 @@
 Sag "Bye" zu Umweltverschmutzung und "Bye" zu Komfortverlust!
 Unser JugendForscht Projekt 2016: Die nächste umweltfreundliche und komfortfreundliche Generation des Energiesparens!
 
+Für genauere Infos und Downloads besuchen Sie uns gerne unter http://www.stand-bye.de
+
 ##Das Problem
 -------------
 ###Keine richtige Anwendung des Standby-Modus‘
