@@ -238,11 +238,11 @@ a#icon_github:hover>p {
 
 /*other elements ****************************/
 
-#legend {
+.legend {
     display: none;
 }
 
-#tooltip {
+.tooltip {
     display: none;
 }
 

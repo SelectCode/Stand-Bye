@@ -21,6 +21,7 @@
 + fill out meta-tags
 + same height for download buttons
 - fixed aspect ratio for chart
+- replace 'name' with 'id'
 
 # accessibility
 - make script free version

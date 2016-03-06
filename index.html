@@ -354,10 +354,11 @@
                     <h3 class="title">Nachfrage</h3>
                     <hr />
                     <div class="chart_wrapper clearfix">
-                        <div id="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
+                        <div class="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
                         <div class="chart" id="survey">
                         </div>
                         <div class="noscript_overlay">Für eine aktuellere Version des Diagramms bitte Javascript aktivieren></div>
+                        <p class="title">nachfrage Nach Verbesserung des Standby-Modus</p>
                         <div class="legend">
                             <ul>
                                 <li><span class="ct-series-a" style="background: #ff9800;"></span>Windows Standby aktiviert</li>
@@ -380,9 +381,8 @@
                     <hr />
                     <p style="clear: both;">
                         Immer noch nicht überzeugt? Dann wollen wir anhand einiger Rechenbeispiele zeigen, wie viel Energie man mit Stand-Bye tatsächlich sparen kann.
-                        <br /> Für unsere Rechnungen sind wir von einem (unserer Meinung nach durchschnittlichen) PC mit folgenden Komponenten ausgegangen:
                     </p>
-                    <table>
+                    <!--       <table>
                         <tr>
                             <td>Prozessor</td>
                             <td>Intel Core i5 4670k</td>
@@ -399,28 +399,34 @@
                             <td>Stromversorgung</td>
                             <td>630W, Ø 86% Wirkungsgrad</td>
                         </tr>
-                    </table>
+                    </table>-->
 
                     <span class="byline">Beispiel 1:</span>
                     <h3 class="title">Energieersparnis eines durchschnittlichen Angestellten</h3>
                     <div class="chart_wrapper">
-                        <div id="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
+                        <div class="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
                         <div class="chart" id="example1"></div>
+                        <div class="legend">
+                            <ul>
+                                <li><span class="ct-series-b" style="background: #1D6886;"></span>Ohne Stand-Bye!</li>
+                                <li><span class="ct-series-a" style="background: #ff9800;"></span>Mit Stand-Bye!</li>
+
+                            </ul>
+                        </div>
                     </div>
-                    <div class="chart_text">
+                    <div class="chart_text clearfix">
                         <p>
-                            Während verschiedener Praktika haben wir die Beobachtung gemacht, dass in vielen großen Konzernen die Computer der Angestellten während Pausen und Meetings einfach weiter laufen. Und das, obwohl meistens keine (wichtige) Aufgabe ausgeführt wird - der PC läuft ohne einen Nutzen! Damit ist dies das Paradebeispiel für einen Anwendungsfall von Stand-Bye.
-                            <br />Wir sind davon ausgegangen, dass jeder Angestellte neben einer Stunde Mittagspause etwa eineinhalb Stunden in Meetings und Besprechungen verbringt, sich sein PC also für <b>2,5 Stunden</b> eingeschaltet im Leerlauf befindet. Für den Leerlauf haben wir bei unserem Referenz-Computer (siehe Tabelle) <b>ca. 110 Watt</b> Leistungsaufnahme gemessen. Stand-Bye greift mit den Standardeinstellungen nach <b>5 Minuten</b>, die zu vernachlässigen sind.
-                            <br /> Es Ergibt sich also eine Energieersparnis von
-                            <span class="math">E = 2,5h x 110W = 275Wh </span> pro Tag.
-                            <br /> Es werden also <b>~27%</b> der normalerweise pro Tag verbrauchten Energie eingespart - und damit knapp ein <b>Viertel der Energiekosten</b>. Gerade für große Unternehmen mit vielen Mitarbeitern kann das ein großer Kostenvorteil sein.
+                            Während verschiedener Praktika haben wir die Beobachtung gemacht, dass in vielen großen Konzernen die Computer der Angestellten während Pausen und Meetings einfach weiter laufen. Und das, obwohl meistens keine (wichtige) Aufgabe ausgeführt wird - der PC läuft ohne einen Nutzen!
+                            <br />Im Diagramm <span class="switch"></span> siehst du einen typischen Arbeitstag, bei dem der Angestellte insgesammt 2,5 Stunden abwesend ist, den PC aber laufen lässt.
+                            <br /> Der PC läuft also 9 Stunden, von denen mit Stand-Bye! 2,5 eingespart werden könnten.
+                            <br /> Das entspricht ewa <b>25% weniger Zeit</b>, also auch <b>25% weniger Energieverbrauch</b> und auch 25% weniger Kosten!
                         </p>
                     </div>
-                    <hr />
+                    <hr class="clearfix" />
                     <span class="byline">Beispiel 2:</span>
                     <h3 class="title">Energieersparnis am LMGU</h3>
                     <div class="chart_wrapper">
-                        <div id="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
+                        <div class="tooltip"><span class="color"></span><span class="text">tooltip</span></div>
                         <div class="chart" id="example2"></div>
                         <div class="legend">
                             <ul>
@@ -432,17 +438,15 @@
                     </div>
                     <div class="chart_text">
                         <p>
-                            Eine weitere Beobachtung ist, dass in den Computerräumen unserer Schule, dem <a href="http://www.lmgu.de">Lise-Meitner-Gymnasium Unterhaching</a> die PCs oft unnötig eingeschaltet sind. Um möglichst keine Unterrichtszeit zu verschwenden, werden alle PCs von den Schülern der ersten Stunde im Computerraum hochgefahren und bleiben den ganzen Tag über eingeschaltet, bis sie um 17.30 Uhr automatisch heruntergefahren werden.
+                            Ein anderer Anwendungsfall ist unsere Schule, das<a href="http://www.lmgu.de"> LMGU</a>. Hier sind die PCs in den beiden Computerräumen von 8:00 bis 17:30 Uhr eingeschaltet, um keine Unterrichtszeit mit dem Ein- und Ausschalten zu verbrauchen.
                             <br />Nachdem wir die Raumbelegungspläne ausgewertet haben, sind wir auf das Ergebnis gekommen, dass die PCs inklusive der Pausen pro Woche <b>52 Stunden</b> unbenutzt beiben, wohingegen nur <b>33 Stunden</b> lang Unterrricht stattfindet.
-                            <br /> Mit Stand-Bye könnten hier also <b>59%</b> der Energie gespart werden, und gleichzeitig auch <b>59% der Kosten.</b> Für die genauen Messwerte und die Berechnung wirf bitte einen Blick in unsere Projektarbeit.
-                        </p>
+                            <br /> Mit Stand-Bye könnten hier also <b>61%</b> der Energie gespart werden, und gleichzeitig auch <b>61% der Kosten.</b> </p>
                     </div>
 
                     <div id="calculator_wrapper">
                         <a name="calculator"></a>
-                        <h3 class="title">Ersparnisrechner</h3>
+                        <h3 class="title" style="margin-bottom: -0.5em; margin-top: 2.5em;">Ersparnisrechner</h3>
                         <hr />
-
                         <form id="calculator">
 
                             <div class="shadow">
@@ -464,7 +468,6 @@
 
                             </div>
                         </form>
-
                         <p>Wenn du jetzt wissen willst, wie viel Energie und Geld du konkret sparen kannst, gib einfach deine Informationen in den Rechner <span class="switch"></span> ein. Falls du die genaue Leistung deines PCs nicht kennst, benutze 50 Watt für ein Notebook und 150-200 Watt für einen Desktop-PC.
 
                             <br />

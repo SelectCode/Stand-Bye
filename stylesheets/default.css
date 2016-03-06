@@ -84,6 +84,7 @@ hr {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    margin: 1.5em 0em;
 }
 
 
@@ -152,6 +153,10 @@ h2.title {
     letter-spacing: 0.15em;
     font-weight: 400;
     font-size: 0.90em;
+    display: block;
+    width: 100%;
+    float: left;
+    clear: both;
 }
 
 
@@ -714,6 +719,7 @@ tr:nth-child(even) {
     height: 20em;
     float: left;
     clear: both;
+    padding: 1em;
 }
 
 .chart_text,
@@ -721,17 +727,24 @@ tr:nth-child(even) {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0em 1em 1em 0em;
     width: 50%;
     float: left;
     clear: none;
 }
 
-.chart_text h3,
-.chart_text .byline {
-    width: 100%;
-    float: left;
-    clear: both;
+.chart_wrapper {
+    border: 1px solid #B6B6B6;
+}
+
+.chart_text {
+    padding-left: 1em;
+}
+
+.chart_wrapper .title {
+    margin-bottom: 0;
+    background: #B6B6B6;
+    color: #fff;
+    text-indent: .8em;
 }
 
 .chart_text p {

@@ -20,17 +20,24 @@ var surveyChartData = {
     example2Data = {
         labels: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"],
         series: [
-            [15, 17, 18, 13, 17],
-            [8, 11, 9, 4, 7]
+            [8.16, 9.04, 6.2, 6.2, 8.16],
+            [2.92, 2.56, 2.9, 1.83, 1.84]
         ],
         seriesLabels: ["Mit Stand-Bye ", "Ohne Stand-Bye "],
         unit: "kWh"
     },
     example1Data = {
-        labels: ["Ohne Stand-Bye!", "Mit Stand-Bye!"],
+        labels: ["07:00", "", "", "", "09:00", "", "", "", "11:00", "", "", "", "13:00", "", "", "", "15:00", "", "", "", "17:00", "", "", "", "19:00", "", "", ""],
         series: [
-            [100, 0],
-            [0, 75]
+            {
+                name: "Ohne Stand-Bye!",
+                data: [0, 0, 0, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 109, 0, 0, 0, 0, 0, 0, 0]
+
+            },
+            {
+                name: "Mit Stand-Bye!",
+                data: [0, 0, 0, 109, 109, 109, 109, 1.6, 109, 109, 109, 1.6, 1.6, 109, 109, 109, 1.6, 1.6, 109, 109, 109, 109, 0, 0, 0, 0, 0, 0, 0]
+            }
         ],
         seriesLabels: ["Mit Stand-Bye", "Ohne Stand-Bye"],
         unit: "kWh"
@@ -44,7 +51,19 @@ var surveyChartData = {
             label: "Benutzer"
         }
     },
-    exampleOptions = {
+    example1Options = {
+        series: {
+            "Ohne Stand-Bye!": {
+                lineSmooth: Chartist.Interpolation.step(),
+                showPoint: false
+            },
+            "Mit Stand-Bye!": {
+                lineSmooth: Chartist.Interpolation.step(),
+                showPoint: false
+            }
+        }
+    },
+    example2Options = {
         stackBars: false,
         axisX: {
             showGrid: false
@@ -58,7 +77,7 @@ function tooltip(chart, $wrapper) {
 
     "use strict";
 
-    var $tooltip = $wrapper.find('#tooltip'),
+    var $tooltip = $wrapper.find('.tooltip'),
         $tooltip_color = $tooltip.find("span.color"),
         $tooltip_text = $tooltip.find("span.text"),
         $chart = $wrapper.find('.chart');
@@ -102,12 +121,13 @@ $(function () {
 
     $(".chart").html("");
 
+
     var surveyChart = new Chartist.Bar('.chart#survey', surveyChartData, surveyChartOptions),
-        example1Chart = new Chartist.Bar('.chart#example1', example1Data, exampleOptions),
-        example2Chart = new Chartist.Bar('.chart#example2', example2Data, exampleOptions);
+        example1Chart = new Chartist.Line('.chart#example1', example1Data, example1Options),
+        example2Chart = new Chartist.Bar('.chart#example2', example2Data, example2Options);
 
     tooltip(surveyChart, $('.chart#survey').parent());
-    tooltip(example1Chart, $('.chart#example1').parent());
+    //tooltip(example1Chart, $('.chart#example1').parent());
     tooltip(example2Chart, $('.chart#example2').parent());
 
 });

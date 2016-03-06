@@ -12,6 +12,11 @@
     stroke-width: 10%;
 }
 
+.ct-series-a .ct-line {
+    stroke: rgba(29, 104, 134, 1);
+    stroke-width: 6px;
+}
+
 .ct-series-a .ct-bar:hover {
     stroke: rgb(41, 147, 188);
 }
@@ -30,6 +35,11 @@
     stroke-width: 10%;
 }
 
+.ct-series-b .ct-line {
+    stroke: rgba(255, 152, 0, 1);
+    stroke-width: 2px;
+}
+
 .ct-series-b .ct-bar:hover {
     stroke: rgb(255, 184, 77);
 }
@@ -39,11 +49,11 @@
     font-size: .8em;
 }
 
-#tooltip {
+.tooltip {
     position: absolute;
     z-index: 20;
     display: none;
-    margin-left: .5em;
+    margin-left: 1.5em;
     padding: .5em .5em;
     -webkit-border-radius: .5em;
     -moz-border-radius: .5em;
@@ -52,12 +62,12 @@
     color: #fff;
 }
 
-#tooltip span.text {
+.tooltip span.text {
     font-size: .9em;
 }
 
-#tooltip span.color,
-#.legend span {
+.tooltip span.color,
+.legend span {
     display: block;
     float: left;
     margin-right: .3em;
@@ -70,14 +80,16 @@
 /* Legend **************************************************************/
 
 .legend {
-    float: left;
-    clear: left;
-}
-
-.legend li {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    float: left;
+    clear: left;
+    width: 100%;
+    border: 1px solid #B6B6B6;
+}
+
+.legend li {
     padding: .5em 0em;
 }
 
@@ -85,6 +97,7 @@
     list-style: none;
     text-indent: 0;
     padding: 0em .5em;
+    margin: 0;
 }
 
 .legend span {
