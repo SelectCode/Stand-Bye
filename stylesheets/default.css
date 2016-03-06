@@ -599,9 +599,6 @@ tr:nth-child(even) {
     #calculator div {
         width: 100%;
         margin-bottom: 1em;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
     }
     .switch:after {
         content: 'oben';
@@ -719,8 +716,8 @@ tr:nth-child(even) {
     clear: both;
 }
 
-.chart_wrapper,
-.chart_text {
+.chart_text,
+.chart_wrapper {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -728,6 +725,13 @@ tr:nth-child(even) {
     width: 50%;
     float: left;
     clear: none;
+}
+
+.chart_text h3,
+.chart_text .byline {
+    width: 100%;
+    float: left;
+    clear: both;
 }
 
 .chart_text p {
@@ -745,32 +749,12 @@ tr:nth-child(even) {
 }
 
 @media only screen and (max-width: 50em) {
-    #chart_wrapper,
-    #chart_text {
+    .chart_wrapper,
+    .chart_text {
         width: 100%;
         clear: both;
         padding: .7em 0em;
     }
-}
-
-
-/* Legend **************************************************************/
-
-#legend {
-    float: left;
-    clear: left;
-}
-
-#legend ul {
-    text-indent: 0;
-    padding: 0em .5em;
-}
-
-#legend li {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: .5em 0em;
 }
 
 
