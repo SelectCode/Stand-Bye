@@ -1011,7 +1011,10 @@ tr:nth-child(even) {
 }
 
 #chippick {
+    float: left; 
+    clear: left;
     width: 33%;
     height: auto;
     cursor: pointer;
+    margin-bottom: 2em;
 }
