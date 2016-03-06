@@ -201,6 +201,10 @@ h2.title {
     }
 }
 
+.content div {
+    float: left;
+}
+
 
 /* Button *******************************************************************/
 
@@ -715,8 +719,8 @@ tr:nth-child(even) {
     clear: both;
 }
 
-#chart_wrapper,
-#chart_text {
+.chart_wrapper,
+.chart_text {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -726,7 +730,7 @@ tr:nth-child(even) {
     clear: none;
 }
 
-#chart_text p {
+.chart_text p {
     float: left;
     clear: both;
     width: 100%;
@@ -755,6 +759,18 @@ tr:nth-child(even) {
 #legend {
     float: left;
     clear: left;
+}
+
+#legend ul {
+    text-indent: 0;
+    padding: 0em .5em;
+}
+
+#legend li {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: .5em 0em;
 }
 
 
@@ -995,4 +1011,10 @@ tr:nth-child(even) {
     #home .content {
         padding: 0 5%;
     }
+}
+
+#chippick {
+    width: 33%;
+    height: auto;
+    cursor: pointer;
 }
