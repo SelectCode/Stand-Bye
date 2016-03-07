@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="about" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="about_text" xml:space="preserve">
+    <value>Über diese Anwendung:
+
+Das Tool "Stand-Bye" wurde von Florian Baader, Stephan Le und Matthias Weirich für Jugend Forscht 2016 erstellt.
+
+Bei Fragen, Anregungen und Ideen schreiben können Sie uns gerne unter contact@stand-bye.de kontaktieren!
+
+Lizenz:
+The MIT License (MIT) 
+
+Copyright (c) 2016 Florian Baader, https://github.com/flobaader
+
+Copyright (C) 2016 Matthias Weirich, https://github.com/vavido
+
+Copyright (C) 2016 Stephan Le, https://github.com/stephanLe
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Thanks to:
+
+Sven Walter and Dennis Magno for creating the MetroFramework
+(https://github.com/cecon/winforms-modernui)
+
+The MIT License (MIT)
+
+Copyright (c) 2011 Sven Walter, http://github.com/viperneo
+
+Copyright (c) 2013 Dennis Magno, http://github.com/dennismagno
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+And all the persons, who have supported us during the development: our families, friends and girlfriends.</value>
+  </data>
+  <data name="activate_pres_mode" xml:space="preserve">
+    <value>Präsentationsmodus aktivieren</value>
+  </data>
+  <data name="add_process_file" xml:space="preserve">
+    <value>Prozess aus Datei hinzufügen</value>
+  </data>
+  <data name="add_process_running" xml:space="preserve">
+    <value>Laufenden Prozess hinzufügen</value>
+  </data>
+  <data name="adv_settings" xml:space="preserve">
+    <value>Erweiterte Einstellungen</value>
+  </data>
+  <data name="alw_on_top" xml:space="preserve">
+    <value>Immer im Vordergrund:</value>
+  </data>
+  <data name="application_upToDate" xml:space="preserve">
+    <value>Stand-Bye! ist aktuell!</value>
+  </data>
+  <data name="ask_presMode" xml:space="preserve">
+    <value>Soll der Präsentationsmodus aktiviert werden?
+    (= kein weiteren Störungen) </value>
+  </data>
+  <data name="ask_update" xml:space="preserve">
+    <value>Eine neue Version von Stand-Bye! ist verfügbar!
+    Soll das Update durchgeführt werden?</value>
+  </data>
+  <data name="autostart" xml:space="preserve">
+    <value>Mit Windows starten:</value>
+  </data>
+  <data name="avg_usage" xml:space="preserve">
+    <value>Durchschnittliche Auslastung:</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="cancel_on_sound" xml:space="preserve">
+    <value>Standby abbrechen wenn Sound abgespielt wird</value>
+  </data>
+  <data name="context_debug" xml:space="preserve">
+    <value>&amp;Entwickler-Modus</value>
+  </data>
+  <data name="context_exit" xml:space="preserve">
+    <value>&amp;Beenden</value>
+  </data>
+  <data name="context_presMode" xml:space="preserve">
+    <value>&amp;Präsentationsmodus</value>
+  </data>
+  <data name="context_settings" xml:space="preserve">
+    <value>&amp;Einstellungen</value>
+  </data>
+  <data name="context_updates" xml:space="preserve">
+    <value>&amp;Nach Updates suchen</value>
+  </data>
+  <data name="cpu_threshold" xml:space="preserve">
+    <value>CPU Grenze</value>
+  </data>
+  <data name="excp_process" xml:space="preserve">
+    <value>Ausnahmeprozesse</value>
+  </data>
+  <data name="excp_process_text" xml:space="preserve">
+    <value>Wenn einer der festgelegten Prozesse läuft, wird das System nicht in den Standby versetzt!</value>
+  </data>
+  <data name="hdd_threshold" xml:space="preserve">
+    <value>HDD Grenze</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="msg_presMode_activated" xml:space="preserve">
+    <value>Der Präsentationsmodus wurde aktiviert!</value>
+  </data>
+  <data name="msg_presMode_deactivatmsg_presMode_deactivaed" xml:space="preserve">
+    <value>Der Präsentationsmodus wurde beendet!</value>
+  </data>
+  <data name="msg_welcome" xml:space="preserve">
+    <value>Stand-Bye! wurde aktiviert. Die Umwelt bedankt sich!</value>
+  </data>
+  <data name="net_threshold" xml:space="preserve">
+    <value>Netzwerk Grenze</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="program_settings" xml:space="preserve">
+    <value>Haupteinstellungen</value>
+  </data>
+  <data name="ram_threshold" xml:space="preserve">
+    <value>RAM Grenze</value>
+  </data>
+  <data name="remove_process" xml:space="preserve">
+    <value>Prozess entfernen</value>
+  </data>
+  <data name="search_updates" xml:space="preserve">
+    <value>Suche nach Updates</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="show_details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="show_messages" xml:space="preserve">
+    <value>Benachrichtigungen anzeigen:</value>
+  </data>
+  <data name="show_tutorial" xml:space="preserve">
+    <value>Tutorial zeigen:</value>
+  </data>
+  <data name="system_usage_thresholds" xml:space="preserve">
+    <value>System Auslastungen</value>
+  </data>
+  <data name="timeout" xml:space="preserve">
+    <value>Standby wird aktiviert:</value>
+  </data>
+  <data name="visit_github" xml:space="preserve">
+    <value>Besuchen Sie uns auf Github!</value>
+  </data>
+  <data name="visit_homepage" xml:space="preserve">
+    <value>Besuchen Sie unsere Homepage!</value>
+  </data>
+  <data name="wait_time" xml:space="preserve">
+    <value>Standby aktivieren nach:</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+</root>

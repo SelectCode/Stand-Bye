@@ -1,0 +1,96 @@
+23:27:31:504	Stand-Bye is starting!
+23:27:31:534	The User: {Code} started Standbye!
+23:27:31:563	Found total amount of {1} Users:
+23:27:31:588		Code
+23:27:31:615	The active user is: {Code}
+23:27:31:64	Only one user is active! StandBye can proceed!
+23:27:31:666	Instance Monitor trys to open Mutex!
+23:27:31:693	Instance Monitor: No other instance running
+23:27:31:719	Deleted TMP File [not existed]
+23:27:31:775	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:27:31:808	SettingsFile could not be opened!
+23:27:31:851	Settings provider added [WAIT_TIME] Setting to file!
+23:27:31:877	Settings provider added [LANGUAGE] Setting to file!
+23:27:31:902	Settings provider added [USE_CPU] Setting to file!
+23:27:31:929	Settings provider added [MAX_CPU] Setting to file!
+23:27:31:954	Settings provider added [USE_RAM] Setting to file!
+23:27:31:98	Settings provider added [MAX_RAM] Setting to file!
+23:27:32:006	Settings provider added [USE_HDD] Setting to file!
+23:27:32:031	Settings provider added [MAX_HDD] Setting to file!
+23:27:32:057	Settings provider added [USE_NET] Setting to file!
+23:27:32:082	Settings provider added [MAX_NET] Setting to file!
+23:27:32:107	Settings provider added [CHECK_SOUND] Setting to file!
+23:27:32:132	Settings provider added [PROC_EXCP] Setting to file!
+23:27:32:158	Settings provider added [SEARCH_UPDATES] Setting to file!
+23:27:32:184	Settings provider added [SHOW_MESSAGES] Setting to file!
+23:27:32:21	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:27:32:242	Written Setting ['WAIT_TIME'] with value ['300']
+23:27:32:272	Written Setting ['LANGUAGE'] with value ['en']
+23:27:32:298	Written Setting ['USE_CPU'] with value ['TRUE']
+23:27:32:323	Written Setting ['MAX_CPU'] with value ['30']
+23:27:32:348	Written Setting ['USE_RAM'] with value ['TRUE']
+23:27:32:373	Written Setting ['MAX_RAM'] with value ['20']
+23:27:32:398	Written Setting ['USE_HDD'] with value ['TRUE']
+23:27:32:423	Written Setting ['MAX_HDD'] with value ['2000']
+23:27:32:448	Written Setting ['USE_NET'] with value ['TRUE']
+23:27:32:473	Written Setting ['MAX_NET'] with value ['1200']
+23:27:32:498	Written Setting ['CHECK_SOUND'] with value ['TRUE']
+23:27:32:523	Written Setting ['PROC_EXCP'] with value ['']
+23:27:32:548	Written Setting ['SEARCH_UPDATES'] with value ['TRUE']
+23:27:32:574	Written Setting ['SHOW_MESSAGES'] with value ['TRUE']
+23:27:32:601	Settingsfile could not be opend!
+23:27:32:757	Exception occured!
+23:27:32:782	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:27:32:807	System.Collections.ListDictionaryInternal
+23:27:32:832	
+23:27:32:857	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:27:32:895	Loaded Setting ['WAIT_TIME'] with value ['300']
+23:27:32:92	Loaded Setting ['LANGUAGE'] with value ['en']
+23:27:32:945	Loaded Setting ['USE_CPU'] with value ['TRUE']
+23:27:32:97	Loaded Setting ['MAX_CPU'] with value ['30']
+23:27:32:996	Loaded Setting ['USE_RAM'] with value ['TRUE']
+23:27:33:021	Loaded Setting ['MAX_RAM'] with value ['20']
+23:27:33:046	Loaded Setting ['USE_HDD'] with value ['TRUE']
+23:27:33:071	Loaded Setting ['MAX_HDD'] with value ['2000']
+23:27:33:096	Loaded Setting ['USE_NET'] with value ['TRUE']
+23:27:33:121	Loaded Setting ['MAX_NET'] with value ['1200']
+23:27:33:146	Loaded Setting ['CHECK_SOUND'] with value ['TRUE']
+23:27:33:171	Loaded Setting ['PROC_EXCP'] with value ['']
+23:27:33:197	Loaded Setting ['SEARCH_UPDATES'] with value ['TRUE']
+23:27:33:222	Loaded Setting ['SHOW_MESSAGES'] with value ['TRUE']
+23:27:33:248	Loaded settingsProvider
+23:27:33:274	Loading SystemAccess instance...
+23:27:33:784	Get Network Adapter Names:
+23:27:33:821		isatap.fritz.box
+23:27:33:846		Teredo Tunneling Pseudo-Interface
+23:27:33:871		Killer e2200 Gigabit Ethernet Controller
+23:27:33:896	Loaded SystemAccess
+23:27:33:917	Loaded and Started SystemMetricWatcher
+23:27:33:968	InputMonitor starting
+23:27:33:97	Loaded InputMonitor
+23:27:34:518	Loaded invisible SettingsForm
+23:27:52:183	Got 'v0.5.2' as versionString from https://raw.githubusercontent.com/flobaader/Stand-Bye/download/version.txt
+23:27:52:209	Got '052' as version number from 'v0.5.2'
+23:27:52:235	Got '052' as version number from '0.5.2'
+23:27:52:261	New Version is available == [False] 
+23:27:52:287	Disabled Windows Standby!
+23:27:57:972	Started opening SettingsForm
+23:28:15:393	SettingsForm: OK Button Clicked
+23:28:15:422	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:28:15:448	Written Setting ['WAIT_TIME'] with value ['300']
+23:28:15:474	Written Setting ['LANGUAGE'] with value ['en']
+23:28:15:5	Written Setting ['USE_CPU'] with value ['TRUE']
+23:28:15:526	Written Setting ['MAX_CPU'] with value ['30']
+23:28:15:552	Written Setting ['USE_RAM'] with value ['TRUE']
+23:28:15:578	Written Setting ['MAX_RAM'] with value ['20']
+23:28:15:604	Written Setting ['USE_HDD'] with value ['TRUE']
+23:28:15:63	Written Setting ['MAX_HDD'] with value ['2000']
+23:28:15:656	Written Setting ['USE_NET'] with value ['TRUE']
+23:28:15:682	Written Setting ['MAX_NET'] with value ['12000']
+23:28:15:72	Written Setting ['CHECK_SOUND'] with value ['TRUE']
+23:28:15:746	Written Setting ['PROC_EXCP'] with value ['']
+23:28:15:772	Written Setting ['SEARCH_UPDATES'] with value ['TRUE']
+23:28:15:798	Written Setting ['SHOW_MESSAGES'] with value ['TRUE']
+23:28:15:859	Stopped InputMonitor!
+23:28:15:884	InputMonitor starting
+23:28:15:93	Settingsform closing

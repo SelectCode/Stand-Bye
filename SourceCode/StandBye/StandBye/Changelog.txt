@@ -1,0 +1,82 @@
+# Changelog:
+
+## v0.5.7
+ * Added compatibility for old settings
+ * Fixed Multi-User Bug (StandBye has started standbye although multiple users are logged in)
+ * Fixed settingsfile location on portable version
+ * Added full Multi-Language Support
+ * Added Language: Deutsch
+ * Fixed Resouce-File locations
+ * Reduced size of executable
+ * Fixed message window buttons
+ * Fixed Downloader and added support for different download links
+
+
+
+## v0.5.2
+* Added installer meta-data
+* Added single instance application support
+* Added cross instance messaging to open the SettingsForm when another instance is launched
+* Updated MetroForm and added features and tooltips
+* Extended Logsystem
+* Application temporary disables the windows standby while StandBye is running
+* Added Copyright notes in all files
+* Added option to disable messages from icon
+* Fixed Bugs:
+	* Fixed too many IO operations of the settingsProvider
+	* Fixed long loading time of SettingsForm
+	* Fixed missing icons
+	* Fixed too many instances of SystemAccess
+	* Fixed RefreshTimer issue on SettingsForm
+	* Fixed LogFiles Directory (IO AccessRights)
+	* Fixed maxLength and Formatting of TextBoxes
+	* Fixed presentation mode issue after messagebox
+	* Fixed option to add processes twice
+	* Fixed disposed error on closing SettingsForm
+	* Fixed Downloading issue, if no internet connection is available
+	* Fixed decimal separator in textboxes
+
+		**The new Layout of the Form**
+		![settings](https://cloud.githubusercontent.com/assets/16624361/13401629/26460f56-df0d-11e5-9f63-4fa541773fb7.jpg)
+
+
+		**The new advanced Settings**
+		![advanced settings](https://cloud.githubusercontent.com/assets/16624361/13401581/f583e078-df0c-11e5-94d3-1114723adb68.jpg)
+
+
+### in Progress:
+- [x] Fixing Bugs
+- [ ] @vavido minimalistic design of the homepage 
+- [ ] Fixing problems with multi-user systems
+- [ ] Designing software as a service
+
+### older versions
+
+#### v0.4.3
+* Added sound detection (audio peak measurement)
+* Added Option to cancel shutdown while sound is playing
+* Added debug window to show detailed information
+* Implemented Log System
+* Fixed some bugs
+* Code improvements and code commenting
+* Improved exception handling
+
+#### v0.3
+* Added tooltips to system tray icon
+* Leftclick on icon opens settingsform
+* Some GUI updates
+* code improvements
+
+#### v0.2
+* System-Usage monitoring
+* Buffering Usage over 30 seconds
+* Settings with current usage
+* Multi-Threaded
+* Wait-Time
+* Exception processes from file / current running processes
+* Autostart
+* Presentationmode
+
+#### v0.1
+* Some tests
+* first code

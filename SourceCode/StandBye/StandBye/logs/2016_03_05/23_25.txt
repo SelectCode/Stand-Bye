@@ -1,0 +1,467 @@
+23:25:17:562	Stand-Bye is starting!
+23:25:17:595	The User: {Code} started Standbye!
+23:25:17:624	Found total amount of {1} Users:
+23:25:17:649		Code
+23:25:17:676	The active user is: {Code}
+23:25:17:701	Only one user is active! StandBye can proceed!
+23:25:17:727	Instance Monitor trys to open Mutex!
+23:25:17:752	Instance Monitor: No other instance running
+23:25:17:778	Deleted TMP File [not existed]
+23:25:17:834	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:17:868	SettingsFile could not be opened!
+23:25:17:894	Settingsfile could not be opend!
+23:25:18:051	Exception occured!
+23:25:18:076	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:18:101	System.Collections.ListDictionaryInternal
+23:25:18:13	
+23:25:18:155	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:18:18	SettingsFile could not be opened!
+23:25:18:205	Settingsfile could not be opend!
+23:25:18:307	Exception occured!
+23:25:18:332	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:18:357	System.Collections.ListDictionaryInternal
+23:25:18:382	
+23:25:18:407	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:18:432	SettingsFile could not be opened!
+23:25:18:457	Settingsfile could not be opend!
+23:25:18:558	Exception occured!
+23:25:18:583	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:18:608	System.Collections.ListDictionaryInternal
+23:25:18:633	
+23:25:18:658	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:18:683	SettingsFile could not be opened!
+23:25:18:708	Settingsfile could not be opend!
+23:25:18:808	Exception occured!
+23:25:18:833	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:18:858	System.Collections.ListDictionaryInternal
+23:25:18:883	
+23:25:18:908	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:18:933	SettingsFile could not be opened!
+23:25:18:958	Settingsfile could not be opend!
+23:25:19:059	Exception occured!
+23:25:19:084	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:19:109	System.Collections.ListDictionaryInternal
+23:25:19:134	
+23:25:19:159	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:19:184	SettingsFile could not be opened!
+23:25:19:209	Settingsfile could not be opend!
+23:25:19:31	Exception occured!
+23:25:19:335	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:19:361	System.Collections.ListDictionaryInternal
+23:25:19:386	
+23:25:19:411	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:19:436	SettingsFile could not be opened!
+23:25:19:461	Settingsfile could not be opend!
+23:25:19:562	Exception occured!
+23:25:19:587	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:19:612	System.Collections.ListDictionaryInternal
+23:25:19:637	
+23:25:19:662	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:19:687	SettingsFile could not be opened!
+23:25:19:712	Settingsfile could not be opend!
+23:25:19:813	Exception occured!
+23:25:19:839	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:19:864	System.Collections.ListDictionaryInternal
+23:25:19:889	
+23:25:19:914	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:19:939	SettingsFile could not be opened!
+23:25:19:964	Settingsfile could not be opend!
+23:25:20:065	Exception occured!
+23:25:20:09	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:20:115	System.Collections.ListDictionaryInternal
+23:25:20:141	
+23:25:20:166	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:20:191	SettingsFile could not be opened!
+23:25:20:216	Settingsfile could not be opend!
+23:25:20:317	Exception occured!
+23:25:20:342	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:20:367	System.Collections.ListDictionaryInternal
+23:25:20:393	
+23:25:20:418	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:20:443	SettingsFile could not be opened!
+23:25:20:468	Settingsfile could not be opend!
+23:25:20:569	Exception occured!
+23:25:20:594	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:20:619	System.Collections.ListDictionaryInternal
+23:25:20:644	
+23:25:20:669	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:20:694	SettingsFile could not be opened!
+23:25:20:719	Settingsfile could not be opend!
+23:25:20:82	Exception occured!
+23:25:20:845	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:20:87	System.Collections.ListDictionaryInternal
+23:25:20:895	
+23:25:20:921	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:20:946	SettingsFile could not be opened!
+23:25:20:971	Settingsfile could not be opend!
+23:25:21:072	Exception occured!
+23:25:21:097	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:21:122	System.Collections.ListDictionaryInternal
+23:25:21:147	
+23:25:21:172	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:21:197	SettingsFile could not be opened!
+23:25:21:222	Settingsfile could not be opend!
+23:25:21:323	Exception occured!
+23:25:21:348	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:21:373	System.Collections.ListDictionaryInternal
+23:25:21:398	
+23:25:21:423	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:21:449	SettingsFile could not be opened!
+23:25:21:474	Settingsfile could not be opend!
+23:25:21:574	Exception occured!
+23:25:21:599	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:21:624	System.Collections.ListDictionaryInternal
+23:25:21:649	
+23:25:21:674	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:21:699	SettingsFile could not be opened!
+23:25:21:724	Settingsfile could not be opend!
+23:25:21:825	Exception occured!
+23:25:21:85	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:21:875	System.Collections.ListDictionaryInternal
+23:25:21:9	
+23:25:21:925	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:21:95	SettingsFile could not be opened!
+23:25:21:975	Settingsfile could not be opend!
+23:25:22:076	Exception occured!
+23:25:22:101	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:22:126	System.Collections.ListDictionaryInternal
+23:25:22:151	
+23:25:22:176	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:22:201	SettingsFile could not be opened!
+23:25:22:226	Settingsfile could not be opend!
+23:25:22:327	Exception occured!
+23:25:22:352	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:22:377	System.Collections.ListDictionaryInternal
+23:25:22:402	
+23:25:22:427	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:22:452	SettingsFile could not be opened!
+23:25:22:478	Settingsfile could not be opend!
+23:25:22:579	Exception occured!
+23:25:22:604	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:22:629	System.Collections.ListDictionaryInternal
+23:25:22:654	
+23:25:22:679	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:22:704	SettingsFile could not be opened!
+23:25:22:729	Settingsfile could not be opend!
+23:25:22:829	Exception occured!
+23:25:22:854	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:22:879	System.Collections.ListDictionaryInternal
+23:25:22:904	
+23:25:22:93	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:22:955	SettingsFile could not be opened!
+23:25:22:98	Settingsfile could not be opend!
+23:25:23:081	Exception occured!
+23:25:23:106	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:23:131	System.Collections.ListDictionaryInternal
+23:25:23:156	
+23:25:23:181	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:23:206	SettingsFile could not be opened!
+23:25:23:231	Settingsfile could not be opend!
+23:25:23:332	Exception occured!
+23:25:23:357	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:23:382	System.Collections.ListDictionaryInternal
+23:25:23:407	
+23:25:23:432	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:23:457	SettingsFile could not be opened!
+23:25:23:482	Settingsfile could not be opend!
+23:25:23:583	Exception occured!
+23:25:23:608	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:23:633	System.Collections.ListDictionaryInternal
+23:25:23:658	
+23:25:23:683	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:23:708	SettingsFile could not be opened!
+23:25:23:733	Settingsfile could not be opend!
+23:25:23:833	Exception occured!
+23:25:23:858	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:23:883	System.Collections.ListDictionaryInternal
+23:25:23:908	
+23:25:23:933	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:23:958	SettingsFile could not be opened!
+23:25:23:983	Settingsfile could not be opend!
+23:25:24:083	Exception occured!
+23:25:24:108	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:24:133	System.Collections.ListDictionaryInternal
+23:25:24:158	
+23:25:24:183	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:24:208	SettingsFile could not be opened!
+23:25:24:233	Settingsfile could not be opend!
+23:25:24:333	Exception occured!
+23:25:24:358	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:24:383	System.Collections.ListDictionaryInternal
+23:25:24:408	
+23:25:24:433	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:24:458	SettingsFile could not be opened!
+23:25:24:483	Settingsfile could not be opend!
+23:25:24:584	Exception occured!
+23:25:24:609	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:24:634	System.Collections.ListDictionaryInternal
+23:25:24:66	
+23:25:24:685	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:24:71	SettingsFile could not be opened!
+23:25:24:735	Settingsfile could not be opend!
+23:25:24:835	Exception occured!
+23:25:24:86	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:24:885	System.Collections.ListDictionaryInternal
+23:25:24:91	
+23:25:24:935	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:24:96	SettingsFile could not be opened!
+23:25:24:985	Settingsfile could not be opend!
+23:25:25:085	Exception occured!
+23:25:25:11	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:25:135	System.Collections.ListDictionaryInternal
+23:25:25:16	
+23:25:25:185	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:25:21	SettingsFile could not be opened!
+23:25:25:235	Settingsfile could not be opend!
+23:25:25:335	Exception occured!
+23:25:25:36	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:25:385	System.Collections.ListDictionaryInternal
+23:25:25:41	
+23:25:25:435	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:25:46	SettingsFile could not be opened!
+23:25:25:485	Settingsfile could not be opend!
+23:25:25:585	Exception occured!
+23:25:25:611	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:25:636	System.Collections.ListDictionaryInternal
+23:25:25:661	
+23:25:25:686	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:25:711	SettingsFile could not be opened!
+23:25:25:736	Settingsfile could not be opend!
+23:25:25:836	Exception occured!
+23:25:25:861	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:25:886	System.Collections.ListDictionaryInternal
+23:25:25:911	
+23:25:25:936	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:25:961	SettingsFile could not be opened!
+23:25:25:986	Settingsfile could not be opend!
+23:25:26:086	Exception occured!
+23:25:26:111	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:26:136	System.Collections.ListDictionaryInternal
+23:25:26:16	
+23:25:26:186	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:26:211	SettingsFile could not be opened!
+23:25:26:236	Settingsfile could not be opend!
+23:25:26:336	Exception occured!
+23:25:26:361	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:26:386	System.Collections.ListDictionaryInternal
+23:25:26:411	
+23:25:26:436	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:26:461	SettingsFile could not be opened!
+23:25:26:486	Settingsfile could not be opend!
+23:25:26:586	Exception occured!
+23:25:26:611	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:26:636	System.Collections.ListDictionaryInternal
+23:25:26:662	
+23:25:26:687	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:26:712	SettingsFile could not be opened!
+23:25:26:737	Settingsfile could not be opend!
+23:25:26:837	Exception occured!
+23:25:26:862	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:26:887	System.Collections.ListDictionaryInternal
+23:25:26:912	
+23:25:26:937	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:26:962	SettingsFile could not be opened!
+23:25:26:987	Settingsfile could not be opend!
+23:25:27:087	Exception occured!
+23:25:27:112	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:27:137	System.Collections.ListDictionaryInternal
+23:25:27:162	
+23:25:27:187	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:27:212	SettingsFile could not be opened!
+23:25:27:237	Settingsfile could not be opend!
+23:25:27:337	Exception occured!
+23:25:27:362	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:27:387	System.Collections.ListDictionaryInternal
+23:25:27:412	
+23:25:27:437	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:27:462	SettingsFile could not be opened!
+23:25:27:487	Settingsfile could not be opend!
+23:25:27:587	Exception occured!
+23:25:27:612	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:27:637	System.Collections.ListDictionaryInternal
+23:25:27:662	
+23:25:27:688	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:27:713	SettingsFile could not be opened!
+23:25:27:738	Settingsfile could not be opend!
+23:25:27:838	Exception occured!
+23:25:27:863	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:27:888	System.Collections.ListDictionaryInternal
+23:25:27:913	
+23:25:27:938	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:27:963	SettingsFile could not be opened!
+23:25:27:988	Settingsfile could not be opend!
+23:25:28:088	Exception occured!
+23:25:28:113	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:28:138	System.Collections.ListDictionaryInternal
+23:25:28:163	
+23:25:28:188	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:28:213	SettingsFile could not be opened!
+23:25:28:238	Settingsfile could not be opend!
+23:25:28:338	Exception occured!
+23:25:28:363	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:28:388	System.Collections.ListDictionaryInternal
+23:25:28:413	
+23:25:28:438	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:28:463	SettingsFile could not be opened!
+23:25:28:488	Settingsfile could not be opend!
+23:25:28:588	Exception occured!
+23:25:28:613	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:28:638	System.Collections.ListDictionaryInternal
+23:25:28:663	
+23:25:28:688	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:28:713	SettingsFile could not be opened!
+23:25:28:739	Settingsfile could not be opend!
+23:25:28:839	Exception occured!
+23:25:28:864	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:28:889	System.Collections.ListDictionaryInternal
+23:25:28:914	
+23:25:28:939	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:28:964	SettingsFile could not be opened!
+23:25:28:989	Settingsfile could not be opend!
+23:25:29:089	Exception occured!
+23:25:29:114	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:29:139	System.Collections.ListDictionaryInternal
+23:25:29:164	
+23:25:29:189	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:29:214	SettingsFile could not be opened!
+23:25:29:239	Settingsfile could not be opend!
+23:25:29:339	Exception occured!
+23:25:29:364	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:29:389	System.Collections.ListDictionaryInternal
+23:25:29:414	
+23:25:29:439	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:29:464	SettingsFile could not be opened!
+23:25:29:489	Settingsfile could not be opend!
+23:25:29:589	Exception occured!
+23:25:29:614	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:29:639	System.Collections.ListDictionaryInternal
+23:25:29:664	
+23:25:29:689	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:29:714	SettingsFile could not be opened!
+23:25:29:739	Settingsfile could not be opend!
+23:25:29:84	Exception occured!
+23:25:29:865	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:29:89	System.Collections.ListDictionaryInternal
+23:25:29:915	
+23:25:29:94	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:29:965	SettingsFile could not be opened!
+23:25:29:99	Settingsfile could not be opend!
+23:25:30:09	Exception occured!
+23:25:30:115	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:30:14	System.Collections.ListDictionaryInternal
+23:25:30:165	
+23:25:30:19	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:30:215	SettingsFile could not be opened!
+23:25:30:24	Settingsfile could not be opend!
+23:25:30:34	Exception occured!
+23:25:30:365	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:30:39	System.Collections.ListDictionaryInternal
+23:25:30:415	
+23:25:30:44	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:30:465	SettingsFile could not be opened!
+23:25:30:49	Settingsfile could not be opend!
+23:25:30:59	Exception occured!
+23:25:30:615	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:30:64	System.Collections.ListDictionaryInternal
+23:25:30:665	
+23:25:30:69	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:30:715	SettingsFile could not be opened!
+23:25:30:74	Settingsfile could not be opend!
+23:25:30:841	Exception occured!
+23:25:30:866	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:30:891	System.Collections.ListDictionaryInternal
+23:25:30:916	
+23:25:30:941	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:30:966	SettingsFile could not be opened!
+23:25:30:991	Settingsfile could not be opend!
+23:25:31:091	Exception occured!
+23:25:31:116	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:31:141	System.Collections.ListDictionaryInternal
+23:25:31:166	
+23:25:31:191	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:31:216	SettingsFile could not be opened!
+23:25:31:241	Settingsfile could not be opend!
+23:25:31:341	Exception occured!
+23:25:31:366	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:31:391	System.Collections.ListDictionaryInternal
+23:25:31:416	
+23:25:31:441	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:31:466	SettingsFile could not be opened!
+23:25:31:491	Settingsfile could not be opend!
+23:25:31:591	Exception occured!
+23:25:31:616	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:31:641	System.Collections.ListDictionaryInternal
+23:25:31:666	
+23:25:31:691	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:31:716	SettingsFile could not be opened!
+23:25:31:741	Settingsfile could not be opend!
+23:25:31:841	Exception occured!
+23:25:31:867	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:31:892	System.Collections.ListDictionaryInternal
+23:25:31:917	
+23:25:31:942	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:31:967	SettingsFile could not be opened!
+23:25:31:992	Settingsfile could not be opend!
+23:25:32:092	Exception occured!
+23:25:32:117	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:32:142	System.Collections.ListDictionaryInternal
+23:25:32:167	
+23:25:32:192	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:32:217	SettingsFile could not be opened!
+23:25:32:242	Settingsfile could not be opend!
+23:25:32:342	Exception occured!
+23:25:32:367	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:32:392	System.Collections.ListDictionaryInternal
+23:25:32:417	
+23:25:32:442	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:32:467	SettingsFile could not be opened!
+23:25:32:492	Settingsfile could not be opend!
+23:25:32:592	Exception occured!
+23:25:32:617	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:32:642	System.Collections.ListDictionaryInternal
+23:25:32:667	
+23:25:32:692	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:32:717	SettingsFile could not be opened!
+23:25:32:742	Settingsfile could not be opend!
+23:25:32:842	Exception occured!
+23:25:32:867	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:32:892	System.Collections.ListDictionaryInternal
+23:25:32:918	
+23:25:32:943	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:32:968	SettingsFile could not be opened!
+23:25:32:993	Settingsfile could not be opend!
+23:25:33:093	Exception occured!
+23:25:33:118	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:33:143	System.Collections.ListDictionaryInternal
+23:25:33:168	
+23:25:33:193	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:33:233	SettingsFile could not be opened!
+23:25:33:258	Settingsfile could not be opend!
+23:25:33:358	Exception occured!
+23:25:33:383	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:33:408	System.Collections.ListDictionaryInternal
+23:25:33:433	
+23:25:33:458	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:33:483	SettingsFile could not be opened!
+23:25:33:508	Settingsfile could not be opend!
+23:25:33:609	Exception occured!
+23:25:33:634	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:33:659	System.Collections.ListDictionaryInternal
+23:25:33:684	
+23:25:33:709	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:33:734	SettingsFile could not be opened!
+23:25:33:759	Settingsfile could not be opend!
+23:25:33:86	Exception occured!
+23:25:33:885	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:33:91	System.Collections.ListDictionaryInternal
+23:25:33:935	
+23:25:33:961	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:33:986	SettingsFile could not be opened!
+23:25:34:011	Settingsfile could not be opend!
+23:25:34:111	Exception occured!
+23:25:34:136	Eine externe Komponente hat eine Ausnahme ausgelöst.
+23:25:34:161	System.Collections.ListDictionaryInternal
+23:25:34:186	
+23:25:34:211	Retuned Settings-File-Path: C:\Users\Code\Desktop\Projekt\StandBye\StandBye\StandBye\Settings.ini
+23:25:34:236	SettingsFile could not be opened!
+23:25:34:261	Settingsfile could not be opend!
