@@ -338,7 +338,7 @@ namespace StandBye {
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTextBoxHDD, 2, 3);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTrackBarRAM, 2, 2);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextAverageUsage, 2, 0);
-				 this->tableLayoutPanelUsageThresholds->Location = System::Drawing::Point(68, 146);
+				 this->tableLayoutPanelUsageThresholds->Location = System::Drawing::Point(68, 153);
 				 this->tableLayoutPanelUsageThresholds->Name = L"tableLayoutPanelUsageThresholds";
 				 this->tableLayoutPanelUsageThresholds->RowCount = 5;
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
@@ -351,7 +351,7 @@ namespace StandBye {
 					 20)));
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
 					 20)));
-				 this->tableLayoutPanelUsageThresholds->Size = System::Drawing::Size(568, 132);
+				 this->tableLayoutPanelUsageThresholds->Size = System::Drawing::Size(568, 125);
 				 this->tableLayoutPanelUsageThresholds->TabIndex = 3;
 				 //
 				 // metroLabelCurNET
@@ -359,9 +359,9 @@ namespace StandBye {
 				 this->metroLabelCurNET->AutoSize = true;
 				 this->metroLabelCurNET->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurNET->Location = System::Drawing::Point(462, 104);
+				 this->metroLabelCurNET->Location = System::Drawing::Point(462, 100);
 				 this->metroLabelCurNET->Name = L"metroLabelCurNET";
-				 this->metroLabelCurNET->Size = System::Drawing::Size(103, 28);
+				 this->metroLabelCurNET->Size = System::Drawing::Size(103, 25);
 				 this->metroLabelCurNET->TabIndex = 41;
 				 this->metroLabelCurNET->Text = L"-";
 				 this->metroLabelCurNET->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -372,10 +372,10 @@ namespace StandBye {
 				 //
 				 this->metroToggleNET->AutoSize = true;
 				 this->metroToggleNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleNET->Location = System::Drawing::Point(3, 109);
+				 this->metroToggleNET->Location = System::Drawing::Point(3, 105);
 				 this->metroToggleNET->Margin = System::Windows::Forms::Padding(3, 5, 3, 3);
 				 this->metroToggleNET->Name = L"metroToggleNET";
-				 this->metroToggleNET->Size = System::Drawing::Size(80, 20);
+				 this->metroToggleNET->Size = System::Drawing::Size(80, 17);
 				 this->metroToggleNET->TabIndex = 49;
 				 this->metroToggleNET->Text = L"Aus";
 				 this->metroToggleNET->UseSelectable = true;
@@ -384,9 +384,9 @@ namespace StandBye {
 				 //
 				 this->metroToggleHDD->AutoSize = true;
 				 this->metroToggleHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleHDD->Location = System::Drawing::Point(3, 81);
+				 this->metroToggleHDD->Location = System::Drawing::Point(3, 78);
 				 this->metroToggleHDD->Name = L"metroToggleHDD";
-				 this->metroToggleHDD->Size = System::Drawing::Size(80, 20);
+				 this->metroToggleHDD->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleHDD->TabIndex = 48;
 				 this->metroToggleHDD->Text = L"Aus";
 				 this->metroToggleHDD->UseSelectable = true;
@@ -396,9 +396,9 @@ namespace StandBye {
 				 this->metroLabelCurHDD->AutoSize = true;
 				 this->metroLabelCurHDD->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurHDD->Location = System::Drawing::Point(462, 78);
+				 this->metroLabelCurHDD->Location = System::Drawing::Point(462, 75);
 				 this->metroLabelCurHDD->Name = L"metroLabelCurHDD";
-				 this->metroLabelCurHDD->Size = System::Drawing::Size(103, 26);
+				 this->metroLabelCurHDD->Size = System::Drawing::Size(103, 25);
 				 this->metroLabelCurHDD->TabIndex = 40;
 				 this->metroLabelCurHDD->Text = L"-";
 				 this->metroLabelCurHDD->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -409,9 +409,9 @@ namespace StandBye {
 				 //
 				 this->metroLabel13->AutoSize = true;
 				 this->metroLabel13->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel13->Location = System::Drawing::Point(410, 104);
+				 this->metroLabel13->Location = System::Drawing::Point(410, 100);
 				 this->metroLabel13->Name = L"metroLabel13";
-				 this->metroLabel13->Size = System::Drawing::Size(46, 28);
+				 this->metroLabel13->Size = System::Drawing::Size(46, 25);
 				 this->metroLabel13->TabIndex = 36;
 				 this->metroLabel13->Text = L"MBit/s";
 				 this->metroLabel13->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
@@ -421,9 +421,9 @@ namespace StandBye {
 				 this->metroLabelCurRAM->AutoSize = true;
 				 this->metroLabelCurRAM->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurRAM->Location = System::Drawing::Point(462, 52);
+				 this->metroLabelCurRAM->Location = System::Drawing::Point(462, 50);
 				 this->metroLabelCurRAM->Name = L"metroLabelCurRAM";
-				 this->metroLabelCurRAM->Size = System::Drawing::Size(103, 26);
+				 this->metroLabelCurRAM->Size = System::Drawing::Size(103, 25);
 				 this->metroLabelCurRAM->TabIndex = 39;
 				 this->metroLabelCurRAM->Text = L"-";
 				 this->metroLabelCurRAM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -434,9 +434,9 @@ namespace StandBye {
 				 //
 				 this->metroToggleRAM->AutoSize = true;
 				 this->metroToggleRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleRAM->Location = System::Drawing::Point(3, 55);
+				 this->metroToggleRAM->Location = System::Drawing::Point(3, 53);
 				 this->metroToggleRAM->Name = L"metroToggleRAM";
-				 this->metroToggleRAM->Size = System::Drawing::Size(80, 20);
+				 this->metroToggleRAM->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleRAM->TabIndex = 47;
 				 this->metroToggleRAM->Text = L"Aus";
 				 this->metroToggleRAM->UseSelectable = true;
@@ -447,9 +447,9 @@ namespace StandBye {
 				 this->metroLabelCurCPU->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurCPU->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelCurCPU->ForeColor = System::Drawing::SystemColors::ControlText;
-				 this->metroLabelCurCPU->Location = System::Drawing::Point(462, 26);
+				 this->metroLabelCurCPU->Location = System::Drawing::Point(462, 25);
 				 this->metroLabelCurCPU->Name = L"metroLabelCurCPU";
-				 this->metroLabelCurCPU->Size = System::Drawing::Size(103, 26);
+				 this->metroLabelCurCPU->Size = System::Drawing::Size(103, 25);
 				 this->metroLabelCurCPU->TabIndex = 38;
 				 this->metroLabelCurCPU->Text = L"-";
 				 this->metroLabelCurCPU->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -460,9 +460,9 @@ namespace StandBye {
 				 //
 				 this->metroToggleCPU->AutoSize = true;
 				 this->metroToggleCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleCPU->Location = System::Drawing::Point(3, 29);
+				 this->metroToggleCPU->Location = System::Drawing::Point(3, 28);
 				 this->metroToggleCPU->Name = L"metroToggleCPU";
-				 this->metroToggleCPU->Size = System::Drawing::Size(80, 20);
+				 this->metroToggleCPU->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleCPU->TabIndex = 46;
 				 this->metroToggleCPU->Text = L"Aus";
 				 this->metroToggleCPU->UseSelectable = true;
@@ -471,14 +471,14 @@ namespace StandBye {
 				 //
 				 this->metroTextBoxNET->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroTextBoxNET->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxNET->Location = System::Drawing::Point(213, 106);
+				 this->metroTextBoxNET->Location = System::Drawing::Point(213, 102);
 				 this->metroTextBoxNET->Margin = System::Windows::Forms::Padding(2);
 				 this->metroTextBoxNET->MaxLength = 3;
 				 this->metroTextBoxNET->Name = L"metroTextBoxNET";
 				 this->metroTextBoxNET->PasswordChar = '\0';
 				 this->metroTextBoxNET->ScrollBars = System::Windows::Forms::ScrollBars::None;
 				 this->metroTextBoxNET->SelectedText = L"";
-				 this->metroTextBoxNET->Size = System::Drawing::Size(192, 24);
+				 this->metroTextBoxNET->Size = System::Drawing::Size(192, 21);
 				 this->metroTextBoxNET->TabIndex = 45;
 				 this->metroTextBoxNET->Text = L" ";
 				 this->metroTextBoxNET->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -489,9 +489,9 @@ namespace StandBye {
 				 //
 				 this->metroLabel14->AutoSize = true;
 				 this->metroLabel14->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel14->Location = System::Drawing::Point(410, 78);
+				 this->metroLabel14->Location = System::Drawing::Point(410, 75);
 				 this->metroLabel14->Name = L"metroLabel14";
-				 this->metroLabel14->Size = System::Drawing::Size(46, 26);
+				 this->metroLabel14->Size = System::Drawing::Size(46, 25);
 				 this->metroLabel14->TabIndex = 37;
 				 this->metroLabel14->Text = L"MBit/s";
 				 this->metroLabel14->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
@@ -500,9 +500,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextCPU->AutoSize = true;
 				 this->metroLabelTextCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextCPU->Location = System::Drawing::Point(89, 26);
+				 this->metroLabelTextCPU->Location = System::Drawing::Point(89, 25);
 				 this->metroLabelTextCPU->Name = L"metroLabelTextCPU";
-				 this->metroLabelTextCPU->Size = System::Drawing::Size(119, 26);
+				 this->metroLabelTextCPU->Size = System::Drawing::Size(119, 25);
 				 this->metroLabelTextCPU->TabIndex = 30;
 				 this->metroLabelTextCPU->Text = L"CPU Threshold";
 				 this->metroLabelTextCPU->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -512,9 +512,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextRAM->AutoSize = true;
 				 this->metroLabelTextRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextRAM->Location = System::Drawing::Point(89, 52);
+				 this->metroLabelTextRAM->Location = System::Drawing::Point(89, 50);
 				 this->metroLabelTextRAM->Name = L"metroLabelTextRAM";
-				 this->metroLabelTextRAM->Size = System::Drawing::Size(119, 26);
+				 this->metroLabelTextRAM->Size = System::Drawing::Size(119, 25);
 				 this->metroLabelTextRAM->TabIndex = 31;
 				 this->metroLabelTextRAM->Text = L"RAM Threshold";
 				 this->metroLabelTextRAM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -524,9 +524,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextHDD->AutoSize = true;
 				 this->metroLabelTextHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextHDD->Location = System::Drawing::Point(89, 78);
+				 this->metroLabelTextHDD->Location = System::Drawing::Point(89, 75);
 				 this->metroLabelTextHDD->Name = L"metroLabelTextHDD";
-				 this->metroLabelTextHDD->Size = System::Drawing::Size(119, 26);
+				 this->metroLabelTextHDD->Size = System::Drawing::Size(119, 25);
 				 this->metroLabelTextHDD->TabIndex = 32;
 				 this->metroLabelTextHDD->Text = L"HDD Threshold";
 				 this->metroLabelTextHDD->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -536,9 +536,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextNET->AutoSize = true;
 				 this->metroLabelTextNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextNET->Location = System::Drawing::Point(89, 104);
+				 this->metroLabelTextNET->Location = System::Drawing::Point(89, 100);
 				 this->metroLabelTextNET->Name = L"metroLabelTextNET";
-				 this->metroLabelTextNET->Size = System::Drawing::Size(119, 28);
+				 this->metroLabelTextNET->Size = System::Drawing::Size(119, 25);
 				 this->metroLabelTextNET->TabIndex = 33;
 				 this->metroLabelTextNET->Text = L"Network Threshold";
 				 this->metroLabelTextNET->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -548,9 +548,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelRAMPer->AutoSize = true;
 				 this->metroLabelRAMPer->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelRAMPer->Location = System::Drawing::Point(410, 52);
+				 this->metroLabelRAMPer->Location = System::Drawing::Point(410, 50);
 				 this->metroLabelRAMPer->Name = L"metroLabelRAMPer";
-				 this->metroLabelRAMPer->Size = System::Drawing::Size(46, 26);
+				 this->metroLabelRAMPer->Size = System::Drawing::Size(46, 25);
 				 this->metroLabelRAMPer->TabIndex = 35;
 				 this->metroLabelRAMPer->Text = L"%";
 				 this->metroLabelRAMPer->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
@@ -559,9 +559,9 @@ namespace StandBye {
 				 //
 				 this->metroTrackBarCPU->BackColor = System::Drawing::Color::Transparent;
 				 this->metroTrackBarCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTrackBarCPU->Location = System::Drawing::Point(214, 29);
+				 this->metroTrackBarCPU->Location = System::Drawing::Point(214, 28);
 				 this->metroTrackBarCPU->Name = L"metroTrackBarCPU";
-				 this->metroTrackBarCPU->Size = System::Drawing::Size(190, 20);
+				 this->metroTrackBarCPU->Size = System::Drawing::Size(190, 19);
 				 this->metroTrackBarCPU->TabIndex = 42;
 				 this->metroTrackBarCPU->Text = L"metroTrackBar1";
 				 this->metroTrackBarCPU->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarCPU_Scroll);
@@ -570,9 +570,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelCPUPer->AutoSize = true;
 				 this->metroLabelCPUPer->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCPUPer->Location = System::Drawing::Point(410, 26);
+				 this->metroLabelCPUPer->Location = System::Drawing::Point(410, 25);
 				 this->metroLabelCPUPer->Name = L"metroLabelCPUPer";
-				 this->metroLabelCPUPer->Size = System::Drawing::Size(46, 26);
+				 this->metroLabelCPUPer->Size = System::Drawing::Size(46, 25);
 				 this->metroLabelCPUPer->TabIndex = 34;
 				 this->metroLabelCPUPer->Text = L"%";
 				 this->metroLabelCPUPer->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
@@ -581,14 +581,14 @@ namespace StandBye {
 				 //
 				 this->metroTextBoxHDD->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroTextBoxHDD->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxHDD->Location = System::Drawing::Point(213, 80);
+				 this->metroTextBoxHDD->Location = System::Drawing::Point(213, 77);
 				 this->metroTextBoxHDD->Margin = System::Windows::Forms::Padding(2);
 				 this->metroTextBoxHDD->MaxLength = 3;
 				 this->metroTextBoxHDD->Name = L"metroTextBoxHDD";
 				 this->metroTextBoxHDD->PasswordChar = '\0';
 				 this->metroTextBoxHDD->ScrollBars = System::Windows::Forms::ScrollBars::None;
 				 this->metroTextBoxHDD->SelectedText = L"";
-				 this->metroTextBoxHDD->Size = System::Drawing::Size(192, 22);
+				 this->metroTextBoxHDD->Size = System::Drawing::Size(192, 21);
 				 this->metroTextBoxHDD->TabIndex = 44;
 				 this->metroTextBoxHDD->Text = L" ";
 				 this->metroTextBoxHDD->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -599,9 +599,9 @@ namespace StandBye {
 				 //
 				 this->metroTrackBarRAM->BackColor = System::Drawing::Color::Transparent;
 				 this->metroTrackBarRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTrackBarRAM->Location = System::Drawing::Point(214, 55);
+				 this->metroTrackBarRAM->Location = System::Drawing::Point(214, 53);
 				 this->metroTrackBarRAM->Name = L"metroTrackBarRAM";
-				 this->metroTrackBarRAM->Size = System::Drawing::Size(190, 20);
+				 this->metroTrackBarRAM->Size = System::Drawing::Size(190, 19);
 				 this->metroTrackBarRAM->TabIndex = 43;
 				 this->metroTrackBarRAM->Text = L"metroTrackBar2";
 				 this->metroTrackBarRAM->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarRAM_Scroll);
@@ -614,7 +614,7 @@ namespace StandBye {
 				 this->metroLabelTextAverageUsage->FontWeight = MetroFramework::MetroLabelWeight::Regular;
 				 this->metroLabelTextAverageUsage->Location = System::Drawing::Point(214, 0);
 				 this->metroLabelTextAverageUsage->Name = L"metroLabelTextAverageUsage";
-				 this->metroLabelTextAverageUsage->Size = System::Drawing::Size(351, 26);
+				 this->metroLabelTextAverageUsage->Size = System::Drawing::Size(351, 25);
 				 this->metroLabelTextAverageUsage->TabIndex = 50;
 				 this->metroLabelTextAverageUsage->Text = L"Average Usage:";
 				 this->metroLabelTextAverageUsage->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -999,7 +999,7 @@ namespace StandBye {
 				 // metroLabelTextExcpProcessExpl
 				 //
 				 this->metroLabelTextExcpProcessExpl->AutoSize = true;
-				 this->metroLabelTextExcpProcessExpl->BackColor = System::Drawing::SystemColors::Control;
+				 this->metroLabelTextExcpProcessExpl->BackColor = System::Drawing::Color::White;
 				 this->metroLabelTextExcpProcessExpl->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelTextExcpProcessExpl->FontWeight = MetroFramework::MetroLabelWeight::Regular;
 				 this->metroLabelTextExcpProcessExpl->Location = System::Drawing::Point(3, 0);
