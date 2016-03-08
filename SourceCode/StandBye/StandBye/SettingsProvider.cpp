@@ -108,7 +108,6 @@ void SettingsProvider::removeProcessFromProcessList(const string process) {
 
 bool SettingsProvider::checkSettingsFile() {
 	//Resets to DEFAULT values
-	bool correction_needed = false;
 
 	using namespace System::Collections;
 	vector<Setting*> default_list;
@@ -139,15 +138,17 @@ bool SettingsProvider::checkSettingsFile() {
 		if (!settting_defined) {
 			SettingsList.push_back(default_setting);
 			LOG("Settings provider added [" + default_setting->GetNameAsString() + "] Setting to file!");
-			correction_needed = true;
+			settingsFileCorrected = true;
 		}
 	}
 
-	if (correction_needed) {
+	if (settingsFileCorrected) {
+		//The settings file was incomplete
 		return writeSettingsFile();
 	}
 	else {
-		return !correction_needed;
+		//The settings file was complete
+		return true;
 	}
 };
 
@@ -158,7 +159,12 @@ bool SettingsProvider::saveSettingsToFile()
 vector<Setting*> SettingsProvider::getAllSettings()
 {
 	return SettingsList;
-};
+}
+bool SettingsProvider::isFirstStart()
+{
+	return settingsFileCorrected;
+}
+;
 
 bool SettingsProvider::writeSettingsFile() {
 	std::ofstream sFile(getSettingsFilePath());
@@ -224,8 +230,7 @@ bool SettingsProvider::loadSettings() {
 	else {
 		//File could not be opened!
 		LOG("SettingsFile could not be opened!");
-		checkSettingsFile();
-		return false;
+		return checkSettingsFile();
 	}
 }
 bool SettingsProvider::reset()

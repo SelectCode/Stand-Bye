@@ -36,6 +36,7 @@ using std::vector;
 
 class SettingsProvider {
 	vector<Setting*> SettingsList;
+	bool settingsFileCorrected = false;
 
 public:
 	SettingsProvider();
@@ -88,6 +89,9 @@ public:
 
 	///<summary>Returns all currently loaded settings</summary>
 	vector<Setting*> getAllSettings();
+
+	///<summary>Returns if the settingsProvider had to correct the settingsfile, which means that this was the first launch of the application</summary>
+	bool isFirstStart();
 
 private:
 

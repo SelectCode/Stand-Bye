@@ -23,6 +23,13 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 {
 	LOG("Loading SystemAccess instance...");
 	setprov = p;
+
+	//Enables autostart if first launch
+	if (setprov->isFirstStart() && !(bool)PORTABLE_VERSION) {
+		this->SetAutoStart(true);
+		LOG("Enabled autostart on first launch of the application");
+	}
+
 	perfCPU = gcnew PerformanceCounter("Processor", "% Processor Time", "_Total");
 	perfHDD = gcnew PerformanceCounter("PhysicalDisk", "Disk Bytes/sec", "_Total");
 	perfNETs = gcnew List<PerformanceCounter^>;
