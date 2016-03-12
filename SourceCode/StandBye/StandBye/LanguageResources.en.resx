@@ -239,13 +239,23 @@ And all the persons, who have supported us during the development: our families,
     <value>Exception Processes</value>
     <comment>-</comment>
   </data>
-  <data name="excp_process_text" xml:space="preserve">
-    <value>If at least one of the set up processes is running, the program will prevent the system from changing over to standby mode.</value>
+  <data name="general_settings" xml:space="preserve">
+    <value>General Settings</value>
     <comment>-</comment>
   </data>
   <data name="hdd_threshold" xml:space="preserve">
     <value>HDD Threshold</value>
     <comment>-</comment>
+  </data>
+  <data name="info_excp" xml:space="preserve">
+    <value>If at least one of the set up processes is running, the program will prevent the system from changing over to standby mode.</value>
+    <comment>-</comment>
+  </data>
+  <data name="info_general" xml:space="preserve">
+    <value>Stand-Bye checks after the selected wait-time if the system is in use. If not the standby will be activated. You can define when to cancel standby by setting up the given settings to your personal needs.</value>
+  </data>
+  <data name="info_thresholds" xml:space="preserve">
+    <value>Stand-Bye checks if the current usage is greater than the selected one. If it is, there will be no change to standby-mode. This prevents resource needing processes to be interrupted.</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Language</value>
@@ -270,10 +280,6 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="ok" xml:space="preserve">
     <value>OK</value>
-    <comment>-</comment>
-  </data>
-  <data name="program_settings" xml:space="preserve">
-    <value>Program Settings</value>
     <comment>-</comment>
   </data>
   <data name="ram_threshold" xml:space="preserve">
@@ -307,6 +313,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="system_usage_thresholds" xml:space="preserve">
     <value>System Usage Thresholds</value>
     <comment>-</comment>
+  </data>
+  <data name="thresholds" xml:space="preserve">
+    <value>Thresholds</value>
   </data>
   <data name="timeout" xml:space="preserve">
     <value>Entering Standby in:</value>

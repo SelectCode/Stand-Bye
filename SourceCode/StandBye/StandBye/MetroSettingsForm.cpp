@@ -358,13 +358,13 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextHDD->Text = res_man->GetString("hdd_threshold", cul);
 	metroLabelTextNET->Text = res_man->GetString("net_threshold", cul);
 	metroLabelTextAverageUsage->Text = res_man->GetString("avg_usage", cul);
-	metroLabelTextProgramSettings->Text = res_man->GetString("program_settings", cul);
+	metroLabelTextProgramSettings->Text = res_man->GetString("general_settings", cul);
 	metroLabelTextUsageThresholds->Text = res_man->GetString("system_usage_thresholds", cul);
 	metroTabPageSettings->Text = res_man->GetString("settings", cul);
 	metroTabPageExcpProcess->Text = res_man->GetString("excp_process", cul);
 	metroTabPageAdvSettings->Text = res_man->GetString("adv_settings", cul);
 	metroTabPageAbout->Text = res_man->GetString("about", cul);
-	metroLabelTextExcpProcessExpl->Text = res_man->GetString("excp_process_text", cul);
+
 	metroButtonAddFromFile->Text = res_man->GetString("add_process_file", cul);
 	metroButtonAddFromList->Text = res_man->GetString("add_process_running", cul);
 	metroLabelView->Text = res_man->GetString("show_details", cul);
@@ -378,6 +378,12 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroTileHomepage->Text = res_man->GetString("visit_homepage", cul);
 	metroTileGithub->Text = res_man->GetString("visit_github", cul);
 	metroLabelTextAbout->Text = res_man->GetString("about_text", cul);
+	metroTabPageThresholds->Text = res_man->GetString("thresholds", cul);
+
+	//Info
+	infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
+	infoThresholds->Text = res_man->GetString("info_thresholds", cul);
+	infoGeneral->Text = res_man->GetString("info_general", cul);
 
 	//Sets preferred Sizes
 	for each(Windows::Forms::Control^ control in this->Controls) {

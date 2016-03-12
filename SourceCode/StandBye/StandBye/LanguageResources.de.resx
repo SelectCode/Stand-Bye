@@ -220,11 +220,20 @@ And all the persons, who have supported us during the development: our families,
   <data name="excp_process" xml:space="preserve">
     <value>Ausnahmeprozesse</value>
   </data>
-  <data name="excp_process_text" xml:space="preserve">
-    <value>Wenn einer der festgelegten Prozesse läuft, wird das System nicht in den Standby versetzt!</value>
+  <data name="general_settings" xml:space="preserve">
+    <value>Allgemeine Einstellungen</value>
   </data>
   <data name="hdd_threshold" xml:space="preserve">
     <value>HDD Grenze</value>
+  </data>
+  <data name="info_excp" xml:space="preserve">
+    <value>Wenn einer der festgelegten Prozesse läuft, wird das System nicht in den Standby versetzt!</value>
+  </data>
+  <data name="info_general" xml:space="preserve">
+    <value>Stand-Bye überprüft nachdem die Wartezeit vorbei ist, ob das System gerade genutzt wird oder nicht. Wenn es nicht genutzt wird, wird der normale Standby gestartet. Durch das Festlegen aller Einstellungen wird garantiert, dass der Standby nur dann aktiviert wird, wenn er nicht stört.</value>
+  </data>
+  <data name="info_thresholds" xml:space="preserve">
+    <value>Stand-Bye überprüft, ob das System mehr ausgelastet ist, als die eingestellten Werte. Wenn dies der Fall ist, wird der Standby-Modus nicht aktiviert.</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Sprache</value>
@@ -246,9 +255,6 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="ok" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="program_settings" xml:space="preserve">
-    <value>Haupteinstellungen</value>
   </data>
   <data name="ram_threshold" xml:space="preserve">
     <value>RAM Grenze</value>
@@ -273,6 +279,9 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="system_usage_thresholds" xml:space="preserve">
     <value>System Auslastungen</value>
+  </data>
+  <data name="thresholds" xml:space="preserve">
+    <value>Grenzwerte</value>
   </data>
   <data name="timeout" xml:space="preserve">
     <value>Standby wird aktiviert:</value>
