@@ -17,7 +17,7 @@
 
 //APP VALUES
 #define APP_NAME "Stand-Bye!"
-#define APP_VERSION "0.5.8"
+#define APP_VERSION "0.5.9"
 #define PORTABLE_VERSION false
 
 //////////////////////////////////////////////////////////////////////////

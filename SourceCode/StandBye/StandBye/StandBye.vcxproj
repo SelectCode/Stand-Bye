@@ -154,6 +154,7 @@
     </ClInclude>
     <ClInclude Include="Setting.h" />
     <ClInclude Include="standbye_main.h" />
+    <ClInclude Include="SystemTimeMonitor.h" />
     <ClInclude Include="TimeoutWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -182,6 +183,7 @@
     <ClCompile Include="standbye_main.cpp" />
     <ClCompile Include="SystemAccess.cpp" />
     <ClCompile Include="SystemMetricWatcher.cpp" />
+    <ClCompile Include="SystemTimeMonitor.cpp" />
     <ClCompile Include="TimeoutWindow.cpp" />
     <ClCompile Include="Updater.cpp" />
   </ItemGroup>

@@ -1,5 +1,12 @@
 # Changelog:
 
+## v x
+ * Added explanation labels for all settings
+ * new set up of GUI
+ * Added option to start standby at specified time
+ * Stand-Bye activates auto-starts on first-launch
+
+
 ## v0.5.7
  * Added compatibility for old settings
  * Fixed Multi-User Bug (StandBye has started standbye although multiple users are logged in)

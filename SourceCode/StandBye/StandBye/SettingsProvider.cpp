@@ -25,7 +25,7 @@ SettingsProvider::SettingsProvider() {
 	}
 	else {
 		LOG("Settingsfile could not be opend!");
-		throw("SettingsFile could not be opend!");
+		throw("SettingsFile could not be opened!");
 	}
 };
 

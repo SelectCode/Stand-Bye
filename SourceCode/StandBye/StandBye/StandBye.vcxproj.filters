@@ -66,6 +66,9 @@
     <ClCompile Include="Updater.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="SystemTimeMonitor.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AverageBuffer.h">
@@ -120,6 +123,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Updater.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemTimeMonitor.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
