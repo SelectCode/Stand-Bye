@@ -56,7 +56,7 @@ public:
 	void setPresentationMode(bool value);
 	void Quit(Object^, System::EventArgs^);
 	void ReloadContextMenu();
-
+	void prepareStandby();
 private:
 
 	void OpenSettings(Object^, System::EventArgs^);

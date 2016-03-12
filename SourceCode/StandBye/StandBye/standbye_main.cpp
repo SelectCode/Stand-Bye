@@ -58,6 +58,47 @@ void mainApplication::ReloadContextMenu()
 	LOG("Reloaded Context Menu with Language:" + CultureInfo::DefaultThreadCurrentCulture->EnglishName);
 }
 
+void mainApplication::prepareStandby()
+{
+	//Checks if the application is in presentation mode
+	if (inPresentationMode) {
+		LOG("Application in presentation mode! \n Canceled Sleep mode!");
+		return;
+	}
+
+	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15, settings_provider);
+	LOG("Preparing the TimeoutWindow");
+	if (msgWnd->ShowDialog() == DialogResult::OK) {
+		LOG("Going to Sleep mode!");
+		SystemAccess::StartESM();
+	}
+	else {
+		LOG("The User has canceled the MessageWindow!");
+
+		if (ask_Enable_PresentationMode) {
+			//Asks User if he wants to enable presentation mode
+			String^ message = res_man->GetString("ask_presMode", CultureInfo::DefaultThreadCurrentCulture);
+
+			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
+			if (msgPres->ShowDialog() == DialogResult::OK) {
+				//Enable presentation mode
+				SystemAccess::SetPresentationMode(true);
+				PresentationModeItem->Checked = true;
+				inPresentationMode = true;
+				LOG("The user accepted to enable the presentation mode");
+			}
+			else {
+				//Do nothing
+				LOG("The user denied to enable the presentation mode");
+				ask_Enable_PresentationMode = false;
+			}
+		}
+		else {
+			LOG("Did not ask for presentation mode, because it has been denied once");
+		}
+	}
+}
+
 void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 {
 	if (!inPresentationMode) {
@@ -78,11 +119,7 @@ void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 
 void mainApplication::CheckUsage() {
 	LOG("Checking System usage....");
-	//Checks if the application is in presentation mode
-	if (inPresentationMode) {
-		LOG("Application in presentation mode! \n Canceled Sleep mode!");
-		return;
-	}
+
 	//Check if an exception process is running
 	boolean exception_process_running = false;
 	for each(std::string process in settings_provider->getProcessList()) {
@@ -140,38 +177,7 @@ void mainApplication::CheckUsage() {
 	}
 
 	//If the method has reached this point, the standby can be started
-
-	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15, settings_provider);
-	LOG("Preparing the TimeoutWindow");
-	if (msgWnd->ShowDialog() == DialogResult::OK) {
-		LOG("Going to Sleep mode!");
-		SystemAccess::StartESM();
-	}
-	else {
-		LOG("The User has canceled the MessageWindow!");
-
-		if (ask_Enable_PresentationMode) {
-			//Asks User if he wants to enable presentation mode
-			String^ message = res_man->GetString("ask_presMode", CultureInfo::DefaultThreadCurrentCulture);
-
-			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
-			if (msgPres->ShowDialog() == DialogResult::OK) {
-				//Enable presentation mode
-				SystemAccess::SetPresentationMode(true);
-				PresentationModeItem->Checked = true;
-				inPresentationMode = true;
-				LOG("The user accepted to enable the presentation mode");
-			}
-			else {
-				//Do nothing
-				LOG("The user denied to enable the presentation mode");
-				ask_Enable_PresentationMode = false;
-			}
-		}
-		else {
-			LOG("Did not ask for presentation mode, because it has been denied once");
-		}
-	}
+	prepareStandby();
 }
 
 void mainApplication::OpenSettingsForm()
