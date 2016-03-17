@@ -20,7 +20,6 @@ namespace StandBye {
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
-	using namespace System::Data;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -159,7 +158,7 @@ namespace StandBye {
 		int getNewestVersion();
 
 		System::String^ VERSION_FILE_PATH = "https://raw.githubusercontent.com/flobaader/Stand-Bye/download/version.info";
-		
+
 		int NEW_VERSION = 0;
 		String^ NEW_VERSION_STRING = "";
 		String^ DOWNLOAD_LINK = "";

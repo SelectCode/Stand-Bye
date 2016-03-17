@@ -29,7 +29,6 @@ using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
-using namespace System::Data;
 using namespace System::Drawing;
 using std::string;
 using std::vector;
@@ -67,7 +66,8 @@ public:
 	void setSetting(SettingName name, const int limit);
 
 	///<summary>Sets the value for a specified Setting</summary>
-	///<param name="limit">The maximum value</param>
+	///<param name="value">The value</param>
+	///<param name="name">The name of the setting </param>
 	void setSetting(SettingName name, const string value);
 
 	///<summary>Returns the set List of blocked Processes</summary>
