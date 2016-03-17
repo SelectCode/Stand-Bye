@@ -21,9 +21,14 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 	//Focus on first tabPage
 	metroTabControl1->SelectedTab = metroTabPageSettings;
 
-	//Get Icon
-	res_man = gcnew ResourceManager("StandBye.ImageResources.Data", GetType()->Assembly);
-	this->Icon = (System::Drawing::Icon^) res_man->GetObject("icon1");
+	//Loads Resource Manager
+	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
+	res_manIMG = gcnew ResourceManager("StandBye.ImageResources.Data", GetType()->Assembly);
+
+	//Icons
+	this->Icon = (System::Drawing::Icon^) res_manIMG->GetObject("icon1");
+	infoGeneral->Icon = (System::Drawing::Image^) res_manIMG->GetObject("INFO");
+	infoThresholds->Icon = (System::Drawing::Image^) res_manIMG->GetObject("INFO");
 
 	//Sets version
 	String^ versionText = gcnew String("v" + APP_VERSION);
@@ -33,85 +38,54 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 	versionText += "\n" + "© Florian Baader, Stephan Le, Matthias Weirich";
 	metroLabelVersion->Text = versionText;
 
-	//Resource Manager
-	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
-
 	//Select Language
 	metroComboBoxLanguage->Text = CultureInfo::DefaultThreadCurrentCulture->NativeName;
 	switchLanguage();
 
-	//Sets preferred sizes
-	tableLayoutPanelProgrammSettings->Size = tableLayoutPanelProgrammSettings->PreferredSize;
-
-	//Activate
-	this->Activate();
-
 	//Load Settings
-	metroTrackBarCPU->Value = settings_provider->getThreshold(SettingName::MAX_CPU);
-	metroTrackBarRAM->Value = settings_provider->getThreshold(SettingName::MAX_RAM);
-	setTextBoxValue(metroTextBoxNET, (double)settings_provider->getThreshold(SettingName::MAX_NET) / 1000);
-	setTextBoxValue(metroTextBoxHDD, (double)settings_provider->getThreshold(SettingName::MAX_HDD) / 1000);
-	setTextBoxValue(metroTextBoxTimeMIN, Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60));
-	setTextBoxValue(metroTextBoxTimeSEC, settings_provider->getThreshold(SettingName::WAIT_TIME) - Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60) * 60);
-	metroToggleCPU->Checked = settings_provider->isActive(SettingName::USE_CPU);
-	metroToggleHDD->Checked = settings_provider->isActive(SettingName::USE_HDD);
-	metroToggleNET->Checked = settings_provider->isActive(SettingName::USE_NET);
-	metroToggleRAM->Checked = settings_provider->isActive(SettingName::USE_RAM);
-	metroToggleSOUND->Checked = settings_provider->isActive(SettingName::CHECK_SOUND);
-
-	//Load AutoStart Setting
-	metroToggleAutoStart->Checked = SystemAccess::IsInAutoStart();
-
-	//Update UI
-	metroLabelCPUPer->Text = String::Format("{0} %", metroTrackBarCPU->Value);
-	metroLabelRAMPer->Text = String::Format("{0} %", metroTrackBarRAM->Value);
-
-	//ListView processes
-	listViewProc->Font = BasicFunc::getMetroFont(9);
-
-	//Load Processes
-	refreshIcons();
-	listViewProc->Items->Clear();
-	for each(std::string str in  settings_provider->getProcessList()) {
-		listViewProc->Items->Add(gcnew ProcessItem(str, listViewProc));
-	}
-	listViewProc->Update();
-
-	//Presentation mode
-	metroTogglePresMode->Checked = parent->isInPresentationMode();
-
-	//Updates
-	metroToggleUPDATES->Checked = settings_provider->isActive(SettingName::SEARCH_UPDATES);
-
-	//Messages
-	metroToggleMessages->Checked = settings_provider->isActive(SettingName::SHOW_MESSAGES);
+	loadSettings();
 
 	//Start Timer
 	timerRefresh->Start();
 	forceRefreshUI();
 
-	switchLanguage();
+	//Activate
+	this->Activate();
 }
 
-double MetroSettingsForm::getTextBoxValueAsDouble(MetroFramework::Controls::MetroTextBox^ box) {
-	box->Text = box->Text->Trim();
-	box->Text = box->Text->Replace(".", ",");
+void StandBye::MetroSettingsForm::OnClosing(System::Object ^, System::ComponentModel::CancelEventArgs ^e)
+{
+	e->Cancel = true; //Form should not be closed, but only hidden
+	this->Hide();
+}
+
+double StandBye::MetroSettingsForm::getTextAsDouble(String^ text) {
+	text = text->Trim();
+	text = text->Replace(".", ",");
 	try {
-		return Convert::ToDouble(box->Text);
+		return Convert::ToDouble(text);
 	}
 	catch (Exception^) {
 		return -1;
 	}
 }
 
-void MetroSettingsForm::setTextBoxValue(MetroFramework::Controls::MetroTextBox^ box, double value) {
-	if (Math::Floor(value) == value) {
-		//Number has no comma
-		box->Text = String::Format("{0:00}", value);
+String^ StandBye::MetroSettingsForm::FormatDigits(double value) {
+	String^ formatter = "";
+
+	for (int x = 1; x < 1000; x = x * 10) {
+		if (value > x) {
+			formatter += "0";
+		}
 	}
-	else {
-		box->Text = String::Format("{0:00.0}", value);
+
+	if (!(Math::Floor(value) == value)) {
+		//Number has comma
+		formatter += ".0";
 	}
+
+	//Example String::Format("{0:00}", value)
+	return String::Format("{0:" + formatter + "}", value);
 }
 
 void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double SettingsValue, double readValue) {
@@ -134,8 +108,8 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	//changes Background Color of the currentUsage Labels
 	changeLabelBackgroundColor(metroLabelCurCPU, metroTrackBarCPU->Value, curCPU);
 	changeLabelBackgroundColor(metroLabelCurRAM, metroTrackBarRAM->Value, curRAM);
-	changeLabelBackgroundColor(metroLabelCurHDD, getTextBoxValueAsDouble(metroTextBoxHDD), curHDD / 1000);
-	changeLabelBackgroundColor(metroLabelCurNET, getTextBoxValueAsDouble(metroTextBoxNET), curNET / 1000);
+	changeLabelBackgroundColor(metroLabelCurHDD, metroTrackBarHDD->Value, curHDD / 100);
+	changeLabelBackgroundColor(metroLabelCurNET, metroTrackBarNET->Value, curNET / 100);
 
 	//Formats Text on the currentUsage Labels
 	metroLabelCurCPU->Text = String::Format("{0:00.00} %", curCPU);
@@ -148,8 +122,6 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	metroToolTip1->SetToolTip(metroLabelCurRAM, String::Format("Now: {0:00.00} % ", system_access->GetMetric(SystemAccess::SystemMetric::RAM)));
 	metroToolTip1->SetToolTip(metroLabelCurHDD, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::HDD) / 1000));
 	metroToolTip1->SetToolTip(metroLabelCurNET, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::NETWORK) / 1000));
-
-	//this->Activate();
 }
 System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	LOG("SettingsForm: OK Button Clicked");
@@ -217,16 +189,6 @@ System::Void MetroSettingsForm::metroToggleView_CheckedChanged(System::Object^, 
 	}
 }
 
-System::Void StandBye::MetroSettingsForm::metroToggleOnTop_CheckedChanged(System::Object ^, System::EventArgs ^)
-{
-	this->TopMost = metroToggleOnTop->Checked;
-}
-
-System::Void StandBye::MetroSettingsForm::metroTogglePresMode_CheckedChanged(System::Object ^, System::EventArgs ^)
-{
-	parent->setPresentationMode(metroTogglePresMode->Checked);
-}
-
 void MetroSettingsForm::refreshIcons() {
 	ImageList^ imglistSmall = gcnew ImageList, ^imglistLarge = gcnew ImageList;
 
@@ -258,9 +220,9 @@ void StandBye::MetroSettingsForm::writeSettings()
 	//Sets Settings
 	settings_provider->setSetting(SettingName::MAX_CPU, Decimal::ToInt32(metroTrackBarCPU->Value));
 	settings_provider->setSetting(SettingName::MAX_RAM, Decimal::ToInt32(metroTrackBarRAM->Value));
-	settings_provider->setSetting(SettingName::MAX_HDD, (int)(getTextBoxValueAsDouble(metroTextBoxHDD) * 1000));
-	settings_provider->setSetting(SettingName::MAX_NET, (int)(getTextBoxValueAsDouble(metroTextBoxNET) * 1000));
-	settings_provider->setSetting(SettingName::WAIT_TIME, (int)getTextBoxValueAsDouble(metroTextBoxTimeMIN) * 60 + (int)getTextBoxValueAsDouble(metroTextBoxTimeSEC));
+	settings_provider->setSetting(SettingName::MAX_HDD, Decimal::ToInt32(metroTrackBarHDD->Value) * 100);
+	settings_provider->setSetting(SettingName::MAX_NET, Decimal::ToInt32(metroTrackBarNET->Value) * 100);
+	settings_provider->setSetting(SettingName::WAIT_TIME, (int)getTextAsDouble(textBoxTimeMIN->Text) * 60 + (int)getTextAsDouble(textBoxTimeSEC->Text));
 	settings_provider->setActiveState(SettingName::USE_CPU, metroToggleCPU->Checked);
 	settings_provider->setActiveState(SettingName::USE_HDD, metroToggleHDD->Checked);
 	settings_provider->setActiveState(SettingName::USE_RAM, metroToggleRAM->Checked);
@@ -283,36 +245,74 @@ void StandBye::MetroSettingsForm::writeSettings()
 		MessageBoxA(NULL, "Writing Settings not successful!", "Writing not successful!", MB_OK);
 	}
 }
-System::Void MetroSettingsForm::metroTileHomepage_Click(System::Object^, System::EventArgs^) {
-	ShellExecute(0, 0, "http://www.stand-bye.de", 0, 0, SW_SHOW);
+void StandBye::MetroSettingsForm::loadSettings()
+{
+	//Load Settings
+	metroTrackBarCPU->Value = settings_provider->getThreshold(SettingName::MAX_CPU);
+	metroTrackBarRAM->Value = settings_provider->getThreshold(SettingName::MAX_RAM);
+	metroTrackBarHDD->Value = settings_provider->getThreshold(SettingName::MAX_HDD) / 100;
+	metroTrackBarNET->Value = settings_provider->getThreshold(SettingName::MAX_NET) / 100;
+	textBoxTimeMIN->Text = FormatDigits(Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60));
+	textBoxTimeSEC->Text = FormatDigits(settings_provider->getThreshold(SettingName::WAIT_TIME) - Math::Floor(settings_provider->getThreshold(SettingName::WAIT_TIME) / 60) * 60);
+	metroToggleCPU->Checked = settings_provider->isActive(SettingName::USE_CPU);
+	metroToggleHDD->Checked = settings_provider->isActive(SettingName::USE_HDD);
+	metroToggleNET->Checked = settings_provider->isActive(SettingName::USE_NET);
+	metroToggleRAM->Checked = settings_provider->isActive(SettingName::USE_RAM);
+	metroToggleSOUND->Checked = settings_provider->isActive(SettingName::CHECK_SOUND);
+
+	//Load AutoStart Setting
+	metroToggleAutoStart->Checked = SystemAccess::IsInAutoStart();
+
+	//Update UI
+	metroTrackBarCPU_Scroll(nullptr, nullptr);
+	metroTrackBarHDD_Scroll(nullptr, nullptr);
+	metroTrackBarNET_Scroll(nullptr, nullptr);
+	metroTrackBarRAM_Scroll(nullptr, nullptr);
+
+	//ListView processes
+	listViewProc->Font = BasicFunc::getMetroFont(9);
+
+	//Load Processes
+	refreshIcons();
+	listViewProc->Items->Clear();
+	for each(std::string str in  settings_provider->getProcessList()) {
+		listViewProc->Items->Add(gcnew ProcessItem(str, listViewProc));
+	}
+	listViewProc->Update();
+
+	//Presentation mode
+	ShowPresModeStatus();
+
+	//Updates
+	metroToggleUPDATES->Checked = settings_provider->isActive(SettingName::SEARCH_UPDATES);
+
+	//Messages
+	metroToggleMessages->Checked = settings_provider->isActive(SettingName::SHOW_MESSAGES);
 }
-System::Void MetroSettingsForm::metroTileGithub_Click(System::Object^, System::EventArgs^) {
-	ShellExecute(0, 0, "https://github.com/flobaader/Stand-Bye", 0, 0, SW_SHOW);
+System::Void MetroSettingsForm::openGithubOnClick(System::Object^, System::EventArgs^) {
+	BasicFunc::openLink("https://github.com/flobaader/Stand-Bye");
 }
-System::Void MetroSettingsForm::metroLinkHomepage_Click(System::Object^, System::EventArgs^) {
-	ShellExecute(0, 0, "http://www.stand-bye.de", 0, 0, SW_SHOW);
+System::Void MetroSettingsForm::OpenHomepageOnClick(System::Object^, System::EventArgs^) {
+	BasicFunc::openLink("http://www.stand-bye.de");
 }
 System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e) {
 	using MetroFramework::Controls::MetroTextBox;
 	if (e->KeyCode == Windows::Forms::Keys::Return) {
-		MetroTextBox^ txt = (MetroTextBox^)sender;
-		double value = getTextBoxValueAsDouble(txt);
+		Windows::Forms::TextBox^ txt = (Windows::Forms::TextBox^)sender;
+		double value = getTextAsDouble(txt->Text);
 		if (value == -1) {
 			//Could not convert
 			txt->Text = "0.0";
 			MessageBoxA(NULL, "Please insert numbers from 0 - 9", "Error!", MB_OK);
 		}
 		else {
-			if (Math::Floor(value) == value) {
-				//Number has no comma
-				txt->Text = String::Format("{0:00}", value);
-			}
-			else {
-				txt->Text = String::Format("{0:00.0}", value);
-			}
+			txt->Text = FormatDigits(value);
 		}
 		forceRefreshUI();
-		this->Activate();
+
+		//Removes Focus
+		txt->Enabled = false;
+		txt->Enabled = true;
 	}
 }
 
@@ -331,39 +331,31 @@ void StandBye::MetroSettingsForm::OnVisibleChanged(System::Object ^, System::Eve
 		timerRefresh->Stop();
 	}
 }
-
-void StandBye::MetroSettingsForm::OnClosing(System::Object ^, System::ComponentModel::CancelEventArgs ^e)
-{
-	e->Cancel = true; //Form should not be closed, but only hidden
-	this->Hide();
-}
-
-void StandBye::MetroSettingsForm::OnKeyDown(System::Object ^, System::Windows::Forms::KeyEventArgs ^e)
-{
-	if (e->Alt && e->Control && e->KeyCode == Windows::Forms::Keys::P) {
-		metroTogglePresMode->Checked = !metroTogglePresMode->Checked;
-	}
-}
-
 void StandBye::MetroSettingsForm::switchLanguage()
 {
+	//Culture
 	CultureInfo^ cul = CultureInfo::DefaultThreadCurrentCulture;
+
 	metroButtonOK->Text = res_man->GetString("ok", cul);
 	metroButtonCancel->Text = res_man->GetString("cancel", cul);
+
+	//Tab Pages
+	metroTabPageSettings->Text = res_man->GetString("general", cul);
+	metroTabPageExcpProcess->Text = res_man->GetString("excp_process", cul);
+	metroTabPageAdvSettings->Text = res_man->GetString("adv_settings", cul);
+	metroTabPageAbout->Text = res_man->GetString("about", cul);
+
+	//General
 	metroLabelTextWaitTime->Text = res_man->GetString("wait_time", cul);
 	metroLabelTextSound->Text = res_man->GetString("cancel_on_sound", cul);
-	metroLabelTextPresMode->Text = res_man->GetString("activate_pres_mode", cul);
+	metroTilePresMode->Text = res_man->GetString("activate_pres_mode", cul);
+
+	//Thresholds
 	metroLabelTextCPU->Text = res_man->GetString("cpu_threshold", cul);
 	metroLabelTextRAM->Text = res_man->GetString("ram_threshold", cul);
 	metroLabelTextHDD->Text = res_man->GetString("hdd_threshold", cul);
 	metroLabelTextNET->Text = res_man->GetString("net_threshold", cul);
 	metroLabelTextAverageUsage->Text = res_man->GetString("avg_usage", cul);
-	metroLabelTextProgramSettings->Text = res_man->GetString("general_settings", cul);
-	metroLabelTextUsageThresholds->Text = res_man->GetString("system_usage_thresholds", cul);
-	metroTabPageSettings->Text = res_man->GetString("settings", cul);
-	metroTabPageExcpProcess->Text = res_man->GetString("excp_process", cul);
-	metroTabPageAdvSettings->Text = res_man->GetString("adv_settings", cul);
-	metroTabPageAbout->Text = res_man->GetString("about", cul);
 
 	metroButtonAddFromFile->Text = res_man->GetString("add_process_file", cul);
 	metroButtonAddFromList->Text = res_man->GetString("add_process_running", cul);
@@ -372,8 +364,6 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextAutoStart->Text = res_man->GetString("autostart", cul);
 	metroLabelTextUpdates->Text = res_man->GetString("search_updates", cul);
 	metroLabelTextMessages->Text = res_man->GetString("show_messages", cul);
-	metroLabelTextOnTop->Text = res_man->GetString("alw_on_top", cul);
-	metroLabelTextTutorial->Text = res_man->GetString("show_tutorial", cul);
 	metroLabelTextLanguage->Text = res_man->GetString("language", cul);
 	metroTileHomepage->Text = res_man->GetString("visit_homepage", cul);
 	metroTileGithub->Text = res_man->GetString("visit_github", cul);
@@ -381,9 +371,24 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroTabPageThresholds->Text = res_man->GetString("thresholds", cul);
 
 	//Info
-	infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
-	infoThresholds->Text = res_man->GetString("info_thresholds", cul);
-	infoGeneral->Text = res_man->GetString("info_general", cul);
+	if (true)
+	{
+		infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
+		infoThresholds->Text = res_man->GetString("info_thresholds", cul);
+		infoGeneral->Text = res_man->GetString("info_general", cul);
+
+		//Explanations
+
+		explCPU->Text = res_man->GetString("expl_CPU", cul);
+		explRAM->Text = res_man->GetString("expl_RAM", cul);
+		explHDD->Text = res_man->GetString("expl_HDD", cul);
+		explNET->Text = res_man->GetString("expl_NET", cul);
+	}
+	else {
+		infoExcpProcesses->Text = "";
+		infoThresholds->Text = "";
+		infoGeneral->Text = "";
+	}
 
 	//Sets preferred Sizes
 	for each(Windows::Forms::Control^ control in this->Controls) {
@@ -407,4 +412,87 @@ void StandBye::MetroSettingsForm::LanguageIndexChanged(System::Object ^, System:
 	}
 	//Should not happen
 	LOG("Selected language not supported: " + metroComboBoxLanguage->Text);
+}
+
+System::Void StandBye::MetroSettingsForm::metroTilePresMode_Click(System::Object^, System::EventArgs^)
+{
+	ShowPresModeStatus();
+	parent->setPresentationMode(!parent->isInPresentationMode());
+}
+
+void StandBye::MetroSettingsForm::ShowPresModeStatus()
+{
+	if (parent->isInPresentationMode()) {
+		metroTilePresMode->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CHECKED");
+	}
+	else {
+		metroTilePresMode->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CROSS");
+	}
+	metroTilePresMode->Update();
+}
+
+void StandBye::MetroSettingsForm::OnMetroTileMouseEnter(System::Object ^sender, System::EventArgs ^)
+{
+	using MetroFramework::Controls::MetroTile;
+
+	MetroTile^ tile = (MetroTile^)sender;
+	//tile->Size = System::Drawing::Size(tile->Size.Height - 1, tile->Size.Width - 1);
+	tile->UseCustomBackColor = true;
+	tile->BackColor = Color::LightGray;
+	//tile->Margin = Windows::Forms::Padding(5);
+	tile->Update();
+}
+
+void StandBye::MetroSettingsForm::OnMetroTileMouseLeave(System::Object ^sender, System::EventArgs ^)
+{
+	using MetroFramework::Controls::MetroTile;
+
+	MetroTile^ tile = (MetroTile^)sender;
+	//tile->Size = System::Drawing::Size(tile->Size.Height + 1, tile->Size.Width + 1);
+	//tile->Margin = Windows::Forms::Padding(5);
+	tile->UseCustomBackColor = false;
+	tile->Update();
+}
+
+void StandBye::MetroSettingsForm::OnTextBoxMouseEnter(System::Object ^sender, System::EventArgs ^)
+{
+	Windows::Forms::TextBox^ box = (TextBox^)sender;
+	box->BackColor = Color::LightGray;
+	box->Update();
+}
+
+void StandBye::MetroSettingsForm::OnTextBoxMouseLeave(System::Object ^sender, System::EventArgs ^)
+{
+	Windows::Forms::TextBox^ box = (TextBox^)sender;
+	box->BackColor = box->Parent->BackColor;
+	box->Update();
+}
+
+System::Void StandBye::MetroSettingsForm::metroTileAbout_Click(System::Object^, System::EventArgs^)
+{
+	metroTabControl1->SelectedTab = metroTabPageAbout;
+}
+
+System::Void StandBye::MetroSettingsForm::metroTileProcesses_Click(System::Object^, System::EventArgs^)
+{
+	metroTabControl1->SelectedTab = metroTabPageExcpProcess;
+}
+
+System::Void StandBye::MetroSettingsForm::metroTileSettings_Click(System::Object^, System::EventArgs^)
+{
+	metroTabControl1->SelectedTab = metroTabPageThresholds;
+}
+
+System::Void StandBye::MetroSettingsForm::metroTrackBarHDD_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e)
+{
+	if (metroLabelHDDStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarHDD->Value / 10)) {
+		metroLabelHDDStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarHDD->Value / 10);
+	}
+}
+
+System::Void StandBye::MetroSettingsForm::metroTrackBarNET_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e)
+{
+	if (metroLabelNETStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10)) {
+		metroLabelNETStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10);
+	}
 }

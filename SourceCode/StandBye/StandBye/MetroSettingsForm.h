@@ -5,11 +5,11 @@
 #include "InputMonitor.h"
 #include "ProcessItem.h"
 #include "ProcessSelectionForm.h"
+#include "InfoBox.h"
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
-using namespace System::Data;
 using namespace System::Drawing;
 using namespace System::Globalization;
 using namespace System::Resources;
@@ -29,38 +29,10 @@ namespace StandBye {
 		SystemMetricWatcher^ system_watcher;
 		InputMonitor^ input_monitor;
 		ResourceManager^ res_man;
+		ResourceManager^ res_manIMG;
 		List<CultureInfo^>^ supportedLanguages;
 		Drawing::Color lightGreen, darkGreen, lightRed, darkRed;
-
-	private: MetroFramework::Controls::MetroTabPage^  metroTabPageThresholds;
-	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanelUsageThresholds;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelCurNET;
-	private: MetroFramework::Controls::MetroToggle^  metroToggleNET;
-	private: MetroFramework::Controls::MetroToggle^  metroToggleHDD;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelCurHDD;
-	private: MetroFramework::Controls::MetroLabel^  metroLabel13;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelCurRAM;
-	private: MetroFramework::Controls::MetroToggle^  metroToggleRAM;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelCurCPU;
-	private: MetroFramework::Controls::MetroToggle^  metroToggleCPU;
-	private: MetroFramework::Controls::MetroTextBox^  metroTextBoxNET;
-	private: MetroFramework::Controls::MetroLabel^  metroLabel14;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextCPU;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextRAM;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextHDD;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextNET;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelRAMPer;
-	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarCPU;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelCPUPer;
-	private: MetroFramework::Controls::MetroTextBox^  metroTextBoxHDD;
-	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarRAM;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAverageUsage;
-
-	private: MetroFramework::Controls::MetroTextBox^  infoThresholds;
-	private: MetroFramework::Controls::MetroTextBox^  infoGeneral;
-	private: MetroFramework::Controls::MetroTextBox^  infoExcpProcesses;
-
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextUsageThresholds;
+		Drawing::Size defined_size;
 
 	public:
 		MetroSettingsForm(mainApplication^ parent, SystemMetricWatcher^ smw, SettingsProvider* pro, SystemAccess^ system_access, InputMonitor^ inputMon, List<CultureInfo^>^ supportLanguages)
@@ -88,6 +60,7 @@ namespace StandBye {
 			//Sets form options
 			this->MinimizeBox = false;
 			this->MaximizeBox = false;
+			this->MaximumSize = this->Size;
 
 			//Defines colors
 			lightGreen = ColorTranslator::FromHtml("#a5d6a7");
@@ -99,19 +72,16 @@ namespace StandBye {
 	protected:
 		~MetroSettingsForm()
 		{
-			delete system_access;
 			if (components)
 			{
 				delete components;
 			}
 		}
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextUpdates;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextLanguage;
-	private: MetroFramework::Controls::MetroComboBox^  metroComboBoxLanguage;
+
 	protected:
 
 #pragma region Windows Form Designer generated code
-
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextUpdates;
 	private: MetroFramework::Components::MetroStyleExtender^  metroStyleExtender1;
 	private: MetroFramework::Components::MetroStyleManager^  metroStyleManager1;
 	private: MetroFramework::Components::MetroToolTip^  metroToolTip1;
@@ -120,60 +90,100 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroButton^  metroButtonCancel;
 	private: MetroFramework::Controls::MetroButton^  metroButtonOK;
 	private: MetroFramework::Controls::MetroButton^  metroButtonRemove;
+	private: MetroFramework::Controls::MetroComboBox^  metroComboBox1;
+	private: MetroFramework::Controls::MetroComboBox^  metroComboBoxLanguage;
+	private: MetroFramework::Controls::MetroLabel^  explCPU;
+	private: MetroFramework::Controls::MetroLabel^  explHDD;
+	private: MetroFramework::Controls::MetroLabel^  explNET;
+	private: MetroFramework::Controls::MetroLabel^  explRAM;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel10;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAutoStart;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelVersion;
-
+	private: MetroFramework::Controls::MetroLabel^  metroLabelNETStatus;
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarHDD;
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarNET;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelHDDStatus;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel1;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel2;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel3;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel4;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel5;
+	private: MetroFramework::Controls::MetroLabel^  metroLabel6;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelCPUPer;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelCurCPU;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelCurHDD;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelCurNET;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelCurRAM;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelRAMPer;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAbout;
-
-	private: MetroFramework::Controls::MetroLabel^  metroLabel19;
-
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAutoStart;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAverageUsage;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextCPU;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextHDD;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextLanguage;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextMessages;
-
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextPresMode;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextProgramSettings;
-
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextNET;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextRAM;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextSound;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextWaitTime;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelVersion;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelView;
 	private: MetroFramework::Controls::MetroLink^  metroLinkHomepage;
 	private: MetroFramework::Controls::MetroTabControl^  metroTabControl1;
-	private: MetroFramework::Controls::MetroTabPage^  metroTabPageSettings;
-	private: MetroFramework::Controls::MetroTabPage^  metroTabPageExcpProcess;
 	private: MetroFramework::Controls::MetroTabPage^  metroTabPageAbout;
 	private: MetroFramework::Controls::MetroTabPage^  metroTabPageAdvSettings;
+	private: MetroFramework::Controls::MetroTabPage^  metroTabPageExcpProcess;
+	private: MetroFramework::Controls::MetroTabPage^  metroTabPageSettings;
+	private: MetroFramework::Controls::MetroTabPage^  metroTabPageThresholds;
+	private: MetroFramework::Controls::MetroTextBox^  infoExcpProcesses;
+	private: MetroFramework::Controls::MetroTextBox^  infoGeneral;
+	private: MetroFramework::Controls::MetroTextBox^  infoThresholds;
 
-	private: MetroFramework::Controls::MetroTextBox^  metroTextBoxTimeMIN;
-	private: MetroFramework::Controls::MetroTextBox^  metroTextBoxTimeSEC;
+	private: MetroFramework::Controls::MetroTile^  metroTileAbout;
+	private: MetroFramework::Controls::MetroTile^  metroTileVisit;
+	private: MetroFramework::Controls::MetroTile^  metroTileProcesses;
+	private: MetroFramework::Controls::MetroTile^  metroTileSettings;
+
+	private: MetroFramework::Controls::MetroTile^  metroTileCanceledStatus;
+
 	private: MetroFramework::Controls::MetroTile^  metroTileGithub;
 	private: MetroFramework::Controls::MetroTile^  metroTileHomepage;
+	private: MetroFramework::Controls::MetroTile^  metroTilePresMode;
+	private: MetroFramework::Controls::MetroToggle^  metroToggle2;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleAutoStart;
-
+	private: MetroFramework::Controls::MetroToggle^  metroToggleCPU;
+	private: MetroFramework::Controls::MetroToggle^  metroToggleHDD;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleMessages;
-
-	private: MetroFramework::Controls::MetroToggle^  metroTogglePresMode;
-
+	private: MetroFramework::Controls::MetroToggle^  metroToggleNET;
+	private: MetroFramework::Controls::MetroToggle^  metroToggleRAM;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleSOUND;
-
 	private: MetroFramework::Controls::MetroToggle^  metroToggleUPDATES;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleView;
-
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarCPU;
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarRAM;
 	private: System::ComponentModel::IContainer^  components;
 	private: System::Windows::Forms::ColumnHeader^  columnHeader1;
 	private: System::Windows::Forms::ColumnHeader^  columnHeader2;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::GroupBox^  groupBox2;
+	private: System::Windows::Forms::GroupBox^  groupBox3;
 	private: System::Windows::Forms::ListView^  listViewProc;
-	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanelProgrammSettings;
-
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPaneWaitTime;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel10;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel11;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel12;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel13;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel14;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
-
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel2;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel3;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel4;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel5;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel6;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel7;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel8;
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel9;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanelUsageThresholds;
+	private: System::Windows::Forms::TextBox^  textBoxTimeMIN;
+	private: System::Windows::Forms::TextBox^  textBoxTimeSEC;
 	private: System::Windows::Forms::Timer^  timerRefresh;
 
 			 void InitializeComponent(void)
@@ -182,33 +192,42 @@ namespace StandBye {
 				 System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MetroSettingsForm::typeid));
 				 this->metroTabControl1 = (gcnew MetroFramework::Controls::MetroTabControl());
 				 this->metroTabPageSettings = (gcnew MetroFramework::Controls::MetroTabPage());
+				 this->tableLayoutPanel10 = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->infoGeneral = (gcnew MetroFramework::Controls::MetroTextBox());
-				 this->tableLayoutPanelProgrammSettings = (gcnew System::Windows::Forms::TableLayoutPanel());
-				 this->metroLabelTextWaitTime = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 				 this->tableLayoutPanel12 = (gcnew System::Windows::Forms::TableLayoutPanel());
-				 this->metroTextBoxTimeMIN = (gcnew MetroFramework::Controls::MetroTextBox());
+				 this->tableLayoutPaneWaitTime = (gcnew System::Windows::Forms::TableLayoutPanel());
+				 this->metroLabel5 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->textBoxTimeSEC = (gcnew System::Windows::Forms::TextBox());
 				 this->metroLabel10 = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroTextBoxTimeSEC = (gcnew MetroFramework::Controls::MetroTextBox());
-				 this->metroLabel19 = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroLabelTextPresMode = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroTogglePresMode = (gcnew MetroFramework::Controls::MetroToggle());
-				 this->metroLabelTextSound = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroToggleSOUND = (gcnew MetroFramework::Controls::MetroToggle());
-				 this->metroLabelTextProgramSettings = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroLabelTextWaitTime = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->textBoxTimeMIN = (gcnew System::Windows::Forms::TextBox());
+				 this->metroTileCanceledStatus = (gcnew MetroFramework::Controls::MetroTile());
+				 this->metroTileSettings = (gcnew MetroFramework::Controls::MetroTile());
+				 this->metroTileProcesses = (gcnew MetroFramework::Controls::MetroTile());
+				 this->metroTileVisit = (gcnew MetroFramework::Controls::MetroTile());
+				 this->metroTileAbout = (gcnew MetroFramework::Controls::MetroTile());
+				 this->metroTilePresMode = (gcnew MetroFramework::Controls::MetroTile());
 				 this->metroTabPageThresholds = (gcnew MetroFramework::Controls::MetroTabPage());
+				 this->tableLayoutPanel13 = (gcnew System::Windows::Forms::TableLayoutPanel());
+				 this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+				 this->tableLayoutPanel14 = (gcnew System::Windows::Forms::TableLayoutPanel());
+				 this->metroToggleSOUND = (gcnew MetroFramework::Controls::MetroToggle());
+				 this->metroLabelTextSound = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroLabel3 = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->infoThresholds = (gcnew MetroFramework::Controls::MetroTextBox());
+				 this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 				 this->tableLayoutPanelUsageThresholds = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->metroLabelCurNET = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroToggleNET = (gcnew MetroFramework::Controls::MetroToggle());
 				 this->metroToggleHDD = (gcnew MetroFramework::Controls::MetroToggle());
 				 this->metroLabelCurHDD = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroLabel13 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroLabelNETStatus = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroLabelCurRAM = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroToggleRAM = (gcnew MetroFramework::Controls::MetroToggle());
 				 this->metroLabelCurCPU = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroToggleCPU = (gcnew MetroFramework::Controls::MetroToggle());
-				 this->metroTextBoxNET = (gcnew MetroFramework::Controls::MetroTextBox());
-				 this->metroLabel14 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroLabelHDDStatus = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroLabelTextCPU = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroLabelTextRAM = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroLabelTextHDD = (gcnew MetroFramework::Controls::MetroLabel());
@@ -216,10 +235,14 @@ namespace StandBye {
 				 this->metroLabelRAMPer = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroTrackBarCPU = (gcnew MetroFramework::Controls::MetroTrackBar());
 				 this->metroLabelCPUPer = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroTextBoxHDD = (gcnew MetroFramework::Controls::MetroTextBox());
 				 this->metroTrackBarRAM = (gcnew MetroFramework::Controls::MetroTrackBar());
+				 this->explCPU = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->explRAM = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->explHDD = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->explNET = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroLabelTextAverageUsage = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroLabelTextUsageThresholds = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroTrackBarHDD = (gcnew MetroFramework::Controls::MetroTrackBar());
+				 this->metroTrackBarNET = (gcnew MetroFramework::Controls::MetroTrackBar());
 				 this->metroTabPageExcpProcess = (gcnew MetroFramework::Controls::MetroTabPage());
 				 this->tableLayoutPanel5 = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->listViewProc = (gcnew System::Windows::Forms::ListView());
@@ -235,6 +258,14 @@ namespace StandBye {
 				 this->metroLabelView = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->infoExcpProcesses = (gcnew MetroFramework::Controls::MetroTextBox());
 				 this->metroTabPageAdvSettings = (gcnew MetroFramework::Controls::MetroTabPage());
+				 this->tableLayoutPanel2 = (gcnew System::Windows::Forms::TableLayoutPanel());
+				 this->tableLayoutPanel3 = (gcnew System::Windows::Forms::TableLayoutPanel());
+				 this->metroLabel4 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroToggle2 = (gcnew MetroFramework::Controls::MetroToggle());
+				 this->metroLabel6 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroComboBox1 = (gcnew MetroFramework::Controls::MetroComboBox());
+				 this->metroLabel2 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->metroLabel1 = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->tableLayoutPanel11 = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->metroLabelTextUpdates = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->metroToggleUPDATES = (gcnew MetroFramework::Controls::MetroToggle());
@@ -261,9 +292,15 @@ namespace StandBye {
 				 this->metroToolTip1 = (gcnew MetroFramework::Components::MetroToolTip());
 				 this->metroTabControl1->SuspendLayout();
 				 this->metroTabPageSettings->SuspendLayout();
-				 this->tableLayoutPanelProgrammSettings->SuspendLayout();
+				 this->tableLayoutPanel10->SuspendLayout();
+				 this->groupBox1->SuspendLayout();
 				 this->tableLayoutPanel12->SuspendLayout();
+				 this->tableLayoutPaneWaitTime->SuspendLayout();
 				 this->metroTabPageThresholds->SuspendLayout();
+				 this->tableLayoutPanel13->SuspendLayout();
+				 this->groupBox3->SuspendLayout();
+				 this->tableLayoutPanel14->SuspendLayout();
+				 this->groupBox2->SuspendLayout();
 				 this->tableLayoutPanelUsageThresholds->SuspendLayout();
 				 this->metroTabPageExcpProcess->SuspendLayout();
 				 this->tableLayoutPanel5->SuspendLayout();
@@ -271,6 +308,8 @@ namespace StandBye {
 				 this->tableLayoutPanel7->SuspendLayout();
 				 this->tableLayoutPanel8->SuspendLayout();
 				 this->metroTabPageAdvSettings->SuspendLayout();
+				 this->tableLayoutPanel2->SuspendLayout();
+				 this->tableLayoutPanel3->SuspendLayout();
 				 this->tableLayoutPanel11->SuspendLayout();
 				 this->metroTabPageAbout->SuspendLayout();
 				 this->tableLayoutPanel9->SuspendLayout();
@@ -290,8 +329,8 @@ namespace StandBye {
 				 this->metroTabControl1->Location = System::Drawing::Point(10, 10);
 				 this->metroTabControl1->Margin = System::Windows::Forms::Padding(10);
 				 this->metroTabControl1->Name = L"metroTabControl1";
-				 this->metroTabControl1->SelectedIndex = 3;
-				 this->metroTabControl1->Size = System::Drawing::Size(739, 266);
+				 this->metroTabControl1->SelectedIndex = 0;
+				 this->metroTabControl1->Size = System::Drawing::Size(740, 350);
 				 this->metroTabControl1->TabIndex = 0;
 				 this->metroTabControl1->UseSelectable = true;
 				 //
@@ -299,27 +338,46 @@ namespace StandBye {
 				 //
 				 this->metroTabPageSettings->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroTabPageSettings->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-				 this->metroTabPageSettings->Controls->Add(this->infoGeneral);
-				 this->metroTabPageSettings->Controls->Add(this->tableLayoutPanelProgrammSettings);
-				 this->metroTabPageSettings->Controls->Add(this->metroLabelTextProgramSettings);
+				 this->metroTabPageSettings->Controls->Add(this->tableLayoutPanel10);
 				 this->metroTabPageSettings->HorizontalScrollbarBarColor = false;
 				 this->metroTabPageSettings->HorizontalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageSettings->HorizontalScrollbarSize = 0;
 				 this->metroTabPageSettings->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageSettings->Name = L"metroTabPageSettings";
-				 this->metroTabPageSettings->Size = System::Drawing::Size(731, 224);
+				 this->metroTabPageSettings->Size = System::Drawing::Size(732, 308);
 				 this->metroTabPageSettings->Style = MetroFramework::MetroColorStyle::Green;
 				 this->metroTabPageSettings->TabIndex = 0;
-				 this->metroTabPageSettings->Text = L"Settings";
+				 this->metroTabPageSettings->Text = L"General";
 				 this->metroTabPageSettings->VerticalScrollbarBarColor = false;
 				 this->metroTabPageSettings->VerticalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageSettings->VerticalScrollbarSize = 0;
+				 this->metroTabPageSettings->Visible = false;
+				 //
+				 // tableLayoutPanel10
+				 //
+				 this->tableLayoutPanel10->AutoSize = true;
+				 this->tableLayoutPanel10->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+				 this->tableLayoutPanel10->BackColor = System::Drawing::Color::White;
+				 this->tableLayoutPanel10->ColumnCount = 1;
+				 this->tableLayoutPanel10->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 100)));
+				 this->tableLayoutPanel10->Controls->Add(this->infoGeneral, 0, 0);
+				 this->tableLayoutPanel10->Controls->Add(this->groupBox1, 0, 1);
+				 this->tableLayoutPanel10->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanel10->Location = System::Drawing::Point(0, 0);
+				 this->tableLayoutPanel10->Name = L"tableLayoutPanel10";
+				 this->tableLayoutPanel10->RowCount = 2;
+				 this->tableLayoutPanel10->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPanel10->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+				 this->tableLayoutPanel10->Size = System::Drawing::Size(730, 306);
+				 this->tableLayoutPanel10->TabIndex = 57;
 				 //
 				 // infoGeneral
 				 //
-				 this->infoGeneral->Enabled = false;
+				 this->infoGeneral->BackColor = System::Drawing::Color::LightBlue;
+				 this->infoGeneral->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->infoGeneral->Lines = gcnew cli::array< System::String^  >(1) { resources->GetString(L"infoGeneral.Lines") };
-				 this->infoGeneral->Location = System::Drawing::Point(63, 33);
+				 this->infoGeneral->Location = System::Drawing::Point(3, 3);
 				 this->infoGeneral->MaxLength = 32767;
 				 this->infoGeneral->Multiline = true;
 				 this->infoGeneral->Name = L"infoGeneral";
@@ -327,213 +385,391 @@ namespace StandBye {
 				 this->infoGeneral->ReadOnly = true;
 				 this->infoGeneral->ScrollBars = System::Windows::Forms::ScrollBars::None;
 				 this->infoGeneral->SelectedText = L"";
-				 this->infoGeneral->Size = System::Drawing::Size(658, 53);
+				 this->infoGeneral->Size = System::Drawing::Size(724, 55);
 				 this->infoGeneral->TabIndex = 56;
 				 this->infoGeneral->Text = resources->GetString(L"infoGeneral.Text");
+				 this->infoGeneral->UseCustomBackColor = true;
 				 this->infoGeneral->UseSelectable = true;
 				 //
-				 // tableLayoutPanelProgrammSettings
+				 // groupBox1
 				 //
-				 this->tableLayoutPanelProgrammSettings->BackColor = System::Drawing::Color::White;
-				 this->tableLayoutPanelProgrammSettings->ColumnCount = 2;
-				 this->tableLayoutPanelProgrammSettings->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
-				 this->tableLayoutPanelProgrammSettings->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->metroLabelTextWaitTime, 0, 0);
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->tableLayoutPanel12, 1, 0);
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->metroLabelTextPresMode, 0, 1);
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->metroTogglePresMode, 1, 1);
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->metroLabelTextSound, 0, 2);
-				 this->tableLayoutPanelProgrammSettings->Controls->Add(this->metroToggleSOUND, 1, 2);
-				 this->tableLayoutPanelProgrammSettings->Location = System::Drawing::Point(63, 103);
-				 this->tableLayoutPanelProgrammSettings->Name = L"tableLayoutPanelProgrammSettings";
-				 this->tableLayoutPanelProgrammSettings->RowCount = 3;
-				 this->tableLayoutPanelProgrammSettings->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanelProgrammSettings->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanelProgrammSettings->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanelProgrammSettings->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
-					 20)));
-				 this->tableLayoutPanelProgrammSettings->Size = System::Drawing::Size(405, 95);
-				 this->tableLayoutPanelProgrammSettings->TabIndex = 53;
-				 //
-				 // metroLabelTextWaitTime
-				 //
-				 this->metroLabelTextWaitTime->AutoSize = true;
-				 this->metroLabelTextWaitTime->Location = System::Drawing::Point(0, 0);
-				 this->metroLabelTextWaitTime->Margin = System::Windows::Forms::Padding(0);
-				 this->metroLabelTextWaitTime->Name = L"metroLabelTextWaitTime";
-				 this->metroLabelTextWaitTime->Size = System::Drawing::Size(139, 19);
-				 this->metroLabelTextWaitTime->TabIndex = 3;
-				 this->metroLabelTextWaitTime->Text = L"Activate Standby After";
-				 this->metroLabelTextWaitTime->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextWaitTime, L"  The waiting time till standby starts.  ");
+				 this->groupBox1->Controls->Add(this->tableLayoutPanel12);
+				 this->groupBox1->Location = System::Drawing::Point(3, 64);
+				 this->groupBox1->Name = L"groupBox1";
+				 this->groupBox1->Size = System::Drawing::Size(724, 239);
+				 this->groupBox1->TabIndex = 57;
+				 this->groupBox1->TabStop = false;
 				 //
 				 // tableLayoutPanel12
 				 //
-				 this->tableLayoutPanel12->ColumnCount = 4;
-				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-					 25)));
-				 this->tableLayoutPanel12->Controls->Add(this->metroTextBoxTimeMIN, 0, 0);
-				 this->tableLayoutPanel12->Controls->Add(this->metroLabel10, 1, 0);
-				 this->tableLayoutPanel12->Controls->Add(this->metroTextBoxTimeSEC, 2, 0);
-				 this->tableLayoutPanel12->Controls->Add(this->metroLabel19, 3, 0);
+				 this->tableLayoutPanel12->ColumnCount = 8;
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPanel12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPanel12->Controls->Add(this->tableLayoutPaneWaitTime, 0, 0);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTileCanceledStatus, 6, 0);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTileSettings, 1, 1);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTileProcesses, 2, 1);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTileVisit, 3, 1);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTileAbout, 4, 1);
+				 this->tableLayoutPanel12->Controls->Add(this->metroTilePresMode, 7, 0);
 				 this->tableLayoutPanel12->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel12->Location = System::Drawing::Point(237, 0);
-				 this->tableLayoutPanel12->Margin = System::Windows::Forms::Padding(0);
+				 this->tableLayoutPanel12->Location = System::Drawing::Point(3, 16);
 				 this->tableLayoutPanel12->Name = L"tableLayoutPanel12";
-				 this->tableLayoutPanel12->RowCount = 1;
-				 this->tableLayoutPanel12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
-					 31)));
-				 this->tableLayoutPanel12->Size = System::Drawing::Size(168, 31);
-				 this->tableLayoutPanel12->TabIndex = 55;
+				 this->tableLayoutPanel12->RowCount = 2;
+				 this->tableLayoutPanel12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPanel12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPanel12->Size = System::Drawing::Size(718, 220);
+				 this->tableLayoutPanel12->TabIndex = 62;
 				 //
-				 // metroTextBoxTimeMIN
+				 // tableLayoutPaneWaitTime
 				 //
-				 this->metroTextBoxTimeMIN->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTextBoxTimeMIN->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxTimeMIN->Location = System::Drawing::Point(3, 3);
-				 this->metroTextBoxTimeMIN->MaxLength = 3;
-				 this->metroTextBoxTimeMIN->Name = L"metroTextBoxTimeMIN";
-				 this->metroTextBoxTimeMIN->PasswordChar = '\0';
-				 this->metroTextBoxTimeMIN->ScrollBars = System::Windows::Forms::ScrollBars::None;
-				 this->metroTextBoxTimeMIN->SelectedText = L"";
-				 this->metroTextBoxTimeMIN->Size = System::Drawing::Size(36, 25);
-				 this->metroTextBoxTimeMIN->TabIndex = 46;
-				 this->metroTextBoxTimeMIN->Text = L" ";
-				 this->metroTextBoxTimeMIN->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
-				 this->metroTextBoxTimeMIN->UseSelectable = true;
-				 this->metroTextBoxTimeMIN->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MetroSettingsForm::ReformatTextBoxValueOnReturn);
+				 this->tableLayoutPaneWaitTime->AutoSize = true;
+				 this->tableLayoutPaneWaitTime->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+				 this->tableLayoutPaneWaitTime->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(76)),
+					 static_cast<System::Int32>(static_cast<System::Byte>(175)), static_cast<System::Int32>(static_cast<System::Byte>(80)));
+				 this->tableLayoutPaneWaitTime->ColumnCount = 3;
+				 this->tableLayoutPanel12->SetColumnSpan(this->tableLayoutPaneWaitTime, 5);
+				 this->tableLayoutPaneWaitTime->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPaneWaitTime->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPaneWaitTime->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPaneWaitTime->Controls->Add(this->metroLabel5, 2, 1);
+				 this->tableLayoutPaneWaitTime->Controls->Add(this->textBoxTimeSEC, 1, 1);
+				 this->tableLayoutPaneWaitTime->Controls->Add(this->metroLabel10, 2, 0);
+				 this->tableLayoutPaneWaitTime->Controls->Add(this->metroLabelTextWaitTime, 0, 0);
+				 this->tableLayoutPaneWaitTime->Controls->Add(this->textBoxTimeMIN, 1, 0);
+				 this->tableLayoutPaneWaitTime->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPaneWaitTime->Location = System::Drawing::Point(3, 3);
+				 this->tableLayoutPaneWaitTime->Name = L"tableLayoutPaneWaitTime";
+				 this->tableLayoutPaneWaitTime->RowCount = 2;
+				 this->tableLayoutPaneWaitTime->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPaneWaitTime->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPaneWaitTime->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPaneWaitTime->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPaneWaitTime->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPaneWaitTime->Size = System::Drawing::Size(378, 118);
+				 this->tableLayoutPaneWaitTime->TabIndex = 61;
+				 //
+				 // metroLabel5
+				 //
+				 this->metroLabel5->AutoSize = true;
+				 this->metroLabel5->BackColor = System::Drawing::Color::Transparent;
+				 this->metroLabel5->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel5->FontSize = MetroFramework::MetroLabelSize::Tall;
+				 this->metroLabel5->FontWeight = MetroFramework::MetroLabelWeight::Regular;
+				 this->metroLabel5->ForeColor = System::Drawing::Color::White;
+				 this->metroLabel5->Location = System::Drawing::Point(303, 59);
+				 this->metroLabel5->Name = L"metroLabel5";
+				 this->metroLabel5->Size = System::Drawing::Size(72, 59);
+				 this->metroLabel5->TabIndex = 63;
+				 this->metroLabel5->Text = L"s";
+				 this->metroLabel5->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabel5->UseCustomBackColor = true;
+				 this->metroLabel5->UseCustomForeColor = true;
+				 //
+				 // textBoxTimeSEC
+				 //
+				 this->textBoxTimeSEC->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(76)), static_cast<System::Int32>(static_cast<System::Byte>(175)),
+					 static_cast<System::Int32>(static_cast<System::Byte>(80)));
+				 this->textBoxTimeSEC->BorderStyle = System::Windows::Forms::BorderStyle::None;
+				 this->textBoxTimeSEC->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 35, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(0)));
+				 this->textBoxTimeSEC->Location = System::Drawing::Point(210, 62);
+				 this->textBoxTimeSEC->Name = L"textBoxTimeSEC";
+				 this->textBoxTimeSEC->Size = System::Drawing::Size(87, 53);
+				 this->textBoxTimeSEC->TabIndex = 62;
+				 this->textBoxTimeSEC->Text = L"1";
+				 this->textBoxTimeSEC->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+				 this->textBoxTimeSEC->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MetroSettingsForm::ReformatTextBoxValueOnReturn);
+				 this->textBoxTimeSEC->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnTextBoxMouseEnter);
+				 this->textBoxTimeSEC->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnTextBoxMouseLeave);
 				 //
 				 // metroLabel10
 				 //
 				 this->metroLabel10->AutoSize = true;
+				 this->metroLabel10->BackColor = System::Drawing::Color::Transparent;
 				 this->metroLabel10->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel10->Location = System::Drawing::Point(45, 0);
+				 this->metroLabel10->FontSize = MetroFramework::MetroLabelSize::Tall;
+				 this->metroLabel10->FontWeight = MetroFramework::MetroLabelWeight::Regular;
+				 this->metroLabel10->ForeColor = System::Drawing::Color::White;
+				 this->metroLabel10->Location = System::Drawing::Point(303, 0);
 				 this->metroLabel10->Name = L"metroLabel10";
-				 this->metroLabel10->Size = System::Drawing::Size(36, 31);
-				 this->metroLabel10->TabIndex = 48;
+				 this->metroLabel10->Size = System::Drawing::Size(72, 59);
+				 this->metroLabel10->TabIndex = 61;
 				 this->metroLabel10->Text = L"min";
 				 this->metroLabel10->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabel10->UseCustomBackColor = true;
+				 this->metroLabel10->UseCustomForeColor = true;
 				 //
-				 // metroTextBoxTimeSEC
+				 // metroLabelTextWaitTime
 				 //
-				 this->metroTextBoxTimeSEC->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTextBoxTimeSEC->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxTimeSEC->Location = System::Drawing::Point(87, 3);
-				 this->metroTextBoxTimeSEC->MaxLength = 2;
-				 this->metroTextBoxTimeSEC->Name = L"metroTextBoxTimeSEC";
-				 this->metroTextBoxTimeSEC->PasswordChar = '\0';
-				 this->metroTextBoxTimeSEC->ScrollBars = System::Windows::Forms::ScrollBars::None;
-				 this->metroTextBoxTimeSEC->SelectedText = L"";
-				 this->metroTextBoxTimeSEC->Size = System::Drawing::Size(36, 25);
-				 this->metroTextBoxTimeSEC->TabIndex = 47;
-				 this->metroTextBoxTimeSEC->Text = L" ";
-				 this->metroTextBoxTimeSEC->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
-				 this->metroTextBoxTimeSEC->UseSelectable = true;
-				 this->metroTextBoxTimeSEC->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MetroSettingsForm::ReformatTextBoxValueOnReturn);
+				 this->metroLabelTextWaitTime->AutoSize = true;
+				 this->metroLabelTextWaitTime->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabelTextWaitTime->FontSize = MetroFramework::MetroLabelSize::Tall;
+				 this->metroLabelTextWaitTime->FontWeight = MetroFramework::MetroLabelWeight::Bold;
+				 this->metroLabelTextWaitTime->ForeColor = System::Drawing::Color::White;
+				 this->metroLabelTextWaitTime->Location = System::Drawing::Point(0, 0);
+				 this->metroLabelTextWaitTime->Margin = System::Windows::Forms::Padding(0);
+				 this->metroLabelTextWaitTime->Name = L"metroLabelTextWaitTime";
+				 this->tableLayoutPaneWaitTime->SetRowSpan(this->metroLabelTextWaitTime, 2);
+				 this->metroLabelTextWaitTime->Size = System::Drawing::Size(207, 118);
+				 this->metroLabelTextWaitTime->TabIndex = 57;
+				 this->metroLabelTextWaitTime->Text = L"Activate Standby After";
+				 this->metroLabelTextWaitTime->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabelTextWaitTime->Theme = MetroFramework::MetroThemeStyle::Light;
+				 this->metroToolTip1->SetToolTip(this->metroLabelTextWaitTime, L"  The waiting time till standby starts.  ");
+				 this->metroLabelTextWaitTime->UseCustomBackColor = true;
+				 this->metroLabelTextWaitTime->UseCustomForeColor = true;
 				 //
-				 // metroLabel19
+				 // textBoxTimeMIN
 				 //
-				 this->metroLabel19->AutoSize = true;
-				 this->metroLabel19->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel19->Location = System::Drawing::Point(129, 0);
-				 this->metroLabel19->Name = L"metroLabel19";
-				 this->metroLabel19->Size = System::Drawing::Size(36, 31);
-				 this->metroLabel19->TabIndex = 49;
-				 this->metroLabel19->Text = L"s";
-				 this->metroLabel19->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->textBoxTimeMIN->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(76)), static_cast<System::Int32>(static_cast<System::Byte>(175)),
+					 static_cast<System::Int32>(static_cast<System::Byte>(80)));
+				 this->textBoxTimeMIN->BorderStyle = System::Windows::Forms::BorderStyle::None;
+				 this->textBoxTimeMIN->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 35, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(0)));
+				 this->textBoxTimeMIN->Location = System::Drawing::Point(210, 3);
+				 this->textBoxTimeMIN->Name = L"textBoxTimeMIN";
+				 this->textBoxTimeMIN->Size = System::Drawing::Size(87, 53);
+				 this->textBoxTimeMIN->TabIndex = 60;
+				 this->textBoxTimeMIN->Text = L"1";
+				 this->textBoxTimeMIN->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+				 this->textBoxTimeMIN->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MetroSettingsForm::ReformatTextBoxValueOnReturn);
+				 this->textBoxTimeMIN->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnTextBoxMouseEnter);
+				 this->textBoxTimeMIN->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnTextBoxMouseLeave);
 				 //
-				 // metroLabelTextPresMode
+				 // metroTileCanceledStatus
 				 //
-				 this->metroLabelTextPresMode->AutoSize = true;
-				 this->metroLabelTextPresMode->Location = System::Drawing::Point(3, 31);
-				 this->metroLabelTextPresMode->Name = L"metroLabelTextPresMode";
-				 this->metroLabelTextPresMode->Size = System::Drawing::Size(172, 19);
-				 this->metroLabelTextPresMode->TabIndex = 53;
-				 this->metroLabelTextPresMode->Text = L"Activate Presentation-Mode";
-				 this->metroLabelTextPresMode->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextPresMode, L"  If enabled --> no standby and no display timeout.  ");
+				 this->metroTileCanceledStatus->ActiveControl = nullptr;
+				 this->metroTileCanceledStatus->Location = System::Drawing::Point(387, 3);
+				 this->metroTileCanceledStatus->Name = L"metroTileCanceledStatus";
+				 this->metroTileCanceledStatus->Size = System::Drawing::Size(127, 118);
+				 this->metroTileCanceledStatus->Style = MetroFramework::MetroColorStyle::Teal;
+				 this->metroTileCanceledStatus->TabIndex = 66;
+				 this->metroTileCanceledStatus->Text = L"Stand-By Canceled";
+				 this->metroTileCanceledStatus->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileCanceledStatus.TileImage")));
+				 this->metroTileCanceledStatus->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTileCanceledStatus->UseSelectable = true;
+				 this->metroTileCanceledStatus->UseTileImage = true;
 				 //
-				 // metroTogglePresMode
+				 // metroTileSettings
 				 //
-				 this->metroTogglePresMode->Anchor = System::Windows::Forms::AnchorStyles::Left;
-				 this->metroTogglePresMode->AutoSize = true;
-				 this->metroTogglePresMode->Location = System::Drawing::Point(240, 38);
-				 this->metroTogglePresMode->Name = L"metroTogglePresMode";
-				 this->metroTogglePresMode->Size = System::Drawing::Size(80, 17);
-				 this->metroTogglePresMode->TabIndex = 54;
-				 this->metroTogglePresMode->Text = L"Aus";
-				 this->metroTogglePresMode->UseSelectable = true;
-				 this->metroTogglePresMode->CheckedChanged += gcnew System::EventHandler(this, &MetroSettingsForm::metroTogglePresMode_CheckedChanged);
+				 this->metroTileSettings->ActiveControl = nullptr;
+				 this->metroTileSettings->Location = System::Drawing::Point(3, 127);
+				 this->metroTileSettings->Name = L"metroTileSettings";
+				 this->metroTileSettings->Size = System::Drawing::Size(90, 90);
+				 this->metroTileSettings->Style = MetroFramework::MetroColorStyle::Silver;
+				 this->metroTileSettings->TabIndex = 65;
+				 this->metroTileSettings->Text = L"Settings";
+				 this->metroTileSettings->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileSettings.TileImage")));
+				 this->metroTileSettings->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTileSettings->UseSelectable = true;
+				 this->metroTileSettings->UseTileImage = true;
+				 this->metroTileSettings->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTileSettings_Click);
+				 this->metroTileSettings->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseEnter);
+				 this->metroTileSettings->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseLeave);
 				 //
-				 // metroLabelTextSound
+				 // metroTileProcesses
 				 //
-				 this->metroLabelTextSound->AutoSize = true;
-				 this->metroLabelTextSound->Location = System::Drawing::Point(3, 62);
-				 this->metroLabelTextSound->Name = L"metroLabelTextSound";
-				 this->metroLabelTextSound->Size = System::Drawing::Size(231, 19);
-				 this->metroLabelTextSound->TabIndex = 52;
-				 this->metroLabelTextSound->Text = L"Cancel Standby while Sound is playing";
-				 this->metroLabelTextSound->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextSound, L"  If you like enjoying music or movies, thats a good choice.  ");
+				 this->metroTileProcesses->ActiveControl = nullptr;
+				 this->metroTileProcesses->Location = System::Drawing::Point(99, 127);
+				 this->metroTileProcesses->Name = L"metroTileProcesses";
+				 this->metroTileProcesses->Size = System::Drawing::Size(90, 90);
+				 this->metroTileProcesses->Style = MetroFramework::MetroColorStyle::Teal;
+				 this->metroTileProcesses->TabIndex = 64;
+				 this->metroTileProcesses->Text = L"Processes";
+				 this->metroTileProcesses->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileProcesses.TileImage")));
+				 this->metroTileProcesses->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTileProcesses->UseSelectable = true;
+				 this->metroTileProcesses->UseTileImage = true;
+				 this->metroTileProcesses->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTileProcesses_Click);
+				 this->metroTileProcesses->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseEnter);
+				 this->metroTileProcesses->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseLeave);
+				 //
+				 // metroTileVisit
+				 //
+				 this->metroTileVisit->ActiveControl = nullptr;
+				 this->metroTileVisit->Location = System::Drawing::Point(195, 127);
+				 this->metroTileVisit->Name = L"metroTileVisit";
+				 this->metroTileVisit->Size = System::Drawing::Size(90, 90);
+				 this->metroTileVisit->Style = MetroFramework::MetroColorStyle::Blue;
+				 this->metroTileVisit->TabIndex = 63;
+				 this->metroTileVisit->Text = L"Visit us!";
+				 this->metroTileVisit->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileVisit.TileImage")));
+				 this->metroTileVisit->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTileVisit->UseSelectable = true;
+				 this->metroTileVisit->UseTileImage = true;
+				 this->metroTileVisit->Click += gcnew System::EventHandler(this, &MetroSettingsForm::OpenHomepageOnClick);
+				 this->metroTileVisit->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseEnter);
+				 this->metroTileVisit->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseLeave);
+				 //
+				 // metroTileAbout
+				 //
+				 this->metroTileAbout->ActiveControl = nullptr;
+				 this->metroTileAbout->Location = System::Drawing::Point(291, 127);
+				 this->metroTileAbout->Name = L"metroTileAbout";
+				 this->metroTileAbout->Size = System::Drawing::Size(90, 90);
+				 this->metroTileAbout->Style = MetroFramework::MetroColorStyle::Lime;
+				 this->metroTileAbout->TabIndex = 62;
+				 this->metroTileAbout->Text = L"About";
+				 this->metroTileAbout->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileAbout.TileImage")));
+				 this->metroTileAbout->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTileAbout->UseSelectable = true;
+				 this->metroTileAbout->UseTileImage = true;
+				 this->metroTileAbout->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTileAbout_Click);
+				 this->metroTileAbout->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseEnter);
+				 this->metroTileAbout->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseLeave);
+				 //
+				 // metroTilePresMode
+				 //
+				 this->metroTilePresMode->ActiveControl = nullptr;
+				 this->metroTilePresMode->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+					 | System::Windows::Forms::AnchorStyles::Right));
+				 this->metroTilePresMode->Location = System::Drawing::Point(520, 3);
+				 this->metroTilePresMode->Name = L"metroTilePresMode";
+				 this->tableLayoutPanel12->SetRowSpan(this->metroTilePresMode, 2);
+				 this->metroTilePresMode->Size = System::Drawing::Size(195, 214);
+				 this->metroTilePresMode->Style = MetroFramework::MetroColorStyle::Blue;
+				 this->metroTilePresMode->TabIndex = 54;
+				 this->metroTilePresMode->Text = L"Presentation Mode";
+				 this->metroTilePresMode->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTilePresMode.TileImage")));
+				 this->metroTilePresMode->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroTilePresMode->TileTextFontWeight = MetroFramework::MetroTileTextWeight::Bold;
+				 this->metroTilePresMode->UseSelectable = true;
+				 this->metroTilePresMode->UseTileImage = true;
+				 this->metroTilePresMode->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTilePresMode_Click);
+				 this->metroTilePresMode->MouseEnter += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseEnter);
+				 this->metroTilePresMode->MouseLeave += gcnew System::EventHandler(this, &MetroSettingsForm::OnMetroTileMouseLeave);
+				 //
+				 // metroTabPageThresholds
+				 //
+				 this->metroTabPageThresholds->Controls->Add(this->tableLayoutPanel13);
+				 this->metroTabPageThresholds->HorizontalScrollbarBarColor = true;
+				 this->metroTabPageThresholds->HorizontalScrollbarHighlightOnWheel = false;
+				 this->metroTabPageThresholds->HorizontalScrollbarSize = 0;
+				 this->metroTabPageThresholds->Location = System::Drawing::Point(4, 38);
+				 this->metroTabPageThresholds->Name = L"metroTabPageThresholds";
+				 this->metroTabPageThresholds->Size = System::Drawing::Size(732, 308);
+				 this->metroTabPageThresholds->TabIndex = 4;
+				 this->metroTabPageThresholds->Text = L"Thresholds";
+				 this->metroTabPageThresholds->VerticalScrollbarBarColor = true;
+				 this->metroTabPageThresholds->VerticalScrollbarHighlightOnWheel = false;
+				 this->metroTabPageThresholds->VerticalScrollbarSize = 0;
+				 //
+				 // tableLayoutPanel13
+				 //
+				 this->tableLayoutPanel13->AutoSize = true;
+				 this->tableLayoutPanel13->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+				 this->tableLayoutPanel13->BackColor = System::Drawing::Color::White;
+				 this->tableLayoutPanel13->ColumnCount = 1;
+				 this->tableLayoutPanel13->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 100)));
+				 this->tableLayoutPanel13->Controls->Add(this->groupBox3, 0, 2);
+				 this->tableLayoutPanel13->Controls->Add(this->infoThresholds, 0, 0);
+				 this->tableLayoutPanel13->Controls->Add(this->groupBox2, 0, 1);
+				 this->tableLayoutPanel13->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanel13->Location = System::Drawing::Point(0, 0);
+				 this->tableLayoutPanel13->Margin = System::Windows::Forms::Padding(10);
+				 this->tableLayoutPanel13->Name = L"tableLayoutPanel13";
+				 this->tableLayoutPanel13->RowCount = 3;
+				 this->tableLayoutPanel13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPanel13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+				 this->tableLayoutPanel13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+				 this->tableLayoutPanel13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPanel13->Size = System::Drawing::Size(732, 308);
+				 this->tableLayoutPanel13->TabIndex = 58;
+				 //
+				 // groupBox3
+				 //
+				 this->groupBox3->Controls->Add(this->tableLayoutPanel14);
+				 this->groupBox3->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->groupBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(0)));
+				 this->groupBox3->Location = System::Drawing::Point(3, 214);
+				 this->groupBox3->Name = L"groupBox3";
+				 this->groupBox3->Size = System::Drawing::Size(726, 91);
+				 this->groupBox3->TabIndex = 61;
+				 this->groupBox3->TabStop = false;
+				 this->groupBox3->Text = L"Extra Features";
+				 //
+				 // tableLayoutPanel14
+				 //
+				 this->tableLayoutPanel14->ColumnCount = 3;
+				 this->tableLayoutPanel14->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel14->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+				 this->tableLayoutPanel14->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+					 520)));
+				 this->tableLayoutPanel14->Controls->Add(this->metroToggleSOUND, 0, 0);
+				 this->tableLayoutPanel14->Controls->Add(this->metroLabelTextSound, 1, 0);
+				 this->tableLayoutPanel14->Controls->Add(this->metroLabel3, 2, 0);
+				 this->tableLayoutPanel14->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanel14->Location = System::Drawing::Point(3, 17);
+				 this->tableLayoutPanel14->Name = L"tableLayoutPanel14";
+				 this->tableLayoutPanel14->RowCount = 1;
+				 this->tableLayoutPanel14->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+				 this->tableLayoutPanel14->Size = System::Drawing::Size(720, 71);
+				 this->tableLayoutPanel14->TabIndex = 0;
 				 //
 				 // metroToggleSOUND
 				 //
 				 this->metroToggleSOUND->Anchor = System::Windows::Forms::AnchorStyles::Left;
 				 this->metroToggleSOUND->AutoSize = true;
-				 this->metroToggleSOUND->Location = System::Drawing::Point(240, 70);
+				 this->metroToggleSOUND->Location = System::Drawing::Point(3, 26);
 				 this->metroToggleSOUND->Name = L"metroToggleSOUND";
-				 this->metroToggleSOUND->Size = System::Drawing::Size(80, 17);
-				 this->metroToggleSOUND->TabIndex = 51;
+				 this->metroToggleSOUND->Size = System::Drawing::Size(80, 19);
+				 this->metroToggleSOUND->TabIndex = 55;
 				 this->metroToggleSOUND->Text = L"Aus";
 				 this->metroToggleSOUND->UseSelectable = true;
 				 //
-				 // metroLabelTextProgramSettings
+				 // metroLabelTextSound
 				 //
-				 this->metroLabelTextProgramSettings->AutoSize = true;
-				 this->metroLabelTextProgramSettings->FontWeight = MetroFramework::MetroLabelWeight::Bold;
-				 this->metroLabelTextProgramSettings->Location = System::Drawing::Point(3, 11);
-				 this->metroLabelTextProgramSettings->Name = L"metroLabelTextProgramSettings";
-				 this->metroLabelTextProgramSettings->Size = System::Drawing::Size(118, 19);
-				 this->metroLabelTextProgramSettings->TabIndex = 0;
-				 this->metroLabelTextProgramSettings->Text = L"General Settings";
-				 this->metroLabelTextProgramSettings->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabelTextSound->AutoSize = true;
+				 this->metroLabelTextSound->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabelTextSound->Location = System::Drawing::Point(89, 0);
+				 this->metroLabelTextSound->Name = L"metroLabelTextSound";
+				 this->metroLabelTextSound->Size = System::Drawing::Size(108, 71);
+				 this->metroLabelTextSound->TabIndex = 56;
+				 this->metroLabelTextSound->Text = L"Cancel on Sound";
+				 this->metroLabelTextSound->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroToolTip1->SetToolTip(this->metroLabelTextSound, L"  If you like enjoying music or movies, thats a good choice.  ");
 				 //
-				 // metroTabPageThresholds
+				 // metroLabel3
 				 //
-				 this->metroTabPageThresholds->Controls->Add(this->infoThresholds);
-				 this->metroTabPageThresholds->Controls->Add(this->tableLayoutPanelUsageThresholds);
-				 this->metroTabPageThresholds->Controls->Add(this->metroLabelTextUsageThresholds);
-				 this->metroTabPageThresholds->HorizontalScrollbarBarColor = true;
-				 this->metroTabPageThresholds->HorizontalScrollbarHighlightOnWheel = false;
-				 this->metroTabPageThresholds->HorizontalScrollbarSize = 10;
-				 this->metroTabPageThresholds->Location = System::Drawing::Point(4, 38);
-				 this->metroTabPageThresholds->Name = L"metroTabPageThresholds";
-				 this->metroTabPageThresholds->Size = System::Drawing::Size(731, 224);
-				 this->metroTabPageThresholds->TabIndex = 4;
-				 this->metroTabPageThresholds->Text = L"Thresholds";
-				 this->metroTabPageThresholds->VerticalScrollbarBarColor = true;
-				 this->metroTabPageThresholds->VerticalScrollbarHighlightOnWheel = false;
-				 this->metroTabPageThresholds->VerticalScrollbarSize = 10;
+				 this->metroLabel3->AutoSize = true;
+				 this->metroLabel3->BackColor = System::Drawing::Color::White;
+				 this->metroLabel3->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel3->Location = System::Drawing::Point(202, 2);
+				 this->metroLabel3->Margin = System::Windows::Forms::Padding(2);
+				 this->metroLabel3->Name = L"metroLabel3";
+				 this->metroLabel3->Size = System::Drawing::Size(516, 67);
+				 this->metroLabel3->TabIndex = 57;
+				 this->metroLabel3->Text = L"Prevents Standby when playing music / movies";
+				 this->metroLabel3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->metroLabel3->UseCustomBackColor = true;
 				 //
 				 // infoThresholds
 				 //
-				 this->infoThresholds->Enabled = false;
+				 this->infoThresholds->BackColor = System::Drawing::Color::LightBlue;
+				 this->infoThresholds->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->infoThresholds->Lines = gcnew cli::array< System::String^  >(1) {
 					 L"Stand-Bye checks if the current usage is greater than the selected one. If it is,"
 						 L" there will be no change to standby-mode. This prevents resource needing process"
 						 L"es to be interrupted."
 				 };
-				 this->infoThresholds->Location = System::Drawing::Point(59, 37);
+				 this->infoThresholds->Location = System::Drawing::Point(3, 3);
 				 this->infoThresholds->MaxLength = 32767;
 				 this->infoThresholds->Multiline = true;
 				 this->infoThresholds->Name = L"infoThresholds";
@@ -541,17 +777,34 @@ namespace StandBye {
 				 this->infoThresholds->ReadOnly = true;
 				 this->infoThresholds->ScrollBars = System::Windows::Forms::ScrollBars::None;
 				 this->infoThresholds->SelectedText = L"";
-				 this->infoThresholds->Size = System::Drawing::Size(565, 42);
+				 this->infoThresholds->Size = System::Drawing::Size(726, 42);
 				 this->infoThresholds->TabIndex = 55;
 				 this->infoThresholds->Text = L"Stand-Bye checks if the current usage is greater than the selected one. If it is,"
 					 L" there will be no change to standby-mode. This prevents resource needing process"
 					 L"es to be interrupted.";
+				 this->infoThresholds->UseCustomBackColor = true;
 				 this->infoThresholds->UseSelectable = true;
+				 //
+				 // groupBox2
+				 //
+				 this->groupBox2->Controls->Add(this->tableLayoutPanelUsageThresholds);
+				 this->groupBox2->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->groupBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(0)));
+				 this->groupBox2->Location = System::Drawing::Point(3, 51);
+				 this->groupBox2->Name = L"groupBox2";
+				 this->groupBox2->Size = System::Drawing::Size(726, 157);
+				 this->groupBox2->TabIndex = 59;
+				 this->groupBox2->TabStop = false;
+				 this->groupBox2->Text = L"General Thresholds";
 				 //
 				 // tableLayoutPanelUsageThresholds
 				 //
+				 this->tableLayoutPanelUsageThresholds->AutoSize = true;
+				 this->tableLayoutPanelUsageThresholds->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 				 this->tableLayoutPanelUsageThresholds->BackColor = System::Drawing::Color::White;
-				 this->tableLayoutPanelUsageThresholds->ColumnCount = 5;
+				 this->tableLayoutPanelUsageThresholds->ColumnCount = 6;
+				 this->tableLayoutPanelUsageThresholds->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 				 this->tableLayoutPanelUsageThresholds->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 				 this->tableLayoutPanelUsageThresholds->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 				 this->tableLayoutPanelUsageThresholds->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
@@ -561,13 +814,12 @@ namespace StandBye {
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroToggleNET, 0, 4);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroToggleHDD, 0, 3);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelCurHDD, 4, 3);
-				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabel13, 3, 4);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelNETStatus, 3, 4);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelCurRAM, 4, 2);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroToggleRAM, 0, 2);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelCurCPU, 4, 1);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroToggleCPU, 0, 1);
-				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTextBoxNET, 2, 4);
-				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabel14, 3, 3);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelHDDStatus, 3, 3);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextCPU, 1, 1);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextRAM, 1, 2);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextHDD, 1, 3);
@@ -575,23 +827,30 @@ namespace StandBye {
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelRAMPer, 3, 2);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTrackBarCPU, 2, 1);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelCPUPer, 3, 1);
-				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTextBoxHDD, 2, 3);
 				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTrackBarRAM, 2, 2);
-				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextAverageUsage, 2, 0);
-				 this->tableLayoutPanelUsageThresholds->Location = System::Drawing::Point(59, 85);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->explCPU, 5, 1);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->explRAM, 5, 2);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->explHDD, 5, 3);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->explNET, 5, 4);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroLabelTextAverageUsage, 3, 0);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTrackBarHDD, 2, 3);
+				 this->tableLayoutPanelUsageThresholds->Controls->Add(this->metroTrackBarNET, 2, 4);
+				 this->tableLayoutPanelUsageThresholds->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanelUsageThresholds->Location = System::Drawing::Point(3, 17);
+				 this->tableLayoutPanelUsageThresholds->Margin = System::Windows::Forms::Padding(0);
+				 this->tableLayoutPanelUsageThresholds->MaximumSize = System::Drawing::Size(999, 999);
 				 this->tableLayoutPanelUsageThresholds->Name = L"tableLayoutPanelUsageThresholds";
 				 this->tableLayoutPanelUsageThresholds->RowCount = 5;
+				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 20)));
+					 25)));
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 20)));
+					 25)));
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 20)));
+					 25)));
 				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 20)));
-				 this->tableLayoutPanelUsageThresholds->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-					 20)));
-				 this->tableLayoutPanelUsageThresholds->Size = System::Drawing::Size(568, 136);
+					 25)));
+				 this->tableLayoutPanelUsageThresholds->Size = System::Drawing::Size(720, 137);
 				 this->tableLayoutPanelUsageThresholds->TabIndex = 57;
 				 //
 				 // metroLabelCurNET
@@ -599,9 +858,9 @@ namespace StandBye {
 				 this->metroLabelCurNET->AutoSize = true;
 				 this->metroLabelCurNET->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurNET->Location = System::Drawing::Point(462, 108);
+				 this->metroLabelCurNET->Location = System::Drawing::Point(414, 106);
 				 this->metroLabelCurNET->Name = L"metroLabelCurNET";
-				 this->metroLabelCurNET->Size = System::Drawing::Size(103, 28);
+				 this->metroLabelCurNET->Size = System::Drawing::Size(52, 31);
 				 this->metroLabelCurNET->TabIndex = 41;
 				 this->metroLabelCurNET->Text = L"-";
 				 this->metroLabelCurNET->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -610,23 +869,23 @@ namespace StandBye {
 				 //
 				 // metroToggleNET
 				 //
+				 this->metroToggleNET->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleNET->AutoSize = true;
-				 this->metroToggleNET->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroToggleNET->Location = System::Drawing::Point(3, 113);
 				 this->metroToggleNET->Margin = System::Windows::Forms::Padding(3, 5, 3, 3);
 				 this->metroToggleNET->Name = L"metroToggleNET";
-				 this->metroToggleNET->Size = System::Drawing::Size(80, 20);
+				 this->metroToggleNET->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleNET->TabIndex = 49;
 				 this->metroToggleNET->Text = L"Aus";
 				 this->metroToggleNET->UseSelectable = true;
 				 //
 				 // metroToggleHDD
 				 //
+				 this->metroToggleHDD->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleHDD->AutoSize = true;
-				 this->metroToggleHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleHDD->Location = System::Drawing::Point(3, 84);
+				 this->metroToggleHDD->Location = System::Drawing::Point(3, 82);
 				 this->metroToggleHDD->Name = L"metroToggleHDD";
-				 this->metroToggleHDD->Size = System::Drawing::Size(80, 21);
+				 this->metroToggleHDD->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleHDD->TabIndex = 48;
 				 this->metroToggleHDD->Text = L"Aus";
 				 this->metroToggleHDD->UseSelectable = true;
@@ -636,34 +895,34 @@ namespace StandBye {
 				 this->metroLabelCurHDD->AutoSize = true;
 				 this->metroLabelCurHDD->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurHDD->Location = System::Drawing::Point(462, 81);
+				 this->metroLabelCurHDD->Location = System::Drawing::Point(414, 77);
 				 this->metroLabelCurHDD->Name = L"metroLabelCurHDD";
-				 this->metroLabelCurHDD->Size = System::Drawing::Size(103, 27);
+				 this->metroLabelCurHDD->Size = System::Drawing::Size(52, 29);
 				 this->metroLabelCurHDD->TabIndex = 40;
 				 this->metroLabelCurHDD->Text = L"-";
 				 this->metroLabelCurHDD->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroLabelCurHDD->UseCustomBackColor = true;
 				 this->metroLabelCurHDD->UseCustomForeColor = true;
 				 //
-				 // metroLabel13
+				 // metroLabelNETStatus
 				 //
-				 this->metroLabel13->AutoSize = true;
-				 this->metroLabel13->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel13->Location = System::Drawing::Point(410, 108);
-				 this->metroLabel13->Name = L"metroLabel13";
-				 this->metroLabel13->Size = System::Drawing::Size(46, 28);
-				 this->metroLabel13->TabIndex = 36;
-				 this->metroLabel13->Text = L"MBit/s";
-				 this->metroLabel13->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabelNETStatus->AutoSize = true;
+				 this->metroLabelNETStatus->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabelNETStatus->Location = System::Drawing::Point(362, 106);
+				 this->metroLabelNETStatus->Name = L"metroLabelNETStatus";
+				 this->metroLabelNETStatus->Size = System::Drawing::Size(46, 31);
+				 this->metroLabelNETStatus->TabIndex = 36;
+				 this->metroLabelNETStatus->Text = L"MBit/s";
+				 this->metroLabelNETStatus->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 				 //
 				 // metroLabelCurRAM
 				 //
 				 this->metroLabelCurRAM->AutoSize = true;
 				 this->metroLabelCurRAM->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCurRAM->Location = System::Drawing::Point(462, 54);
+				 this->metroLabelCurRAM->Location = System::Drawing::Point(414, 48);
 				 this->metroLabelCurRAM->Name = L"metroLabelCurRAM";
-				 this->metroLabelCurRAM->Size = System::Drawing::Size(103, 27);
+				 this->metroLabelCurRAM->Size = System::Drawing::Size(52, 29);
 				 this->metroLabelCurRAM->TabIndex = 39;
 				 this->metroLabelCurRAM->Text = L"-";
 				 this->metroLabelCurRAM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -672,11 +931,11 @@ namespace StandBye {
 				 //
 				 // metroToggleRAM
 				 //
+				 this->metroToggleRAM->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleRAM->AutoSize = true;
-				 this->metroToggleRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleRAM->Location = System::Drawing::Point(3, 57);
+				 this->metroToggleRAM->Location = System::Drawing::Point(3, 53);
 				 this->metroToggleRAM->Name = L"metroToggleRAM";
-				 this->metroToggleRAM->Size = System::Drawing::Size(80, 21);
+				 this->metroToggleRAM->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleRAM->TabIndex = 47;
 				 this->metroToggleRAM->Text = L"Aus";
 				 this->metroToggleRAM->UseSelectable = true;
@@ -687,9 +946,9 @@ namespace StandBye {
 				 this->metroLabelCurCPU->BackColor = System::Drawing::SystemColors::Control;
 				 this->metroLabelCurCPU->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelCurCPU->ForeColor = System::Drawing::SystemColors::ControlText;
-				 this->metroLabelCurCPU->Location = System::Drawing::Point(462, 27);
+				 this->metroLabelCurCPU->Location = System::Drawing::Point(414, 19);
 				 this->metroLabelCurCPU->Name = L"metroLabelCurCPU";
-				 this->metroLabelCurCPU->Size = System::Drawing::Size(103, 27);
+				 this->metroLabelCurCPU->Size = System::Drawing::Size(52, 29);
 				 this->metroLabelCurCPU->TabIndex = 38;
 				 this->metroLabelCurCPU->Text = L"-";
 				 this->metroLabelCurCPU->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -698,50 +957,33 @@ namespace StandBye {
 				 //
 				 // metroToggleCPU
 				 //
+				 this->metroToggleCPU->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleCPU->AutoSize = true;
-				 this->metroToggleCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroToggleCPU->Location = System::Drawing::Point(3, 30);
+				 this->metroToggleCPU->Location = System::Drawing::Point(3, 24);
 				 this->metroToggleCPU->Name = L"metroToggleCPU";
-				 this->metroToggleCPU->Size = System::Drawing::Size(80, 21);
+				 this->metroToggleCPU->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleCPU->TabIndex = 46;
 				 this->metroToggleCPU->Text = L"Aus";
 				 this->metroToggleCPU->UseSelectable = true;
 				 //
-				 // metroTextBoxNET
+				 // metroLabelHDDStatus
 				 //
-				 this->metroTextBoxNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTextBoxNET->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxNET->Location = System::Drawing::Point(213, 110);
-				 this->metroTextBoxNET->Margin = System::Windows::Forms::Padding(2);
-				 this->metroTextBoxNET->MaxLength = 3;
-				 this->metroTextBoxNET->Name = L"metroTextBoxNET";
-				 this->metroTextBoxNET->PasswordChar = '\0';
-				 this->metroTextBoxNET->ScrollBars = System::Windows::Forms::ScrollBars::None;
-				 this->metroTextBoxNET->SelectedText = L"";
-				 this->metroTextBoxNET->Size = System::Drawing::Size(192, 24);
-				 this->metroTextBoxNET->TabIndex = 45;
-				 this->metroTextBoxNET->Text = L" ";
-				 this->metroTextBoxNET->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
-				 this->metroTextBoxNET->UseSelectable = true;
-				 //
-				 // metroLabel14
-				 //
-				 this->metroLabel14->AutoSize = true;
-				 this->metroLabel14->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel14->Location = System::Drawing::Point(410, 81);
-				 this->metroLabel14->Name = L"metroLabel14";
-				 this->metroLabel14->Size = System::Drawing::Size(46, 27);
-				 this->metroLabel14->TabIndex = 37;
-				 this->metroLabel14->Text = L"MBit/s";
-				 this->metroLabel14->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroLabelHDDStatus->AutoSize = true;
+				 this->metroLabelHDDStatus->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabelHDDStatus->Location = System::Drawing::Point(362, 77);
+				 this->metroLabelHDDStatus->Name = L"metroLabelHDDStatus";
+				 this->metroLabelHDDStatus->Size = System::Drawing::Size(46, 29);
+				 this->metroLabelHDDStatus->TabIndex = 37;
+				 this->metroLabelHDDStatus->Text = L"MBit/s";
+				 this->metroLabelHDDStatus->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 				 //
 				 // metroLabelTextCPU
 				 //
 				 this->metroLabelTextCPU->AutoSize = true;
 				 this->metroLabelTextCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextCPU->Location = System::Drawing::Point(89, 27);
+				 this->metroLabelTextCPU->Location = System::Drawing::Point(89, 19);
 				 this->metroLabelTextCPU->Name = L"metroLabelTextCPU";
-				 this->metroLabelTextCPU->Size = System::Drawing::Size(119, 27);
+				 this->metroLabelTextCPU->Size = System::Drawing::Size(119, 29);
 				 this->metroLabelTextCPU->TabIndex = 30;
 				 this->metroLabelTextCPU->Text = L"CPU Threshold";
 				 this->metroLabelTextCPU->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -750,9 +992,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextRAM->AutoSize = true;
 				 this->metroLabelTextRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextRAM->Location = System::Drawing::Point(89, 54);
+				 this->metroLabelTextRAM->Location = System::Drawing::Point(89, 48);
 				 this->metroLabelTextRAM->Name = L"metroLabelTextRAM";
-				 this->metroLabelTextRAM->Size = System::Drawing::Size(119, 27);
+				 this->metroLabelTextRAM->Size = System::Drawing::Size(119, 29);
 				 this->metroLabelTextRAM->TabIndex = 31;
 				 this->metroLabelTextRAM->Text = L"RAM Threshold";
 				 this->metroLabelTextRAM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -761,9 +1003,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextHDD->AutoSize = true;
 				 this->metroLabelTextHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextHDD->Location = System::Drawing::Point(89, 81);
+				 this->metroLabelTextHDD->Location = System::Drawing::Point(89, 77);
 				 this->metroLabelTextHDD->Name = L"metroLabelTextHDD";
-				 this->metroLabelTextHDD->Size = System::Drawing::Size(119, 27);
+				 this->metroLabelTextHDD->Size = System::Drawing::Size(119, 29);
 				 this->metroLabelTextHDD->TabIndex = 32;
 				 this->metroLabelTextHDD->Text = L"HDD Threshold";
 				 this->metroLabelTextHDD->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -772,9 +1014,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextNET->AutoSize = true;
 				 this->metroLabelTextNET->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextNET->Location = System::Drawing::Point(89, 108);
+				 this->metroLabelTextNET->Location = System::Drawing::Point(89, 106);
 				 this->metroLabelTextNET->Name = L"metroLabelTextNET";
-				 this->metroLabelTextNET->Size = System::Drawing::Size(119, 28);
+				 this->metroLabelTextNET->Size = System::Drawing::Size(119, 31);
 				 this->metroLabelTextNET->TabIndex = 33;
 				 this->metroLabelTextNET->Text = L"Network Threshold";
 				 this->metroLabelTextNET->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -783,85 +1025,138 @@ namespace StandBye {
 				 //
 				 this->metroLabelRAMPer->AutoSize = true;
 				 this->metroLabelRAMPer->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelRAMPer->Location = System::Drawing::Point(410, 54);
+				 this->metroLabelRAMPer->Location = System::Drawing::Point(362, 48);
 				 this->metroLabelRAMPer->Name = L"metroLabelRAMPer";
-				 this->metroLabelRAMPer->Size = System::Drawing::Size(46, 27);
+				 this->metroLabelRAMPer->Size = System::Drawing::Size(46, 29);
 				 this->metroLabelRAMPer->TabIndex = 35;
 				 this->metroLabelRAMPer->Text = L"%";
 				 this->metroLabelRAMPer->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 				 //
 				 // metroTrackBarCPU
 				 //
+				 this->metroTrackBarCPU->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroTrackBarCPU->BackColor = System::Drawing::Color::Transparent;
-				 this->metroTrackBarCPU->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTrackBarCPU->Location = System::Drawing::Point(214, 30);
+				 this->metroTrackBarCPU->Location = System::Drawing::Point(214, 24);
 				 this->metroTrackBarCPU->Name = L"metroTrackBarCPU";
-				 this->metroTrackBarCPU->Size = System::Drawing::Size(190, 21);
+				 this->metroTrackBarCPU->Size = System::Drawing::Size(141, 18);
 				 this->metroTrackBarCPU->TabIndex = 42;
 				 this->metroTrackBarCPU->Text = L"metroTrackBar1";
+				 this->metroTrackBarCPU->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarCPU_Scroll);
 				 //
 				 // metroLabelCPUPer
 				 //
 				 this->metroLabelCPUPer->AutoSize = true;
 				 this->metroLabelCPUPer->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelCPUPer->Location = System::Drawing::Point(410, 27);
+				 this->metroLabelCPUPer->Location = System::Drawing::Point(362, 19);
 				 this->metroLabelCPUPer->Name = L"metroLabelCPUPer";
-				 this->metroLabelCPUPer->Size = System::Drawing::Size(46, 27);
+				 this->metroLabelCPUPer->Size = System::Drawing::Size(46, 29);
 				 this->metroLabelCPUPer->TabIndex = 34;
 				 this->metroLabelCPUPer->Text = L"%";
 				 this->metroLabelCPUPer->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 				 //
-				 // metroTextBoxHDD
-				 //
-				 this->metroTextBoxHDD->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTextBoxHDD->Lines = gcnew cli::array< System::String^  >(1) { L" " };
-				 this->metroTextBoxHDD->Location = System::Drawing::Point(213, 83);
-				 this->metroTextBoxHDD->Margin = System::Windows::Forms::Padding(2);
-				 this->metroTextBoxHDD->MaxLength = 3;
-				 this->metroTextBoxHDD->Name = L"metroTextBoxHDD";
-				 this->metroTextBoxHDD->PasswordChar = '\0';
-				 this->metroTextBoxHDD->ScrollBars = System::Windows::Forms::ScrollBars::None;
-				 this->metroTextBoxHDD->SelectedText = L"";
-				 this->metroTextBoxHDD->Size = System::Drawing::Size(192, 23);
-				 this->metroTextBoxHDD->TabIndex = 44;
-				 this->metroTextBoxHDD->Text = L" ";
-				 this->metroTextBoxHDD->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
-				 this->metroTextBoxHDD->UseSelectable = true;
-				 //
 				 // metroTrackBarRAM
 				 //
+				 this->metroTrackBarRAM->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroTrackBarRAM->BackColor = System::Drawing::Color::Transparent;
-				 this->metroTrackBarRAM->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTrackBarRAM->Location = System::Drawing::Point(214, 57);
+				 this->metroTrackBarRAM->Location = System::Drawing::Point(214, 53);
 				 this->metroTrackBarRAM->Name = L"metroTrackBarRAM";
-				 this->metroTrackBarRAM->Size = System::Drawing::Size(190, 21);
+				 this->metroTrackBarRAM->Size = System::Drawing::Size(142, 18);
 				 this->metroTrackBarRAM->TabIndex = 43;
 				 this->metroTrackBarRAM->Text = L"metroTrackBar2";
+				 this->metroTrackBarRAM->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarRAM_Scroll);
+				 //
+				 // explCPU
+				 //
+				 this->explCPU->AutoSize = true;
+				 this->explCPU->BackColor = System::Drawing::Color::White;
+				 this->explCPU->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->explCPU->Location = System::Drawing::Point(471, 21);
+				 this->explCPU->Margin = System::Windows::Forms::Padding(2);
+				 this->explCPU->Name = L"explCPU";
+				 this->explCPU->Size = System::Drawing::Size(247, 25);
+				 this->explCPU->TabIndex = 51;
+				 this->explCPU->Text = L"example";
+				 this->explCPU->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->explCPU->UseCustomBackColor = true;
+				 //
+				 // explRAM
+				 //
+				 this->explRAM->AutoSize = true;
+				 this->explRAM->BackColor = System::Drawing::Color::White;
+				 this->explRAM->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->explRAM->Location = System::Drawing::Point(471, 50);
+				 this->explRAM->Margin = System::Windows::Forms::Padding(2);
+				 this->explRAM->Name = L"explRAM";
+				 this->explRAM->Size = System::Drawing::Size(247, 25);
+				 this->explRAM->TabIndex = 52;
+				 this->explRAM->Text = L"example";
+				 this->explRAM->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->explRAM->UseCustomBackColor = true;
+				 //
+				 // explHDD
+				 //
+				 this->explHDD->AutoSize = true;
+				 this->explHDD->BackColor = System::Drawing::Color::White;
+				 this->explHDD->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->explHDD->Location = System::Drawing::Point(471, 79);
+				 this->explHDD->Margin = System::Windows::Forms::Padding(2);
+				 this->explHDD->Name = L"explHDD";
+				 this->explHDD->Size = System::Drawing::Size(247, 25);
+				 this->explHDD->TabIndex = 53;
+				 this->explHDD->Text = L"example";
+				 this->explHDD->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->explHDD->UseCustomBackColor = true;
+				 //
+				 // explNET
+				 //
+				 this->explNET->AutoSize = true;
+				 this->explNET->BackColor = System::Drawing::Color::White;
+				 this->explNET->Location = System::Drawing::Point(471, 108);
+				 this->explNET->Margin = System::Windows::Forms::Padding(2);
+				 this->explNET->Name = L"explNET";
+				 this->explNET->Size = System::Drawing::Size(59, 19);
+				 this->explNET->TabIndex = 54;
+				 this->explNET->Text = L"example";
+				 this->explNET->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->explNET->UseCustomBackColor = true;
 				 //
 				 // metroLabelTextAverageUsage
 				 //
 				 this->metroLabelTextAverageUsage->AutoSize = true;
-				 this->tableLayoutPanelUsageThresholds->SetColumnSpan(this->metroLabelTextAverageUsage, 3);
+				 this->tableLayoutPanelUsageThresholds->SetColumnSpan(this->metroLabelTextAverageUsage, 2);
 				 this->metroLabelTextAverageUsage->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelTextAverageUsage->FontWeight = MetroFramework::MetroLabelWeight::Regular;
-				 this->metroLabelTextAverageUsage->Location = System::Drawing::Point(214, 0);
+				 this->metroLabelTextAverageUsage->Location = System::Drawing::Point(362, 0);
 				 this->metroLabelTextAverageUsage->Name = L"metroLabelTextAverageUsage";
-				 this->metroLabelTextAverageUsage->Size = System::Drawing::Size(351, 27);
+				 this->metroLabelTextAverageUsage->Size = System::Drawing::Size(104, 19);
 				 this->metroLabelTextAverageUsage->TabIndex = 50;
 				 this->metroLabelTextAverageUsage->Text = L"Average Usage:";
 				 this->metroLabelTextAverageUsage->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 				 this->metroToolTip1->SetToolTip(this->metroLabelTextAverageUsage, L"   Stand-Bye uses the average usage over 15 sec. (measurement 2 times / sec)");
 				 //
-				 // metroLabelTextUsageThresholds
+				 // metroTrackBarHDD
 				 //
-				 this->metroLabelTextUsageThresholds->AutoSize = true;
-				 this->metroLabelTextUsageThresholds->FontWeight = MetroFramework::MetroLabelWeight::Bold;
-				 this->metroLabelTextUsageThresholds->Location = System::Drawing::Point(3, 15);
-				 this->metroLabelTextUsageThresholds->Name = L"metroLabelTextUsageThresholds";
-				 this->metroLabelTextUsageThresholds->Size = System::Drawing::Size(178, 19);
-				 this->metroLabelTextUsageThresholds->TabIndex = 30;
-				 this->metroLabelTextUsageThresholds->Text = L"System Usage Thresholds";
-				 this->metroLabelTextUsageThresholds->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+				 this->metroTrackBarHDD->Anchor = System::Windows::Forms::AnchorStyles::None;
+				 this->metroTrackBarHDD->BackColor = System::Drawing::Color::Transparent;
+				 this->metroTrackBarHDD->Location = System::Drawing::Point(214, 82);
+				 this->metroTrackBarHDD->Name = L"metroTrackBarHDD";
+				 this->metroTrackBarHDD->Size = System::Drawing::Size(142, 18);
+				 this->metroTrackBarHDD->TabIndex = 55;
+				 this->metroTrackBarHDD->Text = L"metroTrackBar2";
+				 this->metroTrackBarHDD->Value = 10;
+				 this->metroTrackBarHDD->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarHDD_Scroll);
+				 //
+				 // metroTrackBarNET
+				 //
+				 this->metroTrackBarNET->Anchor = System::Windows::Forms::AnchorStyles::None;
+				 this->metroTrackBarNET->BackColor = System::Drawing::Color::Transparent;
+				 this->metroTrackBarNET->Location = System::Drawing::Point(214, 112);
+				 this->metroTrackBarNET->Name = L"metroTrackBarNET";
+				 this->metroTrackBarNET->Size = System::Drawing::Size(142, 18);
+				 this->metroTrackBarNET->TabIndex = 56;
+				 this->metroTrackBarNET->Text = L"metroTrackBar2";
+				 this->metroTrackBarNET->Value = 10;
+				 this->metroTrackBarNET->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarNET_Scroll);
 				 //
 				 // metroTabPageExcpProcess
 				 //
@@ -871,15 +1166,18 @@ namespace StandBye {
 				 this->metroTabPageExcpProcess->HorizontalScrollbarSize = 0;
 				 this->metroTabPageExcpProcess->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageExcpProcess->Name = L"metroTabPageExcpProcess";
-				 this->metroTabPageExcpProcess->Size = System::Drawing::Size(731, 224);
+				 this->metroTabPageExcpProcess->Size = System::Drawing::Size(732, 308);
 				 this->metroTabPageExcpProcess->TabIndex = 1;
 				 this->metroTabPageExcpProcess->Text = L"Exception Processes";
 				 this->metroTabPageExcpProcess->VerticalScrollbarBarColor = true;
 				 this->metroTabPageExcpProcess->VerticalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageExcpProcess->VerticalScrollbarSize = 0;
+				 this->metroTabPageExcpProcess->Visible = false;
 				 //
 				 // tableLayoutPanel5
 				 //
+				 this->tableLayoutPanel5->AutoSize = true;
+				 this->tableLayoutPanel5->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 				 this->tableLayoutPanel5->ColumnCount = 2;
 				 this->tableLayoutPanel5->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 					 70)));
@@ -892,7 +1190,7 @@ namespace StandBye {
 				 this->tableLayoutPanel5->Name = L"tableLayoutPanel5";
 				 this->tableLayoutPanel5->RowCount = 1;
 				 this->tableLayoutPanel5->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel5->Size = System::Drawing::Size(731, 224);
+				 this->tableLayoutPanel5->Size = System::Drawing::Size(732, 308);
 				 this->tableLayoutPanel5->TabIndex = 2;
 				 //
 				 // listViewProc
@@ -911,7 +1209,7 @@ namespace StandBye {
 				 this->listViewProc->Margin = System::Windows::Forms::Padding(10);
 				 this->listViewProc->MultiSelect = false;
 				 this->listViewProc->Name = L"listViewProc";
-				 this->listViewProc->Size = System::Drawing::Size(491, 204);
+				 this->listViewProc->Size = System::Drawing::Size(492, 288);
 				 this->listViewProc->Sorting = System::Windows::Forms::SortOrder::Ascending;
 				 this->listViewProc->TabIndex = 0;
 				 this->listViewProc->UseCompatibleStateImageBehavior = false;
@@ -930,21 +1228,22 @@ namespace StandBye {
 				 //
 				 // tableLayoutPanel6
 				 //
+				 this->tableLayoutPanel6->AutoSize = true;
+				 this->tableLayoutPanel6->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 				 this->tableLayoutPanel6->BackColor = System::Drawing::Color::White;
 				 this->tableLayoutPanel6->ColumnCount = 1;
 				 this->tableLayoutPanel6->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 					 100)));
-				 this->tableLayoutPanel6->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-					 20)));
 				 this->tableLayoutPanel6->Controls->Add(this->tableLayoutPanel7, 0, 1);
 				 this->tableLayoutPanel6->Controls->Add(this->infoExcpProcesses, 0, 0);
 				 this->tableLayoutPanel6->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel6->Location = System::Drawing::Point(514, 3);
+				 this->tableLayoutPanel6->Location = System::Drawing::Point(515, 3);
 				 this->tableLayoutPanel6->Name = L"tableLayoutPanel6";
 				 this->tableLayoutPanel6->RowCount = 2;
+				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 49.99999F)));
 				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
-				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
-				 this->tableLayoutPanel6->Size = System::Drawing::Size(214, 218);
+				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+				 this->tableLayoutPanel6->Size = System::Drawing::Size(214, 302);
 				 this->tableLayoutPanel6->TabIndex = 1;
 				 //
 				 // tableLayoutPanel7
@@ -957,24 +1256,24 @@ namespace StandBye {
 				 this->tableLayoutPanel7->Controls->Add(this->metroButtonAddFromFile, 0, 0);
 				 this->tableLayoutPanel7->Controls->Add(this->tableLayoutPanel8, 0, 3);
 				 this->tableLayoutPanel7->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel7->Location = System::Drawing::Point(3, 112);
+				 this->tableLayoutPanel7->Location = System::Drawing::Point(3, 153);
 				 this->tableLayoutPanel7->Name = L"tableLayoutPanel7";
 				 this->tableLayoutPanel7->RowCount = 4;
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
-				 this->tableLayoutPanel7->Size = System::Drawing::Size(208, 103);
+				 this->tableLayoutPanel7->Size = System::Drawing::Size(208, 146);
 				 this->tableLayoutPanel7->TabIndex = 0;
 				 //
 				 // metroButtonRemove
 				 //
 				 this->metroButtonRemove->BackColor = System::Drawing::Color::DarkCyan;
 				 this->metroButtonRemove->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroButtonRemove->Location = System::Drawing::Point(5, 55);
+				 this->metroButtonRemove->Location = System::Drawing::Point(5, 77);
 				 this->metroButtonRemove->Margin = System::Windows::Forms::Padding(5);
 				 this->metroButtonRemove->Name = L"metroButtonRemove";
-				 this->metroButtonRemove->Size = System::Drawing::Size(198, 15);
+				 this->metroButtonRemove->Size = System::Drawing::Size(198, 26);
 				 this->metroButtonRemove->TabIndex = 2;
 				 this->metroButtonRemove->Text = L"Remove Process";
 				 this->metroButtonRemove->UseCustomBackColor = true;
@@ -985,10 +1284,10 @@ namespace StandBye {
 				 //
 				 this->metroButtonAddFromList->BackColor = System::Drawing::Color::DarkCyan;
 				 this->metroButtonAddFromList->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroButtonAddFromList->Location = System::Drawing::Point(5, 30);
+				 this->metroButtonAddFromList->Location = System::Drawing::Point(5, 41);
 				 this->metroButtonAddFromList->Margin = System::Windows::Forms::Padding(5);
 				 this->metroButtonAddFromList->Name = L"metroButtonAddFromList";
-				 this->metroButtonAddFromList->Size = System::Drawing::Size(198, 15);
+				 this->metroButtonAddFromList->Size = System::Drawing::Size(198, 26);
 				 this->metroButtonAddFromList->TabIndex = 1;
 				 this->metroButtonAddFromList->Text = L"Add current running Process";
 				 this->metroButtonAddFromList->UseCustomBackColor = true;
@@ -999,10 +1298,11 @@ namespace StandBye {
 				 //
 				 this->metroButtonAddFromFile->BackColor = System::Drawing::Color::DarkCyan;
 				 this->metroButtonAddFromFile->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroButtonAddFromFile->Highlight = true;
 				 this->metroButtonAddFromFile->Location = System::Drawing::Point(5, 5);
 				 this->metroButtonAddFromFile->Margin = System::Windows::Forms::Padding(5);
 				 this->metroButtonAddFromFile->Name = L"metroButtonAddFromFile";
-				 this->metroButtonAddFromFile->Size = System::Drawing::Size(198, 15);
+				 this->metroButtonAddFromFile->Size = System::Drawing::Size(198, 26);
 				 this->metroButtonAddFromFile->TabIndex = 0;
 				 this->metroButtonAddFromFile->Text = L"Add Process From File";
 				 this->metroButtonAddFromFile->UseCustomBackColor = true;
@@ -1019,12 +1319,12 @@ namespace StandBye {
 				 this->tableLayoutPanel8->Controls->Add(this->metroToggleView, 1, 0);
 				 this->tableLayoutPanel8->Controls->Add(this->metroLabelView, 0, 0);
 				 this->tableLayoutPanel8->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel8->Location = System::Drawing::Point(3, 78);
+				 this->tableLayoutPanel8->Location = System::Drawing::Point(3, 111);
 				 this->tableLayoutPanel8->Name = L"tableLayoutPanel8";
 				 this->tableLayoutPanel8->RowCount = 1;
 				 this->tableLayoutPanel8->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel8->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 22)));
-				 this->tableLayoutPanel8->Size = System::Drawing::Size(202, 22);
+				 this->tableLayoutPanel8->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 32)));
+				 this->tableLayoutPanel8->Size = System::Drawing::Size(202, 32);
 				 this->tableLayoutPanel8->TabIndex = 3;
 				 //
 				 // metroToggleView
@@ -1034,7 +1334,7 @@ namespace StandBye {
 				 this->metroToggleView->Location = System::Drawing::Point(111, 7);
 				 this->metroToggleView->Margin = System::Windows::Forms::Padding(7);
 				 this->metroToggleView->Name = L"metroToggleView";
-				 this->metroToggleView->Size = System::Drawing::Size(80, 8);
+				 this->metroToggleView->Size = System::Drawing::Size(80, 18);
 				 this->metroToggleView->TabIndex = 3;
 				 this->metroToggleView->Text = L"Aus";
 				 this->metroToggleView->UseSelectable = true;
@@ -1046,14 +1346,14 @@ namespace StandBye {
 				 this->metroLabelView->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelView->Location = System::Drawing::Point(3, 0);
 				 this->metroLabelView->Name = L"metroLabelView";
-				 this->metroLabelView->Size = System::Drawing::Size(95, 22);
+				 this->metroLabelView->Size = System::Drawing::Size(95, 32);
 				 this->metroLabelView->TabIndex = 4;
 				 this->metroLabelView->Text = L"Show Details";
 				 this->metroLabelView->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 //
 				 // infoExcpProcesses
 				 //
-				 this->infoExcpProcesses->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->infoExcpProcesses->BackColor = System::Drawing::Color::LightBlue;
 				 this->infoExcpProcesses->Enabled = false;
 				 this->infoExcpProcesses->Lines = gcnew cli::array< System::String^  >(1) {
 					 L"If at least one of the set up processes is running, the program will prevent the "
@@ -1066,26 +1366,146 @@ namespace StandBye {
 				 this->infoExcpProcesses->PasswordChar = '\0';
 				 this->infoExcpProcesses->ScrollBars = System::Windows::Forms::ScrollBars::None;
 				 this->infoExcpProcesses->SelectedText = L"";
-				 this->infoExcpProcesses->Size = System::Drawing::Size(208, 103);
+				 this->infoExcpProcesses->Size = System::Drawing::Size(208, 74);
 				 this->infoExcpProcesses->TabIndex = 1;
 				 this->infoExcpProcesses->Text = L"If at least one of the set up processes is running, the program will prevent the "
 					 L"system from changing over to standby mode.";
+				 this->infoExcpProcesses->UseCustomBackColor = true;
 				 this->infoExcpProcesses->UseSelectable = true;
 				 //
 				 // metroTabPageAdvSettings
 				 //
-				 this->metroTabPageAdvSettings->Controls->Add(this->tableLayoutPanel11);
+				 this->metroTabPageAdvSettings->Controls->Add(this->tableLayoutPanel2);
 				 this->metroTabPageAdvSettings->HorizontalScrollbarBarColor = true;
 				 this->metroTabPageAdvSettings->HorizontalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageAdvSettings->HorizontalScrollbarSize = 0;
 				 this->metroTabPageAdvSettings->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageAdvSettings->Name = L"metroTabPageAdvSettings";
-				 this->metroTabPageAdvSettings->Size = System::Drawing::Size(731, 224);
+				 this->metroTabPageAdvSettings->Size = System::Drawing::Size(732, 308);
 				 this->metroTabPageAdvSettings->TabIndex = 3;
 				 this->metroTabPageAdvSettings->Text = L"Advanced Settings";
 				 this->metroTabPageAdvSettings->VerticalScrollbarBarColor = true;
 				 this->metroTabPageAdvSettings->VerticalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageAdvSettings->VerticalScrollbarSize = 0;
+				 this->metroTabPageAdvSettings->Visible = false;
+				 //
+				 // tableLayoutPanel2
+				 //
+				 this->tableLayoutPanel2->ColumnCount = 2;
+				 this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 50)));
+				 this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 50)));
+				 this->tableLayoutPanel2->Controls->Add(this->tableLayoutPanel3, 0, 1);
+				 this->tableLayoutPanel2->Controls->Add(this->metroLabel2, 1, 0);
+				 this->tableLayoutPanel2->Controls->Add(this->metroLabel1, 0, 0);
+				 this->tableLayoutPanel2->Controls->Add(this->tableLayoutPanel11, 0, 1);
+				 this->tableLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanel2->Location = System::Drawing::Point(0, 0);
+				 this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
+				 this->tableLayoutPanel2->RowCount = 2;
+				 this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 10)));
+				 this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 90)));
+				 this->tableLayoutPanel2->Size = System::Drawing::Size(732, 308);
+				 this->tableLayoutPanel2->TabIndex = 4;
+				 //
+				 // tableLayoutPanel3
+				 //
+				 this->tableLayoutPanel3->BackColor = System::Drawing::Color::White;
+				 this->tableLayoutPanel3->ColumnCount = 2;
+				 this->tableLayoutPanel3->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 50)));
+				 this->tableLayoutPanel3->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+					 50)));
+				 this->tableLayoutPanel3->Controls->Add(this->metroLabel4, 0, 0);
+				 this->tableLayoutPanel3->Controls->Add(this->metroToggle2, 1, 0);
+				 this->tableLayoutPanel3->Controls->Add(this->metroLabel6, 0, 1);
+				 this->tableLayoutPanel3->Controls->Add(this->metroComboBox1, 1, 1);
+				 this->tableLayoutPanel3->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->tableLayoutPanel3->Location = System::Drawing::Point(369, 33);
+				 this->tableLayoutPanel3->Name = L"tableLayoutPanel3";
+				 this->tableLayoutPanel3->RowCount = 4;
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+				 this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+				 this->tableLayoutPanel3->Size = System::Drawing::Size(360, 272);
+				 this->tableLayoutPanel3->TabIndex = 5;
+				 //
+				 // metroLabel4
+				 //
+				 this->metroLabel4->AutoSize = true;
+				 this->metroLabel4->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel4->Location = System::Drawing::Point(3, 0);
+				 this->metroLabel4->Name = L"metroLabel4";
+				 this->metroLabel4->Size = System::Drawing::Size(174, 68);
+				 this->metroLabel4->TabIndex = 0;
+				 this->metroLabel4->Text = L"Enable Logging:";
+				 this->metroLabel4->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+				 this->metroToolTip1->SetToolTip(this->metroLabel4, L"Starts Stand-Bye! with windows.");
+				 //
+				 // metroToggle2
+				 //
+				 this->metroToggle2->Anchor = System::Windows::Forms::AnchorStyles::None;
+				 this->metroToggle2->AutoSize = true;
+				 this->metroToggle2->Location = System::Drawing::Point(230, 25);
+				 this->metroToggle2->Margin = System::Windows::Forms::Padding(0);
+				 this->metroToggle2->Name = L"metroToggle2";
+				 this->metroToggle2->Size = System::Drawing::Size(80, 17);
+				 this->metroToggle2->TabIndex = 1;
+				 this->metroToggle2->Text = L"Aus";
+				 this->metroToggle2->UseSelectable = true;
+				 //
+				 // metroLabel6
+				 //
+				 this->metroLabel6->AutoSize = true;
+				 this->metroLabel6->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel6->Location = System::Drawing::Point(3, 68);
+				 this->metroLabel6->Name = L"metroLabel6";
+				 this->metroLabel6->Size = System::Drawing::Size(174, 68);
+				 this->metroLabel6->TabIndex = 10;
+				 this->metroLabel6->Text = L"Select Standby-Mode:";
+				 this->metroLabel6->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+				 //
+				 // metroComboBox1
+				 //
+				 this->metroComboBox1->Anchor = System::Windows::Forms::AnchorStyles::None;
+				 this->metroComboBox1->DisplayMember = L"0";
+				 this->metroComboBox1->FormattingEnabled = true;
+				 this->metroComboBox1->ItemHeight = 23;
+				 this->metroComboBox1->Location = System::Drawing::Point(193, 91);
+				 this->metroComboBox1->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+				 this->metroComboBox1->Name = L"metroComboBox1";
+				 this->metroComboBox1->Size = System::Drawing::Size(154, 29);
+				 this->metroComboBox1->TabIndex = 11;
+				 this->metroComboBox1->UseSelectable = true;
+				 this->metroComboBox1->ValueMember = L"0";
+				 //
+				 // metroLabel2
+				 //
+				 this->metroLabel2->AutoSize = true;
+				 this->metroLabel2->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel2->FontWeight = MetroFramework::MetroLabelWeight::Bold;
+				 this->metroLabel2->Location = System::Drawing::Point(369, 0);
+				 this->metroLabel2->Name = L"metroLabel2";
+				 this->metroLabel2->Size = System::Drawing::Size(360, 30);
+				 this->metroLabel2->TabIndex = 4;
+				 this->metroLabel2->Text = L"Stand-Bye Settings";
+				 this->metroLabel2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 //
+				 // metroLabel1
+				 //
+				 this->metroLabel1->AutoSize = true;
+				 this->metroLabel1->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroLabel1->FontWeight = MetroFramework::MetroLabelWeight::Bold;
+				 this->metroLabel1->Location = System::Drawing::Point(3, 0);
+				 this->metroLabel1->Name = L"metroLabel1";
+				 this->metroLabel1->Size = System::Drawing::Size(360, 30);
+				 this->metroLabel1->TabIndex = 3;
+				 this->metroLabel1->Text = L"General Settings";
+				 this->metroLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 //
 				 // tableLayoutPanel11
 				 //
@@ -1104,25 +1524,27 @@ namespace StandBye {
 				 this->tableLayoutPanel11->Controls->Add(this->metroLabelTextLanguage, 0, 1);
 				 this->tableLayoutPanel11->Controls->Add(this->metroComboBoxLanguage, 1, 1);
 				 this->tableLayoutPanel11->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel11->Location = System::Drawing::Point(0, 0);
+				 this->tableLayoutPanel11->Location = System::Drawing::Point(3, 33);
 				 this->tableLayoutPanel11->Name = L"tableLayoutPanel11";
-				 this->tableLayoutPanel11->RowCount = 6;
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.66667F)));
-				 this->tableLayoutPanel11->Size = System::Drawing::Size(731, 224);
+				 this->tableLayoutPanel11->RowCount = 4;
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPanel11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+					 20)));
+				 this->tableLayoutPanel11->Size = System::Drawing::Size(360, 272);
 				 this->tableLayoutPanel11->TabIndex = 2;
 				 //
 				 // metroLabelTextUpdates
 				 //
 				 this->metroLabelTextUpdates->AutoSize = true;
 				 this->metroLabelTextUpdates->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextUpdates->Location = System::Drawing::Point(3, 74);
+				 this->metroLabelTextUpdates->Location = System::Drawing::Point(3, 136);
 				 this->metroLabelTextUpdates->Name = L"metroLabelTextUpdates";
-				 this->metroLabelTextUpdates->Size = System::Drawing::Size(359, 37);
+				 this->metroLabelTextUpdates->Size = System::Drawing::Size(174, 68);
 				 this->metroLabelTextUpdates->TabIndex = 6;
 				 this->metroLabelTextUpdates->Text = L"Search for Updates:";
 				 this->metroLabelTextUpdates->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -1130,13 +1552,12 @@ namespace StandBye {
 				 //
 				 // metroToggleUPDATES
 				 //
-				 this->metroToggleUPDATES->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-					 | System::Windows::Forms::AnchorStyles::Left));
+				 this->metroToggleUPDATES->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleUPDATES->AutoSize = true;
-				 this->metroToggleUPDATES->Location = System::Drawing::Point(370, 86);
-				 this->metroToggleUPDATES->Margin = System::Windows::Forms::Padding(5, 12, 0, 12);
+				 this->metroToggleUPDATES->Location = System::Drawing::Point(230, 161);
+				 this->metroToggleUPDATES->Margin = System::Windows::Forms::Padding(0);
 				 this->metroToggleUPDATES->Name = L"metroToggleUPDATES";
-				 this->metroToggleUPDATES->Size = System::Drawing::Size(80, 13);
+				 this->metroToggleUPDATES->Size = System::Drawing::Size(80, 17);
 				 this->metroToggleUPDATES->TabIndex = 7;
 				 this->metroToggleUPDATES->Text = L"Aus";
 				 this->metroToggleUPDATES->UseSelectable = true;
@@ -1147,7 +1568,7 @@ namespace StandBye {
 				 this->metroLabelTextAutoStart->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelTextAutoStart->Location = System::Drawing::Point(3, 0);
 				 this->metroLabelTextAutoStart->Name = L"metroLabelTextAutoStart";
-				 this->metroLabelTextAutoStart->Size = System::Drawing::Size(359, 37);
+				 this->metroLabelTextAutoStart->Size = System::Drawing::Size(174, 68);
 				 this->metroLabelTextAutoStart->TabIndex = 0;
 				 this->metroLabelTextAutoStart->Text = L"Start with Windows:";
 				 this->metroLabelTextAutoStart->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -1155,13 +1576,12 @@ namespace StandBye {
 				 //
 				 // metroToggleAutoStart
 				 //
-				 this->metroToggleAutoStart->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-					 | System::Windows::Forms::AnchorStyles::Left));
+				 this->metroToggleAutoStart->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleAutoStart->AutoSize = true;
-				 this->metroToggleAutoStart->Location = System::Drawing::Point(370, 12);
-				 this->metroToggleAutoStart->Margin = System::Windows::Forms::Padding(5, 12, 0, 12);
+				 this->metroToggleAutoStart->Location = System::Drawing::Point(230, 25);
+				 this->metroToggleAutoStart->Margin = System::Windows::Forms::Padding(0);
 				 this->metroToggleAutoStart->Name = L"metroToggleAutoStart";
-				 this->metroToggleAutoStart->Size = System::Drawing::Size(80, 13);
+				 this->metroToggleAutoStart->Size = System::Drawing::Size(80, 17);
 				 this->metroToggleAutoStart->TabIndex = 1;
 				 this->metroToggleAutoStart->Text = L"Aus";
 				 this->metroToggleAutoStart->UseSelectable = true;
@@ -1171,9 +1591,9 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextMessages->AutoSize = true;
 				 this->metroLabelTextMessages->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextMessages->Location = System::Drawing::Point(3, 111);
+				 this->metroLabelTextMessages->Location = System::Drawing::Point(3, 204);
 				 this->metroLabelTextMessages->Name = L"metroLabelTextMessages";
-				 this->metroLabelTextMessages->Size = System::Drawing::Size(359, 37);
+				 this->metroLabelTextMessages->Size = System::Drawing::Size(174, 68);
 				 this->metroLabelTextMessages->TabIndex = 8;
 				 this->metroLabelTextMessages->Text = L"Show Messages";
 				 this->metroLabelTextMessages->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -1182,13 +1602,12 @@ namespace StandBye {
 				 //
 				 // metroToggleMessages
 				 //
-				 this->metroToggleMessages->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-					 | System::Windows::Forms::AnchorStyles::Left));
+				 this->metroToggleMessages->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroToggleMessages->AutoSize = true;
-				 this->metroToggleMessages->Location = System::Drawing::Point(370, 123);
-				 this->metroToggleMessages->Margin = System::Windows::Forms::Padding(5, 12, 0, 12);
+				 this->metroToggleMessages->Location = System::Drawing::Point(230, 229);
+				 this->metroToggleMessages->Margin = System::Windows::Forms::Padding(0);
 				 this->metroToggleMessages->Name = L"metroToggleMessages";
-				 this->metroToggleMessages->Size = System::Drawing::Size(80, 13);
+				 this->metroToggleMessages->Size = System::Drawing::Size(80, 17);
 				 this->metroToggleMessages->TabIndex = 9;
 				 this->metroToggleMessages->Text = L"Aus";
 				 this->metroToggleMessages->UseSelectable = true;
@@ -1197,22 +1616,23 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextLanguage->AutoSize = true;
 				 this->metroLabelTextLanguage->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabelTextLanguage->Location = System::Drawing::Point(3, 37);
+				 this->metroLabelTextLanguage->Location = System::Drawing::Point(3, 68);
 				 this->metroLabelTextLanguage->Name = L"metroLabelTextLanguage";
-				 this->metroLabelTextLanguage->Size = System::Drawing::Size(359, 37);
+				 this->metroLabelTextLanguage->Size = System::Drawing::Size(174, 68);
 				 this->metroLabelTextLanguage->TabIndex = 10;
 				 this->metroLabelTextLanguage->Text = L"Language:";
 				 this->metroLabelTextLanguage->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 				 //
 				 // metroComboBoxLanguage
 				 //
+				 this->metroComboBoxLanguage->Anchor = System::Windows::Forms::AnchorStyles::None;
 				 this->metroComboBoxLanguage->DisplayMember = L"0";
 				 this->metroComboBoxLanguage->FormattingEnabled = true;
 				 this->metroComboBoxLanguage->ItemHeight = 23;
-				 this->metroComboBoxLanguage->Location = System::Drawing::Point(368, 47);
+				 this->metroComboBoxLanguage->Location = System::Drawing::Point(193, 91);
 				 this->metroComboBoxLanguage->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
 				 this->metroComboBoxLanguage->Name = L"metroComboBoxLanguage";
-				 this->metroComboBoxLanguage->Size = System::Drawing::Size(168, 29);
+				 this->metroComboBoxLanguage->Size = System::Drawing::Size(154, 29);
 				 this->metroComboBoxLanguage->TabIndex = 11;
 				 this->metroComboBoxLanguage->UseSelectable = true;
 				 this->metroComboBoxLanguage->ValueMember = L"0";
@@ -1229,13 +1649,14 @@ namespace StandBye {
 				 this->metroTabPageAbout->HorizontalScrollbarSize = 5;
 				 this->metroTabPageAbout->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageAbout->Name = L"metroTabPageAbout";
-				 this->metroTabPageAbout->Size = System::Drawing::Size(731, 224);
+				 this->metroTabPageAbout->Size = System::Drawing::Size(732, 308);
 				 this->metroTabPageAbout->TabIndex = 2;
 				 this->metroTabPageAbout->Text = L"About";
 				 this->metroTabPageAbout->VerticalScrollbar = true;
 				 this->metroTabPageAbout->VerticalScrollbarBarColor = true;
 				 this->metroTabPageAbout->VerticalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageAbout->VerticalScrollbarSize = 5;
+				 this->metroTabPageAbout->Visible = false;
 				 //
 				 // tableLayoutPanel9
 				 //
@@ -1266,7 +1687,7 @@ namespace StandBye {
 				 this->metroTileHomepage->Text = L"Visit our Homepage!";
 				 this->metroTileHomepage->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileHomepage->UseSelectable = true;
-				 this->metroTileHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTileHomepage_Click);
+				 this->metroTileHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::OpenHomepageOnClick);
 				 //
 				 // metroTileGithub
 				 //
@@ -1279,7 +1700,7 @@ namespace StandBye {
 				 this->metroTileGithub->Text = L"Visit us on Github!";
 				 this->metroTileGithub->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileGithub->UseSelectable = true;
-				 this->metroTileGithub->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroTileGithub_Click);
+				 this->metroTileGithub->Click += gcnew System::EventHandler(this, &MetroSettingsForm::openGithubOnClick);
 				 //
 				 // metroLabelTextAbout
 				 //
@@ -1305,7 +1726,7 @@ namespace StandBye {
 				 this->tableLayoutPanel1->RowCount = 2;
 				 this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 				 this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 60)));
-				 this->tableLayoutPanel1->Size = System::Drawing::Size(759, 346);
+				 this->tableLayoutPanel1->Size = System::Drawing::Size(760, 430);
 				 this->tableLayoutPanel1->TabIndex = 1;
 				 //
 				 // tableLayoutPanel4
@@ -1326,11 +1747,11 @@ namespace StandBye {
 				 this->tableLayoutPanel4->Controls->Add(this->metroLabelVersion, 0, 0);
 				 this->tableLayoutPanel4->Controls->Add(this->metroLinkHomepage, 1, 0);
 				 this->tableLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel4->Location = System::Drawing::Point(3, 289);
+				 this->tableLayoutPanel4->Location = System::Drawing::Point(3, 373);
 				 this->tableLayoutPanel4->Name = L"tableLayoutPanel4";
 				 this->tableLayoutPanel4->RowCount = 1;
 				 this->tableLayoutPanel4->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel4->Size = System::Drawing::Size(753, 54);
+				 this->tableLayoutPanel4->Size = System::Drawing::Size(754, 54);
 				 this->tableLayoutPanel4->TabIndex = 1;
 				 //
 				 // metroButtonOK
@@ -1340,7 +1761,7 @@ namespace StandBye {
 				 this->metroButtonOK->Location = System::Drawing::Point(610, 10);
 				 this->metroButtonOK->Margin = System::Windows::Forms::Padding(10);
 				 this->metroButtonOK->Name = L"metroButtonOK";
-				 this->metroButtonOK->Size = System::Drawing::Size(133, 34);
+				 this->metroButtonOK->Size = System::Drawing::Size(134, 34);
 				 this->metroButtonOK->TabIndex = 1;
 				 this->metroButtonOK->Text = L"OK";
 				 this->metroButtonOK->UseSelectable = true;
@@ -1383,7 +1804,7 @@ namespace StandBye {
 				 this->metroLinkHomepage->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroToolTip1->SetToolTip(this->metroLinkHomepage, L"Visit our homepage!");
 				 this->metroLinkHomepage->UseSelectable = true;
-				 this->metroLinkHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroLinkHomepage_Click);
+				 this->metroLinkHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::OpenHomepageOnClick);
 				 //
 				 // timerRefresh
 				 //
@@ -1410,10 +1831,10 @@ namespace StandBye {
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 				 this->BackImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackImage")));
 				 this->BackImagePadding = System::Windows::Forms::Padding(0, 5, 0, 0);
-				 this->BackMaxSize = 760;
+				 this->BackMaxSize = 774;
 				 this->BorderStyle = MetroFramework::Forms::MetroFormBorderStyle::FixedSingle;
 				 this->CancelButton = this->metroButtonCancel;
-				 this->ClientSize = System::Drawing::Size(759, 406);
+				 this->ClientSize = System::Drawing::Size(760, 490);
 				 this->Controls->Add(this->tableLayoutPanel1);
 				 this->MaximizeBox = false;
 				 this->MinimizeBox = false;
@@ -1426,25 +1847,38 @@ namespace StandBye {
 				 this->Closing += gcnew System::ComponentModel::CancelEventHandler(this, &MetroSettingsForm::OnClosing);
 				 this->Load += gcnew System::EventHandler(this, &MetroSettingsForm::MetroSettingsForm_Load);
 				 this->VisibleChanged += gcnew System::EventHandler(this, &MetroSettingsForm::OnVisibleChanged);
-				 this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MetroSettingsForm::OnKeyDown);
 				 this->metroTabControl1->ResumeLayout(false);
 				 this->metroTabPageSettings->ResumeLayout(false);
 				 this->metroTabPageSettings->PerformLayout();
-				 this->tableLayoutPanelProgrammSettings->ResumeLayout(false);
-				 this->tableLayoutPanelProgrammSettings->PerformLayout();
+				 this->tableLayoutPanel10->ResumeLayout(false);
+				 this->groupBox1->ResumeLayout(false);
 				 this->tableLayoutPanel12->ResumeLayout(false);
 				 this->tableLayoutPanel12->PerformLayout();
+				 this->tableLayoutPaneWaitTime->ResumeLayout(false);
+				 this->tableLayoutPaneWaitTime->PerformLayout();
 				 this->metroTabPageThresholds->ResumeLayout(false);
 				 this->metroTabPageThresholds->PerformLayout();
+				 this->tableLayoutPanel13->ResumeLayout(false);
+				 this->groupBox3->ResumeLayout(false);
+				 this->tableLayoutPanel14->ResumeLayout(false);
+				 this->tableLayoutPanel14->PerformLayout();
+				 this->groupBox2->ResumeLayout(false);
+				 this->groupBox2->PerformLayout();
 				 this->tableLayoutPanelUsageThresholds->ResumeLayout(false);
 				 this->tableLayoutPanelUsageThresholds->PerformLayout();
 				 this->metroTabPageExcpProcess->ResumeLayout(false);
+				 this->metroTabPageExcpProcess->PerformLayout();
 				 this->tableLayoutPanel5->ResumeLayout(false);
+				 this->tableLayoutPanel5->PerformLayout();
 				 this->tableLayoutPanel6->ResumeLayout(false);
 				 this->tableLayoutPanel7->ResumeLayout(false);
 				 this->tableLayoutPanel8->ResumeLayout(false);
 				 this->tableLayoutPanel8->PerformLayout();
 				 this->metroTabPageAdvSettings->ResumeLayout(false);
+				 this->tableLayoutPanel2->ResumeLayout(false);
+				 this->tableLayoutPanel2->PerformLayout();
+				 this->tableLayoutPanel3->ResumeLayout(false);
+				 this->tableLayoutPanel3->PerformLayout();
 				 this->tableLayoutPanel11->ResumeLayout(false);
 				 this->tableLayoutPanel11->PerformLayout();
 				 this->metroTabPageAbout->ResumeLayout(false);
@@ -1458,12 +1892,26 @@ namespace StandBye {
 			 }
 #pragma endregion
 	private:
-		//Main
+		//Form Events
 		System::Void MetroSettingsForm_Load(System::Object^  sender, System::EventArgs^  e);
+		void OnVisibleChanged(System::Object ^sender, System::EventArgs ^e);
+		void OnClosing(System::Object ^sender, System::ComponentModel::CancelEventArgs ^e);
+
+		//Main Page
+		System::Void metroTilePresMode_Click(System::Object^  sender, System::EventArgs^  e);
+		void OnMetroTileMouseEnter(System::Object ^sender, System::EventArgs ^e);
+		void OnMetroTileMouseLeave(System::Object ^sender, System::EventArgs ^e);
+		void OnTextBoxMouseEnter(System::Object ^sender, System::EventArgs ^e);
+		void OnTextBoxMouseLeave(System::Object ^sender, System::EventArgs ^e);
+		System::Void metroTileAbout_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroTileProcesses_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroTileSettings_Click(System::Object^  sender, System::EventArgs^  e);
+
+		//Thresholds
 		System::Void metroTrackBarRAM_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e);
 		System::Void metroTrackBarCPU_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e);
-		System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e);
-		System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroTrackBarHDD_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e);
+		System::Void metroTrackBarNET_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e);
 
 		//Processes
 		System::Void metroButtonAddFromFile_Click(System::Object^  sender, System::EventArgs^  e);
@@ -1471,36 +1919,33 @@ namespace StandBye {
 		System::Void metroButtonRemove_Click(System::Object^  sender, System::EventArgs^  e);
 		System::Void listViewProc_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
 		System::Void metroToggleView_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
-		System::Void metroToggleOnTop_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
-		System::Void metroTogglePresMode_CheckedChanged(System::Object^, System::EventArgs^);
 		void refreshIcons();
 
-		//Settings
-		System::Void metroToggleAutoStart_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
-		void writeSettings();
+		System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e);
 
-		//Timer
+		//Advanced Settings
+		System::Void metroToggleAutoStart_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+		void LanguageIndexChanged(System::Object ^sender, System::EventArgs ^e);
+		void switchLanguage();
+
+		//About
+		System::Void openGithubOnClick(System::Object^  sender, System::EventArgs^  e);
+		System::Void OpenHomepageOnClick(System::Object^  sender, System::EventArgs^  e);
+
+		//Background
+		void changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double SettingsValue, double readValue);
+		void ShowPresModeStatus();
 		System::Void timerUIRefresh_Tick(System::Object^  sender, System::EventArgs^  e);
 		void forceRefreshUI();
 
-		//Others
-		System::Void metroTileHomepage_Click(System::Object^  sender, System::EventArgs^  e);
-		System::Void metroTileGithub_Click(System::Object^  sender, System::EventArgs^  e);
-		System::Void metroLinkHomepage_Click(System::Object^  sender, System::EventArgs^  e);
-		void changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double SettingsValue, double readValue);
-
 		//Formatters
-		double getTextBoxValueAsDouble(MetroFramework::Controls::MetroTextBox^ box);
-		void setTextBoxValue(MetroFramework::Controls::MetroTextBox^ box, double value);
+		double getTextAsDouble(String^ text);
+		String^ FormatDigits(double value);
 		System::Void ReformatTextBoxValueOnReturn(System::Object ^, System::Windows::Forms::KeyEventArgs ^);
 
-		//Events
-		void OnVisibleChanged(System::Object ^sender, System::EventArgs ^e);
-		void OnClosing(System::Object ^sender, System::ComponentModel::CancelEventArgs ^e);
-		void OnKeyDown(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e);
-
-		//Switching Language
-		void switchLanguage();
-		void LanguageIndexChanged(System::Object ^sender, System::EventArgs ^e);
+		//Data
+		void writeSettings();
+		void loadSettings();
 	};
 }

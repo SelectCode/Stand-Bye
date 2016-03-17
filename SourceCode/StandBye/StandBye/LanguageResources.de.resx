@@ -162,7 +162,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 And all the persons, who have supported us during the development: our families, friends and girlfriends.</value>
   </data>
   <data name="activate_pres_mode" xml:space="preserve">
-    <value>Präsentationsmodus aktivieren</value>
+    <value>Präsentationsmodus</value>
   </data>
   <data name="add_process_file" xml:space="preserve">
     <value>Prozess aus Datei hinzufügen</value>
@@ -197,7 +197,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Abbrechen</value>
   </data>
   <data name="cancel_on_sound" xml:space="preserve">
-    <value>Standby abbrechen wenn Sound abgespielt wird</value>
+    <value>Kein Standby bei Sound</value>
   </data>
   <data name="context_debug" xml:space="preserve">
     <value>&amp;Entwickler-Modus</value>
@@ -220,6 +220,21 @@ And all the persons, who have supported us during the development: our families,
   <data name="excp_process" xml:space="preserve">
     <value>Ausnahmeprozesse</value>
   </data>
+  <data name="expl_CPU" xml:space="preserve">
+    <value>z.B. Video Bearbeitung</value>
+  </data>
+  <data name="expl_HDD" xml:space="preserve">
+    <value>z.B. Backups</value>
+  </data>
+  <data name="expl_NET" xml:space="preserve">
+    <value>z.B. Downloads</value>
+  </data>
+  <data name="expl_RAM" xml:space="preserve">
+    <value>z.B. große Projekte</value>
+  </data>
+  <data name="general" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
   <data name="general_settings" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
@@ -241,7 +256,7 @@ And all the persons, who have supported us during the development: our families,
   <data name="msg_presMode_activated" xml:space="preserve">
     <value>Der Präsentationsmodus wurde aktiviert!</value>
   </data>
-  <data name="msg_presMode_deactivatmsg_presMode_deactivaed" xml:space="preserve">
+  <data name="msg_presMode_deactivated" xml:space="preserve">
     <value>Der Präsentationsmodus wurde beendet!</value>
   </data>
   <data name="msg_welcome" xml:space="preserve">
@@ -264,9 +279,6 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="search_updates" xml:space="preserve">
     <value>Suche nach Updates</value>
-  </data>
-  <data name="settings" xml:space="preserve">
-    <value>Einstellungen</value>
   </data>
   <data name="show_details" xml:space="preserve">
     <value>Details</value>

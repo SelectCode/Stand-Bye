@@ -163,7 +163,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 And all the persons, who have supported us during the development: our families, friends and girlfriends.</value>
   </data>
   <data name="activate_pres_mode" xml:space="preserve">
-    <value>Activate Presentation-Mode</value>
+    <value>Presentation-Mode</value>
     <comment>-</comment>
   </data>
   <data name="add_process_file" xml:space="preserve">
@@ -209,7 +209,7 @@ And all the persons, who have supported us during the development: our families,
     <comment>-</comment>
   </data>
   <data name="cancel_on_sound" xml:space="preserve">
-    <value>Cancel Standby while Sound is playing</value>
+    <value>Cancel on Sound</value>
     <comment>-</comment>
   </data>
   <data name="context_debug" xml:space="preserve">
@@ -237,6 +237,22 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="excp_process" xml:space="preserve">
     <value>Exception Processes</value>
+    <comment>-</comment>
+  </data>
+  <data name="expl_CPU" xml:space="preserve">
+    <value>f.ex. Video Rendering, Games, </value>
+  </data>
+  <data name="expl_HDD" xml:space="preserve">
+    <value>f.ex. copy processes, backups</value>
+  </data>
+  <data name="expl_NET" xml:space="preserve">
+    <value />
+  </data>
+  <data name="expl_RAM" xml:space="preserve">
+    <value>f.ex. large opened project files</value>
+  </data>
+  <data name="general" xml:space="preserve">
+    <value>General</value>
     <comment>-</comment>
   </data>
   <data name="general_settings" xml:space="preserve">
@@ -292,10 +308,6 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="search_updates" xml:space="preserve">
     <value>Search for Updates:</value>
-    <comment>-</comment>
-  </data>
-  <data name="settings" xml:space="preserve">
-    <value>Settings</value>
     <comment>-</comment>
   </data>
   <data name="show_details" xml:space="preserve">
