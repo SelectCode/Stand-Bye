@@ -249,21 +249,8 @@ NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	return trayicon;
 }
 
-void mainApplication::OnThreadException(System::Object ^, System::Threading::ThreadExceptionEventArgs ^e) {
-	LOG(e->Exception->Message + "\n" +
-		e->Exception->Data + "\n" +
-		e->Exception->StackTrace + "\n" +
-		e->Exception->HelpLink);
-}
-
 mainApplication::mainApplication(HINSTANCE hInstance) {
 	LOG("Stand-Bye is starting!");
-
-	SystemAccess::MultiUsersPreventStandby();
-
-	//Sets Exception Modes
-	Application::ThreadException += gcnew System::Threading::ThreadExceptionEventHandler(this, &mainApplication::OnThreadException);
-	Application::SetUnhandledExceptionMode(UnhandledExceptionMode::CatchException);
 
 	//Loads Languages
 	supportedLanguages = gcnew List<CultureInfo^>();

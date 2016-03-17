@@ -49,6 +49,10 @@ private:
 
 public:
 	mainApplication(HINSTANCE hInstance);
+	~mainApplication()
+	{
+		delete settingsForm, input_monitor, system_watcher, system_access, settings_provider;
+	}
 	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
 	void CheckUsage();
 	void OpenSettingsForm();
@@ -62,7 +66,6 @@ private:
 	void OpenSettings(Object^, System::EventArgs^);
 	void SetPresentationMode(Object^, System::EventArgs^);
 	ContextMenu^ GetContextMenu();
-	void OnThreadException(System::Object^ sender, System::Threading::ThreadExceptionEventArgs^ args);
 	void OnIconMouseClick(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e);
 	void OpenDebugForm(System::Object ^sender, System::EventArgs ^e);
 	void CheckForUpdatesOnStartUp();
