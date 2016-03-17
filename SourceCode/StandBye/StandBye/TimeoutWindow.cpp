@@ -39,22 +39,18 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 	int past_millis = Environment::TickCount - startTime;
 
 	//If user shows activity the standby can be canceled
-	if (SystemAccess::GetLastInputTime() < settings_provider->getThreshold(SettingName::WAIT_TIME)) {
+	if (SystemAccess::GetLastInputTime() < settings_provider->getThreshold(SettingName::WAIT_TIME) || (past_millis > delay)) {
 		this->DialogResult = Windows::Forms::DialogResult::Cancel;
 		this->Close();
+		return;
 	}
-
-	if (past_millis < delay) {
+	else {
 		metroButtonCancel->Text = "Cancel [" + Math::Truncate((delay - past_millis) / 1000).ToString() + "]";
 		this->metroLabelTime->Text = String::Format("{0:0.00}s", (double)(delay - past_millis) / 1000);
 		metroProgressBar1->Value = 100 - (int)Math::Truncate(((double)past_millis / (double)delay) * 100);
 		counter++;
 		this->BringToFront();
 		this->Activate();
-	}
-	else {
-		this->DialogResult = Windows::Forms::DialogResult::OK;
-		this->Close();
 	}
 }
 System::Void TimeoutWindow::metroButtonOK_Click(System::Object^, System::EventArgs^) {
