@@ -43,9 +43,6 @@ namespace BasicFunc {
 	///<summary>Logs an specified statement or event.</summary>
 	void Log(System::String^ text);
 
-	///<summary>Checks if string only contains numerique characters</summary>
-	bool isNumerique(std::string text);
-
-	///<summary>Checks if string only contains numerique characters</summary>
-	bool isNumerique(System::String^ text);
+	///<summary>Opens website in new tab</summary>
+	void openLink(std::string url);
 }

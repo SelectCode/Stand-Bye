@@ -105,15 +105,9 @@ void BasicFunc::Log(System::String^ text)
 	}
 }
 
-bool BasicFunc::isNumerique(std::string text)
+void BasicFunc::openLink(std::string url)
 {
-	char* p;
-	strtol(text.c_str(), &p, 10);
-	return *p == 0;
-}
-bool BasicFunc::isNumerique(System::String ^ text)
-{
-	return isNumerique(BasicFunc::StringToString(text));
+	ShellExecute(0, 0, (LPCTSTR)url.c_str(), 0, 0, SW_SHOW);
 }
 
 void BasicFunc::Log(std::string text)
