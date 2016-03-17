@@ -75,13 +75,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>StandBye</TargetName>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -94,6 +93,7 @@
     <Link />
     <Link>
       <AdditionalDependencies>Wtsapi32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -104,6 +104,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,7 +123,13 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Wtsapi32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WtsApi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EnableUAC>false</EnableUAC>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <LinkStatus>true</LinkStatus>
+      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <SetChecksum>true</SetChecksum>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,6 +139,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -203,19 +211,10 @@
     <Reference Include="System.Configuration.Install">
       <Private>true</Private>
     </Reference>
-    <Reference Include="System.Data">
-      <Private>true</Private>
-    </Reference>
     <Reference Include="System.Drawing">
       <Private>true</Private>
     </Reference>
-    <Reference Include="System.Management">
-      <Private>true</Private>
-    </Reference>
     <Reference Include="System.Windows.Forms">
-      <Private>true</Private>
-    </Reference>
-    <Reference Include="System.Xml">
       <Private>true</Private>
     </Reference>
   </ItemGroup>
@@ -255,7 +254,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="D:\Florian\Dokumente\#Wettbewerbe\JugendForscht\JugendForscht 2016\Öffentlichkeitsarbeit\Design\Bilder\Icons\ico\icon1.ico" />
-    <Image Include="D:\Florian\Dokumente\#Wettbewerbe\JugendForscht\JugendForscht 2016\Öffentlichkeitsarbeit\Design\Bilder\Icons\png\icon 400x400.png" />
+    <Image Include="Resources\checked.png" />
+    <Image Include="Resources\cross.png" />
+    <Image Include="Resources\icon 400x400.png" />
+    <Image Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

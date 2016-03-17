@@ -138,7 +138,16 @@
     <Image Include="D:\Florian\Dokumente\#Wettbewerbe\JugendForscht\JugendForscht 2016\Öffentlichkeitsarbeit\Design\Bilder\Icons\ico\icon1.ico">
       <Filter>Ressourcendateien</Filter>
     </Image>
-    <Image Include="D:\Florian\Dokumente\#Wettbewerbe\JugendForscht\JugendForscht 2016\Öffentlichkeitsarbeit\Design\Bilder\Icons\png\icon 400x400.png">
+    <Image Include="Resources\info.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\icon 400x400.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\checked.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\cross.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>
