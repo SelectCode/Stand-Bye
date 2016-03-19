@@ -1,10 +1,20 @@
 # Changelog:
 
 ## v x
- * Added explanation labels for all settings
- * new set up of GUI
- * Added option to start standby at specified time
- * Stand-Bye activates auto-starts on first-launch
+ * New GUI setup:
+	* MetroTiles on Start
+	* New metroTile that shows the cancel-status
+	* New options:
+		* Enable / disable logging
+		* Specify standby mode
+		* Added option to start standby at specified time
+	* Deleted "onTop" Setting (not necassary)
+ * Auto-Start activating on first launch
+ * Reduced memory consumption (delayed loading of components)
+ * Reduced CPU consumption
+ * Reduced size of executable
+ * Re-structered code
+ 
 
 
 ## v0.5.7
