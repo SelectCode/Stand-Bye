@@ -1,9 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: InputMonitor.cpp
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -11,59 +10,34 @@
 //////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "InputMonitor.h"
-
-#include "standbye_main.h" //Is needed here to prevent cross including
-
-#define TO_MILLISECONDS(X) ((X) * 1000)
+#include "mainApplication.h" //Is needed here to prevent cross including
 
 InputMonitor::InputMonitor(mainApplication^ parent, SettingsProvider* s) {
-	aborted = false;
 	this->parent = parent;
 	settings_provider = s;
-	Start();
+	monTimer = gcnew System::Windows::Forms::Timer();
+	monTimer->Tick += gcnew System::EventHandler(this, &InputMonitor::Monitor);
+	monTimer->Interval = 500;
+	monTimer->Start();
 }
 
 InputMonitor::~InputMonitor()
 {
 	Stop();
-	delete thread_start, watcher, settings_provider;
-}
-
-void InputMonitor::Monitor() {
-	while (aborted == false) {
-		if (SystemAccess::GetLastInputTime() > wait_time) {
-			LOG("Wait Time is over!");
-			parent->CheckUsage();
-		}
-		//Sleep only 10 milliseconds at once to handle to Close() Event
-		for (int x = 0; x < wait_time; x = x + 10) {
-			watcher->Sleep(10);
-			if (aborted) {
-				return;
-			}
-		}
-	}
-};
-
-void InputMonitor::Reset() {
-	Stop();
-	Start();
+	delete monTimer;
 }
 
 void InputMonitor::Stop()
 {
-	aborted = true;
-	watcher->Join();
-	aborted = false;
-	LOG("Stopped InputMonitor!");
+	monTimer->Stop();
 }
 
-void InputMonitor::Start() {
-	LOG("InputMonitor starting");
-	wait_time = TO_MILLISECONDS(settings_provider->getThreshold(SettingName::WAIT_TIME));
-	thread_start = gcnew ThreadStart(this, &InputMonitor::Monitor);
-	watcher = gcnew Thread(thread_start);
-	watcher->IsBackground = true;
-	watcher->Name = "INPUT_MON";
-	watcher->Start();
+void InputMonitor::Monitor(System::Object ^, System::EventArgs ^)
+{
+	if (SystemAccess::GetLastInputTime() > settings_provider->getThreshold(SettingName::WAIT_TIME) * 1000) {
+		LOG("Wait Time is over!");
+		this->Stop();
+		parent->checkSystemAndStandby();
+		monTimer->Start();
+	}
 }

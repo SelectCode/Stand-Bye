@@ -1,9 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: InputMonitor.h
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -18,21 +17,15 @@ ref class mainApplication;
 
 public  ref class InputMonitor {
 private:
-	int wait_time;
-	bool aborted;
 	mainApplication^ parent;
-	ThreadStart^ thread_start;
-	Thread^ watcher;
+	System::Windows::Forms::Timer^ monTimer;
 	SettingsProvider* settings_provider;
 
 public:
 	InputMonitor(mainApplication^ parent, SettingsProvider* s);
 	~InputMonitor();
-
-	void Reset();
 	void Stop();
-	void Start();
 
 private:
-	void Monitor();
+	void Monitor(System::Object ^sender, System::EventArgs ^e);
 };

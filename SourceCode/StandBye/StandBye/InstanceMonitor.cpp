@@ -1,19 +1,17 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: InstanceMonitor.cpp
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
 */
 //////////////////////////////////////////////////////////////////////////
 #include "InstanceMonitor.h"
-#include "standbye_main.h"
+#include "mainApplication.h"
 //#define WM_REQUEST_OPEN_SETTINGS (WM_USER+1)
 #define FILENAME "standBye.tmp"
-using namespace System::Diagnostics;
 using namespace System::IO;
 
 InstanceMonitor::InstanceMonitor(mainApplication ^ parent)
@@ -37,11 +35,10 @@ InstanceMonitor::InstanceMonitor(mainApplication ^ parent)
 		deleteFile();
 
 		//Starts monitor Thread
-		monThread = gcnew Thread(gcnew ThreadStart(this, &InstanceMonitor::monitor));
-		monThread->IsBackground = true;
-		monThread->Priority = ThreadPriority::Normal;
-		monThread->Name = "INST_MON";
-		monThread->Start();
+		monTimer = gcnew System::Windows::Forms::Timer();
+		monTimer->Tick += gcnew System::EventHandler(this, &InstanceMonitor::monitor);
+		monTimer->Interval = 1000;
+		monTimer->Start();
 	}
 	else {
 		LOG("Another Instance of Stand-Bye! is running!");
@@ -51,23 +48,18 @@ InstanceMonitor::InstanceMonitor(mainApplication ^ parent)
 	}
 }
 
-void InstanceMonitor::monitor()
+void InstanceMonitor::monitor(System::Object^, System::EventArgs^)
 {
-	while (exit == false) {
-		if (!File::Exists(path)) {
-			System::Threading::Thread::Sleep(50);
+	if (File::Exists(path)) {
+		try {
+			mApplication->OpenSettingsForm();
+			LOG("TEMP File existed --> Opend Settingsform");
 		}
-		else {
-			try {
-				mApplication->OpenSettingsForm();
-				LOG("TEMP File existed --> Opend Settingsform");
-			}
-			catch (Exception^ e) {
-				LOG("Could not open Settingsform!");
-				LOG(e->Message);
-			}
-			deleteFile();
+		catch (Exception^ e) {
+			LOG("Could not open Settingsform!");
+			LOG(e->Message);
 		}
+		deleteFile();
 	}
 }
 void InstanceMonitor::writeFile()
@@ -96,8 +88,7 @@ bool InstanceMonitor::isAnotherInstanceRunning()
 void InstanceMonitor::Destroy()
 {
 	ReleaseMutex(hMutex);
-	exit = true;
-	monThread->Join();
+	monTimer->Stop();
 	deleteFile();
 	LOG("Detroyed Instance Monitor!");
 }
