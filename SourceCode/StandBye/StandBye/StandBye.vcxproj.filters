@@ -51,9 +51,6 @@
     <ClCompile Include="SettingsProvider.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="standbye_main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="SystemAccess.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -67,6 +64,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="SystemTimeMonitor.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="mainApplication.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="winMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,9 +104,6 @@
     <ClInclude Include="Setting.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="standbye_main.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="TimeoutWindow.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -128,6 +128,12 @@
     <ClInclude Include="SystemTimeMonitor.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="mainApplication.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="winMain.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="StandBye.rc">
@@ -141,13 +147,19 @@
     <Image Include="Resources\info.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
-    <Image Include="Resources\icon 400x400.png">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
     <Image Include="Resources\checked.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
     <Image Include="Resources\cross.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\icon 128x128.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\circle_checked.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="Resources\circle_unchecked.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>

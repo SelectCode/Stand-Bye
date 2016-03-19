@@ -1,9 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: stdafx.h
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -17,7 +16,7 @@
 
 //APP VALUES
 #define APP_NAME "Stand-Bye!"
-#define APP_VERSION "0.6.1"
+#define APP_VERSION "0.6.2"
 #define PORTABLE_VERSION false
 
 //////////////////////////////////////////////////////////////////////////

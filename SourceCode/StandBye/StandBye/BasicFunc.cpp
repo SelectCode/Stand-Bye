@@ -1,9 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: BasicFunc.cpp
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -74,11 +73,11 @@ System::String ^ BasicFunc::getLogFilePath()
 
 void BasicFunc::Log(System::String^ text)
 {
-	//Prints message on Debug-Console
-	System::Diagnostics::Debug::WriteLine(text);
-
 	using namespace System::IO;
 	using namespace System::Diagnostics;
+
+	//Prints message on Debug-Console
+	System::Diagnostics::Debug::WriteLine(text);
 
 	//Line
 	String^ line = DateTime::Now.ToString("HH:mm:ss:FFF") + "\t" + text;
@@ -97,6 +96,11 @@ void BasicFunc::Log(System::String^ text)
 	//Appends Text
 	try {
 		sw->WriteLine(line);
+	}
+	catch (Exception^ e) {
+		System::Diagnostics::Debug::WriteLine(e->Message);
+		System::Diagnostics::Debug::WriteLine(e->StackTrace);
+		return;
 	}
 	finally
 	{

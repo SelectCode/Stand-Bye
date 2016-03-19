@@ -1,14 +1,14 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: AverageBuffer.h
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Matthias Weirich
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
 */
 //////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #define lock(X, B) System::Threading::Monitor::Enter(X, B)
 #define ulock(X)if(System::Threading::Monitor::IsEntered(X)) System::Threading::Monitor::Exit(X)
