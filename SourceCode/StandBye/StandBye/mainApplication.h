@@ -19,6 +19,7 @@
 #include "InstanceMonitor.h"
 #include "MetroSettingsForm.h"
 #include "Updater.h"
+#include "HotKeyMessageFilter.h"
 
 using namespace StandBye;
 using System::Resources::ResourceManager;
@@ -74,6 +75,9 @@ public:
 	void setPresentationMode(bool value);
 	void askUserAndStartStandby();
 	bool hasUserExited();
+
+	//Hotkey
+	void registerPresentationModeHotkey();
 
 private:
 	//Context Menu

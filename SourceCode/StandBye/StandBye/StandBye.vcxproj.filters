@@ -72,6 +72,9 @@
     <ClCompile Include="winMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="HotKeyMessageFilter.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AverageBuffer.h">
@@ -132,6 +135,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="winMain.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="HotKeyMessageFilter.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

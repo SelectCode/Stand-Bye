@@ -162,6 +162,7 @@
     <ClInclude Include="ProcessSelectionForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="HotKeyMessageFilter.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="mainApplication.h" />
     <ClInclude Include="SystemTimeMonitor.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="MetroSettingsForm.cpp" />
     <ClCompile Include="ProcessItem.cpp" />
     <ClCompile Include="ProcessSelectionForm.cpp" />
+    <ClCompile Include="HotKeyMessageFilter.cpp" />
     <ClCompile Include="setting.cpp" />
     <ClCompile Include="SettingsProvider.cpp" />
     <ClCompile Include="mainApplication.cpp" />

@@ -328,6 +328,9 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 		UpdateThread->IsBackground = true;
 		UpdateThread->Start();
 
+		//Registers Hotkey
+		this->registerPresentationModeHotkey();
+
 		//Disable Windows intern standby
 		SystemAccess::DisableWindowsStandBy();
 
@@ -406,6 +409,22 @@ void mainApplication::OnIconBalloonTipClicked(System::Object ^, System::EventArg
 void mainApplication::ShowBallonTipMessage(System::String ^ text)
 {
 	if (settings_provider->isActive(SettingName::SHOW_MESSAGES)) {
-		trayicon->ShowBalloonTip(1000, "Stand-Bye!", text, System::Windows::Forms::ToolTipIcon::Info);
+		trayicon->ShowBalloonTip(500, "Stand-Bye!", text, System::Windows::Forms::ToolTipIcon::Info);
+	}
+}
+
+void mainApplication::registerPresentationModeHotkey() {
+	//If the Hotkey is successfully registered, add a message filter
+	// MOD_ALT and MOD_CONTROL mean that alt and ctrl have to be pressed
+	// MOD_NOREPEAT avoids multiple messages from one keystroke
+	//0x50 is the virtual keycode for the key P
+	if (RegisterHotKey(NULL, GlobalAddAtom("stand-bye\0"), (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT), 0x50)) {
+		LOG("Hotkey registered, adding MSG Filter");
+
+		//Generate a new Message filter, add it to the thread
+		Application::AddMessageFilter(gcnew HotKeyMessageFilter(this));
+	}
+	else {
+		LOG("Failed to register hotkey. Error: " + GetLastError());
 	}
 }
