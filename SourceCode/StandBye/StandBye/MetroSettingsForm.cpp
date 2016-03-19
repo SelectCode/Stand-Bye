@@ -1,9 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 /*!
- * STAND_BYE! SOURCE CODE
+ * STAND-BYE! SOURCE CODE
  * ----------------------------------------------------------------------
- * for more information see: http://www.stand-bye.de
- * FILE: MetroSettingsForm.cpp
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
  * Author: Florian Baader
  * Contact: contact@stand-bye.de
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
@@ -11,15 +10,17 @@
 //////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "MetroSettingsForm.h"
-#include "standbye_main.h"
+#include "mainApplication.h"
 using namespace StandBye;
-
 System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::EventArgs^) {
-	//KeyPreview
-	this->KeyPreview = true;
+	//Prepares Form
+	this->PrepareForm();
+}
 
+void StandBye::MetroSettingsForm::PrepareForm()
+{
 	//Focus on first tabPage
-	metroTabControl1->SelectedTab = metroTabPageSettings;
+	metroTabControlMain->SelectedTab = metroTabPageSettings;
 
 	//Loads Resource Manager
 	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
@@ -35,7 +36,7 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 	if ((bool)PORTABLE_VERSION) {
 		versionText += " PORTABLE";
 	}
-	versionText += "\n" + "© Florian Baader, Stephan Le, Matthias Weirich";
+	versionText += "\n" + "Â© Florian Baader, Stephan Le, Matthias Weirich";
 	metroLabelVersion->Text = versionText;
 
 	//Select Language
@@ -51,12 +52,6 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 
 	//Activate
 	this->Activate();
-}
-
-void StandBye::MetroSettingsForm::OnClosing(System::Object ^, System::ComponentModel::CancelEventArgs ^e)
-{
-	e->Cancel = true; //Form should not be closed, but only hidden
-	this->Hide();
 }
 
 double StandBye::MetroSettingsForm::getTextAsDouble(String^ text) {
@@ -96,7 +91,6 @@ void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::Met
 		label->BackColor = lightRed;
 	}
 }
-
 System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::EventArgs^) {
 	float curCPU, curRAM, curHDD, curNET;
 	//gets current system Usage
@@ -122,19 +116,30 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	metroToolTip1->SetToolTip(metroLabelCurRAM, String::Format("Now: {0:00.00} % ", system_access->GetMetric(SystemAccess::SystemMetric::RAM)));
 	metroToolTip1->SetToolTip(metroLabelCurHDD, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::HDD) / 1000));
 	metroToolTip1->SetToolTip(metroLabelCurNET, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::NETWORK) / 1000));
+
+	//Sets icon of status tile
+	if (parent->isSystemBusy()) {
+		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_CHECKED");
+	}
+	else {
+		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_UNCHECKED");
+	}
+
+	//Update
+	this->Update();
 }
 System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
 	LOG("SettingsForm: OK Button Clicked");
 	//disables Form;
 	this->Visible = false;
 	writeSettings();
-	input_monitor->Reset();
 	LOG("Settingsform closing");
+	this->Close();
 }
 System::Void MetroSettingsForm::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	LOG("SettingsForm: CANCEL Button Clicked");
-	this->Visible = false;
 	LOG("Settingsform closing");
+	this->Close();
 }
 System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, System::EventArgs^) {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
@@ -317,26 +322,14 @@ System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sen
 }
 
 void MetroSettingsForm::forceRefreshUI() {
-	timerUIRefresh_Tick(gcnew System::Object, gcnew System::EventArgs);
-}
-
-void StandBye::MetroSettingsForm::OnVisibleChanged(System::Object ^, System::EventArgs ^)
-{
-	if (this->Visible) {
-		MetroSettingsForm_Load(nullptr, nullptr);
-		timerRefresh->Start();
-		forceRefreshUI();
-	}
-	else {
-		timerRefresh->Stop();
-	}
+	timerUIRefresh_Tick(nullptr, nullptr);
 }
 void StandBye::MetroSettingsForm::switchLanguage()
 {
 	//Culture
 	CultureInfo^ cul = CultureInfo::DefaultThreadCurrentCulture;
 
-	metroButtonOK->Text = res_man->GetString("ok", cul);
+	metroButtonOK->Text = res_man->GetString("save", cul);
 	metroButtonCancel->Text = res_man->GetString("cancel", cul);
 
 	//Tab Pages
@@ -344,6 +337,7 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroTabPageExcpProcess->Text = res_man->GetString("excp_process", cul);
 	metroTabPageAdvSettings->Text = res_man->GetString("adv_settings", cul);
 	metroTabPageAbout->Text = res_man->GetString("about", cul);
+	metroTabPageThresholds->Text = res_man->GetString("thresholds", cul);
 
 	//General
 	metroLabelTextWaitTime->Text = res_man->GetString("wait_time", cul);
@@ -357,38 +351,33 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextNET->Text = res_man->GetString("net_threshold", cul);
 	metroLabelTextAverageUsage->Text = res_man->GetString("avg_usage", cul);
 
+	//Processes
 	metroButtonAddFromFile->Text = res_man->GetString("add_process_file", cul);
 	metroButtonAddFromList->Text = res_man->GetString("add_process_running", cul);
 	metroLabelView->Text = res_man->GetString("show_details", cul);
 	metroButtonRemove->Text = res_man->GetString("remove_process", cul);
+
+	//Advanced Settings
 	metroLabelTextAutoStart->Text = res_man->GetString("autostart", cul);
 	metroLabelTextUpdates->Text = res_man->GetString("search_updates", cul);
 	metroLabelTextMessages->Text = res_man->GetString("show_messages", cul);
 	metroLabelTextLanguage->Text = res_man->GetString("language", cul);
+
+	//About
+	metroLabelTextAbout->Text = res_man->GetString("about_text", cul);
 	metroTileHomepage->Text = res_man->GetString("visit_homepage", cul);
 	metroTileGithub->Text = res_man->GetString("visit_github", cul);
-	metroLabelTextAbout->Text = res_man->GetString("about_text", cul);
-	metroTabPageThresholds->Text = res_man->GetString("thresholds", cul);
 
 	//Info
-	if (true)
-	{
-		infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
-		infoThresholds->Text = res_man->GetString("info_thresholds", cul);
-		infoGeneral->Text = res_man->GetString("info_general", cul);
+	infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
+	infoThresholds->Text = res_man->GetString("info_thresholds", cul);
+	infoGeneral->Text = res_man->GetString("info_general", cul);
 
-		//Explanations
-
-		explCPU->Text = res_man->GetString("expl_CPU", cul);
-		explRAM->Text = res_man->GetString("expl_RAM", cul);
-		explHDD->Text = res_man->GetString("expl_HDD", cul);
-		explNET->Text = res_man->GetString("expl_NET", cul);
-	}
-	else {
-		infoExcpProcesses->Text = "";
-		infoThresholds->Text = "";
-		infoGeneral->Text = "";
-	}
+	//Explanations
+	explCPU->Text = res_man->GetString("expl_CPU", cul);
+	explRAM->Text = res_man->GetString("expl_RAM", cul);
+	explHDD->Text = res_man->GetString("expl_HDD", cul);
+	explNET->Text = res_man->GetString("expl_NET", cul);
 
 	//Sets preferred Sizes
 	for each(Windows::Forms::Control^ control in this->Controls) {
@@ -416,8 +405,11 @@ void StandBye::MetroSettingsForm::LanguageIndexChanged(System::Object ^, System:
 
 System::Void StandBye::MetroSettingsForm::metroTilePresMode_Click(System::Object^, System::EventArgs^)
 {
-	ShowPresModeStatus();
 	parent->setPresentationMode(!parent->isInPresentationMode());
+	//Change Label of Tile
+	ShowPresModeStatus();
+	//Ensures that the canceled status is updated
+	forceRefreshUI();
 }
 
 void StandBye::MetroSettingsForm::ShowPresModeStatus()
@@ -436,10 +428,9 @@ void StandBye::MetroSettingsForm::OnMetroTileMouseEnter(System::Object ^sender, 
 	using MetroFramework::Controls::MetroTile;
 
 	MetroTile^ tile = (MetroTile^)sender;
-	//tile->Size = System::Drawing::Size(tile->Size.Height - 1, tile->Size.Width - 1);
 	tile->UseCustomBackColor = true;
 	tile->BackColor = Color::LightGray;
-	//tile->Margin = Windows::Forms::Padding(5);
+	tile->Cursor = Cursors::Hand;
 	tile->Update();
 }
 
@@ -448,8 +439,6 @@ void StandBye::MetroSettingsForm::OnMetroTileMouseLeave(System::Object ^sender, 
 	using MetroFramework::Controls::MetroTile;
 
 	MetroTile^ tile = (MetroTile^)sender;
-	//tile->Size = System::Drawing::Size(tile->Size.Height + 1, tile->Size.Width + 1);
-	//tile->Margin = Windows::Forms::Padding(5);
 	tile->UseCustomBackColor = false;
 	tile->Update();
 }
@@ -458,6 +447,7 @@ void StandBye::MetroSettingsForm::OnTextBoxMouseEnter(System::Object ^sender, Sy
 {
 	Windows::Forms::TextBox^ box = (TextBox^)sender;
 	box->BackColor = Color::LightGray;
+	box->Cursor = Cursors::IBeam;
 	box->Update();
 }
 
@@ -470,27 +460,27 @@ void StandBye::MetroSettingsForm::OnTextBoxMouseLeave(System::Object ^sender, Sy
 
 System::Void StandBye::MetroSettingsForm::metroTileAbout_Click(System::Object^, System::EventArgs^)
 {
-	metroTabControl1->SelectedTab = metroTabPageAbout;
+	metroTabControlMain->SelectedTab = metroTabPageAbout;
 }
 
 System::Void StandBye::MetroSettingsForm::metroTileProcesses_Click(System::Object^, System::EventArgs^)
 {
-	metroTabControl1->SelectedTab = metroTabPageExcpProcess;
+	metroTabControlMain->SelectedTab = metroTabPageExcpProcess;
 }
 
 System::Void StandBye::MetroSettingsForm::metroTileSettings_Click(System::Object^, System::EventArgs^)
 {
-	metroTabControl1->SelectedTab = metroTabPageThresholds;
+	metroTabControlMain->SelectedTab = metroTabPageThresholds;
 }
 
-System::Void StandBye::MetroSettingsForm::metroTrackBarHDD_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e)
+System::Void StandBye::MetroSettingsForm::metroTrackBarHDD_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^)
 {
 	if (metroLabelHDDStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarHDD->Value / 10)) {
 		metroLabelHDDStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarHDD->Value / 10);
 	}
 }
 
-System::Void StandBye::MetroSettingsForm::metroTrackBarNET_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e)
+System::Void StandBye::MetroSettingsForm::metroTrackBarNET_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^)
 {
 	if (metroLabelNETStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10)) {
 		metroLabelNETStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10);

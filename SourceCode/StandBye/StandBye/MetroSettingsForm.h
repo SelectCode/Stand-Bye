@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+/*!
+ * STAND-BYE! SOURCE CODE
+ * ----------------------------------------------------------------------
+ * for more information see: http://www.stand-bye.de or https://github.com/flobaader/Stand-Bye
+ * Author: Florian Baader
+ * Contact: contact@stand-bye.de
+ * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
+*/
+//////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "stdafx.h"
 #include "SystemMetricWatcher.h"
@@ -5,7 +16,6 @@
 #include "InputMonitor.h"
 #include "ProcessItem.h"
 #include "ProcessSelectionForm.h"
-#include "InfoBox.h"
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -44,9 +54,6 @@ namespace StandBye {
 			system_watcher = smw;
 			input_monitor = inputMon;
 
-			//temporary solution
-			this->CheckForIllegalCrossThreadCalls = false;
-
 			//Initialze Components()
 			InitializeComponent();
 
@@ -81,7 +88,6 @@ namespace StandBye {
 	protected:
 
 #pragma region Windows Form Designer generated code
-	private: MetroFramework::Controls::MetroLabel^  metroLabelTextUpdates;
 	private: MetroFramework::Components::MetroStyleExtender^  metroStyleExtender1;
 	private: MetroFramework::Components::MetroStyleManager^  metroStyleManager1;
 	private: MetroFramework::Components::MetroToolTip^  metroToolTip1;
@@ -97,10 +103,6 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroLabel^  explNET;
 	private: MetroFramework::Controls::MetroLabel^  explRAM;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel10;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelNETStatus;
-	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarHDD;
-	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarNET;
-	private: MetroFramework::Controls::MetroLabel^  metroLabelHDDStatus;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel1;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel2;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel3;
@@ -112,6 +114,8 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroLabel^  metroLabelCurHDD;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelCurNET;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelCurRAM;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelHDDStatus;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelNETStatus;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelRAMPer;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAbout;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextAutoStart;
@@ -123,11 +127,13 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextNET;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextRAM;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextSound;
+	private: MetroFramework::Controls::MetroLabel^  metroLabelTextUpdates;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelTextWaitTime;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelVersion;
 	private: MetroFramework::Controls::MetroLabel^  metroLabelView;
 	private: MetroFramework::Controls::MetroLink^  metroLinkHomepage;
-	private: MetroFramework::Controls::MetroTabControl^  metroTabControl1;
+	private: MetroFramework::Controls::MetroTabControl^  metroTabControlMain;
+
 	private: MetroFramework::Controls::MetroTabPage^  metroTabPageAbout;
 	private: MetroFramework::Controls::MetroTabPage^  metroTabPageAdvSettings;
 	private: MetroFramework::Controls::MetroTabPage^  metroTabPageExcpProcess;
@@ -136,17 +142,14 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroTextBox^  infoExcpProcesses;
 	private: MetroFramework::Controls::MetroTextBox^  infoGeneral;
 	private: MetroFramework::Controls::MetroTextBox^  infoThresholds;
-
 	private: MetroFramework::Controls::MetroTile^  metroTileAbout;
-	private: MetroFramework::Controls::MetroTile^  metroTileVisit;
-	private: MetroFramework::Controls::MetroTile^  metroTileProcesses;
-	private: MetroFramework::Controls::MetroTile^  metroTileSettings;
-
 	private: MetroFramework::Controls::MetroTile^  metroTileCanceledStatus;
-
 	private: MetroFramework::Controls::MetroTile^  metroTileGithub;
 	private: MetroFramework::Controls::MetroTile^  metroTileHomepage;
 	private: MetroFramework::Controls::MetroTile^  metroTilePresMode;
+	private: MetroFramework::Controls::MetroTile^  metroTileProcesses;
+	private: MetroFramework::Controls::MetroTile^  metroTileSettings;
+	private: MetroFramework::Controls::MetroTile^  metroTileVisit;
 	private: MetroFramework::Controls::MetroToggle^  metroToggle2;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleAutoStart;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleCPU;
@@ -158,6 +161,8 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroToggle^  metroToggleUPDATES;
 	private: MetroFramework::Controls::MetroToggle^  metroToggleView;
 	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarCPU;
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarHDD;
+	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarNET;
 	private: MetroFramework::Controls::MetroTrackBar^  metroTrackBarRAM;
 	private: System::ComponentModel::IContainer^  components;
 	private: System::Windows::Forms::ColumnHeader^  columnHeader1;
@@ -190,7 +195,7 @@ namespace StandBye {
 			 {
 				 this->components = (gcnew System::ComponentModel::Container());
 				 System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MetroSettingsForm::typeid));
-				 this->metroTabControl1 = (gcnew MetroFramework::Controls::MetroTabControl());
+				 this->metroTabControlMain = (gcnew MetroFramework::Controls::MetroTabControl());
 				 this->metroTabPageSettings = (gcnew MetroFramework::Controls::MetroTabPage());
 				 this->tableLayoutPanel10 = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->infoGeneral = (gcnew MetroFramework::Controls::MetroTextBox());
@@ -290,7 +295,7 @@ namespace StandBye {
 				 this->metroStyleManager1 = (gcnew MetroFramework::Components::MetroStyleManager(this->components));
 				 this->metroStyleExtender1 = (gcnew MetroFramework::Components::MetroStyleExtender(this->components));
 				 this->metroToolTip1 = (gcnew MetroFramework::Components::MetroToolTip());
-				 this->metroTabControl1->SuspendLayout();
+				 this->metroTabControlMain->SuspendLayout();
 				 this->metroTabPageSettings->SuspendLayout();
 				 this->tableLayoutPanel10->SuspendLayout();
 				 this->groupBox1->SuspendLayout();
@@ -318,21 +323,21 @@ namespace StandBye {
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->metroStyleManager1))->BeginInit();
 				 this->SuspendLayout();
 				 //
-				 // metroTabControl1
+				 // metroTabControlMain
 				 //
-				 this->metroTabControl1->Controls->Add(this->metroTabPageSettings);
-				 this->metroTabControl1->Controls->Add(this->metroTabPageThresholds);
-				 this->metroTabControl1->Controls->Add(this->metroTabPageExcpProcess);
-				 this->metroTabControl1->Controls->Add(this->metroTabPageAdvSettings);
-				 this->metroTabControl1->Controls->Add(this->metroTabPageAbout);
-				 this->metroTabControl1->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroTabControl1->Location = System::Drawing::Point(10, 10);
-				 this->metroTabControl1->Margin = System::Windows::Forms::Padding(10);
-				 this->metroTabControl1->Name = L"metroTabControl1";
-				 this->metroTabControl1->SelectedIndex = 0;
-				 this->metroTabControl1->Size = System::Drawing::Size(740, 350);
-				 this->metroTabControl1->TabIndex = 0;
-				 this->metroTabControl1->UseSelectable = true;
+				 this->metroTabControlMain->Controls->Add(this->metroTabPageSettings);
+				 this->metroTabControlMain->Controls->Add(this->metroTabPageThresholds);
+				 this->metroTabControlMain->Controls->Add(this->metroTabPageExcpProcess);
+				 this->metroTabControlMain->Controls->Add(this->metroTabPageAdvSettings);
+				 this->metroTabControlMain->Controls->Add(this->metroTabPageAbout);
+				 this->metroTabControlMain->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->metroTabControlMain->Location = System::Drawing::Point(10, 10);
+				 this->metroTabControlMain->Margin = System::Windows::Forms::Padding(10);
+				 this->metroTabControlMain->Name = L"metroTabControlMain";
+				 this->metroTabControlMain->SelectedIndex = 0;
+				 this->metroTabControlMain->Size = System::Drawing::Size(740, 350);
+				 this->metroTabControlMain->TabIndex = 0;
+				 this->metroTabControlMain->UseSelectable = true;
 				 //
 				 // metroTabPageSettings
 				 //
@@ -744,7 +749,6 @@ namespace StandBye {
 				 this->metroLabelTextSound->TabIndex = 56;
 				 this->metroLabelTextSound->Text = L"Cancel on Sound";
 				 this->metroLabelTextSound->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextSound, L"  If you like enjoying music or movies, thats a good choice.  ");
 				 //
 				 // metroLabel3
 				 //
@@ -1298,7 +1302,6 @@ namespace StandBye {
 				 //
 				 this->metroButtonAddFromFile->BackColor = System::Drawing::Color::DarkCyan;
 				 this->metroButtonAddFromFile->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroButtonAddFromFile->Highlight = true;
 				 this->metroButtonAddFromFile->Location = System::Drawing::Point(5, 5);
 				 this->metroButtonAddFromFile->Margin = System::Windows::Forms::Padding(5);
 				 this->metroButtonAddFromFile->Name = L"metroButtonAddFromFile";
@@ -1444,7 +1447,6 @@ namespace StandBye {
 				 this->metroLabel4->TabIndex = 0;
 				 this->metroLabel4->Text = L"Enable Logging:";
 				 this->metroLabel4->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-				 this->metroToolTip1->SetToolTip(this->metroLabel4, L"Starts Stand-Bye! with windows.");
 				 //
 				 // metroToggle2
 				 //
@@ -1548,7 +1550,6 @@ namespace StandBye {
 				 this->metroLabelTextUpdates->TabIndex = 6;
 				 this->metroLabelTextUpdates->Text = L"Search for Updates:";
 				 this->metroLabelTextUpdates->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextUpdates, L"  Determine if Stand-Bye! should search for updates.");
 				 //
 				 // metroToggleUPDATES
 				 //
@@ -1572,7 +1573,6 @@ namespace StandBye {
 				 this->metroLabelTextAutoStart->TabIndex = 0;
 				 this->metroLabelTextAutoStart->Text = L"Start with Windows:";
 				 this->metroLabelTextAutoStart->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextAutoStart, L"Starts Stand-Bye! with windows.");
 				 //
 				 // metroToggleAutoStart
 				 //
@@ -1597,8 +1597,6 @@ namespace StandBye {
 				 this->metroLabelTextMessages->TabIndex = 8;
 				 this->metroLabelTextMessages->Text = L"Show Messages";
 				 this->metroLabelTextMessages->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-				 this->metroToolTip1->SetToolTip(this->metroLabelTextMessages, L"    Determine if Stand-Bye! should show messages from the icon (for ex. presentat"
-					 L"ion mode enabled)");
 				 //
 				 // metroToggleMessages
 				 //
@@ -1706,7 +1704,7 @@ namespace StandBye {
 				 //
 				 this->metroLabelTextAbout->Location = System::Drawing::Point(6, 75);
 				 this->metroLabelTextAbout->Name = L"metroLabelTextAbout";
-				 this->metroLabelTextAbout->Size = System::Drawing::Size(691, 1035);
+				 this->metroLabelTextAbout->Size = System::Drawing::Size(691, 1100);
 				 this->metroLabelTextAbout->TabIndex = 1;
 				 this->metroLabelTextAbout->Text = L"About:";
 				 this->metroLabelTextAbout->WrapToLine = true;
@@ -1717,7 +1715,7 @@ namespace StandBye {
 				 this->tableLayoutPanel1->ColumnCount = 1;
 				 this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 					 100)));
-				 this->tableLayoutPanel1->Controls->Add(this->metroTabControl1, 0, 0);
+				 this->tableLayoutPanel1->Controls->Add(this->metroTabControlMain, 0, 0);
 				 this->tableLayoutPanel1->Controls->Add(this->tableLayoutPanel4, 0, 1);
 				 this->tableLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->tableLayoutPanel1->Location = System::Drawing::Point(0, 60);
@@ -1763,7 +1761,7 @@ namespace StandBye {
 				 this->metroButtonOK->Name = L"metroButtonOK";
 				 this->metroButtonOK->Size = System::Drawing::Size(134, 34);
 				 this->metroButtonOK->TabIndex = 1;
-				 this->metroButtonOK->Text = L"OK";
+				 this->metroButtonOK->Text = L"Save";
 				 this->metroButtonOK->UseSelectable = true;
 				 this->metroButtonOK->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonOK_Click);
 				 //
@@ -1789,7 +1787,7 @@ namespace StandBye {
 				 this->metroLabelVersion->Name = L"metroLabelVersion";
 				 this->metroLabelVersion->Size = System::Drawing::Size(144, 54);
 				 this->metroLabelVersion->TabIndex = 2;
-				 this->metroLabelVersion->Text = L"v0.5.2.0\n© Florian Baader, Stephan Le, Matthias Weirich";
+				 this->metroLabelVersion->Text = L"v0.5.2.0\nï¿½ Florian Baader, Stephan Le, Matthias Weirich";
 				 this->metroLabelVersion->TextAlign = System::Drawing::ContentAlignment::BottomLeft;
 				 this->metroLabelVersion->WrapToLine = true;
 				 //
@@ -1808,7 +1806,7 @@ namespace StandBye {
 				 //
 				 // timerRefresh
 				 //
-				 this->timerRefresh->Interval = 1000;
+				 this->timerRefresh->Interval = 500;
 				 this->timerRefresh->Tick += gcnew System::EventHandler(this, &MetroSettingsForm::timerUIRefresh_Tick);
 				 //
 				 // metroStyleManager1
@@ -1836,6 +1834,7 @@ namespace StandBye {
 				 this->CancelButton = this->metroButtonCancel;
 				 this->ClientSize = System::Drawing::Size(760, 490);
 				 this->Controls->Add(this->tableLayoutPanel1);
+				 this->KeyPreview = true;
 				 this->MaximizeBox = false;
 				 this->MinimizeBox = false;
 				 this->Name = L"MetroSettingsForm";
@@ -1844,10 +1843,8 @@ namespace StandBye {
 				 this->ShadowType = MetroFramework::Forms::MetroFormShadowType::DropShadow;
 				 this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
 				 this->Style = MetroFramework::MetroColorStyle::Green;
-				 this->Closing += gcnew System::ComponentModel::CancelEventHandler(this, &MetroSettingsForm::OnClosing);
 				 this->Load += gcnew System::EventHandler(this, &MetroSettingsForm::MetroSettingsForm_Load);
-				 this->VisibleChanged += gcnew System::EventHandler(this, &MetroSettingsForm::OnVisibleChanged);
-				 this->metroTabControl1->ResumeLayout(false);
+				 this->metroTabControlMain->ResumeLayout(false);
 				 this->metroTabPageSettings->ResumeLayout(false);
 				 this->metroTabPageSettings->PerformLayout();
 				 this->tableLayoutPanel10->ResumeLayout(false);
@@ -1892,10 +1889,11 @@ namespace StandBye {
 			 }
 #pragma endregion
 	private:
+		//Load Form Components
+		void PrepareForm();
+
 		//Form Events
 		System::Void MetroSettingsForm_Load(System::Object^  sender, System::EventArgs^  e);
-		void OnVisibleChanged(System::Object ^sender, System::EventArgs ^e);
-		void OnClosing(System::Object ^sender, System::ComponentModel::CancelEventArgs ^e);
 
 		//Main Page
 		System::Void metroTilePresMode_Click(System::Object^  sender, System::EventArgs^  e);
@@ -1921,6 +1919,7 @@ namespace StandBye {
 		System::Void metroToggleView_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 		void refreshIcons();
 
+		//OK & Cancel
 		System::Void metroButtonOK_Click(System::Object^  sender, System::EventArgs^  e);
 		System::Void metroButtonCancel_Click(System::Object^  sender, System::EventArgs^  e);
 
