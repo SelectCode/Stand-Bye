@@ -160,7 +160,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-And all the persons, who have supported us during the development: our families, friends and girlfriends.</value>
+And all the persons, who have supported us during the development: our families, friends and girlfriends.
+
+    
+    
+    </value>
   </data>
   <data name="activate_pres_mode" xml:space="preserve">
     <value>Presentation-Mode</value>
@@ -305,6 +309,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="remove_process" xml:space="preserve">
     <value>Remove Process</value>
     <comment>-</comment>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="search_updates" xml:space="preserve">
     <value>Search for Updates:</value>
