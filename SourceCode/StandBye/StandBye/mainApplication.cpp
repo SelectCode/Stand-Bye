@@ -24,17 +24,19 @@ NotifyIconAppContext::NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst
 }
 
 void mainApplication::OpenSettings(Object^, System::EventArgs^) {
-	LOG("Started opening SettingsForm");
+	LOG("Requested to load settingsForm");
 	if (settingsForm == nullptr) {
 		//Ensures that settingsForm != nullptr
 		settingsForm = gcnew MetroSettingsForm(this, system_watcher, settings_provider, system_access, input_monitor, supportedLanguages);
 		settingsForm->Show();
 	}
 	else if (settingsForm->IsDisposed) {
+		//Now save to ask if disposed
 		settingsForm = gcnew MetroSettingsForm(this, system_watcher, settings_provider, system_access, input_monitor, supportedLanguages);
 		settingsForm->Show();
 	}
 	else {
+		//Settings form is open
 		LOG("Did not load Form: SettingsForm was visible");
 		settingsForm->BringToFront();
 		settingsForm->Activate();
@@ -42,13 +44,12 @@ void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 }
 
 void mainApplication::Quit(Object^, System::EventArgs^) {
-	LOG("Application starts quitting...");
+	//Enables Windows standby
+	SystemAccess::EnableWindowsStandBy();
+	LOG("Re-enabled windows Standby");
 	userExited = true;
-	input_monitor->Stop();
-	LOG("Stopped InputMonitor");
-	trayicon->Visible = false;
-	LOG("ByeBye...");
-	instance_monitor->Destroy();
+	LOG("Application starts quitting...");
+	Application::ExitThread();
 }
 
 void mainApplication::ReloadContextMenu()
@@ -70,7 +71,7 @@ void mainApplication::askUserAndStartStandby()
 		return;
 	}
 
-	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15, settings_provider);
+	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15);
 	LOG("Preparing the TimeoutWindow");
 	if (msgWnd->ShowDialog() == DialogResult::OK) {
 		LOG("Going to Sleep mode!");
@@ -248,6 +249,14 @@ ContextMenu^ mainApplication::GetContextMenu() {
 	return contextMenu;
 }
 
+void mainApplication::Start()
+{
+	ApplicationContext^ context = gcnew NotifyIconAppContext(this, hinstance);
+	Application::ApplicationExit += gcnew System::EventHandler(this, &mainApplication::Quit);
+	Application::Run(context); //Synchronous
+	LOG("!!Application exited");
+}
+
 NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	using namespace System::Windows::Forms;
 	trayicon = gcnew NotifyIcon();
@@ -271,84 +280,61 @@ void mainApplication::checkSystemAndStandby()
 mainApplication::mainApplication(HINSTANCE hInstance) {
 	LOG("Stand-Bye is starting!");
 
+	this->hinstance = hInstance;
+
 	//Loads Languages
 	supportedLanguages = gcnew List<CultureInfo^>();
 	supportedLanguages->Add(CultureInfo::CreateSpecificCulture("de"));
 	supportedLanguages->Add(CultureInfo::CreateSpecificCulture("en"));
 
-	instance_monitor = gcnew InstanceMonitor(this);
+	//Loading SettingsProvider
+	settings_provider = new SettingsProvider();
+	LOG("Loaded settingsProvider");
 
-	//If another instance is running --> exit
-	if (instance_monitor->isAnotherInstanceRunning()) {
-		LOG("Application quits because of other instance");
-		userExited = true;
-	}
+	//Defines language
+	String^ loadedLanguage = gcnew String(settings_provider->getRawSetting(SettingName::LANGUAGE).c_str());
 
-	try {
-		//Loading SettingsProvider
-		settings_provider = new SettingsProvider();
-		LOG("Loaded settingsProvider");
-
-		//Defines language
-		String^ loadedLanguage = gcnew String(settings_provider->getRawSetting(SettingName::LANGUAGE).c_str());
-
-		//If language is not set, check if system language is supported
-		if (loadedLanguage == "system") {
-			bool language_found = false;
-			for each(CultureInfo^ supLanguage in supportedLanguages) {
-				if (CultureInfo::CurrentUICulture->TwoLetterISOLanguageName == supLanguage->TwoLetterISOLanguageName) {
-					loadedLanguage = supLanguage->TwoLetterISOLanguageName;
-					language_found = true;
-				}
-			}
-			if (!language_found) {
-				//loaded Language is not supported
-				loadedLanguage = "en";
+	//If language is not set, check if system language is supported
+	if (loadedLanguage == "system") {
+		bool language_found = false;
+		for each(CultureInfo^ supLanguage in supportedLanguages) {
+			if (CultureInfo::CurrentUICulture->TwoLetterISOLanguageName == supLanguage->TwoLetterISOLanguageName) {
+				loadedLanguage = supLanguage->TwoLetterISOLanguageName;
+				language_found = true;
 			}
 		}
-		res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
-		CultureInfo::DefaultThreadCurrentCulture = CultureInfo::CreateSpecificCulture(loadedLanguage);
-
-		delete loadedLanguage;
-
-		//Loading System Access
-		system_access = gcnew SystemAccess(settings_provider);
-		LOG("Loaded SystemAccess");
-
-		//Loading SystemMetricWatcher
-		system_watcher = gcnew SystemMetricWatcher(system_access, 5, 30);//Sample 10 times/second, space for 30 samples, average over 3 seconds
-		LOG("Loaded and Started SystemMetricWatcher");
-
-		//Loading Input Monitor
-		input_monitor = gcnew InputMonitor(this, settings_provider);
-		LOG("Loaded InputMonitor");
-
-		//Checks for Updates
-		UpdateThread = gcnew Thread(gcnew System::Threading::ThreadStart(this, &mainApplication::CheckForUpdatesOnStartUp));
-		UpdateThread->IsBackground = true;
-		UpdateThread->Start();
-
-		//Registers Hotkey
-		this->registerPresentationModeHotkey();
-
-		//Disable Windows intern standby
-		SystemAccess::DisableWindowsStandBy();
-
-		ApplicationContext^ context = gcnew NotifyIconAppContext(this, hInstance);
-		Application::ApplicationExit += gcnew System::EventHandler(this, &mainApplication::Quit);
-		Application::Run(context); //Synchronous
-		LOG("!!Application exited");
+		if (!language_found) {
+			//loaded Language is not supported
+			loadedLanguage = "en";
+		}
 	}
-	catch (Exception^ e) {
-		//Catching Exception
-		LOG("Exception occured!");
-		LOG(e->Message);
-		LOG(e->Data->ToString());
-		LOG(e->HelpLink);
-	}
+	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
+	CultureInfo::DefaultThreadCurrentCulture = CultureInfo::CreateSpecificCulture(loadedLanguage);
 
-	//Enables Windows standby
-	SystemAccess::EnableWindowsStandBy();
+	delete loadedLanguage;
+
+	//Loading System Access
+	system_access = gcnew SystemAccess(settings_provider);
+	LOG("Loaded SystemAccess");
+
+	//Loading SystemMetricWatcher
+	system_watcher = gcnew SystemMetricWatcher(system_access, 5, 30);//Sample 10 times/second, space for 30 samples, average over 3 seconds
+	LOG("Loaded and Started SystemMetricWatcher");
+
+	//Loading Input Monitor
+	input_monitor = gcnew InputMonitor(this, settings_provider);
+	LOG("Loaded InputMonitor");
+
+	//Checks for Updates
+	UpdateThread = gcnew Thread(gcnew System::Threading::ThreadStart(this, &mainApplication::CheckForUpdatesOnStartUp));
+	UpdateThread->IsBackground = true;
+	UpdateThread->Start();
+
+	//Registers Hotkey
+	this->registerPresentationModeHotkey();
+
+	//Disable Windows intern standby
+	SystemAccess::DisableWindowsStandBy();
 }
 
 void mainApplication::OnIconMouseClick(System::Object ^, System::Windows::Forms::MouseEventArgs ^e)

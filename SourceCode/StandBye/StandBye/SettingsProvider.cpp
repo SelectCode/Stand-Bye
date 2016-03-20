@@ -33,14 +33,7 @@ SettingsProvider::~SettingsProvider() {
 }
 
 string SettingsProvider::getRawSetting(SettingName name) {
-	try {
-		return SettingsProvider::getSettingbyName(name)->GetValue().at(0);
-	}
-	catch (Exception^ e) {
-		LOG("Could not get Raw Setting!");
-		LOG(e->Message + "\n" + e->Data + "\n" + e->StackTrace);
-		return "";
-	}
+	return SettingsProvider::getSettingbyName(name)->GetValue().at(0);
 }
 
 int SettingsProvider::getThreshold(SettingName name) {

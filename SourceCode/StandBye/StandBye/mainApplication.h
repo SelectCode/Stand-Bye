@@ -28,6 +28,7 @@ using System::Windows::Forms::Application;
 
 public ref class mainApplication {
 private:
+	HINSTANCE hinstance;
 	NotifyIcon^ trayicon;
 	MenuItem^ PresentationModeItem; //Has to be accessed
 	MetroSettingsForm^ settingsForm;
@@ -35,7 +36,6 @@ private:
 	SettingsProvider* settings_provider;
 	SystemAccess^ system_access;
 	InputMonitor^ input_monitor;
-	InstanceMonitor^ instance_monitor;
 	System::Threading::Thread^ UpdateThread;
 
 	//Resources and Languages
@@ -54,13 +54,15 @@ public:
 		//Cleans Resources
 		delete settingsForm;
 		delete input_monitor;
-		delete instance_monitor;
 		delete settings_provider;
 		delete system_access;
 		delete system_watcher;
 		delete PresentationModeItem;
 		delete trayicon;
+		LOG("successfully exited mainApplication");
 	};
+	//Main Function
+	void Start();
 
 	//Context Menu public
 	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
@@ -76,11 +78,11 @@ public:
 	void askUserAndStartStandby();
 	bool hasUserExited();
 
-	//Hotkey
+	//PM-Hotkey
 	void registerPresentationModeHotkey();
 
 private:
-	//Context Menu
+	//Context Menu & Event Handlers
 	ContextMenu^ GetContextMenu();
 	void OpenSettings(Object^, System::EventArgs^);
 	void SetPresentationMode(Object^, System::EventArgs^);

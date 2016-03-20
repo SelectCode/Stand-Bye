@@ -20,7 +20,7 @@ ProcessItem::ProcessItem(const string settings_value, Windows::Forms::ListView^ 
 	}
 	catch (System::ArgumentException^ e) {
 		LOG("Could not load icon from " + settings_value);
-		LOG(e->Message);
+		LOG("\t" + e->Message);
 	}
 	addIconToLists(list);
 	this->Text = IO::Path::GetFileNameWithoutExtension(path);
