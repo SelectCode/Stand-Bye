@@ -33,7 +33,7 @@ public:
 	InstanceMonitor(mainApplication^ parent);
 	~InstanceMonitor()
 	{
-		delete monTimer;
+		Destroy();
 	}
 	bool isAnotherInstanceRunning();
 	void Destroy();

@@ -88,7 +88,9 @@ bool InstanceMonitor::isAnotherInstanceRunning()
 void InstanceMonitor::Destroy()
 {
 	ReleaseMutex(hMutex);
-	monTimer->Stop();
-	deleteFile();
+	if (!anotherInstanceRunning) {
+		deleteFile();
+	}
+	delete monTimer;
 	LOG("Detroyed Instance Monitor!");
 }
