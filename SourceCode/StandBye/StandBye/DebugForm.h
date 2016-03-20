@@ -49,6 +49,7 @@ namespace StandBye {
 
 			//Starts Timer
 			timerRefresh->Tick += gcnew System::EventHandler(this, &StandBye::DebugForm::OnTick);
+			timerRefresh->Interval = 100;
 			timerRefresh->Start();
 		}
 

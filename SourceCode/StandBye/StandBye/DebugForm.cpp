@@ -36,7 +36,7 @@ System::Void StandBye::DebugForm::buttonMessageWnd_Click(System::Object ^, Syste
 
 System::Void StandBye::DebugForm::buttonTimeWnd_Click(System::Object ^, System::EventArgs ^)
 {
-	TimeoutWindow^ wnd = gcnew TimeoutWindow(15, settings_prov);
+	TimeoutWindow^ wnd = gcnew TimeoutWindow(15);
 	wnd->ShowDialog();
 }
 
