@@ -105,7 +105,8 @@ namespace StandBye {
 	private: MetroFramework::Controls::MetroLabel^  metroLabel10;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel1;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel2;
-	private: MetroFramework::Controls::MetroLabel^  metroLabel3;
+	private: MetroFramework::Controls::MetroLabel^  explSOUND;
+
 	private: MetroFramework::Controls::MetroLabel^  metroLabel4;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel5;
 	private: MetroFramework::Controls::MetroLabel^  metroLabel6;
@@ -219,7 +220,7 @@ namespace StandBye {
 				 this->tableLayoutPanel14 = (gcnew System::Windows::Forms::TableLayoutPanel());
 				 this->metroToggleSOUND = (gcnew MetroFramework::Controls::MetroToggle());
 				 this->metroLabelTextSound = (gcnew MetroFramework::Controls::MetroLabel());
-				 this->metroLabel3 = (gcnew MetroFramework::Controls::MetroLabel());
+				 this->explSOUND = (gcnew MetroFramework::Controls::MetroLabel());
 				 this->infoThresholds = (gcnew MetroFramework::Controls::MetroTextBox());
 				 this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 				 this->tableLayoutPanelUsageThresholds = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -334,7 +335,7 @@ namespace StandBye {
 				 this->metroTabControlMain->Location = System::Drawing::Point(10, 10);
 				 this->metroTabControlMain->Margin = System::Windows::Forms::Padding(10);
 				 this->metroTabControlMain->Name = L"metroTabControlMain";
-				 this->metroTabControlMain->SelectedIndex = 0;
+				 this->metroTabControlMain->SelectedIndex = 1;
 				 this->metroTabControlMain->Size = System::Drawing::Size(740, 350);
 				 this->metroTabControlMain->TabIndex = 0;
 				 this->metroTabControlMain->UseSelectable = true;
@@ -564,6 +565,7 @@ namespace StandBye {
 				 this->metroTileCanceledStatus->Style = MetroFramework::MetroColorStyle::Teal;
 				 this->metroTileCanceledStatus->TabIndex = 66;
 				 this->metroTileCanceledStatus->Text = L"Stand-By Canceled";
+				 this->metroTileCanceledStatus->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTileCanceledStatus->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileCanceledStatus.TileImage")));
 				 this->metroTileCanceledStatus->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileCanceledStatus->UseSelectable = true;
@@ -578,6 +580,7 @@ namespace StandBye {
 				 this->metroTileSettings->Style = MetroFramework::MetroColorStyle::Silver;
 				 this->metroTileSettings->TabIndex = 65;
 				 this->metroTileSettings->Text = L"Settings";
+				 this->metroTileSettings->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTileSettings->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileSettings.TileImage")));
 				 this->metroTileSettings->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileSettings->UseSelectable = true;
@@ -595,6 +598,7 @@ namespace StandBye {
 				 this->metroTileProcesses->Style = MetroFramework::MetroColorStyle::Teal;
 				 this->metroTileProcesses->TabIndex = 64;
 				 this->metroTileProcesses->Text = L"Processes";
+				 this->metroTileProcesses->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTileProcesses->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileProcesses.TileImage")));
 				 this->metroTileProcesses->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileProcesses->UseSelectable = true;
@@ -612,6 +616,7 @@ namespace StandBye {
 				 this->metroTileVisit->Style = MetroFramework::MetroColorStyle::Blue;
 				 this->metroTileVisit->TabIndex = 63;
 				 this->metroTileVisit->Text = L"Visit us!";
+				 this->metroTileVisit->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTileVisit->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileVisit.TileImage")));
 				 this->metroTileVisit->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileVisit->UseSelectable = true;
@@ -629,6 +634,7 @@ namespace StandBye {
 				 this->metroTileAbout->Style = MetroFramework::MetroColorStyle::Lime;
 				 this->metroTileAbout->TabIndex = 62;
 				 this->metroTileAbout->Text = L"About";
+				 this->metroTileAbout->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTileAbout->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTileAbout.TileImage")));
 				 this->metroTileAbout->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTileAbout->UseSelectable = true;
@@ -649,6 +655,7 @@ namespace StandBye {
 				 this->metroTilePresMode->Style = MetroFramework::MetroColorStyle::Blue;
 				 this->metroTilePresMode->TabIndex = 54;
 				 this->metroTilePresMode->Text = L"Presentation Mode";
+				 this->metroTilePresMode->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 				 this->metroTilePresMode->TileImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"metroTilePresMode.TileImage")));
 				 this->metroTilePresMode->TileImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
 				 this->metroTilePresMode->TileTextFontWeight = MetroFramework::MetroTileTextWeight::Bold;
@@ -719,7 +726,7 @@ namespace StandBye {
 					 520)));
 				 this->tableLayoutPanel14->Controls->Add(this->metroToggleSOUND, 0, 0);
 				 this->tableLayoutPanel14->Controls->Add(this->metroLabelTextSound, 1, 0);
-				 this->tableLayoutPanel14->Controls->Add(this->metroLabel3, 2, 0);
+				 this->tableLayoutPanel14->Controls->Add(this->explSOUND, 2, 0);
 				 this->tableLayoutPanel14->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->tableLayoutPanel14->Location = System::Drawing::Point(3, 17);
 				 this->tableLayoutPanel14->Name = L"tableLayoutPanel14";
@@ -750,19 +757,19 @@ namespace StandBye {
 				 this->metroLabelTextSound->Text = L"Cancel on Sound";
 				 this->metroLabelTextSound->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 				 //
-				 // metroLabel3
+				 // explSOUND
 				 //
-				 this->metroLabel3->AutoSize = true;
-				 this->metroLabel3->BackColor = System::Drawing::Color::White;
-				 this->metroLabel3->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->metroLabel3->Location = System::Drawing::Point(202, 2);
-				 this->metroLabel3->Margin = System::Windows::Forms::Padding(2);
-				 this->metroLabel3->Name = L"metroLabel3";
-				 this->metroLabel3->Size = System::Drawing::Size(516, 67);
-				 this->metroLabel3->TabIndex = 57;
-				 this->metroLabel3->Text = L"Prevents Standby when playing music / movies";
-				 this->metroLabel3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-				 this->metroLabel3->UseCustomBackColor = true;
+				 this->explSOUND->AutoSize = true;
+				 this->explSOUND->BackColor = System::Drawing::Color::White;
+				 this->explSOUND->Dock = System::Windows::Forms::DockStyle::Fill;
+				 this->explSOUND->Location = System::Drawing::Point(202, 2);
+				 this->explSOUND->Margin = System::Windows::Forms::Padding(2);
+				 this->explSOUND->Name = L"explSOUND";
+				 this->explSOUND->Size = System::Drawing::Size(516, 67);
+				 this->explSOUND->TabIndex = 57;
+				 this->explSOUND->Text = L"Prevents Standby when playing music / movies";
+				 this->explSOUND->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+				 this->explSOUND->UseCustomBackColor = true;
 				 //
 				 // infoThresholds
 				 //

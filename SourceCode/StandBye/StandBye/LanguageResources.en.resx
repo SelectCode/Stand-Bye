@@ -255,6 +255,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="expl_RAM" xml:space="preserve">
     <value>f.ex. large opened project files</value>
   </data>
+  <data name="expl_SOUND" xml:space="preserve">
+    <value>Prevents Standby when playing music / movies</value>
+  </data>
   <data name="general" xml:space="preserve">
     <value>General</value>
     <comment>-</comment>
@@ -302,6 +305,9 @@ And all the persons, who have supported us during the development: our families,
     <value>OK</value>
     <comment>-</comment>
   </data>
+  <data name="processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
   <data name="ram_threshold" xml:space="preserve">
     <value>RAM Threshold</value>
     <comment>-</comment>
@@ -317,6 +323,9 @@ And all the persons, who have supported us during the development: our families,
     <value>Search for Updates:</value>
     <comment>-</comment>
   </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="show_details" xml:space="preserve">
     <value>Show Details</value>
     <comment>-</comment>
@@ -325,9 +334,11 @@ And all the persons, who have supported us during the development: our families,
     <value>Show Messages:</value>
     <comment>-</comment>
   </data>
-  <data name="show_tutorial" xml:space="preserve">
-    <value>Show Tutorial:</value>
-    <comment>-</comment>
+  <data name="standby_activated" xml:space="preserve">
+    <value>Standby On</value>
+  </data>
+  <data name="standby_canceled" xml:space="preserve">
+    <value>Standby Canceled</value>
   </data>
   <data name="system_usage_thresholds" xml:space="preserve">
     <value>System Usage Thresholds</value>
@@ -347,6 +358,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="visit_homepage" xml:space="preserve">
     <value>Visit our Homepage!</value>
     <comment>-</comment>
+  </data>
+  <data name="visit_us" xml:space="preserve">
+    <value>Visit us!</value>
   </data>
   <data name="wait_time" xml:space="preserve">
     <value>Activate Standby After</value>

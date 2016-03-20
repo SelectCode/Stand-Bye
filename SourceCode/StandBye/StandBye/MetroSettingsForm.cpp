@@ -119,10 +119,12 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 
 	//Sets icon of status tile
 	if (parent->isSystemBusy()) {
-		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_CHECKED");
+		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_UNCHECKED");
+		this->metroTileCanceledStatus->Text = res_man->GetString("standby_canceled", CultureInfo::DefaultThreadCurrentCulture);
 	}
 	else {
-		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_UNCHECKED");
+		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_CHECKED");
+		this->metroTileCanceledStatus->Text = res_man->GetString("standby_activated", CultureInfo::DefaultThreadCurrentCulture);
 	}
 
 	//Update
@@ -343,6 +345,10 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextWaitTime->Text = res_man->GetString("wait_time", cul);
 	metroLabelTextSound->Text = res_man->GetString("cancel_on_sound", cul);
 	metroTilePresMode->Text = res_man->GetString("activate_pres_mode", cul);
+	metroTileAbout->Text = res_man->GetString("about", cul);
+	metroTileVisit->Text = res_man->GetString("visit_us", cul);
+	metroTileProcesses->Text = res_man->GetString("processes", cul);
+	metroTileSettings->Text = res_man->GetString("settings", cul);
 
 	//Thresholds
 	metroLabelTextCPU->Text = res_man->GetString("cpu_threshold", cul);
@@ -378,6 +384,7 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	explRAM->Text = res_man->GetString("expl_RAM", cul);
 	explHDD->Text = res_man->GetString("expl_HDD", cul);
 	explNET->Text = res_man->GetString("expl_NET", cul);
+	explSOUND->Text = res_man->GetString("expl_SOUND", cul);
 
 	//Sets preferred Sizes
 	for each(Windows::Forms::Control^ control in this->Controls) {
