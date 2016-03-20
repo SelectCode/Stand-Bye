@@ -31,10 +31,7 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 
 	perfCPU = gcnew PerformanceCounter("Processor", "% Processor Time", "_Total");
 	perfHDD = gcnew PerformanceCounter("PhysicalDisk", "Disk Bytes/sec", "_Total");
-	perfNETs = gcnew List<PerformanceCounter^>;
-	for each(std::string name in SystemAccess::GetNetAdapterNames()) {
-		perfNETs->Add(gcnew PerformanceCounter("Network Interface", "Bytes Total/sec", gcnew String(name.c_str())));
-	}
+	reloadNetworkAdapters();
 }
 float SystemAccess::getCPUUsage() {
 	//Note: performance counters need administrator privileges at Windows Vista
@@ -54,9 +51,19 @@ float SystemAccess::getRAMUsage()
 
 float SystemAccess::getNETUsage() {
 	float kbytes_per_sec = 0;
-	for each(PerformanceCounter^ perf in *perfNETs) {
-		kbytes_per_sec += perf->NextValue() / 1000;
+	try {
+		for each(PerformanceCounter^ perf in *perfNETs) {
+			kbytes_per_sec += perf->NextValue() / 1000;
+		}
 	}
+	catch (Exception^ e) {
+		LOG("Error getting NET Status");
+		LOG("\t" + e->Message);
+		LOG("Reloading Network Adapters!");
+		reloadNetworkAdapters();
+		return 0;
+	}
+
 	return kbytes_per_sec;
 }
 
@@ -64,6 +71,14 @@ float SystemAccess::getHDDUsage()
 {
 	float kbytes_per_sec = perfHDD->NextValue() / 1000;
 	return kbytes_per_sec;
+}
+
+void SystemAccess::reloadNetworkAdapters()
+{
+	perfNETs = gcnew List<PerformanceCounter^>;
+	for each(std::string name in SystemAccess::GetNetAdapterNames()) {
+		perfNETs->Add(gcnew PerformanceCounter("Network Interface", "Bytes Total/sec", gcnew String(name.c_str())));
+	}
 }
 
 SystemAccess::~SystemAccess() {
@@ -75,23 +90,17 @@ SystemAccess::~SystemAccess() {
 }
 
 float SystemAccess::GetMetric(SystemMetric s) {
-	try {
-		switch (s) {
-		case SystemMetric::CPU:
-			return getCPUUsage();
-		case SystemMetric::RAM:
-			return getRAMUsage();
-		case SystemMetric::NETWORK:
-			return getNETUsage();
-		case SystemMetric::HDD:
-			return getHDDUsage();
-		case SystemMetric::SOUND:
-			return getAudioPeak();
-		}
-	}
-	catch (Exception^ ex) {
-		LOG("Could not get Metric!");
-		LOG("Error Details: " + ex->Message + "\n" + ex->Data + "\n" + ex->Source);
+	switch (s) {
+	case SystemMetric::CPU:
+		return getCPUUsage();
+	case SystemMetric::RAM:
+		return getRAMUsage();
+	case SystemMetric::NETWORK:
+		return getNETUsage();
+	case SystemMetric::HDD:
+		return getHDDUsage();
+	case SystemMetric::SOUND:
+		return getAudioPeak();
 	}
 	return 0.0f;
 }

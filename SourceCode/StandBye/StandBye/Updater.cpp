@@ -26,8 +26,8 @@ int StandBye::Updater::cleanVersionString(System::String^ version_string)
 	version = version_string->Trim();
 	version = version->Replace("v", "");
 	version = version->Replace(".", "");
+	LOG("Got '" + version + "' as version number from '" + version_string + "'");
 	try {
-		LOG("Got '" + version + "' as version number from '" + version_string + "'");
 		return System::Convert::ToInt32(version);
 	}
 	catch (System::Exception^) {

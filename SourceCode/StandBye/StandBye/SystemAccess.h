@@ -40,6 +40,8 @@ private:
 	float getNETUsage();
 	float getHDDUsage();
 
+	void reloadNetworkAdapters();
+
 public:
 	SystemAccess(SettingsProvider* p);
 	~SystemAccess();
