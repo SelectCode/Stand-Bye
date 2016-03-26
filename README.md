@@ -29,16 +29,16 @@ Wenn Sie Ideen oder Fragen haben, können sie uns gerne unter contact@stand-bye.
 ---------
 
 
-Copyright (c) 2015 Florian Baader, http://github.com/flobaader
+					Copyright (c) 2015 Florian Baader, http://github.com/flobaader
 
-Copyright (c) 2015 Stephan Le, https://github.com/stephanLe
+					Copyright (c) 2015 Stephan Le, https://github.com/stephanLe
 
-Copyright (c) 2015 Matthias Weirich, https://github.com/vavido
+					Copyright (c) 2015 Matthias Weirich, https://github.com/vavido
+
+
 
 Weitere Details findest du auf unserer [Webseite](http://stand-bye.de)
 
-
-Copyright (C) 2015 Florian Baader, Stephan Le, Matthias Weirich
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
