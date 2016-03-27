@@ -32,6 +32,11 @@ SystemMetricWatcher::SystemMetricWatcher(SystemAccess^ system_access, int freque
 SystemMetricWatcher::~SystemMetricWatcher() {
 	monTimer->Stop();
 	delete monTimer;
+	delete cpu_buffer;
+	delete ram_buffer;
+	delete hdd_buffer;
+	delete network_buffer;
+	LOG("System Metric Watcher destroyed");
 }
 
 void SystemMetricWatcher::Stop() {
