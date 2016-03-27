@@ -199,6 +199,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="cancel_on_sound" xml:space="preserve">
     <value>Kein Standby bei Sound</value>
   </data>
+  <data name="contact" xml:space="preserve">
+    <value>Kontakt: contact@stand-bye.de</value>
+  </data>
   <data name="context_debug" xml:space="preserve">
     <value>&amp;Entwickler-Modus</value>
   </data>
@@ -216,6 +219,12 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="cpu_threshold" xml:space="preserve">
     <value>CPU Grenze</value>
+  </data>
+  <data name="donate" xml:space="preserve">
+    <value>Spenden ♥</value>
+  </data>
+  <data name="enable_log" xml:space="preserve">
+    <value>Logs erstellen:</value>
   </data>
   <data name="excp_process" xml:space="preserve">
     <value>Ausnahmeprozesse</value>
@@ -235,6 +244,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="expl_SOUND" xml:space="preserve">
     <value>Verhindert Standby während Musik / Filmen</value>
   </data>
+  <data name="expl_StandbyAt" xml:space="preserve">
+    <value>Ignoriert Grenzwerte nach der festgelegten Zeit</value>
+  </data>
   <data name="general" xml:space="preserve">
     <value>Allgemein</value>
   </data>
@@ -243,6 +255,9 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="hdd_threshold" xml:space="preserve">
     <value>HDD Grenze</value>
+  </data>
+  <data name="hibernate" xml:space="preserve">
+    <value>Ruhezustand</value>
   </data>
   <data name="info_excp" xml:space="preserve">
     <value>Wenn einer der festgelegten Prozesse läuft, wird das System nicht in den Standby versetzt!</value>
@@ -255,6 +270,9 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="language" xml:space="preserve">
     <value>Sprache</value>
+  </data>
+  <data name="license_heading" xml:space="preserve">
+    <value>Lizenz</value>
   </data>
   <data name="msg_presMode_activated" xml:space="preserve">
     <value>Der Präsentationsmodus wurde aktiviert!</value>
@@ -289,6 +307,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="search_updates" xml:space="preserve">
     <value>Suche nach Updates</value>
   </data>
+  <data name="select_standby" xml:space="preserve">
+    <value>Standby-Modus auswählen:</value>
+  </data>
   <data name="settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -296,13 +317,22 @@ And all the persons, who have supported us during the development: our families,
     <value>Details</value>
   </data>
   <data name="show_messages" xml:space="preserve">
-    <value>Benachrichtigungen anzeigen:</value>
+    <value>Benachrichtigungen:</value>
   </data>
   <data name="standby_activated" xml:space="preserve">
     <value>Standby an</value>
   </data>
   <data name="standby_canceled" xml:space="preserve">
     <value>Standby aus</value>
+  </data>
+  <data name="start_standby_at" xml:space="preserve">
+    <value>Standby starten um</value>
+  </data>
+  <data name="support_us" xml:space="preserve">
+    <value>Wenn du uns unterstützen möchtest bitte...</value>
+  </data>
+  <data name="suspend" xml:space="preserve">
+    <value>Standby</value>
   </data>
   <data name="system_usage_thresholds" xml:space="preserve">
     <value>System Auslastungen</value>
