@@ -15,7 +15,6 @@
 
 #define threshold(X) settings_provider->getThreshold(SettingName::X)
 #define active(X) settings_provider->isActive(SettingName::X)
-#define sysMetric(X) system_watcher->GetSystemMetric(SystemAccess::SystemMetric::X)
 
 using namespace StandBye;
 
@@ -26,14 +25,13 @@ NotifyIconAppContext::NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst
 void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 	LOG("Requested to load settingsForm");
 	if (settingsForm == nullptr) {
-		//Ensures that settingsForm != nullptr
-		settingsForm = gcnew MetroSettingsForm(this, system_watcher, settings_provider, system_access, input_monitor, supportedLanguages);
-		settingsForm->Show();
-	}
-	else if (settingsForm->IsDisposed) {
-		//Now save to ask if disposed
-		settingsForm = gcnew MetroSettingsForm(this, system_watcher, settings_provider, system_access, input_monitor, supportedLanguages);
-		settingsForm->Show();
+		settingsForm = gcnew MetroSettingsForm(this, settings_provider, supportedLanguages);
+		settingsForm->ShowDialog();
+		delete settingsForm;
+		settingsForm = nullptr;
+		GC::Collect();
+		GC::WaitForPendingFinalizers();
+		GC::Collect();
 	}
 	else {
 		//Settings form is open
@@ -75,7 +73,7 @@ void mainApplication::askUserAndStartStandby()
 	LOG("Preparing the TimeoutWindow");
 	if (msgWnd->ShowDialog() == DialogResult::OK) {
 		LOG("Going to Sleep mode!");
-		SystemAccess::StartESM();
+		SystemAccess::StartESM(settings_provider);
 	}
 	else {
 		LOG("The User has canceled the MessageWindow!");
@@ -127,7 +125,7 @@ void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 	}
 }
 
-bool mainApplication::isSystemBusy()
+bool mainApplication::isSystemBusy(SystemMetricWatcher^ watcher)
 {
 	LOG("Checking System usage....");
 
@@ -153,7 +151,7 @@ bool mainApplication::isSystemBusy()
 
 	//Check if sound is playing
 	if ((bool)active(CHECK_SOUND)) {
-		if (sysMetric(SOUND) > 0.01) {
+		if (watcher->GetSystemMetric(SystemAccess::SystemMetric::SOUND) > 0.01) {
 			LOG("SOUND level too high - standby canceled");
 			return true;
 		}
@@ -162,28 +160,28 @@ bool mainApplication::isSystemBusy()
 	//Check Thresholds
 	//CPU
 	if ((bool)active(USE_CPU)) {
-		if (threshold(MAX_CPU) < sysMetric(CPU)) {
+		if (threshold(MAX_CPU) < watcher->GetSystemMetric(SystemAccess::SystemMetric::CPU)) {
 			LOG("CPU Usage too high - standby canceled");
 			return true;
 		}
 	}
 	//RAM
 	if ((bool)active(USE_RAM)) {
-		if (threshold(MAX_RAM) < sysMetric(RAM)) {
+		if (threshold(MAX_RAM) < watcher->GetSystemMetric(SystemAccess::SystemMetric::RAM)) {
 			LOG("RAM Usage too high - standby canceled");
 			return true;
 		}
 	}
 	//HDD
 	if ((bool)active(USE_HDD)) {
-		if (threshold(MAX_HDD) < sysMetric(HDD)) {
+		if (threshold(MAX_HDD) < watcher->GetSystemMetric(SystemAccess::SystemMetric::HDD)) {
 			LOG("HDD Usage too high - standby canceled");
 			return true;
 		}
 	}
 	//NET
 	if ((bool)active(USE_NET)) {
-		if (threshold(MAX_NET) < sysMetric(NETWORK)) {
+		if (threshold(MAX_NET) < watcher->GetSystemMetric(SystemAccess::SystemMetric::NETWORK)) {
 			LOG("NETWORK Usage too high - standby canceled");
 			return true;
 		}
@@ -257,6 +255,30 @@ void mainApplication::Start()
 	LOG("!!Application exited");
 }
 
+void mainApplication::startMetricWatcher()
+{
+	if (system_access == nullptr) {
+		//Loading System Access
+		system_access = gcnew SystemAccess(settings_provider);
+		LOG("Loaded SystemAccess");
+
+		//Loading SystemMetricWatcher
+		system_watcher = gcnew SystemMetricWatcher(system_access, 5, 30);//Sample 10 times/second, space for 30 samples, average over 3 seconds
+		LOG("Loaded and Started SystemMetricWatcher");
+	}
+}
+
+void mainApplication::stopMetricWatcher()
+{
+	if (system_access != nullptr) {
+		LOG("Stopped Metric Watcher");
+		delete system_access;
+		delete system_watcher;
+		system_access = nullptr;
+		system_watcher = nullptr;
+	}
+}
+
 NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	using namespace System::Windows::Forms;
 	trayicon = gcnew NotifyIcon();
@@ -272,14 +294,13 @@ NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 
 void mainApplication::checkSystemAndStandby()
 {
-	if (!this->isSystemBusy()) {
+	if (!this->isSystemBusy(system_watcher)) {
 		this->askUserAndStartStandby();
 	}
 }
 
 mainApplication::mainApplication(HINSTANCE hInstance) {
 	LOG("Stand-Bye is starting!");
-
 	this->hinstance = hInstance;
 
 	//Loads Languages
@@ -313,20 +334,12 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 
 	delete loadedLanguage;
 
-	//Loading System Access
-	system_access = gcnew SystemAccess(settings_provider);
-	LOG("Loaded SystemAccess");
-
-	//Loading SystemMetricWatcher
-	system_watcher = gcnew SystemMetricWatcher(system_access, 5, 30);//Sample 10 times/second, space for 30 samples, average over 3 seconds
-	LOG("Loaded and Started SystemMetricWatcher");
-
 	//Loading Input Monitor
 	input_monitor = gcnew InputMonitor(this, settings_provider);
 	LOG("Loaded InputMonitor");
 
 	//Checks for Updates
-	UpdateThread = gcnew Thread(gcnew System::Threading::ThreadStart(this, &mainApplication::CheckForUpdatesOnStartUp));
+	Thread^ UpdateThread = gcnew Thread(gcnew System::Threading::ThreadStart(this, &mainApplication::CheckForUpdatesOnStartUp));
 	UpdateThread->IsBackground = true;
 	UpdateThread->Start();
 
@@ -335,6 +348,11 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 
 	//Disable Windows intern standby
 	SystemAccess::DisableWindowsStandBy();
+
+	//Loads Debug Form if requested
+	if (SystemAccess::inDebugMode()) {
+		OpenDebugForm(nullptr, nullptr);
+	}
 }
 
 void mainApplication::OnIconMouseClick(System::Object ^, System::Windows::Forms::MouseEventArgs ^e)
@@ -352,7 +370,7 @@ void mainApplication::OnIconMouseClick(System::Object ^, System::Windows::Forms:
 void mainApplication::OpenDebugForm(System::Object ^, System::EventArgs ^)
 {
 	LOG("Open DEBUG Form");
-	DebugForm^ debug_form = gcnew DebugForm(this, settings_provider, system_access, input_monitor, system_watcher);
+	DebugForm^ debug_form = gcnew DebugForm(this, settings_provider, input_monitor);
 	debug_form->Show();
 }
 
@@ -368,9 +386,12 @@ void mainApplication::CheckForUpdatesOnStartUp()
 				updater->UpdateApplication(this);
 			}
 		}
+		else {
+			//Deletes File if it exists
+			updater->deleteInstallFile();
+		}
 		delete updater;
 	}
-	delete UpdateThread;
 }
 
 void mainApplication::CheckForUpdatesClicked(System::Object ^, System::EventArgs ^)
@@ -400,11 +421,11 @@ void mainApplication::ShowBallonTipMessage(System::String ^ text)
 }
 
 void mainApplication::registerPresentationModeHotkey() {
-	//If the Hotkey is successfully registered, add a message filter
+	//If the Hot key is successfully registered, add a message filter
 	// MOD_ALT and MOD_CONTROL mean that alt and ctrl have to be pressed
 	// MOD_NOREPEAT avoids multiple messages from one keystroke
-	//0x50 is the virtual keycode for the key P
-	if (RegisterHotKey(NULL, GlobalAddAtom("stand-bye\0"), (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT), 0x50)) {
+	//0x50 is the virtual key code for the key P
+	if (RegisterHotKey(NULL, GlobalAddAtom((LPCWSTR)"stand-bye\0"), (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT), 0x50)) {
 		LOG("Hotkey registered, adding MSG Filter");
 
 		//Generate a new Message filter, add it to the thread
@@ -413,4 +434,12 @@ void mainApplication::registerPresentationModeHotkey() {
 	else {
 		LOG("Failed to register hotkey. Error: " + GetLastError());
 	}
+}
+
+void mainApplication::OnSettingsFormClosed(System::Object ^, System::Windows::Forms::FormClosedEventArgs ^)
+{
+	delete settingsForm;
+	settingsForm = nullptr;
+	//GC::Collect();
+	//GC::WaitForPendingFinalizers();
 }

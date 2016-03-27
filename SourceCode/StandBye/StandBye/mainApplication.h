@@ -36,7 +36,6 @@ private:
 	SettingsProvider* settings_provider;
 	SystemAccess^ system_access;
 	InputMonitor^ input_monitor;
-	System::Threading::Thread^ UpdateThread;
 
 	//Resources and Languages
 	ResourceManager^ res_man;
@@ -46,23 +45,33 @@ private:
 	bool userExited = false;
 	bool ask_Enable_PresentationMode = true;
 
+
 public:
 	//Main Functions
 	mainApplication(HINSTANCE hInstance);
 
 	~mainApplication() {
 		//Cleans Resources
-		delete settingsForm;
+		bool Log = settings_provider->isActive(SettingName::LOGGING);
 		delete input_monitor;
-		delete settings_provider;
 		delete system_access;
+		delete settings_provider;
 		delete system_watcher;
 		delete PresentationModeItem;
 		delete trayicon;
-		LOG("successfully exited mainApplication");
+
+		//Deletes log files if not enabled
+		if (Log) {
+			LOG("successfully exited mainApplication");
+		}
+		else {
+			BasicFunc::cleanLogFiles();
+		}
 	};
 	//Main Function
 	void Start();
+	void startMetricWatcher();
+	void stopMetricWatcher();
 
 	//Context Menu public
 	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
@@ -72,13 +81,13 @@ public:
 
 	//Standby Functions
 	void checkSystemAndStandby();
-	bool isSystemBusy();
+	bool isSystemBusy(SystemMetricWatcher^ watcher);
 	bool isInPresentationMode();
 	void setPresentationMode(bool value);
 	void askUserAndStartStandby();
 	bool hasUserExited();
 
-	//PM-Hotkey
+	//PM-Hot key
 	void registerPresentationModeHotkey();
 
 private:
@@ -94,6 +103,8 @@ private:
 	//Updates
 	void CheckForUpdatesOnStartUp();
 	void CheckForUpdatesClicked(System::Object ^sender, System::EventArgs ^e);
+
+	void OnSettingsFormClosed(System::Object ^sender, System::Windows::Forms::FormClosedEventArgs ^e);
 };
 
 ref class NotifyIconAppContext : System::Windows::Forms::ApplicationContext {
