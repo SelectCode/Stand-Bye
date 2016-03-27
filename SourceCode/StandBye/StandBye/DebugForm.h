@@ -32,13 +32,13 @@ namespace StandBye {
 		SystemAccess^ system_access;
 
 	public:
-		DebugForm(mainApplication^ sender, SettingsProvider* set_prov, SystemAccess^ system_access, InputMonitor^ mon, SystemMetricWatcher^ watcher)
+		DebugForm(mainApplication^ sender, SettingsProvider* set_prov,InputMonitor^ mon)
 		{
 			parent = sender;
 			settings_prov = set_prov;
 			input_monitor = mon;
-			system_watcher = watcher;
-			this->system_access = system_access;
+			this->system_access = gcnew SystemAccess(settings_prov);
+			this->system_watcher = gcnew SystemMetricWatcher(system_access, 10, 3);
 
 			//Initialize Components
 			InitializeComponent();
@@ -63,6 +63,8 @@ namespace StandBye {
 			{
 				delete components;
 			}
+			delete system_watcher;
+			delete system_access;
 		}
 	private: System::Windows::Forms::RichTextBox^  textBoxLog;
 	private: System::Windows::Forms::GroupBox^  groupBox7;
@@ -205,9 +207,9 @@ namespace StandBye {
 			this->groupBox5->SuspendLayout();
 			this->groupBox7->SuspendLayout();
 			this->SuspendLayout();
-			//
+			// 
 			// tableLayoutPanel1
-			//
+			// 
 			this->tableLayoutPanel1->ColumnCount = 5;
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				20)));
@@ -235,9 +237,9 @@ namespace StandBye {
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
 			this->tableLayoutPanel1->Size = System::Drawing::Size(998, 432);
 			this->tableLayoutPanel1->TabIndex = 0;
-			//
+			// 
 			// groupBox3
-			//
+			// 
 			this->groupBox3->Controls->Add(this->tableLayoutPanel3);
 			this->groupBox3->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox3->Location = System::Drawing::Point(401, 3);
@@ -246,9 +248,9 @@ namespace StandBye {
 			this->groupBox3->TabIndex = 2;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Real-Time Usage";
-			//
+			// 
 			// tableLayoutPanel3
-			//
+			// 
 			this->tableLayoutPanel3->CellBorderStyle = System::Windows::Forms::TableLayoutPanelCellBorderStyle::Single;
 			this->tableLayoutPanel3->ColumnCount = 2;
 			this->tableLayoutPanel3->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
@@ -275,9 +277,9 @@ namespace StandBye {
 			this->tableLayoutPanel3->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 20)));
 			this->tableLayoutPanel3->Size = System::Drawing::Size(187, 137);
 			this->tableLayoutPanel3->TabIndex = 1;
-			//
+			// 
 			// labelRTNET
-			//
+			// 
 			this->labelRTNET->AutoSize = true;
 			this->labelRTNET->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelRTNET->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -288,9 +290,9 @@ namespace StandBye {
 			this->labelRTNET->TabIndex = 8;
 			this->labelRTNET->Text = L"0.0";
 			this->labelRTNET->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelRTHDD
-			//
+			// 
 			this->labelRTHDD->AutoSize = true;
 			this->labelRTHDD->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelRTHDD->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -301,9 +303,9 @@ namespace StandBye {
 			this->labelRTHDD->TabIndex = 7;
 			this->labelRTHDD->Text = L"0.0";
 			this->labelRTHDD->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelRTRAM
-			//
+			// 
 			this->labelRTRAM->AutoSize = true;
 			this->labelRTRAM->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelRTRAM->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -314,9 +316,9 @@ namespace StandBye {
 			this->labelRTRAM->TabIndex = 6;
 			this->labelRTRAM->Text = L"0.0";
 			this->labelRTRAM->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelRTCPU
-			//
+			// 
 			this->labelRTCPU->AutoSize = true;
 			this->labelRTCPU->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelRTCPU->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -327,9 +329,9 @@ namespace StandBye {
 			this->labelRTCPU->TabIndex = 5;
 			this->labelRTCPU->Text = L"0.0";
 			this->labelRTCPU->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// label14
-			//
+			// 
 			this->label14->AutoSize = true;
 			this->label14->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -340,9 +342,9 @@ namespace StandBye {
 			this->label14->TabIndex = 4;
 			this->label14->Text = L"NET";
 			this->label14->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label15
-			//
+			// 
 			this->label15->AutoSize = true;
 			this->tableLayoutPanel3->SetColumnSpan(this->label15, 2);
 			this->label15->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -352,9 +354,9 @@ namespace StandBye {
 			this->label15->TabIndex = 0;
 			this->label15->Text = L"Real Time Usage got by Performance Counters";
 			this->label15->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label16
-			//
+			// 
 			this->label16->AutoSize = true;
 			this->label16->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -365,9 +367,9 @@ namespace StandBye {
 			this->label16->TabIndex = 1;
 			this->label16->Text = L"CPU";
 			this->label16->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label17
-			//
+			// 
 			this->label17->AutoSize = true;
 			this->label17->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label17->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -378,9 +380,9 @@ namespace StandBye {
 			this->label17->TabIndex = 2;
 			this->label17->Text = L"RAM";
 			this->label17->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label18
-			//
+			// 
 			this->label18->AutoSize = true;
 			this->label18->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label18->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -391,9 +393,9 @@ namespace StandBye {
 			this->label18->TabIndex = 3;
 			this->label18->Text = L"HDD";
 			this->label18->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// groupBox2
-			//
+			// 
 			this->groupBox2->Controls->Add(this->tableLayoutPanel2);
 			this->groupBox2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox2->Location = System::Drawing::Point(202, 3);
@@ -402,9 +404,9 @@ namespace StandBye {
 			this->groupBox2->TabIndex = 1;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Buffered Usage";
-			//
+			// 
 			// tableLayoutPanel2
-			//
+			// 
 			this->tableLayoutPanel2->CellBorderStyle = System::Windows::Forms::TableLayoutPanelCellBorderStyle::Single;
 			this->tableLayoutPanel2->ColumnCount = 2;
 			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
@@ -431,9 +433,9 @@ namespace StandBye {
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 20)));
 			this->tableLayoutPanel2->Size = System::Drawing::Size(187, 137);
 			this->tableLayoutPanel2->TabIndex = 0;
-			//
+			// 
 			// labelBuffNET
-			//
+			// 
 			this->labelBuffNET->AutoSize = true;
 			this->labelBuffNET->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelBuffNET->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -444,9 +446,9 @@ namespace StandBye {
 			this->labelBuffNET->TabIndex = 8;
 			this->labelBuffNET->Text = L"0.0";
 			this->labelBuffNET->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelBuffHDD
-			//
+			// 
 			this->labelBuffHDD->AutoSize = true;
 			this->labelBuffHDD->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelBuffHDD->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -457,9 +459,9 @@ namespace StandBye {
 			this->labelBuffHDD->TabIndex = 7;
 			this->labelBuffHDD->Text = L"0.0";
 			this->labelBuffHDD->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelBuffRAM
-			//
+			// 
 			this->labelBuffRAM->AutoSize = true;
 			this->labelBuffRAM->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelBuffRAM->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -470,9 +472,9 @@ namespace StandBye {
 			this->labelBuffRAM->TabIndex = 6;
 			this->labelBuffRAM->Text = L"0.0";
 			this->labelBuffRAM->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// labelBuffCPU
-			//
+			// 
 			this->labelBuffCPU->AutoSize = true;
 			this->labelBuffCPU->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelBuffCPU->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -483,9 +485,9 @@ namespace StandBye {
 			this->labelBuffCPU->TabIndex = 5;
 			this->labelBuffCPU->Text = L"0.0";
 			this->labelBuffCPU->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			//
+			// 
 			// label5
-			//
+			// 
 			this->label5->AutoSize = true;
 			this->label5->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -496,9 +498,9 @@ namespace StandBye {
 			this->label5->TabIndex = 4;
 			this->label5->Text = L"NET";
 			this->label5->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label1
-			//
+			// 
 			this->label1->AutoSize = true;
 			this->tableLayoutPanel2->SetColumnSpan(this->label1, 2);
 			this->label1->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -508,9 +510,9 @@ namespace StandBye {
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"The values are sampled 2 / sec and stored over 30 seconds";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label2
-			//
+			// 
 			this->label2->AutoSize = true;
 			this->label2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -521,9 +523,9 @@ namespace StandBye {
 			this->label2->TabIndex = 1;
 			this->label2->Text = L"CPU";
 			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label3
-			//
+			// 
 			this->label3->AutoSize = true;
 			this->label3->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -534,9 +536,9 @@ namespace StandBye {
 			this->label3->TabIndex = 2;
 			this->label3->Text = L"RAM";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// label4
-			//
+			// 
 			this->label4->AutoSize = true;
 			this->label4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -547,9 +549,9 @@ namespace StandBye {
 			this->label4->TabIndex = 3;
 			this->label4->Text = L"HDD";
 			this->label4->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			//
+			// 
 			// groupBox1
-			//
+			// 
 			this->groupBox1->Controls->Add(this->listViewSettings);
 			this->groupBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox1->Location = System::Drawing::Point(3, 3);
@@ -559,9 +561,9 @@ namespace StandBye {
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Settings";
-			//
+			// 
 			// listViewSettings
-			//
+			// 
 			this->listViewSettings->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) {
 				this->columnHeader1,
 					this->columnHeader2
@@ -573,19 +575,19 @@ namespace StandBye {
 			this->listViewSettings->TabIndex = 0;
 			this->listViewSettings->UseCompatibleStateImageBehavior = false;
 			this->listViewSettings->View = System::Windows::Forms::View::Details;
-			//
+			// 
 			// columnHeader1
-			//
+			// 
 			this->columnHeader1->Text = L"Name";
 			this->columnHeader1->Width = 80;
-			//
+			// 
 			// columnHeader2
-			//
+			// 
 			this->columnHeader2->Text = L"Value";
 			this->columnHeader2->Width = 104;
-			//
+			// 
 			// tableLayoutPanel6
-			//
+			// 
 			this->tableLayoutPanel6->ColumnCount = 1;
 			this->tableLayoutPanel6->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				100)));
@@ -601,9 +603,9 @@ namespace StandBye {
 			this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
 			this->tableLayoutPanel6->Size = System::Drawing::Size(193, 156);
 			this->tableLayoutPanel6->TabIndex = 7;
-			//
+			// 
 			// groupBox8
-			//
+			// 
 			this->groupBox8->Controls->Add(this->tableLayoutPanel7);
 			this->groupBox8->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox8->Location = System::Drawing::Point(3, 81);
@@ -612,9 +614,9 @@ namespace StandBye {
 			this->groupBox8->TabIndex = 4;
 			this->groupBox8->TabStop = false;
 			this->groupBox8->Text = L"Sound detection";
-			//
+			// 
 			// tableLayoutPanel7
-			//
+			// 
 			this->tableLayoutPanel7->ColumnCount = 2;
 			this->tableLayoutPanel7->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 			this->tableLayoutPanel7->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
@@ -633,9 +635,9 @@ namespace StandBye {
 			this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
 			this->tableLayoutPanel7->Size = System::Drawing::Size(181, 53);
 			this->tableLayoutPanel7->TabIndex = 0;
-			//
+			// 
 			// labelSoundOverLimit
-			//
+			// 
 			this->labelSoundOverLimit->AutoSize = true;
 			this->labelSoundOverLimit->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelSoundOverLimit->Location = System::Drawing::Point(62, 33);
@@ -644,9 +646,9 @@ namespace StandBye {
 			this->labelSoundOverLimit->TabIndex = 4;
 			this->labelSoundOverLimit->Text = L"Yes / No";
 			this->labelSoundOverLimit->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// labelSoundPeak
-			//
+			// 
 			this->labelSoundPeak->AutoSize = true;
 			this->labelSoundPeak->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelSoundPeak->Location = System::Drawing::Point(62, 13);
@@ -655,9 +657,9 @@ namespace StandBye {
 			this->labelSoundPeak->TabIndex = 3;
 			this->labelSoundPeak->Text = L"0.0";
 			this->labelSoundPeak->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label11
-			//
+			// 
 			this->label11->AutoSize = true;
 			this->label11->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label11->Location = System::Drawing::Point(3, 13);
@@ -666,9 +668,9 @@ namespace StandBye {
 			this->label11->TabIndex = 1;
 			this->label11->Text = L"Peak";
 			this->label11->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label12
-			//
+			// 
 			this->label12->AutoSize = true;
 			this->tableLayoutPanel7->SetColumnSpan(this->label12, 2);
 			this->label12->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -678,9 +680,9 @@ namespace StandBye {
 			this->label12->TabIndex = 0;
 			this->label12->Text = L"Gets sound peak information";
 			this->label12->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label13
-			//
+			// 
 			this->label13->AutoSize = true;
 			this->label13->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label13->Location = System::Drawing::Point(3, 33);
@@ -689,9 +691,9 @@ namespace StandBye {
 			this->label13->TabIndex = 2;
 			this->label13->Text = L"Over limit:";
 			this->label13->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// groupBox4
-			//
+			// 
 			this->groupBox4->Controls->Add(this->tableLayoutPanel5);
 			this->groupBox4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox4->Location = System::Drawing::Point(3, 3);
@@ -700,9 +702,9 @@ namespace StandBye {
 			this->groupBox4->TabIndex = 3;
 			this->groupBox4->TabStop = false;
 			this->groupBox4->Text = L"Input Monitor";
-			//
+			// 
 			// tableLayoutPanel5
-			//
+			// 
 			this->tableLayoutPanel5->ColumnCount = 2;
 			this->tableLayoutPanel5->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 			this->tableLayoutPanel5->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
@@ -721,9 +723,9 @@ namespace StandBye {
 			this->tableLayoutPanel5->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
 			this->tableLayoutPanel5->Size = System::Drawing::Size(181, 53);
 			this->tableLayoutPanel5->TabIndex = 0;
-			//
+			// 
 			// labelWAITReached
-			//
+			// 
 			this->labelWAITReached->AutoSize = true;
 			this->labelWAITReached->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelWAITReached->Location = System::Drawing::Point(113, 33);
@@ -732,9 +734,9 @@ namespace StandBye {
 			this->labelWAITReached->TabIndex = 4;
 			this->labelWAITReached->Text = L"Yes / No";
 			this->labelWAITReached->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// labelInputTime
-			//
+			// 
 			this->labelInputTime->AutoSize = true;
 			this->labelInputTime->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->labelInputTime->Location = System::Drawing::Point(113, 13);
@@ -743,9 +745,9 @@ namespace StandBye {
 			this->labelInputTime->TabIndex = 3;
 			this->labelInputTime->Text = L"0.0";
 			this->labelInputTime->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label7
-			//
+			// 
 			this->label7->AutoSize = true;
 			this->label7->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label7->Location = System::Drawing::Point(3, 13);
@@ -754,9 +756,9 @@ namespace StandBye {
 			this->label7->TabIndex = 1;
 			this->label7->Text = L"Time since last Input";
 			this->label7->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label6
-			//
+			// 
 			this->label6->AutoSize = true;
 			this->tableLayoutPanel5->SetColumnSpan(this->label6, 2);
 			this->label6->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -766,9 +768,9 @@ namespace StandBye {
 			this->label6->TabIndex = 0;
 			this->label6->Text = L"Gets user input information";
 			this->label6->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// label8
-			//
+			// 
 			this->label8->AutoSize = true;
 			this->label8->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->label8->Location = System::Drawing::Point(3, 33);
@@ -777,9 +779,9 @@ namespace StandBye {
 			this->label8->TabIndex = 2;
 			this->label8->Text = L"Waittime reached";
 			this->label8->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			//
+			// 
 			// groupBox6
-			//
+			// 
 			this->groupBox6->Controls->Add(this->tableLayoutPanel4);
 			this->groupBox6->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->groupBox6->Location = System::Drawing::Point(799, 3);
@@ -788,9 +790,9 @@ namespace StandBye {
 			this->groupBox6->TabIndex = 5;
 			this->groupBox6->TabStop = false;
 			this->groupBox6->Text = L"Controls";
-			//
+			// 
 			// tableLayoutPanel4
-			//
+			// 
 			this->tableLayoutPanel4->ColumnCount = 1;
 			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				100)));
@@ -808,9 +810,9 @@ namespace StandBye {
 			this->tableLayoutPanel4->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 			this->tableLayoutPanel4->Size = System::Drawing::Size(190, 137);
 			this->tableLayoutPanel4->TabIndex = 0;
-			//
+			// 
 			// buttonTimeWnd
-			//
+			// 
 			this->buttonTimeWnd->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->buttonTimeWnd->Location = System::Drawing::Point(7, 109);
 			this->buttonTimeWnd->Margin = System::Windows::Forms::Padding(7);
@@ -820,9 +822,9 @@ namespace StandBye {
 			this->buttonTimeWnd->Text = L"Open TimeoutWindow";
 			this->buttonTimeWnd->UseVisualStyleBackColor = true;
 			this->buttonTimeWnd->Click += gcnew System::EventHandler(this, &DebugForm::buttonTimeWnd_Click);
-			//
+			// 
 			// buttonMessageWnd
-			//
+			// 
 			this->buttonMessageWnd->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->buttonMessageWnd->Location = System::Drawing::Point(7, 75);
 			this->buttonMessageWnd->Margin = System::Windows::Forms::Padding(7);
@@ -832,9 +834,9 @@ namespace StandBye {
 			this->buttonMessageWnd->Text = L"Open MessageWindow";
 			this->buttonMessageWnd->UseVisualStyleBackColor = true;
 			this->buttonMessageWnd->Click += gcnew System::EventHandler(this, &DebugForm::buttonMessageWnd_Click);
-			//
+			// 
 			// buttonProcessForm
-			//
+			// 
 			this->buttonProcessForm->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->buttonProcessForm->Location = System::Drawing::Point(7, 41);
 			this->buttonProcessForm->Margin = System::Windows::Forms::Padding(7);
@@ -844,9 +846,9 @@ namespace StandBye {
 			this->buttonProcessForm->Text = L"Open ProcessSelectionForm";
 			this->buttonProcessForm->UseVisualStyleBackColor = true;
 			this->buttonProcessForm->Click += gcnew System::EventHandler(this, &DebugForm::buttonProcessForm_Click);
-			//
+			// 
 			// buttonSettingsForm
-			//
+			// 
 			this->buttonSettingsForm->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->buttonSettingsForm->Location = System::Drawing::Point(7, 7);
 			this->buttonSettingsForm->Margin = System::Windows::Forms::Padding(7);
@@ -856,9 +858,9 @@ namespace StandBye {
 			this->buttonSettingsForm->Text = L"Open MetroSettingsForm";
 			this->buttonSettingsForm->UseVisualStyleBackColor = true;
 			this->buttonSettingsForm->Click += gcnew System::EventHandler(this, &DebugForm::buttonSettingsForm_Click);
-			//
+			// 
 			// groupBox5
-			//
+			// 
 			this->tableLayoutPanel1->SetColumnSpan(this->groupBox5, 2);
 			this->groupBox5->Controls->Add(this->listViewProc);
 			this->groupBox5->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -868,9 +870,9 @@ namespace StandBye {
 			this->groupBox5->TabIndex = 4;
 			this->groupBox5->TabStop = false;
 			this->groupBox5->Text = L"Running Processes";
-			//
+			// 
 			// listViewProc
-			//
+			// 
 			this->listViewProc->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) {
 				this->columnHeader3,
 					this->columnHeader4
@@ -886,18 +888,18 @@ namespace StandBye {
 			this->listViewProc->TabIndex = 1;
 			this->listViewProc->UseCompatibleStateImageBehavior = false;
 			this->listViewProc->View = System::Windows::Forms::View::Details;
-			//
+			// 
 			// columnHeader3
-			//
+			// 
 			this->columnHeader3->Text = L"Name";
-			//
+			// 
 			// columnHeader4
-			//
+			// 
 			this->columnHeader4->Text = L"Path";
 			this->columnHeader4->Width = 216;
-			//
+			// 
 			// groupBox7
-			//
+			// 
 			this->tableLayoutPanel1->SetColumnSpan(this->groupBox7, 2);
 			this->groupBox7->Controls->Add(this->textBoxLog);
 			this->groupBox7->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -907,31 +909,32 @@ namespace StandBye {
 			this->groupBox7->TabIndex = 9;
 			this->groupBox7->TabStop = false;
 			this->groupBox7->Text = L"Log File";
-			//
+			// 
 			// textBoxLog
-			//
+			// 
 			this->textBoxLog->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->textBoxLog->Location = System::Drawing::Point(3, 16);
 			this->textBoxLog->Name = L"textBoxLog";
 			this->textBoxLog->Size = System::Drawing::Size(389, 245);
 			this->textBoxLog->TabIndex = 8;
 			this->textBoxLog->Text = L"";
-			//
+			// 
 			// timerRefresh
-			//
+			// 
 			this->timerRefresh->Enabled = true;
-			//
+			// 
 			// DebugForm
-			//
+			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(998, 432);
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->DoubleBuffered = true;
 			this->Name = L"DebugForm";
-			this->Text = L"DebugForm";
+			this->Text = L"DebugForm - (c) Florian Baader, Stephan Le, Matthias Weirich";
 			this->TopMost = true;
 			this->Load += gcnew System::EventHandler(this, &DebugForm::DebugForm_Load);
+			this->Closing += gcnew System::ComponentModel::CancelEventHandler(this, &StandBye::DebugForm::OnClosing);
 			this->tableLayoutPanel1->ResumeLayout(false);
 			this->groupBox3->ResumeLayout(false);
 			this->tableLayoutPanel3->ResumeLayout(false);
@@ -952,6 +955,7 @@ namespace StandBye {
 			this->groupBox5->ResumeLayout(false);
 			this->groupBox7->ResumeLayout(false);
 			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 		//Load
@@ -970,5 +974,7 @@ namespace StandBye {
 		void OnTick(System::Object ^sender, System::EventArgs ^e);
 		void RefreshUISlow();
 		void RefreshUIRealTime();
-	};
+		void OnClosing(System::Object ^sender, System::ComponentModel::CancelEventArgs ^e);
+};
 }
+

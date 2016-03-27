@@ -142,3 +142,9 @@ void StandBye::DebugForm::RefreshUIRealTime()
 		textBoxLog->ScrollToCaret();
 	}
 }
+
+
+void StandBye::DebugForm::OnClosing(System::Object ^, System::ComponentModel::CancelEventArgs ^)
+{
+	delete this;
+}
