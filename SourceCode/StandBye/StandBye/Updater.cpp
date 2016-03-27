@@ -39,6 +39,7 @@ int StandBye::Updater::cleanVersionString(System::String^ version_string)
 void StandBye::Updater::downloadInformation()
 {
 	using namespace System::Net;
+
 	System::String^ filePath = System::IO::Path::Combine(SystemAccess::getStandByeFolderPath(), "version.txt");
 
 	//Downloads File
@@ -58,7 +59,7 @@ void StandBye::Updater::downloadInformation()
 		catch (Exception^ e)
 		{
 			LOG("Could not get version string from version.txt");
-			LOG("\t" + e->Message);
+			LOG(e);
 		}
 
 		try
@@ -69,7 +70,7 @@ void StandBye::Updater::downloadInformation()
 		catch (Exception^ e)
 		{
 			LOG("Could not get download string from version.txt");
-			LOG("\t" + e->Message);
+			LOG(e);
 		}
 
 		//Closes FileStream
@@ -83,7 +84,7 @@ void StandBye::Updater::downloadInformation()
 	}
 	catch (Exception^ e) {
 		LOG("Could not download version.txt!");
-		LOG("\t" + e->Message);
+		LOG(e);
 	}
 }
 
@@ -138,6 +139,16 @@ void StandBye::Updater::UpdateApplication(mainApplication ^ parent)
 	}
 	else {
 		LOG("Download did not succeed or was canceled!");
+	}
+}
+
+void StandBye::Updater::deleteInstallFile()
+{
+	using System::IO::File;
+	String^ filepath = System::IO::Path::Combine(SystemAccess::getStandByeFolderPath(), "installer.msi");
+	if (File::Exists(filepath)) {
+		File::Delete(System::IO::Path::Combine(SystemAccess::getStandByeFolderPath(), "installer.msi"));
+		LOG("Deleted old updater file");
 	}
 }
 

@@ -141,9 +141,9 @@ namespace StandBye {
 				 this->ResumeLayout(false);
 			 }
 #pragma endregion
-	private: System::Void DownloadDialog_Load(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e);
+			 //Events
+			 System::Void DownloadDialog_Load(System::Object^  sender, System::EventArgs^  e);
+			 System::Void button1_Click(System::Object^  sender, System::EventArgs^  e);
 			 void OnDownloadFileCompleted(System::Object ^sender, System::ComponentModel::AsyncCompletedEventArgs ^e);
 			 void OnDownloadProgressChanged(System::Object ^sender, System::Net::DownloadProgressChangedEventArgs ^e);
 	};
@@ -164,11 +164,8 @@ namespace StandBye {
 		String^ DOWNLOAD_LINK = "";
 
 		//FOR TESING
-
 		//System::String^ VERSION_FILE_PATH = "file:///C:\\Users\\Code\\Desktop\\version.info";
-
 		//OUTDATED
-
 		//System::String^ RELEASE_LINK = "https://github.com/flobaader/Stand-Bye/releases/download/{0}/Install_Stand-Bye.msi";
 
 	public:
@@ -176,5 +173,6 @@ namespace StandBye {
 		Updater();
 		bool IsUpdateAvailable();
 		void UpdateApplication(mainApplication^ parent);
+		void deleteInstallFile();
 	};
 }

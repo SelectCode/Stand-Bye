@@ -38,10 +38,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 		}
 		catch (Exception^ e) {
 			//Catching Exception
-			LOG("Exception occured!:");
-			LOG("\t" + e->Message);
-			LOG("\t" + e->Data->ToString());
-			LOG("\t" + e->HelpLink);
+			LOG(e);
+			MessageBoxW(nullptr, (LPCTSTR)BasicFunc::StringToString("Exception occurred: " + "\n" + e->Message).c_str(), (LPCTSTR)"Exception occurred!", MB_OK);
 			errors_occured++;
 		}
 
