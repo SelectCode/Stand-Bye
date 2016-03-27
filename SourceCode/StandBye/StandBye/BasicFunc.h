@@ -16,32 +16,39 @@
 using std::vector;
 using std::string;
 
-namespace BasicFunc {
-	using namespace System;
+ref class BasicFunc {
+public:
+
 	///<summary>Converts a System::String to a std::string</summary>
-	string StringToString(System::String^ str);
+	static string StringToString(System::String^ str);
 
 	///<summary>Splits a string on a defined char and returns vector.</summary>
-	std::vector<string> SplitString(const string s, char delim);
+	static std::vector<string> SplitString(const string s, char delim);
 
 	///<summary>Converts a std::string to an int</summary>
-	int StringToInt(string str);
+	static int StringToInt(string str);
 
 	///<summary>Returns an metro font with specified size in points</summary>
-	System::Drawing::Font^ getMetroFont(float size);
+	static System::Drawing::Font^ getMetroFont(float size);
 
 	///<summary>Returns if an vector of std::string contains a specified std::string</summary>
-	bool VectorContains(std::vector<string> list, std::string text);
+	static bool VectorContains(std::vector<string> list, std::string text);
 
 	///<summary>Returns the log file path and ensures that the file is accessible</summary>
-	System::String^ getLogFilePath();
+	static System::String^ getLogFilePath();
 
 	///<summary>Logs an specified statement or event.</summary>
-	void Log(std::string text);
+	static void Log(std::string text);
 
 	///<summary>Logs an specified statement or event.</summary>
-	void Log(System::String^ text);
+	static void Log(System::String^ text);
+
+	///<summary>Logs an exception</summary>
+	static void Log(System::Exception^ exception);
 
 	///<summary>Opens website in new tab</summary>
-	void openLink(std::string url);
-}
+	static void openLink(System::String^ url);
+
+	///<summary>Deletes all log files</summary>
+	static void cleanLogFiles();
+};

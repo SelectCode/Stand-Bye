@@ -80,7 +80,7 @@ void BasicFunc::Log(System::String^ text)
 	System::Diagnostics::Debug::WriteLine(text);
 
 	//Line
-	String^ line = DateTime::Now.ToString("HH:mm:ss:FFF") + "\t" + text;
+	String^ line = "@" + DateTime::Now.ToString("HH:mm:ss:FFF") + ":" + "\t" + text;
 
 	//Open Stream
 	StreamWriter^ sw;
@@ -108,10 +108,29 @@ void BasicFunc::Log(System::String^ text)
 			delete (IDisposable^)sw;
 	}
 }
-
-void BasicFunc::openLink(std::string url)
+void BasicFunc::Log(System::Exception ^ exception)
 {
-	ShellExecute(0, 0, (LPCTSTR)url.c_str(), 0, 0, SW_SHOW);
+	Log("Exception occurred!");
+	Log("-----------------------");
+	Log("\t" + "Message:");
+	Log("\t\t" + exception->Message);
+	Log("\t" + "Stack:");
+	Log("\t\t" + exception->StackTrace);
+	Log("-----------------------");
+}
+
+void BasicFunc::openLink(System::String^ url)
+{
+	System::Diagnostics::Process::Start(url);
+}
+
+void BasicFunc::cleanLogFiles()
+{
+	using namespace System::IO;
+
+	String^ mainFolder = SystemAccess::getStandByeFolderPath();
+	String^ log_folder = Path::Combine(mainFolder, "logs");
+	Directory::Delete(log_folder, true);
 }
 
 void BasicFunc::Log(std::string text)
