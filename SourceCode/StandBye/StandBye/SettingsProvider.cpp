@@ -113,6 +113,8 @@ bool SettingsProvider::checkSettingsFile() {
 	default_list.push_back(new Setting(SettingName::PROC_EXCP, PROC_EXCP_DEFAULT));
 	default_list.push_back(new Setting(SettingName::SEARCH_UPDATES, "TRUE"));
 	default_list.push_back(new Setting(SettingName::SHOW_MESSAGES, "TRUE"));
+	default_list.push_back(new Setting(SettingName::STANDBY_MODE, "SUSPEND"));
+	default_list.push_back(new Setting(SettingName::LOGGING, "FALSE"));
 
 	//Ensures that every setting is set
 	for each(Setting* default_setting in default_list) {
