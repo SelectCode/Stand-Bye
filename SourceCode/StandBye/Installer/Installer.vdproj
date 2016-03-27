@@ -15,25 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_107CA2419D4F4FA0BA5BDE2FF0656125"
+        "MsmKey" = "8:_21D6BB7CE5234BC696514AB65BC6F2A3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1DB10B3A27B4189324304A6302B3BB8A"
+        "MsmKey" = "8:_327E8F2B814B568AB390F86C886AEB2D"
         "OwnerKey" = "8:_21D6BB7CE5234BC696514AB65BC6F2A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1DB10B3A27B4189324304A6302B3BB8A"
+        "MsmKey" = "8:_327E8F2B814B568AB390F86C886AEB2D"
         "OwnerKey" = "8:_752F8769F1DE419591D9CF4757567C20"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_21D6BB7CE5234BC696514AB65BC6F2A3"
+        "MsmKey" = "8:_4C0A9977E29347D69A4468035BFFDEDF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -94,7 +94,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1DB10B3A27B4189324304A6302B3BB8A"
+        "OwnerKey" = "8:_327E8F2B814B568AB390F86C886AEB2D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -216,52 +216,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_107CA2419D4F4FA0BA5BDE2FF0656125"
-            {
-            "SourcePath" = "8:DLLS\\Microsoft_VC140_CRT_x86.msm"
-            "TargetName" = "8:Microsoft_VC140_CRT_x86.msm"
-            "Tag" = "8:"
-            "Folder" = "8:_917867257B554B638C69BCA9CC770281"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1DB10B3A27B4189324304A6302B3BB8A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:MetroFramework.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_917867257B554B638C69BCA9CC770281"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_21D6BB7CE5234BC696514AB65BC6F2A3"
             {
             "AssemblyRegister" = "3:1"
@@ -291,6 +245,32 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_327E8F2B814B568AB390F86C886AEB2D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                }
+            "SourcePath" = "8:MetroFramework.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_917867257B554B638C69BCA9CC770281"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5097EC2EA7974BE1926BDC8C62DFB0CB"
@@ -567,7 +547,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Stand-Bye!"
         "ProductCode" = "8:{B0DD608E-A148-4771-90E1-C11FF2AE932C}"
-        "PackageCode" = "8:{8C16E68A-2AA2-4060-9372-F31E93378852}"
+        "PackageCode" = "8:{67A88821-BD62-446F-A2EC-4268CA5DACC1}"
         "UpgradeCode" = "8:{B4A9ADBD-E108-44F0-AD4A-0E878B5B204F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1111,6 +1091,20 @@
         }
         "MergeModule"
         {
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4C0A9977E29347D69A4468035BFFDEDF"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:C:\\Program Files (x86)\\Common Files\\Merge Modules\\Microsoft_VC140_CRT_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
         }
         "ProjectOutput"
         {
