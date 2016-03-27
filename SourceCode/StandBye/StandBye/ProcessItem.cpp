@@ -10,18 +10,11 @@
 //////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "ProcessItem.h"
+#include "SystemAccess.h"
 
 ProcessItem::ProcessItem(const string settings_value, Windows::Forms::ListView^ list) {
 	path = gcnew String(settings_value.c_str());
-	SHFILEINFO* stFileInfo = new SHFILEINFO();
-	SHGetFileInfo(settings_value.c_str(), FILE_ATTRIBUTE_NORMAL, stFileInfo, sizeof(stFileInfo), SHGFI_ICON | SHGFI_LARGEICON);
-	try {
-		icon = Bitmap::FromHicon((IntPtr)stFileInfo->hIcon);
-	}
-	catch (System::ArgumentException^ e) {
-		LOG("Could not load icon from " + settings_value);
-		LOG("\t" + e->Message);
-	}
+	icon = SystemAccess::getIconOfProcess(settings_value);
 	addIconToLists(list);
 	this->Text = IO::Path::GetFileNameWithoutExtension(path);
 	this->SubItems->Add(path);

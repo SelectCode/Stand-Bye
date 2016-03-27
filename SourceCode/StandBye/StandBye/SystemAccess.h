@@ -50,7 +50,7 @@ public:
 
 	float GetMetric(SystemMetric s);
 
-	static void StartESM();
+	static void StartESM(SettingsProvider*);
 
 	static std::vector<std::string> GetNetAdapterNames();
 
@@ -81,4 +81,10 @@ public:
 	static bool MultiUsersPreventStandby();
 
 	static String^ getStandByeFolderPath();
+
+	static System::Drawing::Bitmap^ getIconOfProcess(std::string path);
+
+	static bool isPortable();
+
+	static bool inDebugMode();
 };

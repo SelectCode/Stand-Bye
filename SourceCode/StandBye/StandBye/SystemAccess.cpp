@@ -24,7 +24,7 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 	setprov = p;
 
 	//Enables autostart if first launch
-	if (setprov->isFirstStart() && !(bool)PORTABLE_VERSION) {
+	if (setprov->isFirstStart() && SystemAccess::isPortable()) {
 		this->SetAutoStart(true);
 		LOG("Enabled autostart on first launch of the application");
 	}
@@ -33,6 +33,7 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 	perfHDD = gcnew PerformanceCounter("PhysicalDisk", "Disk Bytes/sec", "_Total");
 	reloadNetworkAdapters();
 }
+
 float SystemAccess::getCPUUsage() {
 	//Note: performance counters need administrator privileges at Windows Vista
 	float cpuUsage_percent = perfCPU->NextValue();
@@ -58,7 +59,7 @@ float SystemAccess::getNETUsage() {
 	}
 	catch (Exception^ e) {
 		LOG("Error getting NET Status");
-		LOG("\t" + e->Message);
+		LOG(e);
 		LOG("Reloading Network Adapters!");
 		reloadNetworkAdapters();
 		return 0;
@@ -87,6 +88,7 @@ SystemAccess::~SystemAccess() {
 	for each(PerformanceCounter^ perf in *perfNETs) {
 		perf->Close();
 	}
+	LOG("Destroyed SystemAccess");
 }
 
 float SystemAccess::GetMetric(SystemMetric s) {
@@ -105,7 +107,7 @@ float SystemAccess::GetMetric(SystemMetric s) {
 	return 0.0f;
 }
 
-void SystemAccess::StartESM()
+void SystemAccess::StartESM(SettingsProvider* p)
 {
 	LOG("ESM will start now");
 	/*
@@ -119,7 +121,13 @@ void SystemAccess::StartESM()
 			The system can restore itself more quickly than returning from hibernation.
 			Because standby does not save the memory state to disk, a power failure while in standby can cause loss of information.
 	*/
-	Application::SetSuspendState(PowerState::Suspend, false, false);
+
+	if (p->getRawSetting(SettingName::STANDBY_MODE) == "SUSPEND") {
+		Application::SetSuspendState(PowerState::Suspend, false, false);
+	}
+	else {
+		Application::SetSuspendState(PowerState::Hibernate, false, false);
+	}
 }
 
 std::vector<std::string> SystemAccess::GetRunningProccesses() {
@@ -137,12 +145,12 @@ std::vector<std::string> SystemAccess::GetRunningProccesses() {
 			if (HANDLE hProcess = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid))
 			{
 				WCHAR filename[MAX_PATH] = {};
-				if (::GetModuleFileNameEx(hProcess, NULL, (LPSTR)filename, MAX_PATH)) {
-					std::string path = (std::string)(LPSTR)filename;
+				if (::GetModuleFileNameEx(hProcess, NULL, (LPWSTR)filename, MAX_PATH)) {
+					std::wstring path = (std::wstring)(LPWSTR)filename;
 					String^ SPath = gcnew String(path.c_str());
 					//Filters all System32 processes
 					if (!SPath->Contains("System32")) {
-						list.push_back(path);
+						list.push_back(BasicFunc::StringToString(SPath));
 					}
 				}
 				::CloseHandle(hProcess);
@@ -312,7 +320,7 @@ String ^ SystemAccess::getActiveUser()
 	WTS_SESSION_INFO *pSession = NULL;
 
 	//Enumerate through all sessions!
-	if (!WTSEnumerateSessionsA(WTS_CURRENT_SERVER_HANDLE, 0, 1, &pSession, &session_count))
+	if (!WTSEnumerateSessionsW(WTS_CURRENT_SERVER_HANDLE, 0, 1, &pSession, &session_count))
 	{
 		LOG("Error on enumerating through sessions!");
 		return "";
@@ -420,7 +428,7 @@ bool SystemAccess::MultiUsersPreventStandby()
 String^ SystemAccess::getStandByeFolderPath()
 {
 	using namespace System::IO;
-	if (!(bool)PORTABLE_VERSION) {
+	if (!SystemAccess::isPortable()) {
 		//Gets the AppData Path
 		String^ folder = Environment::GetFolderPath(Environment::SpecialFolder::ApplicationData);
 		System::IO::Directory::CreateDirectory(folder);
@@ -447,6 +455,49 @@ String^ SystemAccess::getStandByeFolderPath()
 			return folder;
 		}
 	}
+}
+
+System::Drawing::Bitmap ^ SystemAccess::getIconOfProcess(std::string path)
+{
+	SHFILEINFOW* stFileInfo = new SHFILEINFOW();
+	std::wstring wpath = std::wstring(path.begin(), path.end());
+	LPCWSTR strPath = wpath.c_str();
+
+	SHGetFileInfoW(strPath, FILE_ATTRIBUTE_NORMAL, stFileInfo, sizeof(stFileInfo), SHGFI_ICON | SHGFI_LARGEICON);
+	try {
+		return Bitmap::FromHicon((IntPtr)stFileInfo->hIcon);
+	}
+	catch (System::ArgumentException^ e) {
+		LOG("Could not load icon from " + path);
+		LOG(e);
+		return nullptr;
+	}
+}
+
+bool SystemAccess::isPortable()
+{
+	String^ line = gcnew String(GetCommandLineW());
+	List<String^>^ commands = gcnew List<String^>(line->Split(' '));
+	for each(String^ c in commands) {
+		String^ cleaned = c->Trim()->Replace("-", "")->Replace("/", "");
+		if (cleaned == "PORTABLE") {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool SystemAccess::inDebugMode()
+{
+	String^ line = gcnew String(GetCommandLineW());
+	List<String^>^ commands = gcnew List<String^>(line->Split(' '));
+	for each(String^ c in commands) {
+		String^ cleaned = c->Trim()->Replace("-", "")->Replace("/", "");
+		if (cleaned == "DEBUG") {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::vector<std::string> SystemAccess::GetNetAdapterNames() {
