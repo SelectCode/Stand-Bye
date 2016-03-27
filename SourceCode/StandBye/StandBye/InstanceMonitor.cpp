@@ -22,12 +22,12 @@ InstanceMonitor::InstanceMonitor(mainApplication ^ parent)
 
 	mApplication = parent;
 	//Checks if another instance is running
-	hMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, "Stand-Bye");
+	hMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, (LPCWSTR)"Stand-Bye");
 	LOG("Instance Monitor trys to open Mutex!");
 
 	if (!hMutex) {
 		//Mutex does not exist --> first instance
-		hMutex = CreateMutex(0, 0, "Stand-Bye");
+		hMutex = CreateMutex(0, 0, (LPCWSTR)"Stand-Bye");
 		anotherInstanceRunning = false;
 		LOG("Instance Monitor: No other instance running");
 
@@ -57,7 +57,7 @@ void InstanceMonitor::monitor(System::Object^, System::EventArgs^)
 		}
 		catch (Exception^ e) {
 			LOG("Could not open Settingsform!");
-			LOG(e->Message);
+			LOG(e);
 		}
 		deleteFile();
 	}

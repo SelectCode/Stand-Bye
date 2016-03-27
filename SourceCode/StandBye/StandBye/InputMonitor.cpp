@@ -12,6 +12,8 @@
 #include "InputMonitor.h"
 #include "mainApplication.h" //Is needed here to prevent cross including
 
+#define SECONDS_TO_MILLIS(x) x * 1000
+
 InputMonitor::InputMonitor(mainApplication^ parent, SettingsProvider* s) {
 	this->parent = parent;
 	settings_provider = s;
@@ -34,10 +36,19 @@ void InputMonitor::Stop()
 
 void InputMonitor::Monitor(System::Object ^, System::EventArgs ^)
 {
+	if ((SECONDS_TO_MILLIS(settings_provider->getThreshold(SettingName::WAIT_TIME)) - SystemAccess::GetLastInputTime()) < SECONDS_TO_MILLIS(10)) {
+		//Only 10 sec left
+		parent->startMetricWatcher();
+	}
+	else {
+		parent->stopMetricWatcher();
+	}
+
 	if (SystemAccess::GetLastInputTime() > settings_provider->getThreshold(SettingName::WAIT_TIME) * 1000) {
 		LOG("Wait Time is over!");
 		this->Stop();
 		parent->checkSystemAndStandby();
 		monTimer->Start();
 	}
+	
 }
