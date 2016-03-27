@@ -1,6 +1,6 @@
 # Changelog:
 
-## v x
+## v0.6.0
  * New GUI setup:
 	* MetroTiles on Start
 	* New metroTile that shows the cancel-status
@@ -11,6 +11,7 @@
 	* Deleted "onTop" Setting (not necassary)
  * Auto-Start activating on first launch
  * Reduced memory consumption (delayed loading of components)
+ * Now Removing Downloadfiles after installing
  * Reduced CPU consumption
  * Reduced size of executable
  * Re-structered code
