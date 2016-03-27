@@ -21,8 +21,11 @@ private:
 	int size;
 
 public:
-
 	AverageBuffer(int s);
+	~AverageBuffer()
+	{
+		delete buffer;
+	}
 	void Put(float f);
 	float GetAverage();
 };
