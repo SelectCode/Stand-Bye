@@ -20,7 +20,10 @@ System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::
 void StandBye::MetroSettingsForm::PrepareForm()
 {
 	//Focus on first tabPage
-	metroTabControlMain->SelectedTab = metroTabPageSettings;
+	metroTabControlMain->SelectedTab = metroTabPageGeneral;
+
+	//Sets Events
+	registerEvents();
 
 	//Loads Resource Manager
 	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
@@ -33,11 +36,14 @@ void StandBye::MetroSettingsForm::PrepareForm()
 
 	//Sets version
 	String^ versionText = gcnew String("v" + APP_VERSION);
-	if ((bool)PORTABLE_VERSION) {
+	if (SystemAccess::isPortable()) {
 		versionText += " PORTABLE";
 	}
-	versionText += "\n" + "© Florian Baader, Stephan Le, Matthias Weirich";
+	versionText += "\n" + L"(c) Florian Baader, Stephan Le, Matthias Weirich";
 	metroLabelVersion->Text = versionText;
+
+	//Sets dateTime Font
+	dateTimePickerStandbyStart->Font = BasicFunc::getMetroFont(12);
 
 	//Select Language
 	metroComboBoxLanguage->Text = CultureInfo::DefaultThreadCurrentCulture->NativeName;
@@ -52,6 +58,88 @@ void StandBye::MetroSettingsForm::PrepareForm()
 
 	//Activate
 	this->Activate();
+}
+
+void StandBye::MetroSettingsForm::cleanResources()
+{
+	if (components)
+	{
+		delete components;
+	}
+	delete system_access;
+	system_watcher->Stop();
+	delete system_watcher;
+	res_man->ReleaseAllResources();
+	delete res_man;
+	res_manIMG->ReleaseAllResources();
+	delete res_manIMG;
+	supportedLanguages->Clear();
+	delete supportedLanguages;
+}
+
+void StandBye::MetroSettingsForm::registerEvents()
+{
+	//Main
+	this->metroButtonOK->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonOK_Click);
+	this->metroButtonCancel->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonCancel_Click);
+	this->metroLinkHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::OpenHomepageOnClick);
+	this->timerRefresh->Tick += gcnew System::EventHandler(this, &MetroSettingsForm::timerUIRefresh_Tick);
+
+	//General
+	metroTilePresMode->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTilePresMode->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileAbout->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileAbout->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileVisit->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileVisit->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileProcesses->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileProcesses->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileSettings->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileSettings->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+
+	textBoxTimeMIN->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnTextBoxMouseEnter);
+	textBoxTimeMIN->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnTextBoxMouseLeave);
+	textBoxTimeSEC->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnTextBoxMouseEnter);
+	textBoxTimeSEC->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnTextBoxMouseLeave);
+
+	textBoxTimeMIN->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &StandBye::MetroSettingsForm::ReformatTextBoxValueOnReturn);
+	textBoxTimeSEC->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &StandBye::MetroSettingsForm::ReformatTextBoxValueOnReturn);
+
+	metroTileAbout->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTileAbout_Click);
+	metroTileProcesses->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTileProcesses_Click);
+	metroTileSettings->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTileSettings_Click);
+	metroTilePresMode->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTilePresMode_Click);
+
+	//Thresholds
+	this->metroTrackBarCPU->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarCPU_Scroll);
+	this->metroTrackBarRAM->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarRAM_Scroll);
+	this->metroTrackBarHDD->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarHDD_Scroll);
+	this->metroTrackBarNET->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarNET_Scroll);
+
+	//Processes
+	this->listViewProc->SelectedIndexChanged += gcnew System::EventHandler(this, &MetroSettingsForm::listViewProc_SelectedIndexChanged);
+	this->metroButtonRemove->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonRemove_Click);
+	this->metroButtonAddFromList->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonAddFromList_Click);
+	this->metroButtonAddFromFile->Click += gcnew System::EventHandler(this, &MetroSettingsForm::metroButtonAddFromFile_Click);
+	this->metroToggleView->CheckedChanged += gcnew System::EventHandler(this, &MetroSettingsForm::metroToggleView_CheckedChanged);
+
+	//Advanced
+	this->metroToggleAutoStart->CheckedChanged += gcnew System::EventHandler(this, &MetroSettingsForm::metroToggleAutoStart_CheckedChanged);
+	this->metroComboBoxLanguage->SelectedIndexChanged += gcnew System::EventHandler(this, &MetroSettingsForm::LanguageIndexChanged);
+
+	//About
+	metroTileHomepage->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileHomepage->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileGithub->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileGithub->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+	metroTileDonate->MouseEnter += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseEnter);
+	metroTileDonate->MouseLeave += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OnMetroTileMouseLeave);
+
+	this->metroTileHomepage->Click += gcnew System::EventHandler(this, &MetroSettingsForm::OpenHomepageOnClick);
+	this->metroTileGithub->Click += gcnew System::EventHandler(this, &MetroSettingsForm::openGithubOnClick);
+	this->metroTileDonate->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OpenHomepageOnClick);
+	this->metroLinkContact->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::ContactLink);
+	this->textBoxLicense->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OpenLicense);
 }
 
 double StandBye::MetroSettingsForm::getTextAsDouble(String^ text) {
@@ -118,7 +206,7 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	metroToolTip1->SetToolTip(metroLabelCurNET, String::Format("Now: {0:00.00} MBit/s", system_access->GetMetric(SystemAccess::SystemMetric::NETWORK) / 1000));
 
 	//Sets icon of status tile
-	if (parent->isSystemBusy()) {
+	if (parent->isSystemBusy(system_watcher)) {
 		this->metroTileCanceledStatus->TileImage = (System::Drawing::Image^) res_manIMG->GetObject("CIRCLE_UNCHECKED");
 		this->metroTileCanceledStatus->Text = res_man->GetString("standby_canceled", CultureInfo::DefaultThreadCurrentCulture);
 	}
@@ -135,12 +223,10 @@ System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::Eve
 	//disables Form;
 	this->Visible = false;
 	writeSettings();
-	LOG("Settingsform closing");
 	this->Close();
 }
 System::Void MetroSettingsForm::metroButtonCancel_Click(System::Object^, System::EventArgs^) {
 	LOG("SettingsForm: CANCEL Button Clicked");
-	LOG("Settingsform closing");
 	this->Close();
 }
 System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, System::EventArgs^) {
@@ -237,6 +323,7 @@ void StandBye::MetroSettingsForm::writeSettings()
 	settings_provider->setActiveState(SettingName::CHECK_SOUND, metroToggleSOUND->Checked);
 	settings_provider->setActiveState(SettingName::SEARCH_UPDATES, metroToggleUPDATES->Checked);
 	settings_provider->setActiveState(SettingName::SHOW_MESSAGES, metroToggleMessages->Checked);
+	settings_provider->setActiveState(SettingName::LOGGING, metroToggleLogging->Checked);
 
 	//Sets language
 	settings_provider->setSetting(SettingName::LANGUAGE, BasicFunc::StringToString(CultureInfo::DefaultThreadCurrentCulture->TwoLetterISOLanguageName));
@@ -245,6 +332,14 @@ void StandBye::MetroSettingsForm::writeSettings()
 	for each(ListViewItem^ l in listViewProc->Items) {
 		ProcessItem^ p = (ProcessItem^)l;
 		p->Write(settings_provider);
+	}
+
+	//Standby mode
+	if (metroComboBoxStandby->Text == res_man->GetString("suspend", CultureInfo::DefaultThreadCurrentCulture)) {
+		settings_provider->setSetting(SettingName::STANDBY_MODE, "SUSPEND");
+	}
+	else {
+		settings_provider->setSetting(SettingName::STANDBY_MODE, "HIBERNATE");
 	}
 
 	//Writes settings to file
@@ -266,6 +361,7 @@ void StandBye::MetroSettingsForm::loadSettings()
 	metroToggleNET->Checked = settings_provider->isActive(SettingName::USE_NET);
 	metroToggleRAM->Checked = settings_provider->isActive(SettingName::USE_RAM);
 	metroToggleSOUND->Checked = settings_provider->isActive(SettingName::CHECK_SOUND);
+	metroToggleLogging->Checked = settings_provider->isActive(SettingName::LOGGING);
 
 	//Load AutoStart Setting
 	metroToggleAutoStart->Checked = SystemAccess::IsInAutoStart();
@@ -286,6 +382,14 @@ void StandBye::MetroSettingsForm::loadSettings()
 		listViewProc->Items->Add(gcnew ProcessItem(str, listViewProc));
 	}
 	listViewProc->Update();
+
+	//Standby mode
+	if (settings_provider->getRawSetting(SettingName::STANDBY_MODE) == "SUSPEND") {
+		metroComboBoxStandby->Text = res_man->GetString("suspend", CultureInfo::DefaultThreadCurrentCulture);
+	}
+	else {
+		metroComboBoxStandby->Text = res_man->GetString("hibernate", CultureInfo::DefaultThreadCurrentCulture);
+	}
 
 	//Presentation mode
 	ShowPresModeStatus();
@@ -335,7 +439,7 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroButtonCancel->Text = res_man->GetString("cancel", cul);
 
 	//Tab Pages
-	metroTabPageSettings->Text = res_man->GetString("general", cul);
+	metroTabPageGeneral->Text = res_man->GetString("general", cul);
 	metroTabPageExcpProcess->Text = res_man->GetString("excp_process", cul);
 	metroTabPageAdvSettings->Text = res_man->GetString("adv_settings", cul);
 	metroTabPageAbout->Text = res_man->GetString("about", cul);
@@ -356,6 +460,9 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextHDD->Text = res_man->GetString("hdd_threshold", cul);
 	metroLabelTextNET->Text = res_man->GetString("net_threshold", cul);
 	metroLabelTextAverageUsage->Text = res_man->GetString("avg_usage", cul);
+	metroLabelTextStartStandBy->Text = res_man->GetString("start_standby_at", cul);
+	explStartStandbyAt->Text = res_man->GetString("expl_StandbyAt", cul);
+	explSOUND->Text = res_man->GetString("expl_SOUND", cul);
 
 	//Processes
 	metroButtonAddFromFile->Text = res_man->GetString("add_process_file", cul);
@@ -368,11 +475,16 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextUpdates->Text = res_man->GetString("search_updates", cul);
 	metroLabelTextMessages->Text = res_man->GetString("show_messages", cul);
 	metroLabelTextLanguage->Text = res_man->GetString("language", cul);
+	metroLabelTextLogging->Text = res_man->GetString("enable_log", cul);
+	metroLabelTextSelectStandby->Text = res_man->GetString("select_standby", cul);
 
 	//About
-	metroLabelTextAbout->Text = res_man->GetString("about_text", cul);
 	metroTileHomepage->Text = res_man->GetString("visit_homepage", cul);
 	metroTileGithub->Text = res_man->GetString("visit_github", cul);
+	metroTileDonate->Text = res_man->GetString("donate", cul);
+	metroLabelSupport->Text = res_man->GetString("support_us", cul);
+	metroLabelLicenseHeading->Text = res_man->GetString("license_heading", cul);
+	metroLinkContact->Text = res_man->GetString("contact", cul);
 
 	//Info
 	infoExcpProcesses->Text = res_man->GetString("info_excp", cul);
@@ -386,9 +498,15 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	explNET->Text = res_man->GetString("expl_NET", cul);
 	explSOUND->Text = res_man->GetString("expl_SOUND", cul);
 
+	//Standby modes
+	metroComboBoxStandby->Items->Clear();
+	metroComboBoxStandby->Items->Add(res_man->GetString("suspend", cul));
+	metroComboBoxStandby->Items->Add(res_man->GetString("hibernate", cul));
+
 	//Sets preferred Sizes
 	for each(Windows::Forms::Control^ control in this->Controls) {
 		control->Size = control->PreferredSize;
+		control->PerformLayout();
 	}
 
 	this->Update();
@@ -492,4 +610,14 @@ System::Void StandBye::MetroSettingsForm::metroTrackBarNET_Scroll(System::Object
 	if (metroLabelNETStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10)) {
 		metroLabelNETStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10);
 	}
+}
+
+void StandBye::MetroSettingsForm::ContactLink(System::Object ^, System::EventArgs ^)
+{
+	BasicFunc::openLink("mailto:contact@stand-bye.de");
+}
+
+void StandBye::MetroSettingsForm::OpenLicense(System::Object ^, System::EventArgs ^)
+{
+	BasicFunc::openLink("http://stand-bye.de/html/license.txt");
 }
