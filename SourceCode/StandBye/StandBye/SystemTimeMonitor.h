@@ -31,7 +31,10 @@ public:
 	SystemTimeMonitor(mainApplication^ sender, SettingsProvider* setProv);
 	~SystemTimeMonitor()
 	{
+		monTimer->Stop();
 		delete monTimer;
+		parent = nullptr;
+		settings_provider = nullptr;
 	}
 	void Stop();
 };

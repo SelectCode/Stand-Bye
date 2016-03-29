@@ -19,6 +19,7 @@ SystemTimeMonitor::SystemTimeMonitor(mainApplication^ sender, SettingsProvider* 
 	monTimer = gcnew System::Windows::Forms::Timer();
 	monTimer->Interval = 1000;
 	monTimer->Tick += gcnew System::EventHandler(this, &SystemTimeMonitor::OnTick);
+	monTimer->Start();
 }
 
 void SystemTimeMonitor::Stop()
@@ -26,12 +27,12 @@ void SystemTimeMonitor::Stop()
 	//Stops Thread
 	monTimer->Stop();
 }
-
 void SystemTimeMonitor::OnTick(System::Object ^, System::EventArgs ^)
 {
+	standbyTime = DateTime::ParseExact(gcnew String(settings_provider->getRawSetting(SettingName::SLEEPTIME).c_str()),
+		gcnew String("HH:mm"), CultureInfo::CreateSpecificCulture("de"));
 	if ((DateTime::Now.Hour == standbyTime.Hour) && (DateTime::Now.Minute == standbyTime.Minute)) {
 		monTimer->Stop();
-		parent->checkSystemAndStandby();
-		monTimer->Start();
+		parent->checkSystemAndStandby(false);
 	}
 }
