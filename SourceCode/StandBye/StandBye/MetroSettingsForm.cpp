@@ -8,15 +8,11 @@
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
 */
 //////////////////////////////////////////////////////////////////////////
+
 #include "stdafx.h"
 #include "MetroSettingsForm.h"
 #include "mainApplication.h"
 using namespace StandBye;
-System::Void MetroSettingsForm::MetroSettingsForm_Load(System::Object^, System::EventArgs^) {
-	//Prepares Form
-	this->PrepareForm();
-}
-
 void StandBye::MetroSettingsForm::PrepareForm()
 {
 	//Focus on first tabPage
@@ -42,6 +38,12 @@ void StandBye::MetroSettingsForm::PrepareForm()
 	versionText += "\n" + L"(c) Florian Baader, Stephan Le, Matthias Weirich";
 	metroLabelVersion->Text = versionText;
 
+	//Sets languages
+	metroComboBoxLanguage->Items->Clear();
+	for each(CultureInfo^ cul in supportedLanguages) {
+		metroComboBoxLanguage->Items->Add(cul->NativeName);
+	}
+
 	//Sets dateTime Font
 	dateTimePickerStandbyStart->Font = BasicFunc::getMetroFont(12);
 
@@ -62,10 +64,6 @@ void StandBye::MetroSettingsForm::PrepareForm()
 
 void StandBye::MetroSettingsForm::cleanResources()
 {
-	if (components)
-	{
-		delete components;
-	}
 	delete system_access;
 	system_watcher->Stop();
 	delete system_watcher;
@@ -73,8 +71,6 @@ void StandBye::MetroSettingsForm::cleanResources()
 	delete res_man;
 	res_manIMG->ReleaseAllResources();
 	delete res_manIMG;
-	supportedLanguages->Clear();
-	delete supportedLanguages;
 }
 
 void StandBye::MetroSettingsForm::registerEvents()
@@ -109,6 +105,7 @@ void StandBye::MetroSettingsForm::registerEvents()
 	metroTileProcesses->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTileProcesses_Click);
 	metroTileSettings->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTileSettings_Click);
 	metroTilePresMode->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::metroTilePresMode_Click);
+	metroTileVisit->Click += gcnew System::EventHandler(this, &StandBye::MetroSettingsForm::OpenHomepageOnClick);
 
 	//Thresholds
 	this->metroTrackBarCPU->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &MetroSettingsForm::metroTrackBarCPU_Scroll);
@@ -324,6 +321,8 @@ void StandBye::MetroSettingsForm::writeSettings()
 	settings_provider->setActiveState(SettingName::SEARCH_UPDATES, metroToggleUPDATES->Checked);
 	settings_provider->setActiveState(SettingName::SHOW_MESSAGES, metroToggleMessages->Checked);
 	settings_provider->setActiveState(SettingName::LOGGING, metroToggleLogging->Checked);
+	settings_provider->setActiveState(SettingName::USE_SLEEPTIME, metroToggleSleepTime->Checked);
+	settings_provider->setSetting(SettingName::SLEEPTIME, BasicFunc::StringToString(dateTimePickerStandbyStart->Value.ToString("HH:mm")));
 
 	//Sets language
 	settings_provider->setSetting(SettingName::LANGUAGE, BasicFunc::StringToString(CultureInfo::DefaultThreadCurrentCulture->TwoLetterISOLanguageName));
@@ -362,6 +361,9 @@ void StandBye::MetroSettingsForm::loadSettings()
 	metroToggleRAM->Checked = settings_provider->isActive(SettingName::USE_RAM);
 	metroToggleSOUND->Checked = settings_provider->isActive(SettingName::CHECK_SOUND);
 	metroToggleLogging->Checked = settings_provider->isActive(SettingName::LOGGING);
+	metroToggleSleepTime->Checked = settings_provider->isActive(SettingName::USE_SLEEPTIME);
+	dateTimePickerStandbyStart->Value = DateTime::ParseExact(gcnew String(settings_provider->getRawSetting(SettingName::SLEEPTIME).c_str()),
+		gcnew String("HH:mm"), CultureInfo::CreateSpecificCulture("de"));
 
 	//Load AutoStart Setting
 	metroToggleAutoStart->Checked = SystemAccess::IsInAutoStart();
@@ -404,7 +406,7 @@ System::Void MetroSettingsForm::openGithubOnClick(System::Object^, System::Event
 	BasicFunc::openLink("https://github.com/flobaader/Stand-Bye");
 }
 System::Void MetroSettingsForm::OpenHomepageOnClick(System::Object^, System::EventArgs^) {
-	BasicFunc::openLink("http://www.stand-bye.de");
+	BasicFunc::openLink("http://www.stand-bye.de/feedback");
 }
 System::Void MetroSettingsForm::ReformatTextBoxValueOnReturn(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e) {
 	using MetroFramework::Controls::MetroTextBox;
@@ -463,6 +465,8 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextStartStandBy->Text = res_man->GetString("start_standby_at", cul);
 	explStartStandbyAt->Text = res_man->GetString("expl_StandbyAt", cul);
 	explSOUND->Text = res_man->GetString("expl_SOUND", cul);
+	groupBoxFeatures->Text = res_man->GetString("feature", cul);
+	groupBoxThresholds->Text = res_man->GetString("general_thresholds", cul);
 
 	//Processes
 	metroButtonAddFromFile->Text = res_man->GetString("add_process_file", cul);
@@ -477,6 +481,8 @@ void StandBye::MetroSettingsForm::switchLanguage()
 	metroLabelTextLanguage->Text = res_man->GetString("language", cul);
 	metroLabelTextLogging->Text = res_man->GetString("enable_log", cul);
 	metroLabelTextSelectStandby->Text = res_man->GetString("select_standby", cul);
+	metroLabelGeneralSettings->Text = res_man->GetString("general_settings", cul);
+	metroLabelStandbyeSettings->Text = res_man->GetString("standbye_settings", cul);
 
 	//About
 	metroTileHomepage->Text = res_man->GetString("visit_homepage", cul);
