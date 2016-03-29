@@ -11,9 +11,11 @@
 #include "stdafx.h"
 #include "SystemMetricWatcher.h"
 
-SystemMetricWatcher::SystemMetricWatcher(SystemAccess^ system_access, int frequency, int stored_samples) {
+SystemMetricWatcher::SystemMetricWatcher(SystemAccess^ system_access) {
 	//Variables
 	this->system_access = system_access;
+
+	int stored_samples = 120;
 
 	//Initialize Buffers
 	ram_buffer = gcnew AverageBuffer(stored_samples);
@@ -24,7 +26,7 @@ SystemMetricWatcher::SystemMetricWatcher(SystemAccess^ system_access, int freque
 
 	//Starts Timer
 	monTimer = gcnew System::Windows::Forms::Timer();
-	monTimer->Interval = 1000 / frequency;
+	monTimer->Interval = 50;
 	monTimer->Tick += gcnew System::EventHandler(this, &SystemMetricWatcher::ReadValues);
 	monTimer->Start();
 }

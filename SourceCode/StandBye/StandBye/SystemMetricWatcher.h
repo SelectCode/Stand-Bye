@@ -21,7 +21,7 @@ private:
 	void ReadValues(System::Object^, System::EventArgs^);
 
 public:
-	SystemMetricWatcher(SystemAccess^ system_access, int frequenzy, int time);
+	SystemMetricWatcher(SystemAccess^ system_access);
 	~SystemMetricWatcher();
 	void Stop();
 	float GetSystemMetric(SystemAccess::SystemMetric s);
