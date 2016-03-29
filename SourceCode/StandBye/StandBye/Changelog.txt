@@ -3,20 +3,28 @@
 ## v0.6.0
  * New GUI setup:
 	* MetroTiles on Start
-	* New metroTile that shows the cancel-status
+	* New metroTile that shows the standby activation status
 	* New options:
-		* Enable / disable logging
 		* Specify standby mode
-		* Added option to start standby at specified time
-	* Deleted "onTop" Setting (not necassary)
- * Auto-Start activating on first launch
- * Reduced memory consumption (delayed loading of components)
- * Now Removing Downloadfiles after installing
- * Reduced CPU consumption
- * Reduced size of executable
- * Re-structered code
+		* Enable / Disable logging
+		* Start standby at specified time
+	* Added information
+	* Updated "About Tab"
+	* Deleted "onTop" Setting (not necessary)
+ * Changed license to GNU GENERAL PUBLIC LICENSE Version 3
+ * Fixed Bugs:
+	* Fixed steadily increasing memory consumption
+	* Fixed missing dlls in portable version (C++ Runtime is not longer required) (.NET Framework is still required)
+ * Improved Code:
+	* Reduced memory consumption (delayed loading of components) from 15-20MB to 5 MB
+	* Reduced CPU consumption from 2-3% average to nearly 0%
+	* Reduced size of executable
+	* Fixed memory leaks
+ * Small Changes:
+	* Auto-Start activating on first launch
+	* Now Removing Downloadfiles after installing
+	* Re-structered code
  
-
 
 ## v0.5.7
  * Added compatibility for old settings

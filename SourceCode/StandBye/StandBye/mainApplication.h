@@ -8,6 +8,7 @@
  * Copyright (c) 2016 Florian Baader, Stephan Le, Matthias Weirich
 */
 //////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "stdafx.h"
 #include "resource1.h"
@@ -20,6 +21,8 @@
 #include "MetroSettingsForm.h"
 #include "Updater.h"
 #include "HotKeyMessageFilter.h"
+#include "SystemTimeMonitor.h"
+#include "StartBanner.h"
 
 using namespace StandBye;
 using System::Resources::ResourceManager;
@@ -36,6 +39,7 @@ private:
 	SettingsProvider* settings_provider;
 	SystemAccess^ system_access;
 	InputMonitor^ input_monitor;
+	SystemTimeMonitor^ time_monitor;
 
 	//Resources and Languages
 	ResourceManager^ res_man;
@@ -45,7 +49,6 @@ private:
 	bool userExited = false;
 	bool ask_Enable_PresentationMode = true;
 
-
 public:
 	//Main Functions
 	mainApplication(HINSTANCE hInstance);
@@ -53,12 +56,31 @@ public:
 	~mainApplication() {
 		//Cleans Resources
 		bool Log = settings_provider->isActive(SettingName::LOGGING);
+
+		//Deletes Components
 		delete input_monitor;
 		delete system_access;
 		delete settings_provider;
-		delete system_watcher;
 		delete PresentationModeItem;
+		delete supportedLanguages;
+
+		//Stop Monitoring Threads
+		StopMetricWatcher();
+		StopSystemTimeWatcher();
+
+		trayicon->Visible = false;
 		delete trayicon;
+
+		//Settings form
+		if (settingsForm != nullptr) {
+			settingsForm->Close();
+			delete settingsForm;
+			settingsForm = nullptr;
+		}
+
+		//Deletes Resources
+		res_man->ReleaseAllResources();
+		delete res_man;
 
 		//Deletes log files if not enabled
 		if (Log) {
@@ -68,10 +90,13 @@ public:
 			BasicFunc::cleanLogFiles();
 		}
 	};
+
 	//Main Function
 	void Start();
 	void startMetricWatcher();
-	void stopMetricWatcher();
+	void StopMetricWatcher();
+	void StartSystemTimeWatcher();
+	void StopSystemTimeWatcher();
 
 	//Context Menu public
 	NotifyIcon^ GenerateIcon(HINSTANCE hInstance);
@@ -80,11 +105,11 @@ public:
 	void OpenSettingsForm();
 
 	//Standby Functions
-	void checkSystemAndStandby();
+	void checkSystemAndStandby(bool checkThresholds);
 	bool isSystemBusy(SystemMetricWatcher^ watcher);
 	bool isInPresentationMode();
 	void setPresentationMode(bool value);
-	void askUserAndStartStandby();
+	void askUserAndStartStandby(bool SystemTime);
 	bool hasUserExited();
 
 	//PM-Hot key
@@ -103,8 +128,6 @@ private:
 	//Updates
 	void CheckForUpdatesOnStartUp();
 	void CheckForUpdatesClicked(System::Object ^sender, System::EventArgs ^e);
-
-	void OnSettingsFormClosed(System::Object ^sender, System::Windows::Forms::FormClosedEventArgs ^e);
 };
 
 ref class NotifyIconAppContext : System::Windows::Forms::ApplicationContext {

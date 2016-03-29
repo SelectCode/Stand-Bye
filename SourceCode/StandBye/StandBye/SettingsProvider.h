@@ -20,7 +20,7 @@
 #define MAX_CPU_DEFAULT "30"                     /*in percent*/
 #define MAX_HDD_DEFAULT "2000"                   /*in kBytes/s*/
 #define MAX_NET_DEFAULT "1200"                   /*in kBytes/s*/
-#define MAX_RAM_DEFAULT "20"                     /*in percent*/
+#define MAX_RAM_DEFAULT "50"                     /*in percent*/
 #define WAIT_TIME_DEFAULT "300"                  /*in seconds*/
 #define PROC_EXCP_DEFAULT ""                     /*paths to exception processes*/
 

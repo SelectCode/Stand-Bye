@@ -41,14 +41,13 @@ void InputMonitor::Monitor(System::Object ^, System::EventArgs ^)
 		parent->startMetricWatcher();
 	}
 	else {
-		parent->stopMetricWatcher();
+		parent->StopMetricWatcher();
 	}
 
 	if (SystemAccess::GetLastInputTime() > settings_provider->getThreshold(SettingName::WAIT_TIME) * 1000) {
 		LOG("Wait Time is over!");
 		this->Stop();
-		parent->checkSystemAndStandby();
+		parent->checkSystemAndStandby(true);
 		monTimer->Start();
 	}
-	
 }

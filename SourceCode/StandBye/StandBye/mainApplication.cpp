@@ -25,13 +25,25 @@ NotifyIconAppContext::NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst
 void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 	LOG("Requested to load settingsForm");
 	if (settingsForm == nullptr) {
+		StartBanner^ banner = gcnew StartBanner();
+		banner->Show();
+		banner->Activate();
+		banner->BringToFront();
+		banner->Refresh();
 		settingsForm = gcnew MetroSettingsForm(this, settings_provider, supportedLanguages);
+		banner->Close();
+		delete banner;
 		settingsForm->ShowDialog();
 		delete settingsForm;
 		settingsForm = nullptr;
-		GC::Collect();
-		GC::WaitForPendingFinalizers();
-		GC::Collect();
+		//Checks if settings were changed
+		//Loading SystemTime Monitor
+		if (settings_provider->isActive(SettingName::USE_SLEEPTIME)) {
+			this->StartSystemTimeWatcher();
+		}
+		else {
+			this->StopSystemTimeWatcher();
+		}
 	}
 	else {
 		//Settings form is open
@@ -44,7 +56,6 @@ void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 void mainApplication::Quit(Object^, System::EventArgs^) {
 	//Enables Windows standby
 	SystemAccess::EnableWindowsStandBy();
-	LOG("Re-enabled windows Standby");
 	userExited = true;
 	LOG("Application starts quitting...");
 	Application::ExitThread();
@@ -56,11 +67,18 @@ void mainApplication::ReloadContextMenu()
 	LOG("Reloaded Context Menu with Language:" + CultureInfo::DefaultThreadCurrentCulture->EnglishName);
 }
 
-void mainApplication::askUserAndStartStandby()
+void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 {
 	//Checks if the application is in presentation mode
 	if (inPresentationMode) {
 		LOG("Application in presentation mode! \n Canceled Sleep mode!");
+		if (FromSystemTime) {
+			String^ message = res_man->GetString("msg_canceled_of_presMode", CultureInfo::DefaultThreadCurrentCulture);
+			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::OK);
+			msgPres->ShowDialog();
+			delete msgPres;
+			StopSystemTimeWatcher();
+		}
 		return;
 	}
 
@@ -95,9 +113,19 @@ void mainApplication::askUserAndStartStandby()
 				LOG("The user denied to enable the presentation mode");
 				ask_Enable_PresentationMode = false;
 			}
+			delete msgPres;
 		}
 		else {
 			LOG("Did not ask for presentation mode, because it has been denied once");
+		}
+
+		//Shows warning if started from system-time
+		if (FromSystemTime) {
+			String^ message = res_man->GetString("msg_standby_time_canceled", CultureInfo::DefaultThreadCurrentCulture);
+			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::OK);
+			msgPres->ShowDialog();
+			delete msgPres;
+			StopSystemTimeWatcher();
 		}
 	}
 }
@@ -257,25 +285,43 @@ void mainApplication::Start()
 
 void mainApplication::startMetricWatcher()
 {
-	if (system_access == nullptr) {
+	if (system_watcher == nullptr) {
 		//Loading System Access
 		system_access = gcnew SystemAccess(settings_provider);
 		LOG("Loaded SystemAccess");
 
 		//Loading SystemMetricWatcher
-		system_watcher = gcnew SystemMetricWatcher(system_access, 5, 30);//Sample 10 times/second, space for 30 samples, average over 3 seconds
+		system_watcher = gcnew SystemMetricWatcher(system_access);//Sample 10 times/second, space for 30 samples, average over 3 seconds
 		LOG("Loaded and Started SystemMetricWatcher");
 	}
 }
 
-void mainApplication::stopMetricWatcher()
+void mainApplication::StopMetricWatcher()
 {
-	if (system_access != nullptr) {
+	if (system_watcher != nullptr) {
 		LOG("Stopped Metric Watcher");
 		delete system_access;
 		delete system_watcher;
 		system_access = nullptr;
 		system_watcher = nullptr;
+	}
+}
+
+void mainApplication::StartSystemTimeWatcher()
+{
+	if (time_monitor == nullptr) {
+		time_monitor = gcnew SystemTimeMonitor(this, settings_provider);
+		LOG("Loaded SystemtimeMonitor");
+	}
+}
+
+void mainApplication::StopSystemTimeWatcher()
+{
+	if (time_monitor != nullptr) {
+		time_monitor->Stop();
+		delete time_monitor;
+		time_monitor = nullptr;
+		LOG("SystemTimeMonitor has been deleted");
 	}
 }
 
@@ -292,10 +338,10 @@ NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	return trayicon;
 }
 
-void mainApplication::checkSystemAndStandby()
+void mainApplication::checkSystemAndStandby(bool checkThresholds)
 {
-	if (!this->isSystemBusy(system_watcher)) {
-		this->askUserAndStartStandby();
+	if (!checkThresholds || !this->isSystemBusy(system_watcher)) {
+		this->askUserAndStartStandby(!checkThresholds);
 	}
 }
 
@@ -329,14 +375,19 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 			loadedLanguage = "en";
 		}
 	}
+
+	//Loads Resources
 	res_man = gcnew ResourceManager("StandBye.LanguageResources", GetType()->Assembly);
 	CultureInfo::DefaultThreadCurrentCulture = CultureInfo::CreateSpecificCulture(loadedLanguage);
-
-	delete loadedLanguage;
 
 	//Loading Input Monitor
 	input_monitor = gcnew InputMonitor(this, settings_provider);
 	LOG("Loaded InputMonitor");
+
+	//Loading SystemTime Monitor
+	if (settings_provider->isActive(SettingName::USE_SLEEPTIME)) {
+		this->StartSystemTimeWatcher();
+	}
 
 	//Checks for Updates
 	Thread^ UpdateThread = gcnew Thread(gcnew System::Threading::ThreadStart(this, &mainApplication::CheckForUpdatesOnStartUp));
@@ -357,13 +408,9 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 
 void mainApplication::OnIconMouseClick(System::Object ^, System::Windows::Forms::MouseEventArgs ^e)
 {
-	if (e->Button == Windows::Forms::MouseButtons::Left && e->Clicks == 0) {
+	if (e->Button == Windows::Forms::MouseButtons::Left) {
 		//If left mouse click open settings
 		this->OpenSettings(nullptr, nullptr);
-	}
-	else if (e->Button == Windows::Forms::MouseButtons::Left && e->Clicks > 0) {
-		//If Double clicked, open DebugForm
-		this->OpenDebugForm(nullptr, nullptr);
 	}
 }
 
@@ -434,12 +481,4 @@ void mainApplication::registerPresentationModeHotkey() {
 	else {
 		LOG("Failed to register hotkey. Error: " + GetLastError());
 	}
-}
-
-void mainApplication::OnSettingsFormClosed(System::Object ^, System::Windows::Forms::FormClosedEventArgs ^)
-{
-	delete settingsForm;
-	settingsForm = nullptr;
-	//GC::Collect();
-	//GC::WaitForPendingFinalizers();
 }

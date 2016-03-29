@@ -29,6 +29,7 @@ ProcessItem::~ProcessItem() {
 	this->ListView->LargeImageList->Images->RemoveAt(this->ListView->Items->IndexOf(this));
 	this->Remove();
 	delete path;
+	delete icon;
 }
 
 System::String^ ProcessItem::GetPath() {

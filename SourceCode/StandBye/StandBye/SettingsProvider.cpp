@@ -29,7 +29,9 @@ SettingsProvider::SettingsProvider() {
 };
 
 SettingsProvider::~SettingsProvider() {
-	saveSettingsToFile();
+	SettingsList.clear();
+	SettingsList.shrink_to_fit();
+	LOG("Settingsprovider destroyed");
 }
 
 string SettingsProvider::getRawSetting(SettingName name) {
@@ -115,6 +117,8 @@ bool SettingsProvider::checkSettingsFile() {
 	default_list.push_back(new Setting(SettingName::SHOW_MESSAGES, "TRUE"));
 	default_list.push_back(new Setting(SettingName::STANDBY_MODE, "SUSPEND"));
 	default_list.push_back(new Setting(SettingName::LOGGING, "FALSE"));
+	default_list.push_back(new Setting(SettingName::USE_SLEEPTIME, "FALSE"));
+	default_list.push_back(new Setting(SettingName::SLEEPTIME, "00:00"));
 
 	//Ensures that every setting is set
 	for each(Setting* default_setting in default_list) {
