@@ -253,22 +253,25 @@ And all the persons, who have supported us during the development: our families,
     <comment>-</comment>
   </data>
   <data name="expl_CPU" xml:space="preserve">
-    <value>f.ex. Video Rendering, Games, </value>
+    <value>e.g. Video Rendering, Games</value>
   </data>
   <data name="expl_HDD" xml:space="preserve">
-    <value>f.ex. copy processes, backups</value>
+    <value>e.g. Copying processes, Backups</value>
   </data>
   <data name="expl_NET" xml:space="preserve">
-    <value />
+    <value>e.g. Dowloads, Streams</value>
   </data>
   <data name="expl_RAM" xml:space="preserve">
-    <value>f.ex. large opened project files</value>
+    <value>e.g. Large Videoprojects</value>
   </data>
   <data name="expl_SOUND" xml:space="preserve">
     <value>Prevents Standby when playing music / movies</value>
   </data>
   <data name="expl_StandbyAt" xml:space="preserve">
-    <value>Ingores Thresholds at specefied time</value>
+    <value>Ignores Thresholds at specified time</value>
+  </data>
+  <data name="feature" xml:space="preserve">
+    <value>Extra Features</value>
   </data>
   <data name="general" xml:space="preserve">
     <value>General</value>
@@ -277,6 +280,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="general_settings" xml:space="preserve">
     <value>General Settings</value>
     <comment>-</comment>
+  </data>
+  <data name="general_thresholds" xml:space="preserve">
+    <value>General Thresholds</value>
   </data>
   <data name="hdd_threshold" xml:space="preserve">
     <value>HDD Threshold</value>
@@ -302,11 +308,17 @@ And all the persons, who have supported us during the development: our families,
   <data name="license_heading" xml:space="preserve">
     <value>License</value>
   </data>
+  <data name="msg_canceled_of_presMode" xml:space="preserve">
+    <value>The Standby at Time has been canceled. The presentation mode is on!</value>
+  </data>
   <data name="msg_presMode_activated" xml:space="preserve">
     <value>The Presentation mode has been activated!</value>
   </data>
   <data name="msg_presMode_deactivated" xml:space="preserve">
     <value>The Presentation mode has been deactivated!</value>
+  </data>
+  <data name="msg_standby_time_canceled" xml:space="preserve">
+    <value>The Standby at specfied Time has been canceled!</value>
   </data>
   <data name="msg_welcome" xml:space="preserve">
     <value>Standby is active. The environment will thank you!</value>
@@ -354,6 +366,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="show_messages" xml:space="preserve">
     <value>Show Messages:</value>
     <comment>-</comment>
+  </data>
+  <data name="standbye_settings" xml:space="preserve">
+    <value>Stand-Bye Settings</value>
   </data>
   <data name="standby_activated" xml:space="preserve">
     <value>Standby On</value>

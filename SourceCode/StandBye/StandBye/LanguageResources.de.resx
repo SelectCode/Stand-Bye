@@ -247,11 +247,17 @@ And all the persons, who have supported us during the development: our families,
   <data name="expl_StandbyAt" xml:space="preserve">
     <value>Ignoriert Grenzwerte nach der festgelegten Zeit</value>
   </data>
+  <data name="feature" xml:space="preserve">
+    <value>Extra Features</value>
+  </data>
   <data name="general" xml:space="preserve">
     <value>Allgemein</value>
   </data>
   <data name="general_settings" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
+  </data>
+  <data name="general_thresholds" xml:space="preserve">
+    <value>Allgemeine Grenzwerte</value>
   </data>
   <data name="hdd_threshold" xml:space="preserve">
     <value>HDD Grenze</value>
@@ -274,11 +280,17 @@ And all the persons, who have supported us during the development: our families,
   <data name="license_heading" xml:space="preserve">
     <value>Lizenz</value>
   </data>
+  <data name="msg_canceled_of_presMode" xml:space="preserve">
+    <value>Der Standby bei bestimmter Uhrzeit wurde wegen dem Präsentationsmodus abgebrochen!</value>
+  </data>
   <data name="msg_presMode_activated" xml:space="preserve">
     <value>Der Präsentationsmodus wurde aktiviert!</value>
   </data>
   <data name="msg_presMode_deactivated" xml:space="preserve">
     <value>Der Präsentationsmodus wurde beendet!</value>
+  </data>
+  <data name="msg_standby_time_canceled" xml:space="preserve">
+    <value>Der Standby bei der eingestellten Uhrzeit wurde abgebrochen!</value>
   </data>
   <data name="msg_welcome" xml:space="preserve">
     <value>Stand-Bye! wurde aktiviert. Die Umwelt bedankt sich!</value>
@@ -319,6 +331,9 @@ And all the persons, who have supported us during the development: our families,
   <data name="show_messages" xml:space="preserve">
     <value>Benachrichtigungen:</value>
   </data>
+  <data name="standbye_settings" xml:space="preserve">
+    <value>Stand-Bye Einstellungen</value>
+  </data>
   <data name="standby_activated" xml:space="preserve">
     <value>Standby an</value>
   </data>
@@ -329,7 +344,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Standby starten um</value>
   </data>
   <data name="support_us" xml:space="preserve">
-    <value>Wenn du uns unterstützen möchtest bitte...</value>
+    <value>Wenn sie uns unterstützen möchtest bitten wir sie zu ...</value>
   </data>
   <data name="suspend" xml:space="preserve">
     <value>Standby</value>
