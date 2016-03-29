@@ -164,7 +164,7 @@ namespace StandBye {
 		String^ DOWNLOAD_LINK = "";
 
 		//FOR TESING
-		//System::String^ VERSION_FILE_PATH = "file:///C:\\Users\\Code\\Desktop\\version.info";
+		//System::String^ VERSION_FILE_PATH = "file:///C:\\Users\\Coder\\Desktop\\version.info";
 		//OUTDATED
 		//System::String^ RELEASE_LINK = "https://github.com/flobaader/Stand-Bye/releases/download/{0}/Install_Stand-Bye.msi";
 

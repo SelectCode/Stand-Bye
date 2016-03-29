@@ -121,13 +121,12 @@ void StandBye::Updater::UpdateApplication(mainApplication ^ parent)
 	}
 
 	//inserts new version
-	String^ downloadLink = String::Format(gcnew String(DOWNLOAD_LINK), NEW_VERSION_STRING);
-	LOG("Downloading File from " + downloadLink);
-	String^ targetFile = System::IO::Path::Combine(SystemAccess::getStandByeFolderPath(), "installer.msi");
+	LOG("Downloading File from " + DOWNLOAD_LINK);
+	String^ fileName = System::IO::Path::GetFileName(DOWNLOAD_LINK);
+	String^ targetFile = System::IO::Path::Combine(SystemAccess::getStandByeFolderPath(), fileName);
 	LOG("Saving File to " + targetFile);
-
 	//Shows Dialog
-	DownloadDialog^ downloadDialog = gcnew DownloadDialog(downloadLink, targetFile);
+	DownloadDialog^ downloadDialog = gcnew DownloadDialog(DOWNLOAD_LINK, targetFile);
 
 	LOG("Starting DownloadDialog");
 	//Starts Downloading
