@@ -174,6 +174,9 @@
     <Image Include="Resources\circle_unchecked.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="Resources\icon1.ico">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DebugForm.resx">
@@ -201,6 +204,9 @@
       <Filter>Ressourcendateien</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageResources.Data.resx">
+      <Filter>Ressourcendateien</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartBanner.resx">
       <Filter>Ressourcendateien</Filter>
     </EmbeddedResource>
   </ItemGroup>

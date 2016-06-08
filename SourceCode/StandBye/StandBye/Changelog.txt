@@ -1,5 +1,12 @@
 # Changelog:
 
+## v0.7.0
+* Message Window is canceled if the system usage is over thresholds
+* Exception processes just use the process name and not the whole path
+* Added minimum of 15 sec for the waittime
+* Portable does not download the new installer anymore but refers to the website
+
+
 ## v0.6.0
  * New GUI setup:
 	* MetroTiles on Start

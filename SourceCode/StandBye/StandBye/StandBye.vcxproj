@@ -276,6 +276,7 @@
     <Image Include="Resources\circle_unchecked.png" />
     <Image Include="Resources\cross.png" />
     <Image Include="Resources\icon 128x128.png" />
+    <Image Include="Resources\icon1.ico" />
     <Image Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>

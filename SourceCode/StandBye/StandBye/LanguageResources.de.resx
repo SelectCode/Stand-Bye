@@ -344,7 +344,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Standby starten um</value>
   </data>
   <data name="support_us" xml:space="preserve">
-    <value>Wenn sie uns unterstützen möchtest bitten wir sie zu ...</value>
+    <value>Wenn Sie uns unterstützen möchten, dann bitten wir Sie zu ....</value>
   </data>
   <data name="suspend" xml:space="preserve">
     <value>Standby</value>
@@ -356,7 +356,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Grenzwerte</value>
   </data>
   <data name="timeout" xml:space="preserve">
-    <value>Standby wird aktiviert:</value>
+    <value>Standby wird aktiviert in:</value>
   </data>
   <data name="visit_github" xml:space="preserve">
     <value>Besuchen Sie uns auf Github!</value>
@@ -372,5 +372,11 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="yes" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="msg_PortableUpdate" xml:space="preserve">
+    <value>Es ist eine neue portable Version verfügbar. Wollen Sie die Website besuchen?</value>
+  </data>
+  <data name="msg_waitTimeMinWarning" xml:space="preserve">
+    <value>Die Wartezeit darf nicht kleiner als 15 Sekunden sein!</value>
   </data>
 </root>

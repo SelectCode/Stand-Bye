@@ -11,6 +11,7 @@
 #pragma once
 #include "stdafx.h"
 #include "TimeoutWindow.h"
+#include "mainApplication.h"
 using namespace StandBye;
 
 System::Void TimeoutWindow::TimeoutWindow_Load(System::Object^, System::EventArgs^) {
@@ -61,7 +62,11 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 
 	//If user shows activity the standby can be canceled
 	if (SystemAccess::GetLastInputTime() < lastInputOnStart) {
-		LOG("The user made an action during displaying");
+		LOG("The user made an action during displaying the TimeOutWindow");
+		metroButtonCancel_Click(nullptr, nullptr);
+	}
+	else if (parent->isSystemBusy()) {
+		LOG("The System has been busy during displaying!");
 		metroButtonCancel_Click(nullptr, nullptr);
 	}
 	else if (past_millis > display_time_in_millis) {

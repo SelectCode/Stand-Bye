@@ -106,7 +106,8 @@ public:
 
 	//Standby Functions
 	void checkSystemAndStandby(bool checkThresholds);
-	bool isSystemBusy(SystemMetricWatcher^ watcher);
+	bool isSystemBusy(SystemMetricWatcher^ watcher); //Uses specified SystemWatcher
+	bool isSystemBusy(); //Uses standard SystemWatcher
 	bool isInPresentationMode();
 	void setPresentationMode(bool value);
 	void askUserAndStartStandby(bool SystemTime);

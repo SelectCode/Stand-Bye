@@ -415,4 +415,10 @@ And all the persons, who have supported us during the development: our families,
     <value>Yes</value>
     <comment>-</comment>
   </data>
+  <data name="msg_PortableUpdate" xml:space="preserve">
+    <value>A new portable version is available. Do you want to visit the Homepage?</value>
+  </data>
+  <data name="msg_waitTimeMinWarning" xml:space="preserve">
+    <value>The Wait-Time can't be less than 15 seconds!</value>
+  </data>
 </root>

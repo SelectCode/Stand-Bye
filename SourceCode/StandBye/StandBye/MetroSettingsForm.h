@@ -351,7 +351,7 @@ namespace StandBye {
 				 this->metroTabControlMain->Location = System::Drawing::Point(0, 0);
 				 this->metroTabControlMain->Margin = System::Windows::Forms::Padding(0);
 				 this->metroTabControlMain->Name = L"metroTabControlMain";
-				 this->metroTabControlMain->SelectedIndex = 3;
+				 this->metroTabControlMain->SelectedIndex = 4;
 				 this->metroTabControlMain->Size = System::Drawing::Size(759, 349);
 				 this->metroTabControlMain->TabIndex = 0;
 				 this->metroTabControlMain->UseSelectable = true;
@@ -364,9 +364,9 @@ namespace StandBye {
 				 this->metroTabPageGeneral->HorizontalScrollbarBarColor = false;
 				 this->metroTabPageGeneral->HorizontalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageGeneral->HorizontalScrollbarSize = 0;
-				 this->metroTabPageGeneral->Location = System::Drawing::Point(4, 35);
+				 this->metroTabPageGeneral->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageGeneral->Name = L"metroTabPageGeneral";
-				 this->metroTabPageGeneral->Size = System::Drawing::Size(751, 310);
+				 this->metroTabPageGeneral->Size = System::Drawing::Size(751, 307);
 				 this->metroTabPageGeneral->Style = MetroFramework::MetroColorStyle::Green;
 				 this->metroTabPageGeneral->TabIndex = 0;
 				 this->metroTabPageGeneral->Text = L"General";
@@ -391,7 +391,7 @@ namespace StandBye {
 				 this->tableLayoutPanel10->RowCount = 2;
 				 this->tableLayoutPanel10->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 				 this->tableLayoutPanel10->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
-				 this->tableLayoutPanel10->Size = System::Drawing::Size(749, 308);
+				 this->tableLayoutPanel10->Size = System::Drawing::Size(749, 305);
 				 this->tableLayoutPanel10->TabIndex = 57;
 				 // 
 				 // tableLayoutPanelSettings
@@ -1251,8 +1251,10 @@ namespace StandBye {
 				 this->metroTrackBarNET->BackColor = System::Drawing::Color::Transparent;
 				 this->metroTrackBarNET->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroTrackBarNET->Location = System::Drawing::Point(214, 109);
+				 this->metroTrackBarNET->Maximum = 1000;
 				 this->metroTrackBarNET->Name = L"metroTrackBarNET";
 				 this->metroTrackBarNET->Size = System::Drawing::Size(347, 24);
+				 this->metroTrackBarNET->SmallChange = 5;
 				 this->metroTrackBarNET->TabIndex = 56;
 				 this->metroTrackBarNET->Text = L"metroTrackBar2";
 				 this->metroTrackBarNET->Value = 10;
@@ -1263,9 +1265,9 @@ namespace StandBye {
 				 this->metroTabPageExcpProcess->HorizontalScrollbarBarColor = true;
 				 this->metroTabPageExcpProcess->HorizontalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageExcpProcess->HorizontalScrollbarSize = 0;
-				 this->metroTabPageExcpProcess->Location = System::Drawing::Point(4, 35);
+				 this->metroTabPageExcpProcess->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageExcpProcess->Name = L"metroTabPageExcpProcess";
-				 this->metroTabPageExcpProcess->Size = System::Drawing::Size(751, 310);
+				 this->metroTabPageExcpProcess->Size = System::Drawing::Size(751, 307);
 				 this->metroTabPageExcpProcess->TabIndex = 1;
 				 this->metroTabPageExcpProcess->Text = L"Exception Processes";
 				 this->metroTabPageExcpProcess->VerticalScrollbarBarColor = true;
@@ -1289,7 +1291,7 @@ namespace StandBye {
 				 this->tableLayoutPanel5->Name = L"tableLayoutPanel5";
 				 this->tableLayoutPanel5->RowCount = 1;
 				 this->tableLayoutPanel5->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel5->Size = System::Drawing::Size(751, 310);
+				 this->tableLayoutPanel5->Size = System::Drawing::Size(751, 307);
 				 this->tableLayoutPanel5->TabIndex = 2;
 				 // 
 				 // listViewProc
@@ -1308,7 +1310,7 @@ namespace StandBye {
 				 this->listViewProc->Margin = System::Windows::Forms::Padding(9, 10, 9, 10);
 				 this->listViewProc->MultiSelect = false;
 				 this->listViewProc->Name = L"listViewProc";
-				 this->listViewProc->Size = System::Drawing::Size(507, 290);
+				 this->listViewProc->Size = System::Drawing::Size(507, 287);
 				 this->listViewProc->Sorting = System::Windows::Forms::SortOrder::Ascending;
 				 this->listViewProc->TabIndex = 0;
 				 this->listViewProc->UseCompatibleStateImageBehavior = false;
@@ -1341,7 +1343,7 @@ namespace StandBye {
 				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 49.99999F)));
 				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
 				 this->tableLayoutPanel6->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-				 this->tableLayoutPanel6->Size = System::Drawing::Size(220, 304);
+				 this->tableLayoutPanel6->Size = System::Drawing::Size(220, 301);
 				 this->tableLayoutPanel6->TabIndex = 1;
 				 // 
 				 // tableLayoutPanel7
@@ -1354,14 +1356,14 @@ namespace StandBye {
 				 this->tableLayoutPanel7->Controls->Add(this->metroButtonAddFromFile, 0, 0);
 				 this->tableLayoutPanel7->Controls->Add(this->tableLayoutPanel8, 0, 3);
 				 this->tableLayoutPanel7->Dock = System::Windows::Forms::DockStyle::Fill;
-				 this->tableLayoutPanel7->Location = System::Drawing::Point(3, 154);
+				 this->tableLayoutPanel7->Location = System::Drawing::Point(3, 153);
 				 this->tableLayoutPanel7->Name = L"tableLayoutPanel7";
 				 this->tableLayoutPanel7->RowCount = 4;
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 				 this->tableLayoutPanel7->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
-				 this->tableLayoutPanel7->Size = System::Drawing::Size(214, 147);
+				 this->tableLayoutPanel7->Size = System::Drawing::Size(214, 145);
 				 this->tableLayoutPanel7->TabIndex = 0;
 				 // 
 				 // metroButtonRemove
@@ -1418,7 +1420,7 @@ namespace StandBye {
 				 this->tableLayoutPanel8->RowCount = 1;
 				 this->tableLayoutPanel8->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 				 this->tableLayoutPanel8->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 30)));
-				 this->tableLayoutPanel8->Size = System::Drawing::Size(208, 33);
+				 this->tableLayoutPanel8->Size = System::Drawing::Size(208, 31);
 				 this->tableLayoutPanel8->TabIndex = 3;
 				 // 
 				 // metroToggleView
@@ -1428,7 +1430,7 @@ namespace StandBye {
 				 this->metroToggleView->Location = System::Drawing::Point(116, 6);
 				 this->metroToggleView->Margin = System::Windows::Forms::Padding(6);
 				 this->metroToggleView->Name = L"metroToggleView";
-				 this->metroToggleView->Size = System::Drawing::Size(80, 21);
+				 this->metroToggleView->Size = System::Drawing::Size(80, 19);
 				 this->metroToggleView->TabIndex = 3;
 				 this->metroToggleView->Text = L"Aus";
 				 this->metroToggleView->UseSelectable = true;
@@ -1439,7 +1441,7 @@ namespace StandBye {
 				 this->metroLabelView->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLabelView->Location = System::Drawing::Point(3, 0);
 				 this->metroLabelView->Name = L"metroLabelView";
-				 this->metroLabelView->Size = System::Drawing::Size(98, 33);
+				 this->metroLabelView->Size = System::Drawing::Size(98, 31);
 				 this->metroLabelView->TabIndex = 4;
 				 this->metroLabelView->Text = L"Show Details";
 				 this->metroLabelView->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -1452,7 +1454,7 @@ namespace StandBye {
 					 L"If at least one of the set up processes is running, the program will prevent the "
 						 L"system from changing over to standby mode."
 				 };
-				 this->infoExcpProcesses->Location = System::Drawing::Point(3, 38);
+				 this->infoExcpProcesses->Location = System::Drawing::Point(3, 37);
 				 this->infoExcpProcesses->MaxLength = 32767;
 				 this->infoExcpProcesses->Multiline = true;
 				 this->infoExcpProcesses->Name = L"infoExcpProcesses";
@@ -1724,9 +1726,9 @@ namespace StandBye {
 				 this->metroTabPageAbout->HorizontalScrollbarBarColor = true;
 				 this->metroTabPageAbout->HorizontalScrollbarHighlightOnWheel = false;
 				 this->metroTabPageAbout->HorizontalScrollbarSize = 6;
-				 this->metroTabPageAbout->Location = System::Drawing::Point(4, 35);
+				 this->metroTabPageAbout->Location = System::Drawing::Point(4, 38);
 				 this->metroTabPageAbout->Name = L"metroTabPageAbout";
-				 this->metroTabPageAbout->Size = System::Drawing::Size(751, 310);
+				 this->metroTabPageAbout->Size = System::Drawing::Size(751, 307);
 				 this->metroTabPageAbout->TabIndex = 2;
 				 this->metroTabPageAbout->Text = L"About";
 				 this->metroTabPageAbout->VerticalScrollbar = true;
@@ -1757,7 +1759,7 @@ namespace StandBye {
 				 this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 				 this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 				 this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-				 this->tableLayoutPanel1->Size = System::Drawing::Size(751, 310);
+				 this->tableLayoutPanel1->Size = System::Drawing::Size(751, 307);
 				 this->tableLayoutPanel1->TabIndex = 3;
 				 // 
 				 // metroLabelLicenseHeading
@@ -1855,7 +1857,7 @@ namespace StandBye {
 				 this->metroLinkContact->Dock = System::Windows::Forms::DockStyle::Fill;
 				 this->metroLinkContact->Location = System::Drawing::Point(3, 282);
 				 this->metroLinkContact->Name = L"metroLinkContact";
-				 this->metroLinkContact->Size = System::Drawing::Size(745, 25);
+				 this->metroLinkContact->Size = System::Drawing::Size(745, 22);
 				 this->metroLinkContact->TabIndex = 0;
 				 this->metroLinkContact->Text = L"Contact: contact@stand-bye.de";
 				 this->metroLinkContact->UseSelectable = true;
@@ -2081,6 +2083,7 @@ namespace StandBye {
 		System::Void metroTileAbout_Click(System::Object^  sender, System::EventArgs^  e);
 		System::Void metroTileProcesses_Click(System::Object^  sender, System::EventArgs^  e);
 		System::Void metroTileSettings_Click(System::Object^  sender, System::EventArgs^  e);
+		bool isWaitTimeOverMin();
 
 		//Thresholds
 		System::Void metroTrackBarRAM_Scroll(System::Object^  sender, System::Windows::Forms::ScrollEventArgs^  e);

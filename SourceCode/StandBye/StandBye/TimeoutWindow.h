@@ -27,15 +27,20 @@ using namespace System::Resources;
 /// <summary>
 /// Summary for TimeoutWindow
 /// </summary>
+
+ref class mainApplication;
+
 namespace StandBye {
 	public ref class TimeoutWindow : public MetroFramework::Forms::MetroForm
 	{
 		int display_time_in_millis, startTimeInTicks, lastInputOnStart; // in milliseconds
 		System::Windows::Forms::Timer^ timer;
+		mainApplication^ parent;
 
 	public:
-		TimeoutWindow(const int displayTime) {
+		TimeoutWindow(mainApplication^ parent,  int displayTime) {
 			display_time_in_millis = displayTime * 1000;
+			this->parent = parent;
 			InitializeComponent();
 		}
 

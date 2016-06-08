@@ -150,6 +150,7 @@ std::vector<std::string> SystemAccess::GetRunningProccesses() {
 					String^ SPath = gcnew String(path.c_str());
 					//Filters all System32 processes
 					if (!SPath->Contains("System32")) {
+						//Returns just the file name of the running process not the whole path
 						list.push_back(BasicFunc::StringToString(SPath));
 					}
 				}
@@ -521,7 +522,8 @@ std::vector<std::string> SystemAccess::GetNetAdapterNames() {
 
 float SystemAccess::GetLastInputTime() {
 	//add user32.lib To Dependencies!!
-	int systemUptime = Environment::TickCount;
+	//int systemUptime = Environment::TickCount; //in millis
+	int systemUptime = GetTickCount();
 	float idleTicks = 0;
 	LASTINPUTINFO lastInputInfo;
 	lastInputInfo.cbSize = (UInt32)sizeof(lastInputInfo);

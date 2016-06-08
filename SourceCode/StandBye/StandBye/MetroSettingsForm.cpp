@@ -216,6 +216,12 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	this->Update();
 }
 System::Void MetroSettingsForm::metroButtonOK_Click(System::Object^, System::EventArgs^) {
+	//Check Limits
+	//Checks if Wait-Time is over the limit
+	if (!isWaitTimeOverMin()) {
+		return;
+	}
+	
 	LOG("SettingsForm: OK Button Clicked");
 	//disables Form;
 	this->Visible = false;
@@ -604,6 +610,20 @@ System::Void StandBye::MetroSettingsForm::metroTileSettings_Click(System::Object
 	metroTabControlMain->SelectedTab = metroTabPageThresholds;
 }
 
+bool StandBye::MetroSettingsForm::isWaitTimeOverMin()
+{
+	int seconds = getTextAsDouble(textBoxTimeMIN->Text) * 60 + getTextAsDouble(textBoxTimeSEC->Text);
+	if (seconds < 15) {
+		// The Wait-Time should not be under 15 seconds
+		MessageWindow^ msgW = gcnew MessageWindow(res_man->GetString("msg_waitTimeMinWarning"), System::Windows::Forms::MessageBoxButtons::OK);
+		msgW->Show();
+		textBoxTimeMIN->Text = "1";
+		textBoxTimeSEC->Text = "0";
+		return false;
+	}
+	return true;
+}
+
 System::Void StandBye::MetroSettingsForm::metroTrackBarHDD_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^)
 {
 	if (metroLabelHDDStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarHDD->Value / 10)) {
@@ -613,8 +633,8 @@ System::Void StandBye::MetroSettingsForm::metroTrackBarHDD_Scroll(System::Object
 
 System::Void StandBye::MetroSettingsForm::metroTrackBarNET_Scroll(System::Object^, System::Windows::Forms::ScrollEventArgs^)
 {
-	if (metroLabelNETStatus->Text != String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10)) {
-		metroLabelNETStatus->Text = String::Format("{0:0.0} MBit/s", (double)metroTrackBarNET->Value / 10);
+	if (metroLabelNETStatus->Text != String::Format("{0:0.00} MBit/s", (double)metroTrackBarNET->Value / 200)) {
+		metroLabelNETStatus->Text = String::Format("{0:0.00} MBit/s", (double)metroTrackBarNET->Value / 200);
 	}
 }
 

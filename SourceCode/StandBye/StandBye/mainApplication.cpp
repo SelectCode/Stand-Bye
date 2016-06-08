@@ -87,7 +87,7 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 		return;
 	}
 
-	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(15);
+	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(this, 15);
 	LOG("Preparing the TimeoutWindow");
 	if (msgWnd->ShowDialog() == DialogResult::OK) {
 		LOG("Going to Sleep mode!");
@@ -153,6 +153,15 @@ void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 	}
 }
 
+bool mainApplication::isSystemBusy() {
+	if (system_watcher != nullptr) {
+		return isSystemBusy(system_watcher);
+	}
+	else {
+		throw("SystemWatcher not initialized!");
+	}
+}
+
 bool mainApplication::isSystemBusy(SystemMetricWatcher^ watcher)
 {
 	LOG("Checking System usage....");
@@ -166,9 +175,16 @@ bool mainApplication::isSystemBusy(SystemMetricWatcher^ watcher)
 	//Check if an exception process is running
 	boolean exception_process_running = false;
 	for each(std::string process in settings_provider->getProcessList()) {
-		if (BasicFunc::VectorContains(SystemAccess::GetRunningProccesses(), process)) {
-			exception_process_running = true;
-			break;
+		String^ ProcessName = System::IO::Path::GetFileName(gcnew String(process.c_str()));
+
+		for each(std::string running_process in SystemAccess::GetRunningProccesses()) {
+			String^ RunningProcessName = System::IO::Path::GetFileName(gcnew String(running_process.c_str()));
+
+			if (ProcessName == RunningProcessName) {
+				//One Exception Process is running
+				exception_process_running = true;
+				break;
+			}
 		}
 	}
 
@@ -427,10 +443,22 @@ void mainApplication::CheckForUpdatesOnStartUp()
 	if (settings_provider->isActive(SettingName::SEARCH_UPDATES)) {
 		Updater^ updater = gcnew Updater();
 		if (updater->IsUpdateAvailable()) {
-			String^ message = res_man->GetString("ask_update", CultureInfo::DefaultThreadCurrentCulture);
-			MessageWindow^ msg = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
-			if (msg->ShowDialog() == DialogResult::OK) {
-				updater->UpdateApplication(this);
+			if (SystemAccess::isPortable()) {
+				//Portable Update
+				String^ message = res_man->GetString("msg_PortableUpdate", CultureInfo::DefaultThreadCurrentCulture);
+				MessageWindow^ msg = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
+				//Asks to go to homepage
+				if (msg->ShowDialog() == DialogResult::OK) {
+					BasicFunc::openLink("www.stand-bye.de");
+				}
+			}
+			else {
+				//Standard Update
+				String^ message = res_man->GetString("ask_update", CultureInfo::DefaultThreadCurrentCulture);
+				MessageWindow^ msg = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
+				if (msg->ShowDialog() == DialogResult::OK) {
+					updater->UpdateApplication(this);
+				}
 			}
 		}
 		else {
