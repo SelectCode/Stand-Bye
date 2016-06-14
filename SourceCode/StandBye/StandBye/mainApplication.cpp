@@ -96,8 +96,10 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 	else {
 		LOG("The User has canceled the MessageWindow!");
 
-		if (ask_Enable_PresentationMode) {
+		//TODO: if (ask_Enable_PresentationMode) {
+		if(false){
 			//Asks User if he wants to enable presentation mode
+
 			String^ message = res_man->GetString("ask_presMode", CultureInfo::DefaultThreadCurrentCulture);
 
 			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::YesNo);
@@ -333,7 +335,8 @@ NotifyIcon^ mainApplication::GenerateIcon(HINSTANCE hInstance) {
 	trayicon->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &mainApplication::OnIconMouseClick);
 	trayicon->BalloonTipClicked += gcnew System::EventHandler(this, &mainApplication::OnIconBalloonTipClicked);
 	trayicon->ContextMenu = GetContextMenu();
-	trayicon->Visible = true;
+	//TODO: Changed to false to make trayicon invisble
+	trayicon->Visible = false;
 	ShowBallonTipMessage(res_man->GetString("msg_welcome", CultureInfo::DefaultThreadCurrentCulture));
 	return trayicon;
 }

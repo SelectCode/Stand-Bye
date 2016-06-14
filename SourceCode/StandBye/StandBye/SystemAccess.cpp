@@ -438,12 +438,14 @@ String^ SystemAccess::getStandByeFolderPath()
 		return folder;
 	}
 	else {
-		String^ folder = Directory::GetCurrentDirectory();
+		//String^ folder = Directory::GetCurrentDirectory();
+		String^ folder = "T:\\StandBye\\";
 		try
 		{
 			// Attempt to get a list of security permissions from the folder.
 			// This will raise an exception if the path is read only or do not have access to view the permissions.
-			Directory::GetAccessControl(folder);
+			//Directory::GetAccessControl(folder);
+			System::IO::Directory::CreateDirectory(folder);
 
 			//is authorized
 			return folder;
@@ -476,7 +478,8 @@ System::Drawing::Bitmap ^ SystemAccess::getIconOfProcess(std::string path)
 
 bool SystemAccess::isPortable()
 {
-	String^ line = gcnew String(GetCommandLineW());
+	return true;
+	/*String^ line = gcnew String(GetCommandLineW());
 	List<String^>^ commands = gcnew List<String^>(line->Split(' '));
 	for each(String^ c in commands) {
 		String^ cleaned = c->Trim()->Replace("-", "")->Replace("/", "");
@@ -484,7 +487,7 @@ bool SystemAccess::isPortable()
 			return true;
 		}
 	}
-	return false;
+	return false;*/
 }
 
 bool SystemAccess::inDebugMode()

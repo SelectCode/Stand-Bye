@@ -62,7 +62,8 @@ System::String ^ BasicFunc::getLogFilePath()
 	//Path
 	String^ mainFolder = SystemAccess::getStandByeFolderPath();
 	String^ log_folder = Path::Combine(mainFolder, "logs");
-	String^ current_date_folder = Path::Combine(log_folder, starttime->ToString("yyyy_MM_dd"));
+	String^ user_folder = Path::Combine(log_folder, SystemAccess::getActiveUser());
+	String^ current_date_folder = Path::Combine(user_folder, starttime->ToString("yyyy_MM_dd"));
 	String^ file_path = Path::Combine(current_date_folder, starttime->ToString("HH_mm") + ".txt");
 
 	//Creates Directory if necessary
@@ -129,7 +130,7 @@ void BasicFunc::cleanLogFiles()
 	using namespace System::IO;
 
 	String^ mainFolder = SystemAccess::getStandByeFolderPath();
-	String^ log_folder = Path::Combine(mainFolder, "logs");
+	String^ log_folder = Path::Combine(Path::Combine(mainFolder, "logs"), SystemAccess::getActiveUser());
 	Directory::Delete(log_folder, true);
 }
 
