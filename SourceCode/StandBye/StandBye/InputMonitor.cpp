@@ -21,6 +21,9 @@ InputMonitor::InputMonitor(mainApplication^ parent, SettingsProvider* s) {
 	monTimer->Tick += gcnew System::EventHandler(this, &InputMonitor::Monitor);
 	monTimer->Interval = 500;
 	monTimer->Start();
+
+	Microsoft::Win32::SystemEvents::PowerModeChanged += gcnew Microsoft::Win32::PowerModeChangedEventHandler(this, &InputMonitor::OnPowerModeChanged);
+
 }
 
 InputMonitor::~InputMonitor()
@@ -34,6 +37,27 @@ void InputMonitor::Stop()
 	monTimer->Stop();
 }
 
+void InputMonitor::OnPowerModeChanged(Object ^ sender, PowerModeChangedEventArgs ^ e) {
+	LOG("Power Mode Changed:");
+	switch(e->Mode) {
+	default:
+		LOG("\tUnknown Change");
+		break;
+	case PowerModes::Resume:
+
+		wakeTime = System::DateTime::Now;
+		LOG("\tResuming System");
+
+		break;
+	case PowerModes::StatusChange:
+		LOG("\tStatus Change");
+		break;
+	case PowerModes::Suspend:
+		LOG("\tSuspending System");
+		break;
+	}
+}
+
 void InputMonitor::Monitor(System::Object ^, System::EventArgs ^)
 {
 	if ((SECONDS_TO_MILLIS(settings_provider->getThreshold(SettingName::WAIT_TIME)) - SystemAccess::GetLastInputTime()) < SECONDS_TO_MILLIS(10)) {
@@ -45,9 +69,18 @@ void InputMonitor::Monitor(System::Object ^, System::EventArgs ^)
 	}
 
 	if (SystemAccess::GetLastInputTime() > settings_provider->getThreshold(SettingName::WAIT_TIME) * 1000) {
+		
 		LOG("Wait Time is over!");
-		this->Stop();
-		parent->checkSystemAndStandby(true);
-		monTimer->Start();
+		
+		System::DateTime now = System::DateTime::Now;
+		TimeSpan t = now.Subtract(wakeTime);
+		if(t.TotalMinutes > 1) {
+			LOG("Protection time is over");
+			this->Stop();
+			parent->checkSystemAndStandby(true);
+			monTimer->Start();
+		} else {
+			LOG("Protection time is not over yet");
+		}
 	}
 }
