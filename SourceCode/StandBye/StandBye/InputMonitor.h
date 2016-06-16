@@ -15,8 +15,11 @@
 
 ref class mainApplication;
 
+using namespace Microsoft::Win32;
+
 public  ref class InputMonitor {
 private:
+	System::DateTime wakeTime;
 	mainApplication^ parent;
 	System::Windows::Forms::Timer^ monTimer;
 	SettingsProvider* settings_provider;
@@ -25,6 +28,7 @@ public:
 	InputMonitor(mainApplication^ parent, SettingsProvider* s);
 	~InputMonitor();
 	void Stop();
+	void OnPowerModeChanged(Object^ sender, PowerModeChangedEventArgs^ e);
 
 private:
 	void Monitor(System::Object ^sender, System::EventArgs ^e);
