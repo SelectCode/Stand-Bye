@@ -96,7 +96,7 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 	else {
 		LOG("The User has canceled the MessageWindow!");
 
-		if (ask_Enable_PresentationMode) {
+		if (ask_Enable_PresentationMode && settings_provider->isActive(SettingName::SHOW_MESSAGES)) {
 			//Asks User if he wants to enable presentation mode
 			String^ message = res_man->GetString("ask_presMode", CultureInfo::DefaultThreadCurrentCulture);
 

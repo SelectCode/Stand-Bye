@@ -37,7 +37,7 @@ void InputMonitor::Stop()
 	monTimer->Stop();
 }
 
-void InputMonitor::OnPowerModeChanged(Object ^ sender, PowerModeChangedEventArgs ^ e) {
+void InputMonitor::OnPowerModeChanged(Object ^ , PowerModeChangedEventArgs ^ e) {
 	LOG("Power Mode Changed:");
 	switch(e->Mode) {
 	default:

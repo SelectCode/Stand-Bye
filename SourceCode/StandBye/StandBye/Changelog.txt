@@ -5,6 +5,10 @@
 * Exception processes just use the process name and not the whole path
 * Added minimum of 15 sec for the waittime
 * Portable does not download the new installer anymore but refers to the website
+* Added one minute after wake up, where stand-by will not be activated
+* Fixed bug when two instances are launched (Windows reports an error)
+* The Presentationmode messagebox can be deacivated now by the "show messages" setting
+
 
 
 ## v0.6.0

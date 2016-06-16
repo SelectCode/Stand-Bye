@@ -16,7 +16,7 @@
 
 //APP VALUES
 #define APP_NAME "Stand-Bye!"
-#define APP_VERSION "0.6.0"
+#define APP_VERSION "0.6.1"
 
 //////////////////////////////////////////////////////////////////////////
 ///VERSION CHANGES HAVE TO BE MADE IN

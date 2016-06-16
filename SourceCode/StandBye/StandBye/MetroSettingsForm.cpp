@@ -612,7 +612,7 @@ System::Void StandBye::MetroSettingsForm::metroTileSettings_Click(System::Object
 
 bool StandBye::MetroSettingsForm::isWaitTimeOverMin()
 {
-	int seconds = getTextAsDouble(textBoxTimeMIN->Text) * 60 + getTextAsDouble(textBoxTimeSEC->Text);
+	int seconds = (int) getTextAsDouble(textBoxTimeMIN->Text) * 60 + (int) getTextAsDouble(textBoxTimeSEC->Text);
 	if (seconds < 15) {
 		// The Wait-Time should not be under 15 seconds
 		MessageWindow^ msgW = gcnew MessageWindow(res_man->GetString("msg_waitTimeMinWarning"), System::Windows::Forms::MessageBoxButtons::OK);

@@ -68,8 +68,10 @@ public:
 		StopMetricWatcher();
 		StopSystemTimeWatcher();
 
-		trayicon->Visible = false;
-		delete trayicon;
+		if (trayicon != nullptr) {
+			trayicon->Visible = false;
+			delete trayicon;
+		}
 
 		//Settings form
 		if (settingsForm != nullptr) {
