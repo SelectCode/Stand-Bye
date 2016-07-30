@@ -259,7 +259,7 @@ And all the persons, who have supported us during the development: our families,
     <value>e.g. Copying processes, Backups</value>
   </data>
   <data name="expl_NET" xml:space="preserve">
-    <value>e.g. Dowloads, Streams</value>
+    <value>e.g. Downloads, Streams</value>
   </data>
   <data name="expl_RAM" xml:space="preserve">
     <value>e.g. Large Videoprojects</value>
@@ -420,5 +420,8 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="msg_waitTimeMinWarning" xml:space="preserve">
     <value>The Wait-Time can't be less than 15 seconds!</value>
+  </data>
+  <data name="msg_processAlreadyAdded" xml:space="preserve">
+    <value>The process has already been added!</value>
   </data>
 </root>

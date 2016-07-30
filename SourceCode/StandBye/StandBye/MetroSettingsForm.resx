@@ -185,9 +185,6 @@
   <data name="infoGeneral.Text" xml:space="preserve">
     <value>Stand-Bye checks after the selected wait-time if the system is in use. If not the standby will be activated. You can define when to cancel standby by setting up the given settings to your personal needs.</value>
   </data>
-  <metadata name="metroStyleExtender1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>304, 17</value>
-  </metadata>
   <data name="textBoxLicense.Text" xml:space="preserve">
     <value>Copyright (C) 2015 Florian Baader, Stephan Le, Matthias Weirich
 
@@ -2739,7 +2736,13 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         G8JUgLNqrgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="metroStyleExtender1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>304, 17</value>
+  </metadata>
   <metadata name="metroToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>469, 17</value>
+  </metadata>
+  <metadata name="metroStyleExtender1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>304, 17</value>
   </metadata>
 </root>

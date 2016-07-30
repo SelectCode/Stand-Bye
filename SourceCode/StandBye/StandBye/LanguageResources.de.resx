@@ -177,7 +177,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Erweiterte Einstellungen</value>
   </data>
   <data name="application_upToDate" xml:space="preserve">
-    <value>Stand-Bye! ist aktuell!</value>
+    <value>Sie haben die aktuelle Version von Stand-Bye!</value>
   </data>
   <data name="ask_presMode" xml:space="preserve">
     <value>Soll der Präsentationsmodus aktiviert werden?
@@ -245,7 +245,7 @@ And all the persons, who have supported us during the development: our families,
     <value>Verhindert Standby während Musik / Filmen</value>
   </data>
   <data name="expl_StandbyAt" xml:space="preserve">
-    <value>Ignoriert Grenzwerte nach der festgelegten Zeit</value>
+    <value>Ignoriert Grenzwerte zur festgelegten Uhrzeit</value>
   </data>
   <data name="feature" xml:space="preserve">
     <value>Extra Features</value>
@@ -269,10 +269,10 @@ And all the persons, who have supported us during the development: our families,
     <value>Wenn einer der festgelegten Prozesse läuft, wird das System nicht in den Standby versetzt!</value>
   </data>
   <data name="info_general" xml:space="preserve">
-    <value>Stand-Bye überprüft nachdem die Wartezeit vorbei ist, ob das System gerade genutzt wird oder nicht. Wenn es nicht genutzt wird, wird der normale Standby gestartet. Durch das Festlegen aller Einstellungen wird garantiert, dass der Standby nur dann aktiviert wird, wenn er nicht stört.</value>
+    <value>Stand-Bye überprüft nach der Wartezeit, ob das System gerade genutzt wird. Wenn nicht, wird der Standby gestartet. Durch die Einstellungen kann festgelegt werden, wann der Standby verhindert wird.</value>
   </data>
   <data name="info_thresholds" xml:space="preserve">
-    <value>Stand-Bye überprüft, ob das System mehr ausgelastet ist, als die eingestellten Werte. Wenn dies der Fall ist, wird der Standby-Modus nicht aktiviert.</value>
+    <value>Stand-Bye überprüft, ob die Systemauslastungen größer sind als die eingestellten Werte. Wenn dies der Fall ist, wird der Standby-Modus nicht aktiviert.</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Sprache</value>
@@ -378,5 +378,8 @@ And all the persons, who have supported us during the development: our families,
   </data>
   <data name="msg_waitTimeMinWarning" xml:space="preserve">
     <value>Die Wartezeit darf nicht kleiner als 15 Sekunden sein!</value>
+  </data>
+  <data name="msg_processAlreadyAdded" xml:space="preserve">
+    <value>Dieser Prozess wurde schon hinzugefügt!</value>
   </data>
 </root>

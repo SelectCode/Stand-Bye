@@ -96,6 +96,8 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 	else {
 		LOG("The User has canceled the MessageWindow!");
 
+		//Temporary Disabled
+		/*
 		if (ask_Enable_PresentationMode && settings_provider->isActive(SettingName::SHOW_MESSAGES)) {
 			//Asks User if he wants to enable presentation mode
 			String^ message = res_man->GetString("ask_presMode", CultureInfo::DefaultThreadCurrentCulture);
@@ -118,8 +120,9 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 		else {
 			LOG("Did not ask for presentation mode, because it has been denied once");
 		}
+		*/
 
-		//Shows warning if started from system-time
+		//Shows warning if started from system-time (= Standby at specified time)
 		if (FromSystemTime) {
 			String^ message = res_man->GetString("msg_standby_time_canceled", CultureInfo::DefaultThreadCurrentCulture);
 			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::OK);

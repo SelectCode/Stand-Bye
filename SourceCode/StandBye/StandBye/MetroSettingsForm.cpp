@@ -168,13 +168,17 @@ String^ StandBye::MetroSettingsForm::FormatDigits(double value) {
 	return String::Format("{0:" + formatter + "}", value);
 }
 
-void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double SettingsValue, double readValue) {
-	if (SettingsValue > readValue) {
+void MetroSettingsForm::changeLabelBackgroundColor(MetroFramework::Controls::MetroLabel^ label, double setValue, double realTimeValue, bool isActive) {
+	if (setValue > realTimeValue && isActive) {
 		label->BackColor = lightGreen;
 	}
-	else {
+	else if(isActive){
 		label->BackColor = lightRed;
 	}
+	else {
+		label->BackColor = Color::LightGray;
+	}
+
 }
 System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::EventArgs^) {
 	float curCPU, curRAM, curHDD, curNET;
@@ -185,10 +189,10 @@ System::Void MetroSettingsForm::timerUIRefresh_Tick(System::Object^, System::Eve
 	curNET = system_watcher->GetSystemMetric(SystemAccess::SystemMetric::NETWORK);
 
 	//changes Background Color of the currentUsage Labels
-	changeLabelBackgroundColor(metroLabelCurCPU, metroTrackBarCPU->Value, curCPU);
-	changeLabelBackgroundColor(metroLabelCurRAM, metroTrackBarRAM->Value, curRAM);
-	changeLabelBackgroundColor(metroLabelCurHDD, metroTrackBarHDD->Value, curHDD / 100);
-	changeLabelBackgroundColor(metroLabelCurNET, metroTrackBarNET->Value, curNET / 100);
+	changeLabelBackgroundColor(metroLabelCurCPU, metroTrackBarCPU->Value, curCPU, metroToggleCPU->Checked);
+	changeLabelBackgroundColor(metroLabelCurRAM, metroTrackBarRAM->Value, curRAM, metroToggleRAM->Checked);
+	changeLabelBackgroundColor(metroLabelCurHDD, metroTrackBarHDD->Value, curHDD / 100, metroToggleHDD->Checked);
+	changeLabelBackgroundColor(metroLabelCurNET, metroTrackBarNET->Value, curNET / 100, metroToggleNET->Checked);
 
 	//Formats Text on the currentUsage Labels
 	metroLabelCurCPU->Text = String::Format("{0:00.00} %", curCPU);
@@ -245,7 +249,10 @@ System::Void MetroSettingsForm::metroButtonAddFromFile_Click(System::Object^, Sy
 				listViewProc->Items->Add(gcnew ProcessItem(BasicFunc::StringToString(ofd->FileName), listViewProc));
 			}
 			else {
-				MessageBoxA(NULL, "Process has already been added!", "Error!", MB_OK);
+				//The process has already been added
+				String^ msg = res_man->GetString("msg_processAlreadyAdded", CultureInfo::DefaultThreadCurrentCulture);
+				MessageWindow^ msgWin = gcnew MessageWindow(msg, Windows::Forms::MessageBoxButtons::OK);
+				msgWin->ShowDialog();
 			}
 		}
 	}

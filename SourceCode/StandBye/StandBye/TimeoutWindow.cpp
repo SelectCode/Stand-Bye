@@ -65,10 +65,11 @@ System::Void TimeoutWindow::RefreshUI(System::Object^, System::EventArgs^) {
 		LOG("The user made an action during displaying the TimeOutWindow");
 		metroButtonCancel_Click(nullptr, nullptr);
 	}
+	/*
 	else if (parent->isSystemBusy()) {
 		LOG("The System has been busy during displaying!");
 		metroButtonCancel_Click(nullptr, nullptr);
-	}
+	}*/
 	else if (past_millis > display_time_in_millis) {
 		LOG("The time limit has been reached!");
 		metroButtonOK_Click(nullptr, nullptr);
