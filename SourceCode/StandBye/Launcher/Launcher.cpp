@@ -7,21 +7,20 @@
 #include <vector>
 
 #define RELPATH std::wstring(L"\\bin\\StandBye.exe")
-#define LOG_D(x) OutputDebugString(x)
-
-LPCWSTR toL(std::string s) {
-	std::wstring stemp = std::wstring(s.begin(), s.end());
-	LPCWSTR sw = stemp.c_str();
-	return sw;
-}
 
 std::wstring getExePath() {
-	wchar_t result[MAX_PATH];
-	GetModuleFileName(NULL, result, MAX_PATH);
+
+	//Get the path to the currently running exe
+	wchar_t result[MAX_PATH]; //buffer, used as [out] variable
+	GetModuleFileName(NULL, result, MAX_PATH);// returns path to currently running exe
+
+	//convert buffer to wstring
 	std::wstring moduleFileName(result);
 
+	//remove file name
 	std::wstring baseDir = moduleFileName.substr(0, moduleFileName.find_last_of(L"\\/"));
 
+	//append relative path to StandBye exe
 	std::wstring exePath = baseDir + RELPATH;
 
 	return exePath;
@@ -30,41 +29,31 @@ std::wstring getExePath() {
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow) {
 
-    //Get exe path
+	//Get exe path
 	std::wstring string = getExePath();
 
-	//Convert to LPWSTR
+	//Convert path to LPWSTR
 	std::vector<wchar_t> vec(string.begin(), string.end());
 	vec.push_back(L'\0');
 	LPWSTR path = &vec[0];
 
-	LOG_D(path);
-	LOG_D(L"\n");
 
-	PROCESS_INFORMATION ProcessInfo; //
+	PROCESS_INFORMATION ProcessInfo; // unused, but necesarry for createprocess
 	STARTUPINFO si; //Unused, but necessary for createprocess
-
-
-	ZeroMemory(&si, sizeof(si));
+	ZeroMemory(&si, sizeof(si)); //init memory
 	si.cb = sizeof si; //Only compulsory field
 
 	wchar_t command[] = L"-PORTABLE"; //Must be editable, cannot be literal
 
 	if(CreateProcessW(path, //path to executable
 		command, //cmd params
-		NULL,
-		NULL,
-		FALSE,
-		0,
-		NULL,
-		NULL,
+		NULL, NULL, FALSE, 0, NULL, NULL,
 		&si,// in param on how to create the process
 		&ProcessInfo // out param, info on created process
 		)) {
-		LOG_D(_T("process created\n"));
+		//TODO: Proper error handling
 	} else {
-		LOG_D(_T("process not created\n"));
-		//LOG_D((LPCWSTR(GetLastError())));
+
 	}
 
 	return 0;
