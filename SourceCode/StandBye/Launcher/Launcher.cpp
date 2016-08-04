@@ -5,6 +5,9 @@
 #include "Launcher.h"
 #include <string>
 #include <vector>
+#include <strsafe.h>
+
+#pragma comment(lib,"user32.lib") 
 
 #define RELPATH std::wstring(L"\\bin\\StandBye.exe")
 
@@ -27,10 +30,56 @@ std::wstring getExePath() {
 
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow) {
+int showErrorMessage() {
 
-	//Get exe path
-	std::wstring string = getExePath();
+	LPVOID lpMsgBuf;
+	LPVOID lpDisplayBuf;
+	DWORD dw = GetLastError();
+
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		dw,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPTSTR)&lpMsgBuf,
+		0, NULL);
+
+	// Display the error message and exit the process
+
+	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,
+		(lstrlen((LPCTSTR)lpMsgBuf)  + 40) * sizeof(TCHAR));
+	StringCchPrintf((LPTSTR)lpDisplayBuf,
+		LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+		TEXT(" StandBye! could not be launched. Error %d: %s"), dw, lpMsgBuf);
+	int clicked = MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("Error"), MB_RETRYCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND);
+
+	LocalFree(lpMsgBuf);
+	LocalFree(lpDisplayBuf);
+
+	return clicked;
+	
+}
+
+void tryToLaunch(std::wstring path) {
+
+	if(!launchMainExe(path)) {
+
+		int clicked = showErrorMessage();
+
+		if(clicked == IDRETRY) {
+			tryToLaunch(path);
+		} else if(clicked == IDCANCEL) {
+			ExitProcess(-1);
+		}
+
+	}
+
+}
+
+//launches the exe at the specified location
+BOOL launchMainExe(std::wstring string) {
 
 	//Convert path to LPWSTR
 	std::vector<wchar_t> vec(string.begin(), string.end());
@@ -45,16 +94,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	wchar_t command[] = L"-PORTABLE"; //Must be editable, cannot be a literal
 
-	if(CreateProcessW(path, //path to executable
+	return CreateProcessW(path, //path to executable
 		command, //cmd params
 		NULL, NULL, FALSE, 0, NULL, NULL,
 		&si,// in param on how to create the process
 		&ProcessInfo // out param, info on created process
-		)) {
-		//TODO: Proper error handling
-	} else {
+	);
+}
 
-	}
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int nCmdShow) {
+
+	tryToLaunch(getExePath());
 
 	return 0;
 }

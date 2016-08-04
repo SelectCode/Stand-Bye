@@ -253,3 +253,4 @@ paket-files/
 *.sln.iml
 SourceCode/StandBye/StandBye/StandBye.aps
 *.aps
+SourceCode/StandBye/Launcher/logs/*
