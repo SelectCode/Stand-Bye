@@ -43,7 +43,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	ZeroMemory(&si, sizeof(si)); //init memory
 	si.cb = sizeof si; //Only compulsory field
 
-	wchar_t command[] = L"-PORTABLE"; //Must be editable, cannot be literal
+	wchar_t command[] = L"-PORTABLE"; //Must be editable, cannot be a literal
 
 	if(CreateProcessW(path, //path to executable
 		command, //cmd params
