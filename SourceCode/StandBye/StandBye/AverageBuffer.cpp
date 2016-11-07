@@ -23,13 +23,13 @@ void AverageBuffer::Put(float f) {
 	bool taken1 = false, taken2 = false;
 
 	lock(buffer, taken1);
-	lock(ind, taken2);
+	lock(index, taken2);
 	if (taken1&&taken2) {
-		buffer[ind] = f;
-		ind = (ind + 1) % size;
+		buffer[index] = f;
+		index = (index + 1) % size;
 	}
 	ulock(buffer);
-	ulock(ind);
+	ulock(index);
 }
 
 float AverageBuffer::GetAverage() {

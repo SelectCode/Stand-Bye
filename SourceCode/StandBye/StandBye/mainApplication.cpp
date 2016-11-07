@@ -25,6 +25,7 @@ NotifyIconAppContext::NotifyIconAppContext(mainApplication^ app, HINSTANCE hinst
 void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 	LOG("Requested to load settingsForm");
 	if (settingsForm == nullptr) {
+		//Shows Banner while loading
 		StartBanner^ banner = gcnew StartBanner();
 		banner->Show();
 		banner->Activate();
@@ -33,11 +34,15 @@ void mainApplication::OpenSettings(Object^, System::EventArgs^) {
 		settingsForm = gcnew MetroSettingsForm(this, settings_provider, supportedLanguages);
 		banner->Close();
 		delete banner;
+
+		//Shows SettingsForm
 		settingsForm->ShowDialog();
 		delete settingsForm;
 		settingsForm = nullptr;
+
 		//Checks if settings were changed
-		//Loading SystemTime Monitor
+
+		//If Sleeptime at specified time is active, starts the SystemTimeMonitor (-->maybe has changed)
 		if (settings_provider->isActive(SettingName::USE_SLEEPTIME)) {
 			this->StartSystemTimeWatcher();
 		}
@@ -73,6 +78,7 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 	if (inPresentationMode) {
 		LOG("Application in presentation mode! \n Canceled Sleep mode!");
 		if (FromSystemTime) {
+			//If the Standby is started at specified time, a special message is displayed
 			String^ message = res_man->GetString("msg_canceled_of_presMode", CultureInfo::DefaultThreadCurrentCulture);
 			MessageWindow^ msgPres = gcnew MessageWindow(message, MessageBoxButtons::OK);
 			msgPres->ShowDialog();
@@ -87,6 +93,7 @@ void mainApplication::askUserAndStartStandby(bool FromSystemTime)
 		return;
 	}
 
+	//Starts TimeOut Window
 	TimeoutWindow^ msgWnd = gcnew TimeoutWindow(this, 15);
 	LOG("Preparing the TimeoutWindow");
 	if (msgWnd->ShowDialog() == DialogResult::OK) {
@@ -141,15 +148,19 @@ bool mainApplication::hasUserExited()
 void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 {
 	if (!inPresentationMode) {
+		//Activates presMode
 		SystemAccess::SetPresentationMode(true);
 		LOG("Presentation mode enabled");
+		//Checks Item in Context Menu
 		PresentationModeItem->Checked = true;
 		ShowBallonTipMessage(res_man->GetString("msg_presMode_activated", CultureInfo::DefaultThreadCurrentCulture));
 		inPresentationMode = true;
 	}
 	else {
+		//If presMode is already enabled, presMode will be disabled
 		SystemAccess::SetPresentationMode(false);
 		LOG("Presentation mode disabled");
+		//Unchecks Item in Context Menu
 		PresentationModeItem->Checked = false;
 		ShowBallonTipMessage(res_man->GetString("msg_presMode_deactivated", CultureInfo::DefaultThreadCurrentCulture));
 		inPresentationMode = false;
@@ -157,6 +168,7 @@ void mainApplication::SetPresentationMode(Object^, System::EventArgs ^)
 }
 
 bool mainApplication::isSystemBusy() {
+	//Can be launched with the standard SystemWatcher or with an selected one
 	if (system_watcher != nullptr) {
 		return isSystemBusy(system_watcher);
 	}
@@ -191,6 +203,7 @@ bool mainApplication::isSystemBusy(SystemMetricWatcher^ watcher)
 		}
 	}
 
+	//If an exception process is running, system is busy
 	if (exception_process_running) {
 		LOG("An exception process is running! \n Canceled Sleep mode!");
 		return true;

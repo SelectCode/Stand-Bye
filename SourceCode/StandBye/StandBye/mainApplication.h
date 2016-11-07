@@ -68,6 +68,7 @@ public:
 		StopMetricWatcher();
 		StopSystemTimeWatcher();
 
+		//Deletes Trayicon if it exists
 		if (trayicon != nullptr) {
 			trayicon->Visible = false;
 			delete trayicon;

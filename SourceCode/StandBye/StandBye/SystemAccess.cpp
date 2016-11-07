@@ -25,20 +25,23 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 
 	//Enables autostart if first launch
 	if (setprov->isFirstStart() && SystemAccess::isPortable()) {
-		this->SetAutoStart(true);
+		sn
+			this->SetAutoStart(true);
 		LOG("Enabled autostart on first launch of the application");
 	}
 
 	perfCPU = gcnew PerformanceCounter("Processor", "% Processor Time", "_Total");
+
 	perfHDD = gcnew PerformanceCounter("PhysicalDisk", "Disk Bytes/sec", "_Total");
 	reloadNetworkAdapters();
 }
 
 float SystemAccess::getCPUUsage() {
-	//Note: performance counters need administrator privileges at Windows Vista
 	float cpuUsage_percent = perfCPU->NextValue();
 	return cpuUsage_percent;
 }
+
+//Note: performance counters need administrator privileges at Windows Vista
 
 float SystemAccess::getRAMUsage()
 {
@@ -51,6 +54,7 @@ float SystemAccess::getRAMUsage()
 }
 
 float SystemAccess::getNETUsage() {
+	//Adds the values for all available net PerfCounters
 	float kbytes_per_sec = 0;
 	try {
 		for each(PerformanceCounter^ perf in *perfNETs) {
@@ -83,6 +87,7 @@ void SystemAccess::reloadNetworkAdapters()
 }
 
 SystemAccess::~SystemAccess() {
+	//Delets all Components
 	perfCPU->Close();
 	perfHDD->Close();
 	for each(PerformanceCounter^ perf in *perfNETs) {
