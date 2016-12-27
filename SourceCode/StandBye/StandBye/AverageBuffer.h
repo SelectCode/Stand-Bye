@@ -17,7 +17,7 @@ ref class AverageBuffer {
 private:
 
 	array<float>^ buffer;
-	int ind = 0;
+	int index = 0;
 	int size;
 
 public:
