@@ -18,8 +18,11 @@ public:
 	//Reports the current Instance to the servers
 	static void reportInstance();
 
-	//Reports an error to the server
-	static void reportError(System::String^ error, System::String^ log);
+	//Reports the exception to the server
+	static void reportException(System::String^ error, System::String^ log);
+
+	//Reports the exception to the server (without log)
+	static void reportException(System::Exception^ e);
 
 	//Reports the current Usage Time to the server
 	static void reportUsageTime(System::TimeSpan^ time);

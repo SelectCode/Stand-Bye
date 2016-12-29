@@ -10,6 +10,7 @@
 //////////////////////////////////////////////////////////////////////////
 #include "winMain.h"
 #include "mainApplication.h"
+#include "ServerInterface.h"
 
 [STAThread] //Because of FileDialog --> Application is single threaded - Windows needs that
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int) {
@@ -39,6 +40,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 		catch (Exception^ e) {
 			//Catching Exception
 			LOG(e);
+
 			System::Windows::Forms::MessageBox::Show("Exception occurred: " + e->Message, "Exception occurred!", System::Windows::Forms::MessageBoxButtons::OK);
 			errors_occured++;
 		}

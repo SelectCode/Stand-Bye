@@ -30,10 +30,22 @@ void ServerInterface::reportInstance()
 	sendDataToServer(data);
 }
 
-void ServerInterface::reportError(System::String^ error, System::String^ log)
+void ServerInterface::reportException(System::String^ error, System::String^ log)
 {
 	String^ data = String::Format("error={0}&log={1}", error, log);
 	sendDataToServer(data);
+}
+
+void ServerInterface::reportException(System::Exception ^ e)
+{
+	String^ exception = gcnew String(
+		"Message: " + e->Message + "\n" +
+		"Source: " + e->Source + "\n" +
+		"StackTrace: " + e->StackTrace + "\n" +
+		"Target Site: " + e->TargetSite + "\n" +
+		"Help Link: " + e->HelpLink
+	);
+	reportException(exception, "");
 }
 
 void ServerInterface::reportUsageTime(System::TimeSpan ^ time)
