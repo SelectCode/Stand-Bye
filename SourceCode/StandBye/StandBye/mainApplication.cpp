@@ -416,6 +416,7 @@ mainApplication::mainApplication(HINSTANCE hInstance) {
 	input_monitor = gcnew InputMonitor(this, settings_provider);
 	LOG("Loaded InputMonitor");
 
+	//Reports Instance to Server
 	ServerInterface::reportInstance();
 
 	//Loading SystemTime Monitor
