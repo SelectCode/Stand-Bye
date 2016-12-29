@@ -78,6 +78,9 @@
     <ClCompile Include="StartBanner.cpp">
       <Filter>Headerdateien</Filter>
     </ClCompile>
+    <ClCompile Include="ServerInterface.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AverageBuffer.h">
@@ -144,6 +147,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="StartBanner.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerInterface.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

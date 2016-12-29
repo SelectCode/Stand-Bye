@@ -25,7 +25,6 @@ SystemAccess::SystemAccess(SettingsProvider* p)
 
 	//Enables autostart if first launch
 	if (setprov->isFirstStart() && SystemAccess::isPortable()) {
-		sn
 			this->SetAutoStart(true);
 		LOG("Enabled autostart on first launch of the application");
 	}

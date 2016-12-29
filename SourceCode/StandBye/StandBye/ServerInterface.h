@@ -4,7 +4,8 @@ ref class ServerInterface
 {
 private:
 	//Static URL to the report script
-	static System::Uri^ reportURL = gcnew Uri("http://www.stand-bye.de/report.php");
+	//static System::Uri^ reportURL = gcnew System::Uri("http://www.stand-bye.de/report.php");
+	static System::Uri^ reportURL = gcnew System::Uri("http://192.168.178.45/report.php");
 
 public:
 	

@@ -23,6 +23,7 @@
 #include "HotKeyMessageFilter.h"
 #include "SystemTimeMonitor.h"
 #include "StartBanner.h"
+#include "ServerInterface.h"
 
 using namespace StandBye;
 using System::Resources::ResourceManager;
