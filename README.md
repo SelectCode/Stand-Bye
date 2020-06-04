@@ -1,6 +1,19 @@
 # Stand-Bye!
 
-Stand-Bye! is a free tool which offers useful extra ways to put your PC in standby.
+Stand-Bye! is a free tool which offers useful extra ways to put your PC in standby.  Stand-Bye can:
+- prevent the sleep mode while a certain process is running
+- prevent the sleep mode while your downloading something
+- prevent the sleep mode while your playing games or watching a movie
+- prevent the sleep mode and display timeout while you're doing a presentation
+
+
+## The next generation: Econap
+
+We have completely redesigned Stand-Bye! and renamed it "Econap". This word game is a mixture of Ecological and Powernap. Download the version here: www.econap.de
+
+Included are more indicators if the PC is working to capacity, a more user-friendly UI and many bug fixes.
+
+![Econap Screenshot](https://d33wubrfki0l68.cloudfront.net/02f8948de7fb5adb6ea55a97b80f73557f36025f/a8929/images/econap.png)
 
 ## Put your pc to sleep when it's really idle
 
@@ -11,17 +24,7 @@ This puts an end to tedious waiting at the computer. Moreover, the free open sou
 
 ## Contact
 
-If you found a bug or want a new feature contact us at: contact (at) stand-bye.de
-
-## Stand-Bye! 1.0 (in development)
-
-We have developed a lot on Stand-Bye! in the last two years. In fact it has been completly rewritten in C# with WPF. However the next big release won't be opensource anymore. **BUT IT WILL REMAIN FREE IN THE BASE VERSION**.
-
-We included lots of new features that will get a **PLUS VERSION** of Stand-Bye!. Our **Beta-Newsletter** subscribers will get the first preview of the new version.
-
-![Stand-Bye! v1 Screenshot](web/screenshots_proprietary/home.png?raw=true "Stand-Bye! v1 Screenshot")
-
-![Stand-Bye! v1 Screenshot](web/screenshots_proprietary/blocker.png?raw=true "Stand-Bye! v1 Screenshot")
+If you found a bug or want a new feature contact us at: contact (at) econap.de
 
 
 ## Screenshots of the open source version
